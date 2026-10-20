@@ -1,4 +1,4 @@
-// server.js — GGBrainX API (Render-ready) + Topup Leaderboard
+// server.js — BrainrotWin API (Render-ready) + Topup Leaderboard
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -11,7 +11,8 @@ const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
 const LUCK_FILE = path.join(DATA_DIR, 'luck.json');
 const TOPUPS_FILE = path.join(DATA_DIR, 'topups.json');
 
-const ADMIN_USERNAME = 'clonexx7';
+// Админы (в нижнем регистре, без @)
+const ADMIN_USERNAMES = ['saintezz7', 'yart11'];
 
 let promocodes = {};
 let users = {};
@@ -83,13 +84,17 @@ function ensureUser(telegramId, username) {
     return users[telegramId];
 }
 
+function isAdmin(username) {
+    return ADMIN_USERNAMES.includes((username || '').toLowerCase());
+}
+
 const server = http.createServer(async (req, res) => {
     if (req.method === 'OPTIONS') { setCORS(res); res.writeHead(204); res.end(); return; }
 
     if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) {
         setCORS(res);
         res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('GGBrainX server is alive');
+        res.end('BrainrotWin server is alive');
         return;
     }
 
@@ -99,14 +104,19 @@ const server = http.createServer(async (req, res) => {
             const sorted = Object.entries(topupHistory)
                 .map(([username, total]) => ({ username, total }))
                 .sort((a, b) => b.total - a.total)
-                .slice(0, 10); // топ 10
+                .slice(0, 10);
             return sendJSON(res, 200, { ok: true, leaderboard: sorted });
         }
 
         // === PROMOS ===
         if (req.method === 'POST' && req.url === '/api/create') {
             const body = await readBody(req);
-            const { code, uses, type, value } = body;
+            const { code, uses, type, value, admin_username } = body;
+
+            if (!isAdmin(admin_username)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+
             if (!code || code.trim().length < 3) return sendJSON(res, 400, { ok: false, error: 'Название минимум 3 символа' });
             const upperCode = code.trim().toUpperCase();
             if (promocodes[upperCode]) return sendJSON(res, 409, { ok: false, error: 'Промокод уже есть' });
@@ -136,7 +146,6 @@ const server = http.createServer(async (req, res) => {
             const u = ensureUser(telegram_id);
             if (promo.type === 'balance') {
                 u.balance = (u.balance || 0) + promo.value;
-                // Добавляем в топ пополнений (по логину)
                 if (u.username) {
                     topupHistory[u.username] = (topupHistory[u.username] || 0) + promo.value;
                     saveTopups();
@@ -147,12 +156,88 @@ const server = http.createServer(async (req, res) => {
             }
             u.updated_at = new Date().toISOString();
             saveUsers();
-            
+
             return sendJSON(res, 200, { ok: true, type: promo.type, value: promo.value, remaining: promo.uses });
         }
 
         if (req.method === 'GET' && req.url === '/api/promocodes') {
             return sendJSON(res, 200, { ok: true, promocodes });
+        }
+
+        // === DEPOSITS ===
+
+        // Создать заявку на пополнение (юзер)
+        if (req.method === 'POST' && req.url === '/api/deposit/create') {
+            const body = await readBody(req);
+            const { telegram_id, username, item_id, item_name, item_price, base_price, roblox_name } = body;
+
+            if (!telegram_id) return sendJSON(res, 400, { ok: false, error: 'telegram_id обязателен' });
+            if (!item_id || !roblox_name) return sendJSON(res, 400, { ok: false, error: 'Не хватает данных' });
+
+            const u = ensureUser(telegram_id, username);
+
+            const deposit = {
+                id: 'dep_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+                telegram_id,
+                username: username || u.username || '',
+                item_id,
+                item_name: item_name || '',
+                item_price: parseInt(item_price) || 0,
+                base_price: parseInt(base_price) || parseInt(item_price) || 0,
+                roblox_name,
+                status: 'pending',
+                created_at: new Date().toISOString()
+            };
+            deposits.push(deposit);
+            saveDeposits();
+
+            return sendJSON(res, 200, { ok: true, deposit });
+        }
+
+        // Получить список заявок (только админ)
+        if (req.method === 'GET' && req.url.startsWith('/api/deposits')) {
+            const url = new URL(req.url, 'http://localhost');
+            const admin = url.searchParams.get('admin') || '';
+            if (!isAdmin(admin)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+            return sendJSON(res, 200, { ok: true, deposits });
+        }
+
+        // Обработать заявку — принять/отклонить (только админ)
+        if (req.method === 'POST' && req.url === '/api/deposit/status') {
+            const body = await readBody(req);
+            const { id, status, admin } = body;
+
+            if (!isAdmin(admin)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+            if (!id || !['accepted', 'rejected'].includes(status)) {
+                return sendJSON(res, 400, { ok: false, error: 'Неверные данные' });
+            }
+
+            const dep = deposits.find(d => d.id === id);
+            if (!dep) return sendJSON(res, 404, { ok: false, error: 'Заявка не найдена' });
+            if (dep.status !== 'pending') return sendJSON(res, 409, { ok: false, error: 'Уже обработана' });
+
+            dep.status = status;
+            dep.processed_at = new Date().toISOString();
+            dep.processed_by = admin || 'admin';
+
+            if (status === 'accepted') {
+                const u = ensureUser(dep.telegram_id, dep.username);
+                u.balance = (u.balance || 0) + dep.item_price;
+
+                const nameKey = dep.username || u.username;
+                if (nameKey) {
+                    topupHistory[nameKey] = (topupHistory[nameKey] || 0) + dep.item_price;
+                    saveTopups();
+                }
+                saveUsers();
+            }
+
+            saveDeposits();
+            return sendJSON(res, 200, { ok: true, deposit: dep });
         }
 
         // === USER ===
