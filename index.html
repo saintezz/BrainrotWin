@@ -1959,12 +1959,17 @@ body{
         openModal('targetModal');
         playClick(); vibrate(10);
     };
-    function formatChance(pct) {
-        if (pct >= 1) return pct.toFixed(1).replace('.0','') + '%';
-        if (pct >= 0.1) return pct.toFixed(2).replace('0','') + '%';
-        if (pct >= 0.01) return pct.toFixed(3) + '%';
-        return pct.toFixed(4) + '%';
-    }
+   function formatChance(pct) {
+    if (!pct || pct <= 0) return '0%';
+    if (pct >= 1) return pct.toFixed(1).replace('.0','') + '%';
+    if (pct >= 0.1) return pct.toFixed(2) + '%';
+    if (pct >= 0.01) return pct.toFixed(3) + '%';
+    if (pct >= 0.001) return pct.toFixed(4) + '%';
+    if (pct >= 0.0001) return pct.toFixed(5) + '%';
+    if (pct >= 0.00001) return pct.toFixed(6) + '%';
+    // Совсем маленькие — в научной нотации: 1e-7% и т.п.
+    return pct.toExponential(2).replace('e-', 'e-') + '%';
+}
 
     window.pickTargetFromList = function(targetId) {
         if (isSpinning) return;
