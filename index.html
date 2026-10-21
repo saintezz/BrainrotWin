@@ -142,15 +142,15 @@ body{
 .tab-panel.active{display:block;animation:panelFadeIn .2s ease}
 @keyframes panelFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== АВТО-ПРОМОКОД ===== */
+/* ===== АВТО-ПРОМОКОД (фиолетово-сиреневый) ===== */
 .auto-promo-card {
   margin: 16px 20px;
-  background: #121826;
-  border: 1px solid rgba(255,255,255,.06);
+  background: linear-gradient(135deg, rgba(60,20,40,.95), rgba(40,14,28,.95));
+  border: 1px solid rgba(192,132,252,.4);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+  box-shadow: 0 10px 30px rgba(0,0,0,.5), 0 0 20px rgba(192,132,252,.15);
   color: #fff;
 }
 .auto-promo-inner {
@@ -160,8 +160,8 @@ body{
 }
 .auto-promo-badge {
   display: inline-block;
-  background: #3b82f6;
-  color: #fff;
+  background: var(--accent);
+  color: #1a0b13;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -178,11 +178,11 @@ body{
   margin-bottom: 4px;
   letter-spacing: 0.5px;
 }
-.auto-promo-title span { color: #3b82f6; }
+.auto-promo-title span { color: var(--accent); }
 .auto-promo-subtitle {
   font-size: 20px;
   font-weight: 900;
-  color: #3b82f6;
+  color: var(--accent-bright);
   text-transform: uppercase;
   margin-bottom: 16px;
 }
@@ -190,7 +190,7 @@ body{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  background: rgba(255,255,255,.06);
+  background: rgba(192,132,252,.15);
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 16px;
@@ -202,7 +202,7 @@ body{
 .auto-promo-label {
   font-size: 10px;
   font-weight: 700;
-  color: #6b7280;
+  color: #9a5f7d;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -212,11 +212,11 @@ body{
   font-weight: 900;
   letter-spacing: 1px;
 }
-.auto-promo-value.green { color: #22c55e; }
+.auto-promo-value.green { color: var(--accent-bright); }
 .auto-promo-promo-label {
   font-size: 10px;
   font-weight: 700;
-  color: #6b7280;
+  color: #9a5f7d;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 6px;
@@ -230,20 +230,20 @@ body{
 .auto-promo-code {
   font-size: 24px;
   font-weight: 900;
-  color: #3b82f6;
+  color: var(--accent-bright);
   letter-spacing: 1px;
 }
 .auto-promo-copy {
   width: 36px;height: 36px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.1);
+  border: 1px solid rgba(192,132,252,.4);
   background: transparent;
-  color: #9ca3af;
+  color: var(--accent);
   cursor: pointer;
   display: flex;align-items:center;justify-content:center;
   transition: all .15s;
 }
-.auto-promo-copy:hover { background: rgba(255,255,255,.08); color:#fff; }
+.auto-promo-copy:hover { background: rgba(192,132,252,.15); color:#fff; }
 .auto-promo-decoration {
   position: absolute;
   inset: 0;
@@ -256,7 +256,7 @@ body{
   position: absolute;
   width: 200%;
   height: 60px;
-  background: linear-gradient(90deg, transparent, rgba(59,130,246,.15), transparent);
+  background: linear-gradient(90deg, transparent, rgba(192,132,252,.15), transparent);
   transform: rotate(-30deg);
 }
 .auto-promo-decoration::before { top: 20%; left: -50%; }
@@ -659,45 +659,31 @@ body{
 }
 @keyframes pulseGlow{from{text-shadow:0 0 10px var(--accent);}to{text-shadow:0 0 25px var(--accent),0 0 5px #fff;}}
 
-/* ===== Апгрейдер: слоты 5 предметов ===== */
-.items-row.multi-row{
-  flex-direction:column;
-  align-items:stretch;
-  gap:14px;
+/* ===== Апгрейдер: карточка с несколькими предметами ===== */
+.multi-preview-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  min-height: 56px;
 }
-.multi-col{width:100%;}
-.multi-col-label{
-  font-size:12px;font-weight:700;color:#c98bb0;text-transform:uppercase;
-  letter-spacing:.5px;margin-bottom:8px;text-align:center;
+.multi-preview-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: rgba(20,6,14,.5);
+  border: 1px solid rgba(192,132,252,.3);
+  padding: 2px;
 }
-.multi-slots{
-  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
-}
-.multi-slot{
-  aspect-ratio:1;background:rgba(192,132,252,.05);
-  border:2px dashed rgba(192,132,252,.25);border-radius:0;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .15s;position:relative;overflow:hidden;
-  min-height:70px;
-}
-.multi-slot:hover{border-color:var(--accent);background:rgba(192,132,252,.12)}
-.multi-slot.filled{border-style:solid;border-color:var(--accent);background:rgba(192,132,252,.1)}
-.multi-slot img{width:80%;height:80%;object-fit:contain;pointer-events:none}
-.multi-slot .slot-price{
-  position:absolute;bottom:2px;right:3px;font-size:9px;font-weight:800;color:var(--accent-bright);
-  display:flex;align-items:center;gap:2px;background:rgba(20,6,14,.7);padding:1px 3px;
-}
-.multi-slot .slot-price img{width:9px;height:9px}
-.multi-slot .slot-remove{
-  position:absolute;top:1px;right:1px;width:16px;height:16px;
-  background:rgba(255,107,138,.35);color:#fff;font-size:10px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;z-index:3;
-}
-.multi-slot > span{font-size:26px;color:#7a4a63;font-weight:800}
-@media (max-width:600px){
-  .multi-slots{grid-template-columns:repeat(5,1fr);gap:4px}
-  .multi-slot{min-height:56px}
-  .multi-slot > span{font-size:20px}
+.multi-preview-count {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent-bright);
+  margin-top: 2px;
+  line-height: 1.2;
 }
 
 /* ==== AUTO PROMO (в пополнении) ==== */
@@ -728,6 +714,26 @@ body{
 .autopromo-timer span{
   font-weight:800;color:#fff;font-variant-numeric:tabular-nums;
 }
+
+.topup-bonus-line {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: rgba(74,222,128,.08);
+  border: 2px solid rgba(74,222,128,.4);
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.topup-bonus-line.show { display: flex; }
+.topup-bonus-line .tbl-label { color: #86efac; line-height: 1.2; }
+.topup-bonus-line .tbl-value {
+  font-weight: 800; color: #4ade80;
+  display: flex; align-items: center; gap: 5px; line-height: 1.3;
+}
+.topup-bonus-line .tbl-value img { width: 14px; height: 14px; }
 
 @media (max-width:900px){
   .inventory-row{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));padding:4px 14px 8px}
@@ -826,7 +832,7 @@ body{
         <div class="modal-title">Пополнение</div>
 
         <div class="autopromo-card">
-            <div class="autopromo-label">АВТО-ПРОМОКОД</div>
+            <div class="autopromo-label">АВТО-ПРОМОКОД (ПОДСКАЗКА)</div>
             <div class="autopromo-code" id="autoPromoCodeModal">—</div>
             <div class="autopromo-bonus" id="autoPromoBonusModal">+0%</div>
             <div class="autopromo-timer">Осталось: <span id="autoPromoTimerModal">--:--:--</span></div>
@@ -840,10 +846,22 @@ body{
             <div class="tpl-label">Цена:</div>
             <div class="tpl-value" id="topupPriceValue">0</div>
         </div>
+
         <div class="form-group" style="margin-top: 12px;">
             <label class="form-label">НИК В РОБЛОКСЕ</label>
             <input type="text" class="form-input" id="topupRoblox" placeholder="Введи ник в Roblox" maxlength="40">
         </div>
+
+        <div class="form-group" style="margin-top: 12px;">
+            <label class="form-label">ПРОМОКОД (ЕСЛИ ЕСТЬ)</label>
+            <input type="text" class="form-input" id="topupPromoInput" placeholder="Введи промокод" maxlength="20" oninput="updateTopupBonus()">
+        </div>
+
+        <div class="topup-bonus-line" id="topupBonusLine">
+            <div class="tbl-label">Итого к оплате (с бонусом):</div>
+            <div class="tbl-value" id="topupBonusValue">0</div>
+        </div>
+
         <button class="action-btn" onclick="createDeposit()">Отправить заявку</button>
         <div class="msg" id="topupMsg"></div>
     </div>
@@ -1034,7 +1052,7 @@ body{
                             <div class="auto-promo-value green" id="homeAutoPromoBonus">+0%</div>
                         </div>
                     </div>
-                    <div class="auto-promo-promo-label">ПРОМОКОД</div>
+                    <div class="auto-promo-promo-label">ПРОМОКОД (ВВЕДИ В ПОПОЛНЕНИИ)</div>
                     <div class="auto-promo-code-row">
                         <div class="auto-promo-code" id="homeAutoPromoCode">—</div>
                         <button class="auto-promo-copy" onclick="copyAutoPromoCode()" title="Скопировать">
@@ -1074,16 +1092,12 @@ body{
                     </div>
                 </div>
             </div>
-            <div class="items-row multi-row">
-                <div class="multi-col">
-                    <div class="multi-col-label">Твои предметы (до 5)</div>
-                    <div class="multi-slots" id="sourceSlots">
-                        <div class="multi-slot" data-slot="0" onclick="openSlotPicker(0)"><span>+</span></div>
-                        <div class="multi-slot" data-slot="1" onclick="openSlotPicker(1)"><span>+</span></div>
-                        <div class="multi-slot" data-slot="2" onclick="openSlotPicker(2)"><span>+</span></div>
-                        <div class="multi-slot" data-slot="3" onclick="openSlotPicker(3)"><span>+</span></div>
-                        <div class="multi-slot" data-slot="4" onclick="openSlotPicker(4)"><span>+</span></div>
-                    </div>
+            <div class="items-row">
+                <div class="item-box" id="sourceBox" onclick="switchUpgTab('inv', document.querySelectorAll('.upg-tab')[1])">
+                    <div class="label">Твой предмет</div>
+                    <div class="multi-preview-row" id="sourcePreview"></div>
+                    <div class="name" id="sourceName">—</div>
+                    <div class="price" id="sourcePrice"></div>
                 </div>
                 <div class="swap-arrow">→</div>
                 <div class="item-box" onclick="openTargetList()">
@@ -1106,7 +1120,7 @@ body{
         </div>
 
         <div class="upg-pane" id="upgPaneInv">
-            <div class="section-title" style="margin-top:10px;">Инвентарь</div>
+            <div class="section-title" style="margin-top:10px;">Инвентарь <span style="font-size:11px;color:#9a5f7d;text-transform:none;font-weight:600;letter-spacing:0;">(клик — выбрать/убрать, до 5 шт)</span></div>
             <div class="inventory-row" id="inventoryRow"><div class="empty-inv">Инвентарь пуст</div></div>
         </div>
 
@@ -1243,7 +1257,6 @@ body{
         lava: 'https://raw.githubusercontent.com/saintezz/SaintGLOSSARY/main/mutation/Lava_Mutation_Icon.webp'
     };
 
-    // ==== БРЕЙНРОТЫ ====
     const ITEMS = [
         { id: 'cupid', name: 'Cupid Wings', price: 34, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/cupid-wings.png' },
         { id: 'garama', name: 'Garama and Madundung', price: 41, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/garama.png' },
@@ -1291,7 +1304,6 @@ body{
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
-    // ==== КЕЙСЫ (обновлённые картинки и дропы) ====
     const CASES = [
         { id: 'og', name: 'OG CASE', price: 12000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/OGCASENEW.png',
           rewards: [
@@ -1354,7 +1366,6 @@ body{
           ] }
     ];
 
-    // ==== АВТО-ПРОМОКОДЫ (меняется каждый час) ====
     const AUTO_PROMOS = [
         { code: 'KRAKEN121', bonus: 5 },
         { code: 'SAINT213', bonus: 8 },
@@ -1366,9 +1377,14 @@ body{
         { code: 'CLOUD56', bonus: 8 }
     ];
     const HOUR_MS = 3600000;
+
     function getCurrentAutoPromo() {
         const idx = Math.floor(Date.now() / HOUR_MS) % AUTO_PROMOS.length;
         return AUTO_PROMOS[idx];
+    }
+    function getAutoPromoByCode(code) {
+        const upper = (code || '').trim().toUpperCase();
+        return AUTO_PROMOS.find(p => p.code === upper) || null;
     }
     function getTimeUntilNextHour() {
         const now = Date.now();
@@ -1409,7 +1425,6 @@ body{
         } catch(e) {}
     };
 
-    // ==== ШАНСЫ АПГРЕЙДА ====
     function calcUpgradeChance(sourcePrice, targetPrice) {
         if (!sourcePrice || !targetPrice || targetPrice <= sourcePrice) return 0;
         const ratio = targetPrice / sourcePrice;
@@ -1454,17 +1469,18 @@ body{
     let currentCaseId = null;
     let caseOpenQty = 1;
     let isCaseOpening = false;
-    let currentCaseFilter = '';
     let rareRollCounter = parseInt(localStorage.getItem('ggbrainx_rare_roll_counter') || '0') || 0;
 
     let skipAnimationFlag = false;
     let activeAnimTimers = [];
     let activeAnimResolvers = [];
 
-    // Апгрейдер: 5 слотов
-    let selectedSourceIndices = [null, null, null, null, null];
+    // Апгрейдер: выбранные индексы предметов (до 5 штук)
+    let selectedSourceIndices = [];
     let selectedTargetId = null;
-    let activeSlotIndex = -1;
+
+    // бонус пополнения
+    let currentTopupBonusPct = 0;
 
     function saveLocalCache() {
         localStorage.setItem('ggbrainx_balance', String(balance));
@@ -1863,11 +1879,15 @@ body{
         renderTopupGrid();
         const r = document.getElementById('topupRoblox');
         const m = document.getElementById('topupMsg');
+        const promo = document.getElementById('topupPromoInput');
         if (r) r.value = '';
+        if (promo) promo.value = '';
         if (m) { m.textContent = ''; m.className = 'msg'; }
         topupSelectedItem = null;
+        currentTopupBonusPct = 0;
         updateTopupPrice();
         updateAutoPromoUI();
+        updateTopupBonus();
         openModal('topupModal');
     };
     function renderTopupGrid() {
@@ -1886,6 +1906,7 @@ body{
         topupSelectedItem = id;
         renderTopupGrid();
         updateTopupPrice();
+        updateTopupBonus();
     };
     function updateTopupPrice() {
         const line = document.getElementById('topupPriceLine');
@@ -1897,6 +1918,29 @@ body{
         line.style.display = 'flex';
         val.innerHTML = `${item.price} <img src="${COIN_IMG}">`;
     }
+    window.updateTopupBonus = function() {
+        const promoInput = document.getElementById('topupPromoInput');
+        const code = promoInput ? promoInput.value.trim().toUpperCase() : '';
+        const promo = getAutoPromoByCode(code);
+        const line = document.getElementById('topupBonusLine');
+        const val = document.getElementById('topupBonusValue');
+        if (!line || !val) return;
+        if (!promo) {
+            currentTopupBonusPct = 0;
+            line.classList.remove('show');
+            return;
+        }
+        currentTopupBonusPct = promo.bonus;
+        if (!topupSelectedItem) {
+            line.classList.remove('show');
+            return;
+        }
+        const item = getItemById(topupSelectedItem);
+        if (!item) { line.classList.remove('show'); return; }
+        const finalPrice = Math.floor(item.price * (1 + promo.bonus / 100));
+        line.classList.add('show');
+        val.innerHTML = `${finalPrice} <img src="${COIN_IMG}"> (+${promo.bonus}%)`;
+    };
     window.createDeposit = async function() {
         const msg = document.getElementById('topupMsg');
         const robloxEl = document.getElementById('topupRoblox');
@@ -1905,6 +1949,12 @@ body{
         if (!roblox) { if(msg){msg.className = 'msg err'; msg.textContent = 'Введи Roblox ник';} return; }
         const item = getItemById(topupSelectedItem);
         if (!item) return;
+        const promoInput = document.getElementById('topupPromoInput');
+        const code = promoInput ? promoInput.value.trim().toUpperCase() : '';
+        const promo = getAutoPromoByCode(code);
+        const bonusPct = promo ? promo.bonus : 0;
+        const finalPrice = Math.floor(item.price * (1 + bonusPct / 100));
+
         if (msg) { msg.className = 'msg wait'; msg.textContent = 'Отправляем заявку...'; }
         try {
             const res = await fetch(API_URL + '/api/deposit/create', {
@@ -1914,14 +1964,15 @@ body{
                     telegram_id: getTelegramId(),
                     username: USER.username || '',
                     item_id: item.id, item_name: item.name,
-                    item_price: item.price, base_price: item.price,
+                    item_price: finalPrice, base_price: item.price,
+                    promo_code: code || '',
                     roblox_name: roblox
                 })
             });
             const data = await res.json();
             if (data.ok) {
                 if (msg) { msg.className = 'msg ok'; msg.textContent = `Заявка отправлена!`; }
-                showToast('Заявка отправлена!', 'ok');
+                showToast(`Заявка: ${finalPrice} монет`, 'ok');
                 playCoin(); vibrate(15);
                 setTimeout(() => closeModal('topupModal'), 2200);
             } else {
@@ -1957,13 +2008,15 @@ body{
         list.innerHTML = pending.map(d => {
             const item = getItemById(d.item_id) || { img: '', name: d.item_name };
             const finalPrice = d.item_price;
+            const basePrice = d.base_price || d.item_price;
             return `
                 <div class="deposit-item">
                     <img src="${item.img}" alt="" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
                     <div class="deposit-info">
                         <div class="dep-line"><span class="dep-key">TG:</span> <span class="dep-val accent">@${d.username || '—'}</span></div>
                         <div class="dep-line"><span class="dep-key">Предмет:</span> <span class="dep-val">${d.item_name}</span></div>
-                        <div class="dep-line"><span class="dep-key">Цена:</span> <span class="dep-val accent">${finalPrice}</span></div>
+                        <div class="dep-line"><span class="dep-key">Цена:</span> <span class="dep-val accent">${finalPrice}</span> <span style="font-size:10px;color:#9a5f7d;">(база: ${basePrice})</span></div>
+                        ${d.promo_code ? `<div class="dep-line"><span class="dep-key">Промо:</span> <span class="dep-val">${d.promo_code}</span></div>` : ''}
                         <div class="dep-line"><span class="dep-key">Roblox:</span> <span class="dep-val">${d.roblox_name}</span></div>
                     </div>
                     <div class="deposit-actions">
@@ -2100,7 +2153,6 @@ body{
         const code = inputTab.value.trim().toUpperCase();
         if (!code) { if(msgTab){msgTab.className = 'msg err'; msgTab.textContent = 'Введи промокод';} return; }
 
-        // проверка авто-промокода
         const cur = getCurrentAutoPromo();
         const isAuto = cur.code === code;
 
@@ -2131,10 +2183,8 @@ body{
                 }
                 inputTab.value = '';
             } else {
-                // если это авто-промокод — выдаём виртуально (без сервера)
                 if (isAuto) {
                     const bonus = cur.bonus;
-                    // бонус работает как +X% к следующему депозиту — просто показываем
                     if (msgTab) { msgTab.className = 'msg ok'; msgTab.textContent = `+${bonus}% к депозиту активировано!`; }
                     showToast(`+${bonus}% к депозиту!`, 'ok');
                     playCoin(); vibrate(20);
@@ -2195,13 +2245,10 @@ body{
         if (!item) return;
         inventory.splice(index, 1);
         balance += item.price;
-        // очищаем слоты, если они ссылались на этот индекс
-        selectedSourceIndices = selectedSourceIndices.map(v => {
-            if (v === null) return null;
-            if (v === index) return null;
-            if (v > index) return v - 1;
-            return v;
-        });
+        // обновляем выбранные индексы
+        selectedSourceIndices = selectedSourceIndices
+            .filter(i => i !== index)
+            .map(i => i > index ? i - 1 : i);
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen();
         renderProfileInventory();
@@ -2238,54 +2285,28 @@ body{
         if (isSpinning) return;
         if (index < 0 || index >= inventory.length) return;
 
-        if (activeSlotIndex >= 0) {
-            for (let i = 0; i < 5; i++) {
-                if (i !== activeSlotIndex && selectedSourceIndices[i] === index) {
-                    return;
-                }
-            }
-            selectedSourceIndices[activeSlotIndex] = index;
-            activeSlotIndex = -1;
+        const pos = selectedSourceIndices.indexOf(index);
+        if (pos > -1) {
+            selectedSourceIndices.splice(pos, 1);
         } else {
-            const freeSlot = selectedSourceIndices.findIndex(v => v === null);
-            if (freeSlot < 0) {
-                showToast('Все 5 слотов заняты', 'info');
+            if (selectedSourceIndices.length >= 5) {
+                showToast('Максимум 5 предметов', 'info');
                 return;
             }
-            if (selectedSourceIndices.includes(index)) {
-                const s = selectedSourceIndices.indexOf(index);
-                selectedSourceIndices[s] = null;
-            } else {
-                selectedSourceIndices[freeSlot] = index;
-            }
+            selectedSourceIndices.push(index);
         }
         renderInventory();
         updateUpgradeScreen();
         playClick(); vibrate(10);
-        switchUpgTab('main', document.querySelectorAll('.upg-tab')[0]);
-    };
-
-    window.openSlotPicker = function(slot) {
-        if (isSpinning) return;
-        activeSlotIndex = slot;
-        switchUpgTab('inv', document.querySelectorAll('.upg-tab')[1]);
-        vibrate(8);
-    };
-
-    window.clearSlot = function(slot) {
-        selectedSourceIndices[slot] = null;
-        renderInventory();
-        updateUpgradeScreen();
     };
 
     window.openTargetList = function() {
         if (isSpinning) return;
-        const anyFilled = selectedSourceIndices.some(v => v !== null);
-        if (!anyFilled) { showToast('Сначала выбери предметы', 'info'); return; }
+        if (selectedSourceIndices.length === 0) { showToast('Сначала выбери предметы', 'info'); return; }
 
         let totalSourcePrice = 0;
         selectedSourceIndices.forEach(idx => {
-            if (idx !== null && idx >= 0 && idx < inventory.length) {
+            if (idx >= 0 && idx < inventory.length) {
                 const it = getItemById(inventory[idx]);
                 if (it) totalSourcePrice += it.price;
             }
@@ -2320,12 +2341,11 @@ body{
 
     window.pickTargetFromList = function(targetId) {
         if (isSpinning) return;
-        const anyFilled = selectedSourceIndices.some(v => v !== null);
-        if (!anyFilled) return;
+        if (selectedSourceIndices.length === 0) return;
 
         let totalSourcePrice = 0;
         selectedSourceIndices.forEach(idx => {
-            if (idx !== null && idx >= 0 && idx < inventory.length) {
+            if (idx >= 0 && idx < inventory.length) {
                 const it = getItemById(inventory[idx]);
                 if (it) totalSourcePrice += it.price;
             }
@@ -2759,28 +2779,48 @@ body{
     }
 
     function updateUpgradeScreen() {
-        const slotsWrap = document.getElementById('sourceSlots');
-        if (slotsWrap) {
-            const slots = slotsWrap.querySelectorAll('.multi-slot');
-            slots.forEach((el, i) => {
-                const idx = selectedSourceIndices[i];
-                if (idx !== null && idx >= 0 && idx < inventory.length) {
-                    const item = getItemById(inventory[idx]);
-                    if (item) {
-                        el.classList.add('filled');
-                        el.innerHTML = `
-                            <img src="${item.img}" alt="" loading="lazy" ${FALLBACK_ATTR}>
-                            <div class="slot-price"><img src="${COIN_IMG}">${item.price}</div>
-                            <div class="slot-remove" onclick="event.stopPropagation(); clearSlot(${i})">✕</div>
-                        `;
-                        return;
-                    }
-                }
-                el.classList.remove('filled');
-                el.innerHTML = '<span>+</span>';
-            });
+        // Preview нескольких картинок
+        const preview = document.getElementById('sourcePreview');
+        const nameEl = document.getElementById('sourceName');
+        const priceEl = document.getElementById('sourcePrice');
+
+        let totalSourcePrice = 0;
+        const items = [];
+        selectedSourceIndices.forEach(idx => {
+            if (idx >= 0 && idx < inventory.length) {
+                const it = getItemById(inventory[idx]);
+                if (it) { items.push(it); totalSourcePrice += it.price; }
+            }
+        });
+
+        if (preview) {
+            if (items.length === 0) {
+                preview.innerHTML = '';
+            } else {
+                preview.innerHTML = items.map(it => `
+                    <img class="multi-preview-img" src="${it.img}" alt="${it.name}" loading="lazy" ${FALLBACK_ATTR}>
+                `).join('');
+            }
         }
 
+        if (nameEl) {
+            if (items.length === 0) {
+                nameEl.innerText = '—';
+            } else if (items.length === 1) {
+                nameEl.innerText = items[0].name;
+            } else {
+                nameEl.innerText = `${items.length} предмета`;
+            }
+        }
+        if (priceEl) {
+            if (items.length === 0) {
+                priceEl.innerHTML = '';
+            } else {
+                priceEl.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${totalSourcePrice}`;
+            }
+        }
+
+        // Цель
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
         if (targetItem) {
             targetImg.src = targetItem.img;
@@ -2793,17 +2833,9 @@ body{
             targetPrice.innerHTML = '';
         }
 
-        let totalSourcePrice = 0;
-        let filledCount = 0;
-        selectedSourceIndices.forEach(idx => {
-            if (idx !== null && idx >= 0 && idx < inventory.length) {
-                const it = getItemById(inventory[idx]);
-                if (it) { totalSourcePrice += it.price; filledCount++; }
-            }
-        });
-
+        // Шанс
         let chance = 0;
-        if (filledCount > 0 && targetItem) {
+        if (items.length > 0 && targetItem) {
             chance = calcUpgradeChance(totalSourcePrice, targetItem.price);
         }
         const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
@@ -2817,7 +2849,7 @@ body{
         else if (chance > 0) { chanceLabel.innerText = 'НИЗКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
         else { chanceLabel.innerText = ''; chanceLabel.className = 'chance-label hidden'; }
 
-        if (filledCount > 0 && targetItem && chance > 0 && !isSpinning) {
+        if (items.length > 0 && targetItem && chance > 0 && !isSpinning) {
             upgradeBtn.disabled = false;
             upgradeBtn.querySelector('span').innerText = `Апгрейд - ${formatChance(chance)}`;
         } else {
@@ -2828,15 +2860,17 @@ body{
 
     function performUpgrade(durationMs) {
         if (isSpinning) return;
-        const activeIdxs = selectedSourceIndices.filter(v => v !== null);
+        const activeIdxs = [...selectedSourceIndices];
         if (activeIdxs.length === 0) return;
         const targetItem = getItemById(selectedTargetId);
         if (!targetItem) return;
 
         let totalSourcePrice = 0;
         activeIdxs.forEach(idx => {
-            const it = getItemById(inventory[idx]);
-            if (it) totalSourcePrice += it.price;
+            if (idx >= 0 && idx < inventory.length) {
+                const it = getItemById(inventory[idx]);
+                if (it) totalSourcePrice += it.price;
+            }
         });
         if (targetItem.price <= totalSourcePrice) return;
         const chance = calcUpgradeChance(totalSourcePrice, targetItem.price);
@@ -2862,20 +2896,22 @@ body{
         const successAngle = (Math.min(chance, 100) / 100) * 360;
         const finalAngle = totalRotation % 360;
         const isSuccess = finalAngle <= successAngle;
-        const burnIdxs = [...activeIdxs];
 
         setTimeout(() => {
             if (isSuccess) {
-                burnIdxs.sort((a, b) => b - a).forEach(idx => inventory.splice(idx, 1));
+                // удаляем все выбранные с конца, чтобы не сбить индексы
+                const sortedDesc = [...activeIdxs].sort((a,b) => b-a);
+                sortedDesc.forEach(idx => inventory.splice(idx, 1));
                 inventory.push(selectedTargetId);
                 showToast(`УСПЕХ! Получен ${targetItem.name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
             } else {
-                burnIdxs.sort((a, b) => b - a).forEach(idx => inventory.splice(idx, 1));
+                const sortedDesc = [...activeIdxs].sort((a,b) => b-a);
+                sortedDesc.forEach(idx => inventory.splice(idx, 1));
                 showToast(`Провал... предметы потеряны`, 'err');
                 playLose(); vibratePattern([50, 30, 100]);
             }
-            selectedSourceIndices = [null, null, null, null, null];
+            selectedSourceIndices = [];
             selectedTargetId = null;
             isSpinning = false;
             updateBalance();
