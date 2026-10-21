@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Brainrot Zone — Sakura</title>
+<title>BrainRoll</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
@@ -23,7 +23,7 @@
   --glass-border:rgba(192,132,252,.28); --glass-highlight:rgba(255,255,255,.08);
   --app-bg-alpha:.35; --card-img-size:52px; --card-name-size:12px;
   --rare-gold:#ffcf6b;
-  --roulette-item-width:130px;
+  --roulette-item-width:120px;
   --font-main:'Science Gothic', sans-serif;
 }
 
@@ -85,13 +85,10 @@ body{
 @keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
 @keyframes toastOut{to{opacity:0;transform:translateX(30px)}}
 
-/* ===== ГЛАВНЫЙ КОНТЕЙНЕР — НА ВЕСЬ ЭКРАН ===== */
 .app{
   width:100%;max-width:none;margin:0;
   background:rgba(60,20,40,.32);
-  border:none;
-  border-radius:0;
-  box-shadow:none;
+  border:none;border-radius:0;box-shadow:none;
   overflow:hidden;display:flex;flex-direction:column;
   padding-bottom:28px;position:relative;flex:1 0 auto;
   contain:layout paint style;z-index:1;min-height:100vh;
@@ -199,7 +196,20 @@ body{
 .upg-pane{display:none;padding-top:8px}
 .upg-pane.active{display:block;animation:panelFadeIn .2s ease}
 
-.cases-page{padding:0 0 20px}
+.cases-page{padding:0 0 20px;position:relative}
+/* сакура в кейсах (лёгкий слой) */
+.cases-page::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(circle at 12% 20%, rgba(192,132,252,.08) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 30%, rgba(216,180,254,.10) 0 2px, transparent 3px),
+    radial-gradient(circle at 30% 70%, rgba(192,132,252,.09) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 85%, rgba(216,180,254,.07) 0 2px, transparent 3px);
+  background-size:240px 240px;
+  opacity:.9;
+}
+.cases-page > *{position:relative;z-index:1}
+
 .cases-header{display:flex;flex-direction:column;gap:10px;padding:16px 20px 8px}
 .cases-search{width:100%;padding:13px 18px;border-radius:0;border:2px solid rgba(192,132,252,.2);background:rgba(192,132,252,.04);color:#fff;font-size:16px;font-weight:600;outline:none;transition:all .15s}
 .cases-search:focus{border-color:var(--accent);background:rgba(192,132,252,.08)}
@@ -208,44 +218,45 @@ body{
 .cases-title-main{font-size:clamp(20px,4vw,32px);font-weight:900;color:#fff;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:8px 0 4px;line-height:1.3;text-shadow:0 0 12px rgba(192,132,252,.5)}
 .cases-subtitle-main{color:#c98bb0;font-size:14px;font-weight:500;text-align:center;letter-spacing:.5px;margin-bottom:16px;line-height:1.3;padding:0 10px}
 
-.cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:0 20px}
-@media (min-width:640px){.cases-grid{grid-template-columns:repeat(3,1fr)}}
-@media (min-width:1000px){.cases-grid{grid-template-columns:repeat(4,1fr)}}
-@media (min-width:1300px){.cases-grid{grid-template-columns:repeat(5,1fr)}}
+/* КАРТОЧКИ КЕЙСОВ — УМЕНЬШЕНЫ */
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px}
+@media (min-width:640px){.cases-grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:1000px){.cases-grid{grid-template-columns:repeat(5,1fr)}}
+@media (min-width:1300px){.cases-grid{grid-template-columns:repeat(6,1fr)}}
 
 .case-card{
   position:relative;border-radius:0;
   background:rgba(192,132,252,.05);
   border:2px solid rgba(192,132,252,.18);
   overflow:hidden;transition:all .2s ease;cursor:pointer;
-  box-shadow:3px 3px 0 rgba(0,0,0,.3);
+  box-shadow:2px 2px 0 rgba(0,0,0,.3);
 }
 .case-card:hover{
   border-color:var(--accent);background:rgba(192,132,252,.09);
-  box-shadow:4px 4px 0 rgba(192,132,252,.25),0 8px 24px rgba(0,0,0,.35);
+  box-shadow:3px 3px 0 rgba(192,132,252,.25),0 6px 18px rgba(0,0,0,.35);
   transform:translate(-1px,-1px);
 }
-.case-card-inner{position:relative;display:flex;flex-direction:column;padding:16px 12px 12px;align-items:center;gap:12px}
+.case-card-inner{position:relative;display:flex;flex-direction:column;padding:10px 8px 8px;align-items:center;gap:8px}
 .case-img-wrap{
   position:relative;width:100%;aspect-ratio:1;border-radius:0;
   overflow:hidden;background:rgba(20,6,14,.5);
   border:2px solid rgba(192,132,252,.12);
   display:flex;align-items:center;justify-content:center;
 }
-.case-img-wrap img{width:78%;height:78%;object-fit:contain;transition:transform .25s ease}
+.case-img-wrap img{width:80%;height:80%;object-fit:contain;transition:transform .25s ease}
 .case-card:hover .case-img-wrap img{transform:scale(1.06)}
 
 .case-info{width:100%;text-align:center}
-.case-name{font-size:13px;font-weight:800;color:#fff;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
+.case-name{font-size:11px;font-weight:800;color:#fff;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
 .case-price{
-  font-size:14px;font-weight:800;
+  font-size:12px;font-weight:800;
   color:var(--accent-bright);background:rgba(192,132,252,.14);
   border:2px solid rgba(192,132,252,.3);
-  padding:6px 10px;border-radius:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;line-height:1.3;
+  padding:4px 8px;border-radius:0;display:inline-flex;align-items:center;justify-content:center;gap:4px;line-height:1.2;
 }
-.case-price img{width:14px;height:14px;}
+.case-price img{width:12px;height:12px;}
 .case-price.free-tag{color:var(--green-bright);background:rgba(216,180,254,.14);border-color:rgba(216,180,254,.35)}
-.case-items-count{font-size:11px;color:#9a5f7d;font-weight:600;margin-top:6px;letter-spacing:.5px;line-height:1.2}
+.case-items-count{font-size:10px;color:#9a5f7d;font-weight:600;margin-top:4px;letter-spacing:.4px;line-height:1.2}
 
 .case-open-modal{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;align-items:center;background:rgba(20,6,14,.98);overflow-y:auto;padding:20px 0 40px}
 .case-open-modal.show{display:flex;animation:caseModalIn .2s ease}
@@ -257,21 +268,21 @@ body{
 .case-open-balance{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;color:#fff;padding:10px 14px;background:rgba(20,6,14,.5);border-radius:0;border:2px solid rgba(192,132,252,.2)}
 .case-open-balance img{width:16px;height:16px;}
 
-.case-open-main-img{width:200px;height:200px;object-fit:contain;margin:10px auto;filter:drop-shadow(0 8px 20px rgba(192,132,252,.3))}
+.case-open-main-img{width:180px;height:180px;object-fit:contain;margin:10px auto;filter:drop-shadow(0 8px 20px rgba(192,132,252,.3))}
 .case-open-name{font-size:18px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:20px;line-height:1.4}
 
-.case-roulette-wrapper{width:100%;max-width:1100px;padding:0 16px;margin-bottom:18px}
+.case-roulette-wrapper{width:100%;max-width:1100px;padding:0 16px;margin-bottom:12px}
 .case-roulette-container{width:100%;display:flex;flex-direction:column;gap:8px;align-items:center}
-.case-roulette-row{width:100%;position:relative;overflow:hidden;border-radius:0;background:rgba(20,6,14,.7);border:2px solid rgba(192,132,252,.18);height:140px}
+.case-roulette-row{width:100%;position:relative;overflow:hidden;border-radius:0;background:rgba(20,6,14,.7);border:2px solid rgba(192,132,252,.18);height:130px}
 .case-roulette-row::before,.case-roulette-row::after{content:'';position:absolute;top:0;bottom:0;width:50px;z-index:8;pointer-events:none}
 .case-roulette-row::before{left:0;background:linear-gradient(90deg,rgba(20,6,14,.95),transparent)}
 .case-roulette-row::after{right:0;background:linear-gradient(270deg,rgba(20,6,14,.95),transparent)}
 .case-roulette-track{display:flex;align-items:center;height:100%;will-change:transform}
-.case-roulette-item{flex:0 0 var(--roulette-item-width,130px);height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;border-right:2px solid rgba(192,132,252,.06);position:relative;transition:background .15s}
-.case-roulette-item img{width:64px;height:64px;object-fit:contain;}
-.case-roulette-item .roulette-name{font-size:11px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:26px;overflow:hidden;width:100%}
-.case-roulette-item .roulette-price{font-size:12px;font-weight:800;color:var(--accent-bright);display:flex;align-items:center;gap:3px;line-height:1.3}
-.case-roulette-item .roulette-price img{width:12px;height:12px;}
+.case-roulette-item{flex:0 0 var(--roulette-item-width,120px);height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;border-right:2px solid rgba(192,132,252,.06);position:relative;transition:background .15s}
+.case-roulette-item img{width:56px;height:56px;object-fit:contain;}
+.case-roulette-item .roulette-name{font-size:10px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:24px;overflow:hidden;width:100%}
+.case-roulette-item .roulette-price{font-size:11px;font-weight:800;color:var(--accent-bright);display:flex;align-items:center;gap:3px;line-height:1.3}
+.case-roulette-item .roulette-price img{width:11px;height:11px;}
 .case-roulette-item.winner{background:rgba(192,132,252,.2)}
 .case-roulette-item.winner::before{content:'';position:absolute;inset:0;border:2px solid var(--accent-bright);border-radius:0}
 
@@ -279,18 +290,22 @@ body{
 .case-roulette-pointer::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--accent)}
 .case-roulette-pointer::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:12px solid var(--accent)}
 
-.case-qty-row{display:flex;gap:8px;margin-bottom:16px;width:100%;max-width:600px;padding:0 20px}
-.case-qty-btn-big{flex:1;padding:14px 8px;border-radius:0;border:2px solid rgba(192,132,252,.2);background:rgba(192,132,252,.05);color:#c98bb0;font-size:15px;font-weight:800;cursor:pointer;transition:all .15s;box-shadow:2px 2px 0 rgba(0,0,0,.3)}
+.case-qty-row{display:flex;gap:8px;margin-bottom:12px;width:100%;max-width:600px;padding:0 20px}
+.case-qty-btn-big{flex:1;padding:12px 8px;border-radius:0;border:2px solid rgba(192,132,252,.2);background:rgba(192,132,252,.05);color:#c98bb0;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s;box-shadow:2px 2px 0 rgba(0,0,0,.3)}
 .case-qty-btn-big:hover{border-color:var(--accent);color:var(--accent-bright)}
 .case-qty-btn-big.active{background:rgba(192,132,252,.2);border-color:var(--accent);color:var(--accent-bright)}
 
-.case-open-action-btn{width:100%;max-width:600px;padding:16px;border-radius:0;border:2px solid var(--accent);background:rgba(192,132,252,.18);color:var(--accent-bright);font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s;margin-bottom:20px;box-shadow:4px 4px 0 rgba(0,0,0,.4);line-height:1.4}
+.case-open-action-btn{width:100%;max-width:600px;padding:14px;border-radius:0;border:2px solid var(--accent);background:rgba(192,132,252,.18);color:var(--accent-bright);font-size:15px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s;margin-bottom:12px;box-shadow:4px 4px 0 rgba(0,0,0,.4);line-height:1.4}
 .case-open-action-btn:hover:not(:disabled){background:rgba(192,132,252,.3)}
 .case-open-action-btn:disabled{opacity:.35;cursor:not-allowed;background:rgba(255,255,255,.03);color:#7a4a63;border-color:rgba(192,132,252,.1);box-shadow:none}
 
+.case-skip-btn{display:none;width:100%;max-width:600px;padding:12px;border-radius:0;border:2px solid rgba(216,180,254,.6);background:rgba(216,180,254,.18);color:#fff;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;margin-bottom:12px;box-shadow:3px 3px 0 rgba(0,0,0,.4);line-height:1.4}
+.case-skip-btn.show{display:block}
+.case-skip-btn:hover{background:rgba(216,180,254,.35)}
+
 .case-possible-title{width:100%;max-width:1100px;padding:0 20px;font-size:13px;font-weight:800;color:#c98bb0;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;line-height:1.4}
 .case-possible-grid{width:100%;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;padding:0 16px}
-.case-possible-item{background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:border-color .15s}
+.case-possible-item{background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:border-color .15s;position:relative}
 .case-possible-item:hover{border-color:rgba(192,132,252,.4)}
 .case-possible-item img{width:50px;height:50px;object-fit:contain;}
 .case-possible-item .cp-name{font-size:10px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:26px;overflow:hidden}
@@ -308,29 +323,24 @@ body{
 .case-anim-text{font-size:20px;font-weight:900;letter-spacing:4px;color:var(--accent-bright);margin-top:24px;z-index:2;line-height:1.4}
 .case-anim-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
 
-.case-result-card{background:rgba(40,14,28,.98) !important;border:2px solid rgba(192,132,252,.25) !important;padding:28px 22px !important;position:relative;overflow:hidden;border-radius:0 !important;box-shadow:6px 6px 0 rgba(0,0,0,.5) !important}
+.case-result-card{background:rgba(40,14,28,.98) !important;border:2px solid rgba(192,132,252,.25) !important;padding:22px 18px !important;position:relative;overflow:hidden;border-radius:0 !important;box-shadow:6px 6px 0 rgba(0,0,0,.5) !important}
 .case-result-card.legend{border-color:var(--rare-gold) !important}
-.case-result-label{font-size:13px;font-weight:800;color:var(--green-bright);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1;line-height:1.4}
+.case-result-label{font-size:13px;font-weight:800;color:var(--green-bright);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:1;line-height:1.4}
 .case-result-card.legend .case-result-label{color:var(--rare-gold)}
-.case-result-img-wrap{position:relative;width:140px;height:140px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;z-index:1}
+.case-result-img-wrap{position:relative;width:130px;height:130px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;z-index:1}
 .case-result-img-wrap img{width:100%;height:100%;object-fit:contain;}
-.case-result-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:1px;margin-bottom:6px;text-align:center;position:relative;z-index:1;line-height:1.4}
-.case-result-price{font-size:22px;font-weight:900;color:var(--green-bright);letter-spacing:1px;margin-bottom:18px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:1;line-height:1.4}
+.case-result-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:1px;margin-bottom:4px;text-align:center;position:relative;z-index:1;line-height:1.3}
+.case-result-price{font-size:18px;font-weight:900;color:var(--green-bright);letter-spacing:1px;margin-bottom:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:1;line-height:1.3}
 .case-result-card.legend .case-result-price{color:var(--rare-gold)}
-.case-result-price img{width:20px;height:20px;object-fit:contain;}
+.case-result-price img{width:18px;height:18px;object-fit:contain;}
 
-.case-multi-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:10px;position:relative;z-index:1}
+.case-multi-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:6px;position:relative;z-index:1}
 .case-multi-item{background:rgba(20,6,14,.5);border:2px solid rgba(192,132,252,.14);border-radius:0;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px}
 .case-multi-item.legend{border-color:var(--rare-gold)}
-.case-multi-item img{width:46px;height:46px;object-fit:contain;}
-.case-multi-item .multi-name{font-size:10px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:26px;overflow:hidden}
-.case-multi-item .multi-price{font-size:12px;font-weight:800;color:var(--accent-bright);display:flex;align-items:center;gap:4px;line-height:1.3}
-.case-multi-item .multi-price img{width:12px;height:12px;}
-.case-multi-summary{margin-top:12px;padding:12px;background:rgba(20,6,14,.5);border:2px solid rgba(192,132,252,.14);border-radius:0;position:relative;z-index:1}
-.case-multi-summary > div{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#c98bb0;letter-spacing:.5px;text-transform:uppercase;padding:5px 0;line-height:1.4;gap:6px}
-.case-multi-summary > div > span{color:var(--green-bright);font-size:14px;font-weight:800;}
-.case-multi-summary > div > span.profit{color:var(--green-bright)}
-.case-multi-summary > div > span.loss{color:#ff6b8a}
+.case-multi-item img{width:44px;height:44px;object-fit:contain;}
+.case-multi-item .multi-name{font-size:10px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:24px;overflow:hidden}
+.case-multi-item .multi-price{font-size:11px;font-weight:800;color:var(--accent-bright);display:flex;align-items:center;gap:4px;line-height:1.3}
+.case-multi-item .multi-price img{width:11px;height:11px;}
 
 .progress-section{display:flex;justify-content:center;align-items:center;padding:24px 0 12px;position:relative}
 .progress-wrapper{position:relative;width:280px;height:280px}
@@ -519,37 +529,17 @@ body{
 .profile-action-row{margin-top:10px}
 
 .coming-soon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  text-align: center;
-  background: rgba(40,14,28,.85);
-  border: 2px dashed var(--accent);
-  margin: 20px;
-  min-height: 300px;
+  display: flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;background:rgba(40,14,28,.85);
+  border:2px dashed var(--accent);margin:20px;min-height:300px;
 }
-.coming-soon img {
-  width: 100%;
-  max-width: 400px;
-  object-fit: contain;
-  margin-bottom: 24px;
-  filter: drop-shadow(0 0 15px rgba(192,132,252,.5));
-}
+.coming-soon img {width:100%;max-width:400px;object-fit:contain;margin-bottom:24px;filter:drop-shadow(0 0 15px rgba(192,132,252,.5));}
 .coming-soon-title {
-  font-size: clamp(20px, 5vw, 32px);
-  font-weight: 900;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  text-shadow: 0 0 10px var(--accent);
-  animation: pulseGlow 2s infinite alternate;
+  font-size:clamp(20px,5vw,32px);font-weight:900;color:#fff;
+  text-transform:uppercase;letter-spacing:4px;
+  text-shadow:0 0 10px var(--accent);animation:pulseGlow 2s infinite alternate;
 }
-@keyframes pulseGlow {
-  from { text-shadow: 0 0 10px var(--accent); }
-  to { text-shadow: 0 0 25px var(--accent), 0 0 5px #fff; }
-}
+@keyframes pulseGlow{from{text-shadow:0 0 10px var(--accent);}to{text-shadow:0 0 25px var(--accent),0 0 5px #fff;}}
 
 @media (max-width:900px){
   .inventory-row{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));padding:4px 14px 8px}
@@ -558,8 +548,8 @@ body{
   :root{--card-img-size:44px}
   .admin-grid{grid-template-columns:repeat(3,1fr)}
   .top-bar{padding:12px 14px}
-  .menu-page,.profile-page,.rocket-page{padding:14px}
-  .cases-grid{padding:0 14px}
+  .menu-page,.profile-page{padding:14px}
+  .cases-grid{padding:0 12px;gap:8px}
   .cases-header{padding:12px 14px 6px}
   .section-title{padding:0 14px}
   .upg-tabs{padding:10px 14px 0;}
@@ -590,25 +580,26 @@ body{
   .deposit-item{grid-template-columns:36px 1fr}
   .deposit-actions{grid-column:1/-1;flex-direction:row}
   .dep-accept,.dep-reject{flex:1}
-  .case-card-inner{padding:12px 8px 10px}
-  .case-name{font-size:11px}
-  .case-price{font-size:12px;padding:5px 8px}
+  .case-card-inner{padding:8px 6px 6px;gap:6px}
+  .case-name{font-size:10px}
+  .case-price{font-size:11px;padding:3px 6px}
   .case-img-wrap img{width:80%;height:80%}
-  .cases-grid{gap:8px;padding:0 8px}
-  .case-open-main-img{width:160px;height:160px}
+  .cases-grid{gap:6px;padding:0 8px;grid-template-columns:repeat(3,1fr)}
+  .case-open-main-img{width:140px;height:140px}
   .case-open-name{font-size:14px;letter-spacing:1px}
-  .case-roulette-item img{width:48px;height:48px}
-  .case-roulette-row{height:110px}
-  .case-roulette-item .roulette-name{font-size:9px;height:22px}
-  .case-qty-btn-big{padding:12px 4px;font-size:14px}
-  .case-open-action-btn{padding:14px;font-size:14px;letter-spacing:1px}
+  .case-roulette-item img{width:44px;height:44px}
+  .case-roulette-row{height:100px}
+  .case-roulette-item .roulette-name{font-size:9px;height:20px}
+  .case-qty-btn-big{padding:10px 4px;font-size:13px}
+  .case-open-action-btn{padding:12px;font-size:13px;letter-spacing:1px}
+  .case-skip-btn{padding:10px;font-size:12px}
   .case-possible-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;padding:0 10px}
   .case-possible-item img{width:40px;height:40px}
   .case-anim-box{width:150px;height:150px}
   .case-anim-text{font-size:16px;letter-spacing:2px}
-  .case-result-img-wrap{width:110px;height:110px}
-  .case-result-name{font-size:15px}
-  .case-result-price{font-size:18px}
+  .case-result-img-wrap{width:100px;height:100px}
+  .case-result-name{font-size:14px}
+  .case-result-price{font-size:16px}
   .case-multi-results{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px}
   .case-multi-item img{width:40px;height:40px}
   .upg-tab{font-size:12px;padding:10px 4px;min-width:90px;}
@@ -617,11 +608,11 @@ body{
 </head>
 <body>
 
-<!-- ===== ЭКРАН "ВХОД НЕДОСТУПЕН" (по умолчанию скрыт, показывается всем не-админам) ===== -->
+<!-- Экран "ВХОД НЕДОСТУПЕН" -->
 <div class="access-denied" id="accessDeniedScreen" style="display:none;">
   <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/brainwinGRUST.png" alt="Access denied" onerror="this.src='https://github.com/saintezz/BrainrotWin/raw/main/brainwinGRUST.png'">
   <div class="access-denied-title">ВХОД НЕДОСТУПЕН</div>
-  <div class="access-denied-sub">СЛЕДИТЕ ЗА НОВОСТЯМИ В ТГК @BRAINWINCHANNEL</div>
+  <div class="access-denied-sub">СЛЕДИТЕ ЗА НОВОСТЯМИ В ТГК @BrainRoll</div>
 </div>
 
 <svg width="0" height="0" style="position:absolute">
@@ -641,7 +632,7 @@ body{
 <div class="bg-layer"></div>
 <div class="bg-grid"></div>
 
-<!-- ===== МОДАЛКИ ===== -->
+<!-- МОДАЛКИ -->
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
@@ -730,7 +721,7 @@ body{
 <div class="modal" id="caseResultModal">
     <div class="modal-card case-result-card" id="caseResultCard">
         <button class="modal-close" onclick="closeModal('caseResultModal')">X</button>
-        <div class="case-result-label" id="caseResultLabel">Результат открытия:</div>
+        <div class="case-result-label" id="caseResultLabel">Твой дроп:</div>
         <div id="caseResultContent"></div>
     </div>
 </div>
@@ -746,7 +737,7 @@ body{
 
 <div class="case-open-modal" id="caseOpenModal">
     <div class="case-open-header">
-        <button class="case-back-btn" onclick="closeCaseOpen()">← Назад к кейсам</button>
+        <button class="case-back-btn" onclick="closeCaseOpen()">← Назад</button>
         <div class="case-open-balance">
             <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin">
             <span id="caseOpenBalance">0</span>
@@ -758,12 +749,12 @@ body{
         <div class="case-roulette-container" id="caseRouletteContainer"></div>
     </div>
     <div class="case-qty-row">
-        <button class="case-qty-btn-big active" data-qty="1" onclick="setCaseOpenQty(1)">1</button>
-        <button class="case-qty-btn-big" data-qty="2" onclick="setCaseOpenQty(2)">2</button>
-        <button class="case-qty-btn-big" data-qty="3" onclick="setCaseOpenQty(3)">3</button>
-        <button class="case-qty-btn-big" data-qty="4" onclick="setCaseOpenQty(4)">4</button>
+        <button class="case-qty-btn-big active" data-qty="1" onclick="setCaseOpenQty(1)">x1</button>
+        <button class="case-qty-btn-big" data-qty="3" onclick="setCaseOpenQty(3)">x3</button>
+        <button class="case-qty-btn-big" data-qty="5" onclick="setCaseOpenQty(5)">x5</button>
     </div>
     <button class="case-open-action-btn" id="caseOpenActionBtn" onclick="confirmOpenCase()">ОТКРЫТЬ КЕЙС</button>
+    <button class="case-skip-btn" id="caseSkipBtn" onclick="skipCaseAnimation()">ПРОПУСТИТЬ</button>
     <div class="case-possible-title">ЧТО МОЖЕТ ВЫПАСТЬ</div>
     <div class="case-possible-grid" id="casePossibleGrid"></div>
 </div>
@@ -783,12 +774,6 @@ body{
                 <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
             </svg>
             <span>Апгрейдер</span>
-        </button>
-        <button class="nav-btn" id="navCases" onclick="switchTab('cases')" title="Игры">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 12h4m-2-2v4m6-4h.01M18 14h.01"/><rect x="2" y="6" width="20" height="12" rx="2"/>
-            </svg>
-            <span>Игры</span>
         </button>
         <button class="nav-btn" id="navRocket" onclick="switchTab('rocket')" title="Квесты">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -815,7 +800,7 @@ body{
             <div class="logo-wrap">
                 <img class="logo-img"
                      src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/braiwin.png"
-                     alt="Brainrot Zone"
+                     alt="BrainRoll"
                      onerror="this.onerror=null;this.src='https://github.com/saintezz/BrainrotWin/raw/main/braiwin.png'">
                 <div class="online-dot" title="Онлайн"></div>
             </div>
@@ -903,17 +888,6 @@ body{
             <div class="shop-scroll">
                 <div class="shop-grid" id="shopRow"></div>
             </div>
-        </div>
-    </div>
-
-    <div class="tab-panel" id="panelCases">
-        <div class="cases-page">
-            <div class="cases-header">
-                <input type="text" class="cases-search" id="caseSearchInput" placeholder="Поиск кейса" oninput="filterCases(this.value)">
-            </div>
-            <div class="cases-title-main">КЕЙСЫ</div>
-            <div class="cases-subtitle-main">Открывай кейсы и получай брейнротов и монеты · шанс 1/100 на легендарку</div>
-            <div class="cases-grid" id="casesGrid"></div>
         </div>
     </div>
 
@@ -1042,6 +1016,7 @@ body{
         lava: 'https://raw.githubusercontent.com/saintezz/SaintGLOSSARY/main/mutation/Lava_Mutation_Icon.webp'
     };
 
+    // ==== БРЕЙНРОТЫ ====
     const ITEMS = [
         { id: 'cupid', name: 'Cupid Wings', price: 34, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/cupid-wings.png' },
         { id: 'garama', name: 'Garama and Madundung', price: 41, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/garama.png' },
@@ -1053,19 +1028,27 @@ body{
         { id: 'jolly', name: 'Jolly Jolly Sahur', price: 132, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/jollyjollysahur.png' },
         { id: 'cerberus', name: 'Cerberus', price: 155, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/cerberus.png' },
         { id: 'globba', name: 'Globba Steppa', price: 164, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/globastepa.png' },
+        { id: 'dugdugdug', name: 'Dug Dug Dug', price: 203, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/dugdugdug.png' },
         { id: 'losamigos', name: 'Los Amigos', price: 220, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/losamigos.png' },
+        { id: 'guest666', name: 'Guest 666', price: 324, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/guest666.png' },
         { id: 'losadmins', name: 'Los Admins', price: 370, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/losadmins.png' },
         { id: 'rubiko', name: 'Rubiko and Kubiko', price: 395, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/Rubiko_and_Kubiko.webp' },
         { id: 'lossecret', name: 'Los Secret Combinasionas', price: 419, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/lossecretcombination.png' },
+        { id: 'ricodinero', name: 'Rico Dinero', price: 430, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/ricodinero2.png' },
+        { id: 'foxinilanternini', name: 'Foxini Lanternini', price: 480, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/Foxini_Lanternini.webp' },
         { id: 'roseyandteddy', name: 'Rosey and Teddy', price: 501, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/roseyandteddy.png' },
         { id: 'lacasaboo', name: 'La Casa Boo', price: 551, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/lacasaboo2.png' },
         { id: 'dragon', name: 'Dragon Cannelloni', price: 890, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/dragoncannelloni.png' },
         { id: 'hydra', name: 'Hydra Dragon Cannelloni', price: 1220, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/hydragoncannelloni.png' },
         { id: 'tirilikalika', name: 'Tirilikalika Tirilikalaka', price: 1255, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/Tirilikalika_Tirilikalako.webp' },
+        { id: 'gingergerat', name: 'Ginger Gerat', price: 1920, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/gingergerat.png' },
         { id: 'kraken', name: 'Kraken', price: 2030, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/kraken.png.webp' },
+        { id: 'kalikabros', name: 'Kalika Bros', price: 3490, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/Kalika_Bros.webp' },
         { id: 'dragonaquanini', name: 'Dragon Aquanini', price: 3701, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/dragon-aquanatini.png' },
         { id: 'lovelovebear', name: 'Love Love Bear', price: 5540, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/lovelovebear.png' },
         { id: 'antonio', name: 'Antonio', price: 5549, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/antonio.png' },
+        { id: 'griffin', name: 'Griffin', price: 6307, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/griffin.png' },
+        { id: 'elefantofrigo', name: 'Elefanto Frigo', price: 11232, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/elefanto-frigo.png' },
         { id: 'skibidi', name: 'Skibidi Toilet', price: 13154, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/skibidi-toilet.png' },
         { id: 'meowl', name: 'Meowl', price: 16839, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/meowl.png' },
         { id: 'signorecarapace', name: 'Signore Carapace', price: 35000, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/singore-carapace.png' },
@@ -1081,22 +1064,81 @@ body{
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
+    // ==== КЕЙСЫ (обновлённые картинки и дропы) ====
     const CASES = [
-        { id: 'og', name: 'OG CASE', price: 12000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/OGCASE.png',
-          rewards: [ { itemId: 'antonio', chance: 70 }, { itemId: 'skibidi', chance: 20 }, { itemId: 'meowl', chance: 15 }, { itemId: 'cyberskibidi', chance: 5 }, { itemId: 'yinyangmeowl', chance: 4.5 }, { itemId: 'goldstrawberry', chance: 0.4 }, { itemId: 'lavastrawberry', chance: 0.1 } ] },
-        { id: 'tacos', name: 'TACOS CASE', price: 169, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/tacoscase.png',
-          rewards: [ { itemId: 'garama', chance: 60 }, { itemId: 'burguro', chance: 30 }, { itemId: 'globba', chance: 6 }, { itemId: 'losamigos', chance: 2 }, { itemId: 'dragon', chance: 1 } ] },
-        { id: 'free', name: 'FREE CASE', price: 0, freeCooldown: 24 * 60 * 60 * 1000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/FREECASE.png',
-          rewards: [ { balance: 3, chance: 70 }, { balance: 5, chance: 20 }, { balance: 10, chance: 5 }, { itemId: 'cupid', chance: 3 }, { itemId: 'garama', chance: 1 } ] },
-        { id: 'easter', name: 'EASTER CASE', price: 45, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/eastercase.png',
-          rewards: [ { balance: 17, chance: 40 }, { balance: 20, chance: 40 }, { itemId: 'cupid', chance: 20 }, { itemId: 'garama', chance: 18 }, { itemId: 'tirilikalika', chance: 1 }, { itemId: 'dragon', chance: 1 } ] },
-        { id: 'newyear', name: 'NEW YEAR CASE', price: 241, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/NEWYEARCASE.png',
-          rewards: [ { itemId: 'jolly', chance: 60 }, { itemId: 'losamigos', chance: 20 }, { itemId: 'rubiko', chance: 10 }, { itemId: 'roseyandteddy', chance: 9 }, { itemId: 'dragon', chance: 1 } ] },
-        { id: 'fusing', name: 'FUSING CASE', price: 1830, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/FUSINGCASE.png',
-          rewards: [ { itemId: 'dragon', chance: 70 }, { itemId: 'hydra', chance: 20 }, { itemId: 'kraken', chance: 10 } ] },
-        { id: 'winter', name: 'WINTER CASE', price: 109, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/WINTERCASE.png',
-          rewards: [ { balance: 49, chance: 99.9 }, { itemId: 'polaroidini', chance: 0.1 } ] }
+        { id: 'og', name: 'OG CASE', price: 12000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/OGCASENEW.png',
+          rewards: [
+            { itemId: 'griffin', chance: 60 },
+            { itemId: 'elefantofrigo', chance: 30 },
+            { itemId: 'skibidi', chance: 5 },
+            { itemId: 'meowl', chance: 3 },
+            { itemId: 'strawberryelephant', chance: 1.99 },
+            { itemId: 'headless', chance: 0.01 }
+          ] },
+        { id: 'tacos', name: 'TACOS CASE', price: 169, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/TACOCASENEW.png',
+          rewards: [
+            { itemId: 'burguro', chance: 50 },
+            { itemId: 'lafoodcombinasion', chance: 30 },
+            { itemId: 'globba', chance: 10 },
+            { itemId: 'roseyandteddy', chance: 5 },
+            { itemId: 'lacasaboo', chance: 4 },
+            { itemId: 'dragon', chance: 1 }
+          ] },
+        { id: 'free', name: 'FREE CASE', price: 0, freeCooldown: 24*60*60*1000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/FREECASENEW.png',
+          rewards: [ { balance: 4, chance: 70 }, { balance: 10, chance: 30 } ] },
+        { id: 'easter', name: 'EASTER CASE', price: 45, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/EASTERCASENEW.png',
+          rewards: [
+            { balance: 17, chance: 50 },
+            { balance: 25, chance: 30 },
+            { balance: 49, chance: 15 },
+            { balance: 100, chance: 4 },
+            { itemId: 'dragon', chance: 0.7 },
+            { itemId: 'tirilikalika', chance: 0.3 }
+          ] },
+        { id: 'newyear', name: 'NEW YEAR CASE', price: 241, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/NEWYEARNEW.png',
+          rewards: [
+            { itemId: 'jolly', chance: 60 },
+            { itemId: 'losamigos', chance: 20 },
+            { itemId: 'rubiko', chance: 10 },
+            { itemId: 'roseyandteddy', chance: 5 },
+            { itemId: 'lacasaboo', chance: 3 },
+            { itemId: 'dragon', chance: 1 },
+            { itemId: 'hydra', chance: 1 }
+          ] },
+        { id: 'fusing', name: 'FUSING CASE', price: 1830, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/FUSECASENEW.png',
+          rewards: [
+            { itemId: 'dragon', chance: 50 },
+            { itemId: 'tirilikalika', chance: 25 },
+            { itemId: 'kraken', chance: 20 },
+            { itemId: 'dragonaquanini', chance: 4 },
+            { itemId: 'antonio', chance: 0.5 },
+            { itemId: 'griffin', chance: 0.4 },
+            { itemId: 'skibidi', chance: 0.1 }
+          ] },
+        { id: 'polaroidini', name: 'POLLAROIDINI ALL IN', price: 109, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/NEWPOLAROIDINIALLIN.png',
+          rewards: [ { balance: 10, chance: 99.9 }, { itemId: 'polaroidini', chance: 0.1 } ] },
+        { id: 'work', name: 'WORK CASE', price: 459, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/WORKINGCASE.png',
+          rewards: [
+            { itemId: 'rubiko', chance: 60 },
+            { itemId: 'lacasaboo', chance: 30 },
+            { itemId: 'dragon', chance: 5 },
+            { itemId: 'tirilikalika', chance: 4 },
+            { itemId: 'kraken', chance: 1 }
+          ] }
     ];
+
+    // ==== ШАНСЫ АПГРЕЙДА ====
+    // Таблица "1 к N" -> процент. Берём ближайший по значению, но считаем и точно.
+    function calcUpgradeChance(sourcePrice, targetPrice) {
+        if (!sourcePrice || !targetPrice || targetPrice <= sourcePrice) return 0;
+        const ratio = targetPrice / sourcePrice; // это "1 к ratio"
+        // Процент = 100 / ratio
+        let pct = 100 / ratio;
+        // Ограничения
+        if (pct > 50) pct = 50;
+        if (pct < 0.0001) pct = 0.0001;
+        return Math.round(pct * 10000) / 10000; // 4 знака после запятой
+    }
 
     function getGlowClass(price) {
         if (price >= 100000) return 'glow-rainbow';
@@ -1125,6 +1167,12 @@ body{
     let isCaseOpening = false;
     let currentCaseFilter = '';
     let rareRollCounter = parseInt(localStorage.getItem('ggbrainx_rare_roll_counter') || '0') || 0;
+
+    // переменные для пропуска анимации
+    let skipAnimationFlag = false;
+    let activeAnimTimers = [];
+    let activeAnimResolvers = [];
+    let animDuration = 6000;
 
     function saveLocalCache() {
         localStorage.setItem('ggbrainx_balance', String(balance));
@@ -1161,14 +1209,12 @@ body{
     })();
     function getDisplayNick() { return customNick || USER.nick; }
 
-    // ==== ПРОВЕРКА ДОСТУПА ====
     function checkAccess() {
         const uname = (USER.username || '').toLowerCase();
         const allowed = ALLOWED_USERS.includes(uname);
         if (!allowed) {
             document.getElementById('accessDeniedScreen').style.display = 'flex';
             document.getElementById('mainApp').style.display = 'none';
-            // Прячем сакуру и прочее
             const sak = document.getElementById('sakura'); if (sak) sak.style.display = 'none';
             const bgl = document.querySelector('.bg-layer'); if (bgl) bgl.style.display = 'none';
             const bgg = document.querySelector('.bg-grid'); if (bgg) bgg.style.display = 'none';
@@ -1302,7 +1348,7 @@ body{
     function vibrate(ms = 15) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} }
     function vibratePattern(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
 
-    const MAX_CHANCE = 70;
+    const MAX_CHANCE = 50;
     const SPIN_DURATION = 7000;
     const SPIN_DURATION_FAST = 3000;
     const CIRCUMFERENCE = 2 * Math.PI * 130;
@@ -1354,7 +1400,6 @@ body{
         }
     }
 
-    // ==== АВАТАРКА ====
     function applyCustomAvatar() {
         const src = customAvatar || DEFAULT_AVATAR;
         const p = document.getElementById('profileAvatarImg');
@@ -1460,7 +1505,6 @@ body{
         const navBtn = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1));
         if (panel) panel.classList.add('active');
         if (navBtn) navBtn.classList.add('active');
-        if (tab === 'cases') renderCases();
         if (tab === 'profile') {
             updateProfile();
             const cn = document.getElementById('customizeNickInput');
@@ -1896,7 +1940,7 @@ body{
             list.innerHTML = '<div style="text-align:center; color:#9a5f7d; padding:20px; font-size:14px; font-weight:600;">Нет целей дороже этого предмета</div>';
         } else {
             list.innerHTML = targets.map(t => {
-                const chance = Math.min(MAX_CHANCE, Math.max(1, Math.round((100 / (t.price / sourceItem.price)) * 10) / 10));
+                const chance = calcUpgradeChance(sourceItem.price, t.price);
                 const glowClass = getGlowClass(t.price);
                 const mutationIcon = t.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[t.mutation]}" alt="mutation" loading="lazy" decoding="async" style="width:16px;height:16px;top:4px;left:4px;">` : '';
                 return `
@@ -1907,7 +1951,7 @@ body{
                             <div class="tl-name">${t.name}</div>
                             <div class="tl-price"><img src="${COIN_IMG}" alt="coin">${t.price}</div>
                         </div>
-                        <div class="tl-chance">${Math.floor(chance)}%</div>
+                        <div class="tl-chance">${formatChance(chance)}</div>
                     </div>
                 `;
             }).join('');
@@ -1915,6 +1959,12 @@ body{
         openModal('targetModal');
         playClick(); vibrate(10);
     };
+    function formatChance(pct) {
+        if (pct >= 1) return pct.toFixed(1).replace('.0','') + '%';
+        if (pct >= 0.1) return pct.toFixed(2).replace('0','') + '%';
+        if (pct >= 0.01) return pct.toFixed(3) + '%';
+        return pct.toFixed(4) + '%';
+    }
 
     window.pickTargetFromList = function(targetId) {
         if (isSpinning) return;
@@ -1934,39 +1984,6 @@ body{
         const grid = document.getElementById('menuCasesGrid');
         if (!grid) return;
         grid.innerHTML = CASES.map(c => {
-            const totalRewards = c.rewards.length;
-            let priceHtml = '';
-            let isFree = false;
-            if (c.id === 'free') { priceHtml = `<span class="free-tag">FREE</span>`; isFree = true; }
-            else priceHtml = `${c.price} <img src="${COIN_IMG}" alt="coin">`;
-            const priceClass = isFree ? 'case-price free-tag' : 'case-price';
-            return `
-                <div class="case-card" onclick="openCaseDetail('${c.id}')">
-                    <div class="case-card-inner">
-                        <div class="case-img-wrap">
-                            <img src="${c.img}" alt="${c.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                        </div>
-                        <div class="case-info">
-                            <div class="case-name">${c.name}</div>
-                            <div class="${priceClass}">${priceHtml}</div>
-                            <div class="case-items-count">${totalRewards} предметов</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function renderCases() {
-        const grid = document.getElementById('casesGrid');
-        if (!grid) return;
-        const filter = (currentCaseFilter || '').toLowerCase();
-        const filtered = CASES.filter(c => c.name.toLowerCase().includes(filter));
-        if (!filtered.length) {
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#9a5f7d;font-size:14px;">Ничего не найдено</div>';
-            return;
-        }
-        grid.innerHTML = filtered.map(c => {
             const totalRewards = c.rewards.length;
             let priceHtml = '';
             let isFree = false;
@@ -2164,12 +2181,14 @@ body{
     function animateRoulette(trackEl, targetIndex, duration) {
         return new Promise(resolve => {
             const sampleItem = trackEl.querySelector('.case-roulette-item');
-            const itemWidth = sampleItem ? sampleItem.getBoundingClientRect().width : 130;
+            const itemWidth = sampleItem ? sampleItem.getBoundingClientRect().width : 120;
             const containerWidth = trackEl.parentElement.clientWidth;
             const targetX = -(targetIndex * itemWidth) + (containerWidth / 2) - (itemWidth / 2);
             trackEl.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.9, 0.2, 1)`;
             trackEl.style.transform = `translate3d(${targetX}px,0,0)`;
-            setTimeout(() => resolve(), duration + 100);
+            const timer = setTimeout(() => resolve(), duration + 100);
+            activeAnimTimers.push(timer);
+            activeAnimResolvers.push(resolve);
         });
     }
 
@@ -2208,12 +2227,14 @@ body{
             }
             overlay.classList.add('show');
             playOsc(220, 0.4, 'triangle', 0.05, 0, 800);
-            setTimeout(() => { textEl.textContent = 'ПОЧТИ...'; playOsc(330, 0.3, 'triangle', 0.05, 0, 900); }, 500);
-            setTimeout(() => { textEl.textContent = 'ГОТОВО!'; playWin(); }, 1000);
-            setTimeout(() => {
+            const t1 = setTimeout(() => { textEl.textContent = 'ПОЧТИ...'; playOsc(330, 0.3, 'triangle', 0.05, 0, 900); }, 500);
+            const t2 = setTimeout(() => { textEl.textContent = 'ГОТОВО!'; playWin(); }, 1000);
+            const t3 = setTimeout(() => {
                 overlay.classList.remove('show');
                 resolve();
             }, 1400);
+            activeAnimTimers.push(t1, t2, t3);
+            activeAnimResolvers.push(resolve);
         });
     }
 
@@ -2225,6 +2246,22 @@ body{
         }
     `;
     document.head.appendChild(caseParticleStyle);
+
+    window.skipCaseAnimation = function() {
+        skipAnimationFlag = true;
+        // Отменяем все таймеры и резолвим промисы
+        activeAnimTimers.forEach(t => clearTimeout(t));
+        activeAnimTimers = [];
+        activeAnimResolvers.forEach(r => { try { r(); } catch(e){} });
+        activeAnimResolvers = [];
+        // Прячем оверлей анимации (если открыт)
+        const overlay = document.getElementById('caseAnimOverlay');
+        if (overlay) overlay.classList.remove('show');
+        // Ускоряем рулетки
+        document.querySelectorAll('.case-roulette-track').forEach(track => {
+            track.style.transition = 'transform 200ms ease-out';
+        });
+    };
 
     window.confirmOpenCase = async function() {
         if (isCaseOpening) return;
@@ -2242,6 +2279,14 @@ body{
             showToast('Недостаточно монет', 'err'); playLose(); vibrate(30); return;
         }
         isCaseOpening = true;
+        skipAnimationFlag = false;
+        activeAnimTimers = [];
+        activeAnimResolvers = [];
+
+        // Показываем кнопку "ПРОПУСТИТЬ"
+        const skipBtn = document.getElementById('caseSkipBtn');
+        if (skipBtn) skipBtn.classList.add('show');
+
         if (c.id !== 'free') { balance -= totalPrice; updateBalance(); }
         else { freeCaseLastOpen = Date.now(); localStorage.setItem('ggbrainx_free_case_last', String(freeCaseLastOpen)); }
 
@@ -2264,62 +2309,52 @@ body{
             const track = tracks[idx];
             if (!track) return;
             const targetIndex = getRewardIndexInTrack(c, reward);
-            const duration = 6000;
+            const duration = skipAnimationFlag ? 200 : 6000;
             animPromises.push(animateRoulette(track, targetIndex, duration));
             const tickCount = 45;
-            for (let t = 0; t < tickCount; t++) setTimeout(() => playTick(), t * (duration / tickCount));
-            setTimeout(() => highlightWinner(track, targetIndex), duration);
+            for (let t = 0; t < tickCount; t++) {
+                const tt = setTimeout(() => { if (!skipAnimationFlag) playTick(); }, t * (duration / tickCount));
+                activeAnimTimers.push(tt);
+            }
+            const wt = setTimeout(() => highlightWinner(track, targetIndex), duration);
+            activeAnimTimers.push(wt);
         });
         await Promise.all(animPromises);
-        await new Promise(r => setTimeout(r, 500));
+
+        if (skipBtn) skipBtn.classList.remove('show');
+
+        // Если пропустили — сразу финал без задержки
+        if (!skipAnimationFlag) {
+            await new Promise(r => setTimeout(r, 400));
+        }
 
         let totalCoins = 0;
-        const itemsWon = [];
         rewards.forEach(r => {
             if (r.balance) totalCoins += r.balance;
-            else if (r.itemId) { inventory.push(r.itemId); itemsWon.push(r.itemId); }
+            else if (r.itemId) { inventory.push(r.itemId); }
         });
         if (totalCoins > 0) balance += totalCoins;
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
         saveLocalCache(); syncUserToServer();
-        const totalSpent = c.id === 'free' ? 0 : c.price * qty;
-        showCaseResult(rewards, c, qty, totalSpent, isRareRoll);
+        showCaseResult(rewards, c, qty);
         isCaseOpening = false;
         closeCaseOpen();
         renderMenuCases();
-        renderCases();
         if (isRareRoll) showToast('🎉 ЛЕГЕНДАРКА! (1/100)', 'ok');
     };
 
-    function showCaseResult(results, c, qty, totalSpent, isRareRoll = false) {
+    // Результат без сводки "потрачено/получено/итог"
+    function showCaseResult(results, c, qty) {
         const content = document.getElementById('caseResultContent');
         const card = document.getElementById('caseResultCard');
         const label = document.getElementById('caseResultLabel');
         card.classList.remove('legend');
-        if (isRareRoll) {
-            card.classList.add('legend');
-            label.textContent = '🎉 ЛЕГЕНДАРНЫЙ РОЛЛ (1/100):';
-            label.style.color = 'var(--rare-gold)';
-        } else {
-            label.textContent = 'Результат открытия:';
-            label.style.color = '';
-        }
-        const totalCoins = results.filter(r => r.balance).reduce((s, r) => s + r.balance, 0);
-        const itemsWon = results.filter(r => r.itemId);
-        let totalValue = totalCoins;
-        itemsWon.forEach(r => { totalValue += getItemById(r.itemId).price; });
-        const profit = totalValue - totalSpent;
-
-        function isLegendItem(r) {
-            if (!r.itemId) return false;
-            const best = pickLegendaryReward(c);
-            return best === r || best.itemId === r.itemId;
-        }
+        label.textContent = 'Твой дроп:';
+        label.style.color = '';
 
         if (qty === 1) {
             const r = results[0];
-            const legendItem = isRareRoll || isLegendItem(r);
             if (r.balance) {
                 content.innerHTML = `
                     <div class="case-result-img-wrap">
@@ -2327,12 +2362,8 @@ body{
                     </div>
                     <div class="case-result-name">Монеты</div>
                     <div class="case-result-price"><img src="${COIN_IMG}" alt="coin"> +${r.balance}</div>
-                    <div class="case-multi-summary" style="margin-top:10px;">
-                        <div>Потрачено: <span>${totalSpent}</span></div>
-                        <div>Получено: <span>+${totalValue}</span></div>
-                        <div>Итог: <span class="${profit >= 0 ? 'profit' : 'loss'}">${profit >= 0 ? '+' : ''}${profit}</span></div>
-                    </div>
                 `;
+                playWin();
             } else {
                 const item = getItemById(r.itemId);
                 const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async" style="width:22px;height:22px;top:0px;left:0px;">` : '';
@@ -2343,25 +2374,12 @@ body{
                     </div>
                     <div class="case-result-name">${item.name}</div>
                     <div class="case-result-price"><img src="${COIN_IMG}" alt="coin"> ${item.price}</div>
-                    <div class="case-multi-summary" style="margin-top:10px;">
-                        <div>Потрачено: <span>${totalSpent}</span></div>
-                        <div>Получено: <span>+${totalValue}</span></div>
-                        <div>Итог: <span class="${profit >= 0 ? 'profit' : 'loss'}">${profit >= 0 ? '+' : ''}${profit}</span></div>
-                    </div>
                 `;
-                if (legendItem) {
-                    card.classList.add('legend');
-                    playLegendary();
-                    vibratePattern([40, 60, 40, 60, 200]);
-                } else {
-                    playWin();
-                    vibratePattern([20, 40, 20]);
-                }
+                playWin();
             }
         } else {
             let html = '<div class="case-multi-results">';
             results.forEach((r, i) => {
-                const legendItem = isRareRoll || isLegendItem(r);
                 if (r.balance) {
                     html += `
                         <div class="case-multi-item" style="animation-delay:${i * 0.08}s">
@@ -2374,7 +2392,7 @@ body{
                     const item = getItemById(r.itemId);
                     const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async" style="width:14px;height:14px;top:2px;left:2px;">` : '';
                     html += `
-                        <div class="case-multi-item ${legendItem ? 'legend' : ''}" style="animation-delay:${i * 0.08}s;position:relative;">
+                        <div class="case-multi-item" style="animation-delay:${i * 0.08}s;position:relative;">
                             ${mutationIcon}
                             <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
                             <div class="multi-name">${item.name}</div>
@@ -2384,22 +2402,8 @@ body{
                 }
             });
             html += '</div>';
-            html += `
-                <div class="case-multi-summary">
-                    <div>Открыто кейсов: <span>${qty}</span></div>
-                    <div>Потрачено: <span>${totalSpent}</span></div>
-                    <div>Получено: <span>+${totalValue}</span></div>
-                    <div>Итог: <span class="${profit >= 0 ? 'profit' : 'loss'}">${profit >= 0 ? '+' : ''}${profit}</span></div>
-                </div>
-            `;
             content.innerHTML = html;
-            if (isRareRoll) {
-                playLegendary();
-                vibratePattern([40, 60, 40, 60, 200]);
-            } else {
-                playWin();
-                vibratePattern([20, 40, 20]);
-            }
+            playWin();
         }
         openModal('caseResultModal');
     }
@@ -2407,12 +2411,8 @@ body{
     function calculateChance() {
         const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
-        if (!sourceItem || !targetItem || targetItem.price <= sourceItem.price) return 0;
-        const ratio = targetItem.price / sourceItem.price;
-        let chance = 100 / ratio;
-        if (chance > MAX_CHANCE) chance = MAX_CHANCE;
-        if (chance < 1) chance = 1;
-        return Math.round(chance * 10) / 10;
+        if (!sourceItem || !targetItem) return 0;
+        return calcUpgradeChance(sourceItem.price, targetItem.price);
     }
 
     function updateUpgradeScreen() {
@@ -2439,18 +2439,19 @@ body{
             targetPrice.innerHTML = '';
         }
         const chance = calculateChance();
-        const displayChance = Math.floor(chance);
-        const offset = CIRCUMFERENCE - (chance / 100) * CIRCUMFERENCE;
+        const displayChance = chance < 1 ? chance.toFixed(2) : Math.floor(chance);
+        const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
         progressBar.style.strokeDashoffset = offset;
-        const angle = (chance / 100) * 360;
+        const angle = (Math.min(chance, 100) / 100) * 360;
         arrowContainer.style.transform = `rotate(${angle}deg)`;
-        chanceBig.innerText = displayChance + '%';
-        if (displayChance >= 45) { chanceLabel.innerText = 'ВЫСОКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
-        else if (displayChance >= 25) { chanceLabel.innerText = 'СРЕДНИЙ ШАНС'; chanceLabel.className = 'chance-label medium'; }
+        chanceBig.innerText = formatChance(chance);
+        if (chance >= 25) { chanceLabel.innerText = 'ВЫСОКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
+        else if (chance >= 5) { chanceLabel.innerText = 'СРЕДНИЙ ШАНС'; chanceLabel.className = 'chance-label medium'; }
+        else if (chance > 0) { chanceLabel.innerText = 'НИЗКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
         else { chanceLabel.innerText = ''; chanceLabel.className = 'chance-label hidden'; }
         if (sourceItem && targetItem && chance > 0 && !isSpinning) {
             upgradeBtn.disabled = false;
-            upgradeBtn.querySelector('span').innerText = `Апгрейд - ${displayChance}%`;
+            upgradeBtn.querySelector('span').innerText = `Апгрейд - ${formatChance(chance)}`;
         } else {
             upgradeBtn.disabled = true;
             upgradeBtn.querySelector('span').innerText = 'Апгрейд - 0%';
@@ -2480,7 +2481,7 @@ body{
         const totalRotation = baseRotation + randomAngle;
         arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.12, 0.8, 0.15, 1)`;
         arrowContainer.style.transform = `rotate(${totalRotation}deg)`;
-        const successAngle = (chance / 100) * 360;
+        const successAngle = (Math.min(chance, 100) / 100) * 360;
         const finalAngle = totalRotation % 360;
         const isSuccess = finalAngle <= successAngle;
         const sourceIndex = selectedSourceIndex;
@@ -2553,11 +2554,8 @@ body{
         preloadImages();
     }
 
-    // Стартуем только после проверки доступа
     window.addEventListener('load', () => {
-        // Telegram WebApp мог ещё не инициализироваться — дадим чуть времени
         setTimeout(() => {
-            // повторно читаем username на случай, если инициализация задержалась
             try {
                 const tg = window.Telegram?.WebApp;
                 const u = tg?.initDataUnsafe?.user;
