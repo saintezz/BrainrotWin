@@ -14,7 +14,6 @@
 
 <style>
 :root{
-  /* РОЗОВО-НЕОНОВАЯ ПАЛИТРА */
   --pink-hot:#ff4d9e;
   --pink:#ff7eb9;
   --pink-soft:#ffb3d9;
@@ -170,7 +169,6 @@ body{
 .tab-panel.active{display:block;animation:panelFadeIn .2s ease}
 @keyframes panelFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== ЗАКРЫТЫЙ ДОСТУП ===== */
 .access-denied{
   position:fixed;inset:0;z-index:999999;display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:30px 20px;text-align:center;
@@ -591,10 +589,8 @@ body{
 }
 @keyframes pulseGlow{from{text-shadow:0 0 10px var(--pink);}to{text-shadow:0 0 25px var(--pink),0 0 5px #fff;}}
 
-/* Мутационные бейджи */
 .mutation-badge{position:absolute;width:18px;height:18px;object-fit:contain;top:4px;left:4px;z-index:3;filter:drop-shadow(0 0 4px rgba(255,77,158,.8));pointer-events:none}
 
-/* Свечение для дорогих предметов */
 .glow-rainbow{
   border-color:#fff !important;
   animation:rainbowGlow 3s linear infinite;
@@ -677,7 +673,6 @@ body{
 </head>
 <body>
 
-<!-- Экран "ВХОД НЕДОСТУПЕН" -->
 <div class="access-denied" id="accessDeniedScreen" style="display:none;">
   <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/brainwinGRUST.png" alt="Access denied" onerror="this.src='https://github.com/saintezz/BrainrotWin/raw/main/brainwinGRUST.png'">
   <div class="access-denied-title">ВХОД НЕДОСТУПЕН</div>
@@ -701,7 +696,6 @@ body{
 <div class="bg-layer"></div>
 <div class="bg-grid"></div>
 
-<!-- МОДАЛКИ -->
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
@@ -1071,7 +1065,6 @@ body{
 </div>
 
 <script>
-    // ==== ДОСТУП ====
     const ALLOWED_USERS = ['saintezz7', 'yart11'];
     const COIN_IMG = 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png';
     const DEFAULT_AVATAR = 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg';
@@ -1085,7 +1078,6 @@ body{
         lava: 'https://raw.githubusercontent.com/saintezz/SaintGLOSSARY/main/mutation/Lava_Mutation_Icon.webp'
     };
 
-    // ==== БРЕЙНРОТЫ ====
     const ITEMS = [
         { id: 'cupid', name: 'Cupid Wings', price: 34, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/cupid-wings.png' },
         { id: 'garama', name: 'Garama and Madundung', price: 41, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/garama.png' },
@@ -1133,7 +1125,6 @@ body{
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
-    // ==== СБАЛАНСИРОВАННЫЕ КЕЙСЫ (сумма шансов = 100%) ====
     const CASES = [
         { id: 'og', name: 'OG CASE', price: 12000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/OGCASENEW.png',
           rewards: [
@@ -1204,29 +1195,52 @@ body{
           ] }
     ];
 
-    // ==== СБАЛАНСИРОВАННЫЕ ШАНСЫ АПГРЕЙДА ====
-    // Плавная нелинейная кривая: мелкие апгрейды выгодны, крупные — лотерея
+    // ============================================================
+    // АПГРЕЙДЕР: ШАНСЫ ПО ТАБЛИЦЕ "1 к N"
+    // Берём ближайший порог из таблицы (без интерполяции).
+    // Пример: ratio 1.9 → ближайший "1 к 2" → 50%
+    //         ratio 2.4 → ближайший "1 к 2" → 50%
+    //         ratio 2.6 → ближайший "1 к 3" → 33.33%
+    // ============================================================
+    const CHANCE_TABLE = [
+        { n: 1.5,     pct: 50 },     // 1 к 2 (можно считать как 1 к 1.5-2)
+        { n: 2,       pct: 50 },     // 1 к 2
+        { n: 3,       pct: 33.33 },  // 1 к 3
+        { n: 4,       pct: 25 },     // 1 к 4
+        { n: 5,       pct: 20 },     // 1 к 5
+        { n: 10,      pct: 10 },     // 1 к 10
+        { n: 20,      pct: 5 },      // 1 к 20
+        { n: 25,      pct: 4 },      // 1 к 25
+        { n: 50,      pct: 2 },      // 1 к 50
+        { n: 100,     pct: 1 },      // 1 к 100
+        { n: 200,     pct: 0.5 },    // 1 к 200
+        { n: 500,     pct: 0.2 },    // 1 к 500
+        { n: 1000,    pct: 0.1 },    // 1 к 1 000
+        { n: 2000,    pct: 0.05 },   // 1 к 2 000
+        { n: 5000,    pct: 0.02 },   // 1 к 5 000
+        { n: 10000,   pct: 0.01 },   // 1 к 10 000
+        { n: 50000,   pct: 0.002 },  // 1 к 50 000
+        { n: 100000,  pct: 0.001 },  // 1 к 100 000
+        { n: 1000000, pct: 0.0001 }  // 1 к 1 000 000
+    ];
+
+    // Возвращает точный процент из таблицы (число, например 50 или 33.33 или 0.5)
     function calcUpgradeChance(sourcePrice, targetPrice) {
         if (!sourcePrice || !targetPrice || targetPrice <= sourcePrice) return 0;
-        const ratio = targetPrice / sourcePrice;
+        const ratio = targetPrice / sourcePrice; // "1 к ratio"
 
-        let pct;
-        if (ratio <= 1.05) {
-            pct = 48;
-        } else if (ratio <= 1.5) {
-            pct = 48 - (ratio - 1.05) / (1.5 - 1.05) * 13;
-        } else if (ratio <= 3) {
-            pct = 35 - (ratio - 1.5) / (3 - 1.5) * 20;
-        } else if (ratio <= 10) {
-            pct = 15 * Math.pow(10 / ratio, 1.4);
-        } else {
-            pct = 3.5 * Math.pow(10 / ratio, 1.6);
+        // Ближайший порог из таблицы по логарифмической шкале (чтобы не было перекосов)
+        let best = CHANCE_TABLE[0];
+        let bestDist = Infinity;
+        for (const row of CHANCE_TABLE) {
+            // Сравниваем в лог-пространстве
+            const dist = Math.abs(Math.log(ratio) - Math.log(row.n));
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = row;
+            }
         }
-
-        if (pct > 48) pct = 48;
-        if (pct < 0.001) pct = 0.001;
-
-        return Math.round(pct * 10000) / 10000;
+        return best.pct;
     }
 
     function getGlowClass(price) {
@@ -2047,15 +2061,25 @@ body{
         openModal('targetModal');
         playClick(); vibrate(10);
     };
+
+    // ============================================================
+    // ФОРМАТИРОВАНИЕ ШАНСА
+    // Если >= 1% — целое число (53, 50, 33, 25, 20, 10, 5, 4, 2, 1)
+    // Если < 1% — с запятой (0,5 / 0,2 / 0,05 / 0,02 / 0,01 / 0,002 ...)
+    // НЕ показываем длинные дроби типа 53,4564%
+    // ============================================================
     function formatChance(pct) {
         if (!pct || pct <= 0) return '0%';
-        if (pct >= 1) return pct.toFixed(1).replace('.0','') + '%';
-        if (pct >= 0.1) return pct.toFixed(2) + '%';
-        if (pct >= 0.01) return pct.toFixed(3) + '%';
-        if (pct >= 0.001) return pct.toFixed(4) + '%';
-        if (pct >= 0.0001) return pct.toFixed(5) + '%';
-        if (pct >= 0.00001) return pct.toFixed(6) + '%';
-        return pct.toExponential(2) + '%';
+        if (pct >= 1) {
+            // Округляем до целого
+            return Math.round(pct) + '%';
+        }
+        // Меньше 1% — показываем как есть с запятой
+        if (pct >= 0.1) return pct.toString().replace('.', ',') + '%';
+        if (pct >= 0.01) return pct.toFixed(2).replace('.', ',') + '%';
+        if (pct >= 0.001) return pct.toFixed(3).replace('.', ',') + '%';
+        if (pct >= 0.0001) return pct.toFixed(4).replace('.', ',') + '%';
+        return pct.toString().replace('.', ',') + '%';
     }
 
     window.pickTargetFromList = function(targetId) {
@@ -2525,7 +2549,6 @@ body{
             targetPrice.innerHTML = '';
         }
         const chance = calculateChance();
-        const displayChance = chance < 1 ? chance.toFixed(2) : Math.floor(chance);
         const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
         progressBar.style.strokeDashoffset = offset;
         const angle = (Math.min(chance, 100) / 100) * 360;
