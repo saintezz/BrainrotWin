@@ -525,39 +525,165 @@ body{
 .target-list-item .tl-price img{width:12px;height:12px;}
 .target-list-item .tl-chance{font-size:14px;font-weight:800;color:var(--green-bright);text-align:right;line-height:1.3}
 
-.admin-header{background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.16);border-radius:0;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
-.admin-header-icon{width:42px;height:42px;border-radius:0;background:rgba(192,132,252,.16);border:2px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;color:var(--accent-bright);flex-shrink:0;z-index:1}
-.admin-header-icon svg{width:22px;height:22px}
-.admin-header-text{z-index:1;flex:1}
-.admin-header-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;line-height:1.3}
-.admin-header-sub{font-size:12px;font-weight:600;color:#c98bb0;letter-spacing:.5px;display:flex;align-items:center;gap:6px;line-height:1.2}
-.admin-online-dot{width:5px;height:5px;border-radius:0;background:var(--emerald);animation:onlinePulse 1.5s ease-in-out infinite}
+/* ===== ПРОФИЛЬ (в стиле скриншота) ===== */
+.profile-layout {
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.profile-header-panel {
+  background: #0b0f19;
+  border: 1px solid rgba(192,132,252,.15);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile-user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.profile-user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  border: 3px solid #fff;
+}
+.profile-user-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+.profile-balance-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0b0f19;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(192,132,252,.2);
+}
+.profile-balance-label {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  margin-right: 10px;
+}
+.profile-balance-value {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.profile-balance-value img { width: 20px; height: 20px; }
 
-.admin-section{background:rgba(192,132,252,.04);border:2px solid rgba(192,132,252,.12);border-radius:0;padding:14px 12px;margin-bottom:12px}
-.admin-section-title{font-size:14px;font-weight:800;color:var(--accent-bright);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;line-height:1.4}
-.admin-section-title::before{content:'';width:4px;height:12px;background:var(--accent);border-radius:0;box-shadow:0 0 6px var(--accent)}
-.admin-preview{background:rgba(20,6,14,.4);border:2px dashed rgba(192,132,252,.35);border-radius:0;padding:8px 10px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.admin-preview-label{font-size:12px;font-weight:700;color:#c98bb0;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;line-height:1.2}
-.admin-preview-value{font-size:14px;font-weight:800;color:var(--accent-bright);letter-spacing:1px;flex:1;word-break:break-all;line-height:1.3}
-.admin-preview-value:empty::after{content:'----';color:#7a4a63}
-.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-height:240px;overflow-y:auto;padding:6px;margin-bottom:12px;background:rgba(20,6,14,.3);border-radius:0;border:2px solid rgba(192,132,252,.08)}
-.admin-item{background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;padding:6px 4px;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:all .15s;position:relative}
-.admin-item.selected{border-color:var(--accent);background:rgba(192,132,252,.14)}
-.admin-item.selected::after{content:'✓';position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:0;background:var(--accent);color:#3a1024;font-size:10px;display:flex;align-items:center;justify-content:center}
-.admin-item img{width:32px;height:32px;object-fit:contain;margin-bottom:4px;}
-.admin-item .name{font-size:9px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:22px;overflow:hidden}
+.profile-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 900px) { .profile-stats-row { grid-template-columns: 1fr; } }
 
-.promo-list{margin-top:6px;max-height:300px;overflow-y:auto;text-align:left;padding-right:4px}
-.promo-list-item{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:8px;padding:10px;background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;margin-bottom:6px;transition:all .15s}
-.promo-list-item .pl-icon{width:36px;height:36px;border-radius:0;background:rgba(20,6,14,.4);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.promo-list-item .pl-icon img{width:28px;height:28px;object-fit:contain;}
-.promo-list-item .pl-icon .pl-coin-icon{width:20px;height:20px}
-.promo-list-item .pl-info{min-width:0}
-.promo-list-item .code{font-size:13px;font-weight:800;color:var(--accent-bright);letter-spacing:1px;margin-bottom:2px;line-height:1.3}
-.promo-list-item .pl-reward{font-size:12px;font-weight:600;color:#c98bb0;line-height:1.2}
-.promo-list-item .pl-uses{font-size:14px;font-weight:800;color:var(--green-bright);text-align:right;min-width:40px;line-height:1.3}
-.promo-list-item .pl-uses.empty{color:#ff6b8a}
-.promo-list-item .pl-uses-label{font-size:10px;font-weight:600;color:#c98bb0;text-align:right;letter-spacing:.5px;text-transform:uppercase;margin-top:2px;line-height:1.1}
+.profile-panel {
+  background: #0b0f19;
+  border: 1px solid rgba(192,132,252,.15);
+  padding: 20px;
+}
+.profile-panel-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.profile-best-drop {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.profile-best-drop img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+.profile-best-drop-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.profile-best-drop-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-inventory {
+  background: #0b0f19;
+  border: 1px solid rgba(192,132,252,.15);
+  padding: 20px;
+}
+.profile-inventory-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.profile-inventory-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.profile-inv-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+}
+.profile-inv-btn:hover { background: rgba(255,255,255,.08); }
+.profile-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+.profile-inv-item {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.06);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.profile-inv-item:hover { border-color: rgba(192,132,252,.4); }
+.profile-inv-item img { width: 60px; height: 60px; object-fit: contain; }
+.profile-inv-name { font-size: 11px; color: #fff; text-align: center; font-weight: 600; line-height: 1.2; }
+.profile-inv-price { font-size: 12px; color: #4ade80; font-weight: 800; display: flex; align-items: center; gap: 4px; }
 
 .deposits-block{margin-top:12px;padding:12px;background:rgba(192,132,252,.06);border:2px solid rgba(192,132,252,.25);border-radius:0}
 .deposits-block-title{font-size:14px;font-weight:800;color:#d8b4fe;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
@@ -591,53 +717,6 @@ body{
 .topup-price-line .tpl-value{font-weight:800;color:#fff;display:flex;align-items:center;gap:5px;line-height:1.3}
 .topup-price-line .tpl-value img{width:14px;height:14px;}
 
-.profile-page{padding:18px 20px}
-.profile-banner{position:relative;width:100%;height:220px;border-radius:0;overflow:hidden;margin-bottom:14px;border:2px solid rgba(192,132,252,.2);background:rgba(20,6,14,.5)}
-.profile-banner-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,6,14,.9) 100%);pointer-events:none}
-.profile-banner-content{position:absolute;bottom:14px;left:18px;right:18px;display:flex;align-items:flex-end;gap:14px;z-index:3}
-.profile-avatar-big{width:80px;height:80px;border-radius:0;object-fit:cover;border:3px solid var(--accent);background:#3a1024;box-shadow:0 0 14px rgba(192,132,252,.5);flex-shrink:0}
-.profile-nick-big{font-size:24px;font-weight:900;color:#fff;letter-spacing:.5px;line-height:1.4;text-shadow:0 0 10px rgba(192,132,252,.6)}
-.profile-tg-big{font-size:15px;font-weight:600;color:var(--accent-bright);text-decoration:none;letter-spacing:.5px;line-height:1.2}
-
-.profile-stats-column{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.profile-stat{padding:14px;background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.14);border-radius:0}
-.profile-stat-label{font-size:12px;font-weight:700;color:#c98bb0;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;line-height:1.2}
-.profile-stat-value{font-size:20px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;line-height:1.3}
-.profile-stat-value img{width:20px;height:20px;}
-.profile-stat.expandable{cursor:pointer;transition:all .15s}
-.profile-stat.expandable:hover{background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.35)}
-.profile-stat-value .expand-arrow{margin-left:auto;width:16px;height:16px;transition:transform .2s;color:var(--accent-bright)}
-.profile-stat.expanded .expand-arrow{transform:rotate(180deg)}
-.profile-inventory-drawer{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease,margin-top .3s ease;background:rgba(20,6,14,.3);border-radius:0;margin-top:0}
-.profile-inventory-drawer.expanded{max-height:500px;padding:10px;margin-top:8px;border:2px solid rgba(192,132,252,.12)}
-.profile-inventory-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px}
-.profile-inventory-item{background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:3px}
-.profile-inventory-item img{width:46px;height:46px;object-fit:contain;}
-.profile-inventory-item .inv-name{font-size:10px;font-weight:600;color:#ffe3ef;text-align:center;line-height:1.1;height:22px;overflow:hidden}
-.profile-inventory-item .inv-price{font-size:11px;font-weight:800;color:var(--accent-bright);line-height:1.3}
-.profile-inventory-empty{text-align:center;color:#9a5f7d;font-size:13px;font-weight:600;padding:16px;line-height:1.3}
-
-.menu-page{padding:18px 20px;display:flex;flex-direction:column;gap:12px}
-.menu-section-title{font-size:24px;font-weight:900;color:#fff;letter-spacing:3px;text-transform:uppercase;text-align:center;padding:8px 0 4px;line-height:1.4;text-shadow:0 0 14px rgba(192,132,252,.5)}
-
-.customize-in-profile{margin-top:14px}
-.customize-section{padding:14px;background:rgba(192,132,252,.05);border:2px solid rgba(192,132,252,.12);border-radius:0;margin-bottom:10px}
-.customize-section-title{font-size:14px;font-weight:800;color:var(--accent-bright);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
-.customize-section-title::before{content:'';width:4px;height:12px;background:var(--accent);border-radius:0;box-shadow:0 0 6px var(--accent)}
-.slider-row{display:flex;align-items:center;gap:10px}
-.slider-row input[type="range"]{flex:1;-webkit-appearance:none;appearance:none;height:8px;background:rgba(192,132,252,.15);border-radius:0;outline:none}
-.slider-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:0;background:var(--accent);cursor:pointer;box-shadow:0 0 6px rgba(192,132,252,.6)}
-.slider-row input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:0;background:var(--accent);cursor:pointer;border:none}
-.slider-value{font-size:14px;font-weight:800;color:#fff;min-width:44px;text-align:right;line-height:1.3}
-
-.avatar-upload-row{display:flex;align-items:center;gap:10px}
-.avatar-preview{width:60px;height:60px;border-radius:0;border:2px solid var(--accent);object-fit:cover;background:#3a1024;flex-shrink:0;}
-.upload-btn{flex:1;padding:12px 16px;border-radius:0;border:2px solid rgba(192,132,252,.2);background:rgba(192,132,252,.05);color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;line-height:1.4;box-shadow:2px 2px 0 rgba(0,0,0,.25)}
-.upload-btn:hover{background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.4)}
-.upload-btn svg{width:16px;height:16px}
-.reset-avatar-btn{padding:8px 12px;border-radius:0;border:2px solid rgba(255,107,138,.4);background:rgba(255,107,138,.12);color:#ff8fa8;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;text-transform:uppercase;line-height:1.4;box-shadow:2px 2px 0 rgba(0,0,0,.25)}
-.reset-avatar-btn:hover{background:rgba(255,107,138,.24)}
-
 .promo-panel{padding:24px 20px;text-align:center}
 .promo-panel h2{font-size:24px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;line-height:1.4}
 .promo-panel p{color:#c98bb0;font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.3}
@@ -658,33 +737,6 @@ body{
   text-shadow:0 0 10px var(--accent);animation:pulseGlow 2s infinite alternate;
 }
 @keyframes pulseGlow{from{text-shadow:0 0 10px var(--accent);}to{text-shadow:0 0 25px var(--accent),0 0 5px #fff;}}
-
-/* ===== Апгрейдер: карточка с несколькими предметами ===== */
-.multi-preview-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
-  min-height: 56px;
-}
-.multi-preview-img {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-  border-radius: 4px;
-  background: rgba(20,6,14,.5);
-  border: 1px solid rgba(192,132,252,.3);
-  padding: 2px;
-}
-.multi-preview-count {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--accent-bright);
-  margin-top: 2px;
-  line-height: 1.2;
-}
 
 /* ==== AUTO PROMO (в пополнении) ==== */
 .autopromo-card{
@@ -867,62 +919,6 @@ body{
     </div>
 </div>
 
-<div class="modal" id="adminModal">
-    <div class="modal-card wide">
-        <button class="modal-close" onclick="closeModal('adminModal')">X</button>
-        <div class="admin-header">
-            <div class="admin-header-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="M9 12l2 2 4-4"/>
-                </svg>
-            </div>
-            <div class="admin-header-text">
-                <div class="admin-header-title">Admin Panel</div>
-                <div class="admin-header-sub"><span class="admin-online-dot"></span> СИСТЕМА АКТИВНА</div>
-            </div>
-        </div>
-        <div class="admin-section">
-            <div class="admin-section-title">Создание промокода</div>
-            <div class="form-group">
-                <label class="form-label">Название промокода</label>
-                <input type="text" class="form-input" id="adminCode" placeholder="Например: SUPER2025" maxlength="20" oninput="updateAdminPreview()">
-            </div>
-            <div class="admin-preview">
-                <div class="admin-preview-label">Превью:</div>
-                <div class="admin-preview-value" id="adminPreviewValue"></div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Кол-во активаций</label>
-                <input type="number" class="form-input" id="adminUses" placeholder="10" min="1" value="1">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Тип награды</label>
-                <div class="radio-row">
-                    <div class="radio-option active" data-type="balance" onclick="selectPromoType('balance')">Баланс</div>
-                    <div class="radio-option" data-type="item" onclick="selectPromoType('item')">Брейнрот</div>
-                </div>
-            </div>
-            <div class="form-group" id="balanceGroup">
-                <label class="form-label">Сумма монет</label>
-                <input type="number" class="form-input" id="adminBalance" placeholder="500" min="1" value="500">
-            </div>
-            <div class="form-group" id="itemGroup" style="display:none;">
-                <label class="form-label">Выбери брейнрот</label>
-                <div class="admin-grid" id="adminGrid"></div>
-            </div>
-            <button class="action-btn" onclick="createPromo()">Создать промокод</button>
-            <div class="msg" id="adminMsg"></div>
-        </div>
-        <div class="admin-section">
-            <div class="admin-section-title">Существующие промокоды</div>
-            <div class="promo-list" id="promoList">
-                <div style="color:#9a5f7d; font-size:12px; font-weight:600; text-align:center; padding:10px;">Загрузка...</div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal" id="targetModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('targetModal')">X</button>
@@ -1093,9 +1089,9 @@ body{
                 </div>
             </div>
             <div class="items-row">
-                <div class="item-box" id="sourceBox" onclick="switchUpgTab('inv', document.querySelectorAll('.upg-tab')[1])">
+                <div class="item-box" onclick="switchUpgTab('inv', document.querySelectorAll('.upg-tab')[1])">
                     <div class="label">Твой предмет</div>
-                    <div class="multi-preview-row" id="sourcePreview"></div>
+                    <img id="sourceImg" src="" alt="" style="display:none" loading="lazy" decoding="async">
                     <div class="name" id="sourceName">—</div>
                     <div class="price" id="sourcePrice"></div>
                 </div>
@@ -1120,7 +1116,7 @@ body{
         </div>
 
         <div class="upg-pane" id="upgPaneInv">
-            <div class="section-title" style="margin-top:10px;">Инвентарь <span style="font-size:11px;color:#9a5f7d;text-transform:none;font-weight:600;letter-spacing:0;">(клик — выбрать/убрать, до 5 шт)</span></div>
+            <div class="section-title" style="margin-top:10px;">Инвентарь</div>
             <div class="inventory-row" id="inventoryRow"><div class="empty-inv">Инвентарь пуст</div></div>
         </div>
 
@@ -1160,42 +1156,50 @@ body{
     </div>
 
     <div class="tab-panel" id="panelProfile">
-        <div class="profile-page">
-            <div class="profile-banner" id="profileBanner">
-                <div class="profile-banner-overlay"></div>
-                <div class="profile-banner-content">
-                    <img class="profile-avatar-big" 
-                         id="profileAvatarImg"
-                         src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" 
-                         alt="Avatar"
-                         loading="lazy" decoding="async">
-                    <div>
-                        <div class="profile-nick-big" id="profileNick">Загрузка...</div>
-                        <a class="profile-tg-big" id="profileTg" href="#" target="_blank">@...</a>
-                    </div>
+        <div class="profile-layout">
+            <!-- ВЕРХНЯЯ ПАНЕЛЬ ПРОФИЛЯ -->
+            <div class="profile-header-panel">
+                <div class="profile-user-info">
+                    <div class="profile-user-avatar" id="profileAvatarInitials">SB</div>
+                    <div class="profile-user-name" id="profileNick">Загрузка...</div>
                 </div>
-            </div>
-            <div class="profile-stats-column">
-                <div class="profile-stat">
-                    <div class="profile-stat-label">Баланс</div>
-                    <div class="profile-stat-value">
-                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin" loading="lazy" decoding="async">
+                <div class="profile-balance-info">
+                    <div class="profile-balance-label">Текущий баланс</div>
+                    <div class="profile-balance-value">
+                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin">
                         <span id="profileBalance">0</span>
                     </div>
                 </div>
-                <div class="profile-stat expandable" id="itemsStat" onclick="toggleInventoryDrawer()">
-                    <div class="profile-stat-label">Предметов</div>
-                    <div class="profile-stat-value">
-                        <span id="profileItemsCount">0</span>
-                        <svg class="expand-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+            </div>
+
+            <!-- СТАТИСТИКА / ЛУЧШИЙ ДРОП -->
+            <div class="profile-stats-row">
+                <div class="profile-panel">
+                    <div class="profile-panel-title">ЛУЧШИЙ ДРОП</div>
+                    <div class="profile-best-drop" id="bestDropContainer">
+                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" style="width:80px;height:80px;opacity:0.3;" id="bestDropImg">
+                        <div>
+                            <div class="profile-best-drop-name" id="bestDropName">Пока нет дропа</div>
+                            <div class="profile-best-drop-price" id="bestDropPrice" style="display:none;"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="profile-inventory-drawer" id="inventoryDrawer">
-                    <div class="profile-inventory-grid" id="profileInventoryGrid"></div>
+                
+                <!-- ПАНЕЛЬ ЗАДАНИЙ ЗА ПРИПИСКУ -->
+                <div class="profile-panel">
+                    <div class="profile-panel-title">ПРИЗЫ ЗА ПРИПИСКУ</div>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div id="task1Status" style="font-size:14px; font-weight:600; color:#c98bb0;">
+                            <span style="color:#d8b4fe;">@BrainRoll_bot</span> в нике
+                        </div>
+                        <div id="task2Status" style="font-size:14px; font-weight:600; color:#c98bb0;">
+                            <span style="color:#d8b4fe;">|ТГК - BRAINROLL|</span> в нике
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- ЗАЯВКИ (ДЛЯ АДМИНОВ) -->
             <div class="deposits-block" id="depositsBlock" style="display:none;">
                 <div class="deposits-block-title">
                     Заявки на пополнение
@@ -1203,40 +1207,19 @@ body{
                 </div>
                 <div id="depositsList"></div>
             </div>
-            <div class="profile-action-row">
+
+            <!-- КНОПКА АДМИНКИ -->
+            <div class="profile-action-row" style="padding: 0 20px 20px 20px;">
                 <button class="action-btn" id="adminPanelBtn" style="display:none; background: rgba(255,107,138,.15); border-color: rgba(255,107,138,.4); color:#ff8fa8;" onclick="openAdminPanel()">Открыть админ-панель</button>
             </div>
 
-            <div class="customize-in-profile">
-                <div class="customize-section">
-                    <div class="customize-section-title">Аватарка</div>
-                    <div class="avatar-upload-row">
-                        <img class="avatar-preview" id="avatarPreview" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="preview" loading="lazy" decoding="async">
-                        <label class="upload-btn" for="avatarFileInput">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
-                            </svg>
-                            Загрузить
-                        </label>
-                        <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
-                    </div>
-                    <button class="reset-avatar-btn" onclick="resetAvatar()" style="margin-top:8px; width:100%;">Сбросить аватарку</button>
+            <!-- ИНВЕНТАРЬ -->
+            <div class="profile-inventory">
+                <div class="profile-inventory-title">ИНВЕНТАРЬ</div>
+                <div class="profile-inventory-actions">
+                    <button class="profile-inv-btn" onclick="sellAllItems()">Продать всё</button>
                 </div>
-                <div class="customize-section">
-                    <div class="customize-section-title">Твой ник</div>
-                    <input type="text" class="form-input" id="customizeNickInput" placeholder="Введи свой ник" maxlength="20">
-                    <button class="action-btn" onclick="saveCustomNick()">Сохранить ник</button>
-                </div>
-                <div class="customize-section">
-                    <div class="customize-section-title">Прозрачность</div>
-                    <div class="slider-row">
-                        <input type="range" id="opacitySlider" min="5" max="100" value="55" oninput="changeOpacity(this.value)">
-                        <div class="slider-value" id="opacityValue">55%</div>
-                    </div>
-                </div>
-                <div class="msg" id="customizeMsg"></div>
+                <div class="profile-inventory-grid" id="profileInventoryGrid"></div>
             </div>
         </div>
     </div>
@@ -1363,9 +1346,15 @@ body{
             { itemId: 'dragon', chance: 5 },
             { itemId: 'tirilikalika', chance: 4 },
             { itemId: 'kraken', chance: 1 }
-          ] }
+          ] },
+        // НОВЫЕ КЕЙСЫ ЗА ПРИПИСКУ
+        { id: 'nick1', name: 'CASE @BrainRoll_bot', price: 0, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/PISKAvNike.png',
+          rewards: [ { balance: 4, chance: 99 }, { itemId: 'garama', chance: 1 } ] },
+        { id: 'nick2', name: 'CASE |ТГК - BRAINROLL|', price: 0, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/PISKAvNike.png',
+          rewards: [ { balance: 4, chance: 99 }, { itemId: 'garama', chance: 1 } ] }
     ];
 
+    // ==== АВТО-ПРОМОКОДЫ (меняется каждый час) ====
     const AUTO_PROMOS = [
         { code: 'KRAKEN121', bonus: 5 },
         { code: 'SAINT213', bonus: 8 },
@@ -1402,12 +1391,14 @@ body{
         const code = p.code;
         const bonus = '+' + p.bonus + '%';
         const t = formatTimeLeft(getTimeUntilNextHour());
+
         const hc = document.getElementById('homeAutoPromoCode');
         const hb = document.getElementById('homeAutoPromoBonus');
         const ht = document.getElementById('homeAutoPromoTimer');
         if (hc) hc.textContent = code;
         if (hb) hb.textContent = bonus;
         if (ht) ht.textContent = t;
+
         const mc = document.getElementById('autoPromoCodeModal');
         const mb = document.getElementById('autoPromoBonusModal');
         const mt = document.getElementById('autoPromoTimerModal');
@@ -1425,6 +1416,7 @@ body{
         } catch(e) {}
     };
 
+    // ==== ШАНСЫ АПГРЕЙДА ====
     function calcUpgradeChance(sourcePrice, targetPrice) {
         if (!sourcePrice || !targetPrice || targetPrice <= sourcePrice) return 0;
         const ratio = targetPrice / sourcePrice;
@@ -1475,12 +1467,12 @@ body{
     let activeAnimTimers = [];
     let activeAnimResolvers = [];
 
-    // Апгрейдер: выбранные индексы предметов (до 5 штук)
-    let selectedSourceIndices = [];
+    let selectedSourceIndex = null;
     let selectedTargetId = null;
-
-    // бонус пополнения
-    let currentTopupBonusPct = 0;
+    let isSpinning = false;
+    let promoType = 'balance';
+    let selectedAdminItem = null;
+    let fastModeEnabled = false;
 
     function saveLocalCache() {
         localStorage.setItem('ggbrainx_balance', String(balance));
@@ -1660,11 +1652,6 @@ body{
     const SPIN_DURATION = 7000;
     const SPIN_DURATION_FAST = 3000;
     const CIRCUMFERENCE = 2 * Math.PI * 130;
-    let fastModeEnabled = false;
-
-    let isSpinning = false;
-    let promoType = 'balance';
-    let selectedAdminItem = null;
 
     const balanceDisplay = document.getElementById('balanceDisplay');
     const balanceBox = document.getElementById('balanceBox');
@@ -1674,6 +1661,9 @@ body{
     const arrowContainer = document.getElementById('arrowContainer');
     const chanceBig = document.getElementById('chanceBig');
     const chanceLabel = document.getElementById('chanceLabel');
+    const sourceImg = document.getElementById('sourceImg');
+    const sourceName = document.getElementById('sourceName');
+    const sourcePrice = document.getElementById('sourcePrice');
     const targetImg = document.getElementById('targetImg');
     const targetName = document.getElementById('targetName');
     const targetPrice = document.getElementById('targetPrice');
@@ -1703,50 +1693,108 @@ body{
         }
     }
 
-    function applyCustomAvatar() {
-        const src = customAvatar || DEFAULT_AVATAR;
-        const p = document.getElementById('profileAvatarImg');
-        const t = document.getElementById('topAvatarImg');
-        if (p) p.src = src;
-        if (t) t.src = src;
-        const preview = document.getElementById('avatarPreview');
-        if (preview) preview.src = src;
-    }
-    window.handleAvatarUpload = function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith('image/')) { showToast('Только изображения', 'err'); return; }
-        if (file.size > 2 * 1024 * 1024) { showToast('Максимум 2 МБ', 'err'); return; }
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            customAvatar = e.target.result;
-            localStorage.setItem('ggbrainx_custom_avatar', customAvatar);
-            applyCustomAvatar();
-            showToast('Аватарка загружена', 'ok');
-            playCoin(); vibrate(15);
-        };
-        reader.readAsDataURL(file);
-    };
-    window.resetAvatar = function() {
-        customAvatar = null;
-        localStorage.removeItem('ggbrainx_custom_avatar');
-        applyCustomAvatar();
-        showToast('Аватарка сброшена', 'ok');
-        playClick(); vibrate(10);
-    };
-    function applyUserToProfile() {
+    function updateProfileStats() {
         const nickEl = document.getElementById('profileNick');
-        const tgEl = document.getElementById('profileTg');
         if (nickEl) nickEl.textContent = getDisplayNick();
-        if (tgEl) { tgEl.textContent = USER.tg; tgEl.href = USER.tgLink; }
-        applyCustomAvatar();
+        
+        const initialsEl = document.getElementById('profileAvatarInitials');
+        if (initialsEl) {
+            const nick = getDisplayNick().replace('@', '');
+            initialsEl.textContent = nick.substring(0, 2).toUpperCase();
+        }
+
+        const balEl = document.getElementById('profileBalance');
+        if (balEl) balEl.innerText = balance.toLocaleString('ru-RU');
+
+        // Лучший дроп
+        let bestItem = null;
+        inventory.forEach(id => {
+            const item = getItemById(id);
+            if (!item) return;
+            if (!bestItem || item.price > bestItem.price) {
+                bestItem = item;
+            }
+        });
+        const bestImg = document.getElementById('bestDropImg');
+        const bestName = document.getElementById('bestDropName');
+        const bestPrice = document.getElementById('bestDropPrice');
+        if (bestItem) {
+            bestImg.src = bestItem.img;
+            bestImg.style.opacity = '1';
+            bestName.textContent = bestItem.name;
+            bestPrice.style.display = 'flex';
+            bestPrice.innerHTML = `${bestItem.price} <img src="${COIN_IMG}" style="width:14px;height:14px;">`;
+        } else {
+            bestImg.src = COIN_IMG;
+            bestImg.style.opacity = '0.3';
+            bestName.textContent = 'Пока нет дропа';
+            bestPrice.style.display = 'none';
+        }
+
+        // Статус приписок
+        const uname = USER.tg || '';
+        const has1 = uname.includes('@BrainRoll_bot');
+        const has2 = uname.includes('|ТГК - BRAINROLL|');
+        const t1 = document.getElementById('task1Status');
+        if (t1) {
+            if (has1) {
+                t1.innerHTML = `<span style="color:#4ade80;">✓</span> <span style="color:#d8b4fe;">@BrainRoll_bot</span> в нике`;
+            } else {
+                t1.innerHTML = `<span style="color:#ff6b8a;">✕</span> <span style="color:#c98bb0;">@BrainRoll_bot</span> в нике`;
+            }
+        }
+        const t2 = document.getElementById('task2Status');
+        if (t2) {
+            if (has2) {
+                t2.innerHTML = `<span style="color:#4ade80;">✓</span> <span style="color:#d8b4fe;">|ТГК - BRAINROLL|</span> в нике`;
+            } else {
+                t2.innerHTML = `<span style="color:#ff6b8a;">✕</span> <span style="color:#c98bb0;">|ТГК - BRAINROLL|</span> в нике`;
+            }
+        }
     }
-    applyUserToProfile();
+
+    function renderProfileInventory() {
+        const grid = document.getElementById('profileInventoryGrid');
+        if (!grid) return;
+        if (!inventory.length) {
+            grid.innerHTML = '<div style="color:#9ca3af; font-size:13px; font-weight:600; padding:16px;">Инвентарь пуст</div>';
+            return;
+        }
+        grid.innerHTML = inventory.map(id => {
+            const item = getItemById(id);
+            if (!item) return '';
+            const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async" style="position:absolute;top:4px;left:4px;width:16px;height:16px;">` : '';
+            return `
+                <div class="profile-inv-item" style="position:relative;">
+                    ${mutationIcon}
+                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                    <div class="profile-inv-name">${item.name}</div>
+                    <div class="profile-inv-price">${item.price} <img src="${COIN_IMG}" style="width:12px;height:12px;"></div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    window.sellAllItems = function() {
+        if (isSpinning) return;
+        if (!inventory.length) return;
+        let total = 0;
+        inventory.forEach(id => {
+            const item = getItemById(id);
+            if (item) total += item.price;
+        });
+        balance += total;
+        inventory = [];
+        updateBalance();
+        renderInventory(); renderShop(); updateUpgradeScreen();
+        updateProfileStats(); renderProfileInventory();
+        showToast(`Продано всё за ${total}`, 'ok');
+        playCoin(); vibrate(15);
+    };
 
     function updateBalance() {
         balanceDisplay.innerText = balance.toLocaleString('ru-RU');
-        profileBalance.innerText = balance.toLocaleString('ru-RU');
-        profileItemsCount.innerText = inventory.length;
+        updateProfileStats();
         balanceBox.classList.remove('pulse');
         void balanceBox.offsetWidth;
         balanceBox.classList.add('pulse');
@@ -1780,6 +1828,7 @@ body{
                 updateBalance();
                 renderInventory(); renderShop(); updateUpgradeScreen();
                 renderProfileInventory();
+                updateProfileStats();
             } else {
                 syncUserToServer();
             }
@@ -1810,12 +1859,8 @@ body{
         if (navBtn) navBtn.classList.add('active');
         if (tab === 'profile') {
             updateProfile();
-            const cn = document.getElementById('customizeNickInput');
-            if (cn) cn.value = customNick || USER.nick;
-            const os = document.getElementById('opacitySlider');
-            const ov = document.getElementById('opacityValue');
-            if (os) os.value = Math.round(appOpacity * 100);
-            if (ov) ov.textContent = Math.round(appOpacity * 100) + '%';
+            updateProfileStats();
+            renderProfileInventory();
         }
         if (tab === 'menu') renderMenuCases();
     };
@@ -1833,9 +1878,6 @@ body{
         isAdmin = ALLOWED_USERS.includes((USER.username || '').toLowerCase());
         const adminBtn = document.getElementById('adminPanelBtn');
         if (adminBtn) adminBtn.style.display = isAdmin ? 'block' : 'none';
-        const banner = document.getElementById('profileBanner');
-        if (banner) banner.style.background = 'rgba(20,6,14,.5)';
-        renderProfileInventory();
         const depositsBlock = document.getElementById('depositsBlock');
         if (depositsBlock) {
             if (isAdmin) { depositsBlock.style.display = 'block'; loadDeposits(); }
@@ -1843,37 +1885,6 @@ body{
         }
     }
 
-    window.toggleInventoryDrawer = function() {
-        playClick(); vibrate(10);
-        const stat = document.getElementById('itemsStat');
-        const drawer = document.getElementById('inventoryDrawer');
-        if (!stat || !drawer) return;
-        stat.classList.toggle('expanded');
-        drawer.classList.toggle('expanded');
-        if (drawer.classList.contains('expanded')) renderProfileInventory();
-    };
-    function renderProfileInventory() {
-        const grid = document.getElementById('profileInventoryGrid');
-        if (!grid) return;
-        if (!inventory.length) {
-            grid.innerHTML = '<div class="profile-inventory-empty">Инвентарь пуст</div>';
-            return;
-        }
-        grid.innerHTML = inventory.map(id => {
-            const item = getItemById(id);
-            if (!item) return '';
-            const glowClass = getGlowClass(item.price);
-            const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async">` : '';
-            return `
-                <div class="profile-inventory-item ${glowClass}" style="position:relative;">
-                    ${mutationIcon}
-                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                    <div class="inv-name">${item.name}</div>
-                    <div class="inv-price">${item.price}</div>
-                </div>
-            `;
-        }).join('');
-    }
     window.openTopup = function() {
         playClick(); vibrate(10);
         renderTopupGrid();
@@ -2174,7 +2185,7 @@ body{
                 } else {
                     inventory.push(data.value);
                     renderInventory(); renderShop(); updateUpgradeScreen();
-                    renderProfileInventory();
+                    updateProfileStats(); renderProfileInventory();
                     saveLocalCache(); syncUserToServer();
                     const item = getItemById(data.value);
                     if (msgTab) { msgTab.className = 'msg ok'; msgTab.textContent = `Получен: ${item ? item.name : data.value}! Осталось: ${data.remaining}`; }
@@ -2233,7 +2244,7 @@ body{
         inventory.push(id);
         updateBalance();
         renderShop(); renderInventory(); updateUpgradeScreen();
-        renderProfileInventory();
+        updateProfileStats(); renderProfileInventory();
         showToast(`Куплен: ${item.name}`, 'ok');
         playCoin(); vibrate(15);
     }
@@ -2245,13 +2256,11 @@ body{
         if (!item) return;
         inventory.splice(index, 1);
         balance += item.price;
-        // обновляем выбранные индексы
-        selectedSourceIndices = selectedSourceIndices
-            .filter(i => i !== index)
-            .map(i => i > index ? i - 1 : i);
+        if (selectedSourceIndex === index) { selectedSourceIndex = null; selectedTargetId = null; }
+        else if (selectedSourceIndex !== null && selectedSourceIndex > index) selectedSourceIndex--;
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen();
-        renderProfileInventory();
+        updateProfileStats(); renderProfileInventory();
         showToast(`Продан: ${item.name} (+${item.price})`, 'ok');
         playCoin(); vibrate(15);
     };
@@ -2264,7 +2273,7 @@ body{
         inventoryRow.innerHTML = inventory.map((id, index) => {
             const item = getItemById(id);
             if (!item) return '';
-            const isSelected = selectedSourceIndices.includes(index);
+            const isSelected = selectedSourceIndex === index;
             const glowClass = getGlowClass(item.price);
             const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async">` : '';
             return `
@@ -2279,47 +2288,30 @@ body{
                 </div>
             `;
         }).join('');
-        profileItemsCount.innerText = inventory.length;
     }
     window.selectSourceByIndex = function(index) {
         if (isSpinning) return;
         if (index < 0 || index >= inventory.length) return;
-
-        const pos = selectedSourceIndices.indexOf(index);
-        if (pos > -1) {
-            selectedSourceIndices.splice(pos, 1);
-        } else {
-            if (selectedSourceIndices.length >= 5) {
-                showToast('Максимум 5 предметов', 'info');
-                return;
-            }
-            selectedSourceIndices.push(index);
-        }
-        renderInventory();
-        updateUpgradeScreen();
+        selectedSourceIndex = index;
+        selectedTargetId = null;
+        renderInventory(); updateUpgradeScreen();
         playClick(); vibrate(10);
     };
 
     window.openTargetList = function() {
         if (isSpinning) return;
-        if (selectedSourceIndices.length === 0) { showToast('Сначала выбери предметы', 'info'); return; }
-
-        let totalSourcePrice = 0;
-        selectedSourceIndices.forEach(idx => {
-            if (idx >= 0 && idx < inventory.length) {
-                const it = getItemById(inventory[idx]);
-                if (it) totalSourcePrice += it.price;
-            }
-        });
-
-        const targets = ITEMS.filter(t => t.price > totalSourcePrice).sort((a, b) => a.price - b.price);
+        if (selectedSourceIndex === null) { showToast('Сначала выбери предмет в инвентаре', 'info'); return; }
+        if (selectedSourceIndex < 0 || selectedSourceIndex >= inventory.length) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
+        if (!sourceItem) return;
+        const targets = ITEMS.filter(t => t.price > sourceItem.price).sort((a, b) => a.price - b.price);
         const list = document.getElementById('targetList');
         if (!list) return;
         if (!targets.length) {
-            list.innerHTML = '<div style="text-align:center; color:#9a5f7d; padding:20px; font-size:14px; font-weight:600;">Нет целей дороже суммы предметов</div>';
+            list.innerHTML = '<div style="text-align:center; color:#9a5f7d; padding:20px; font-size:14px; font-weight:600;">Нет целей дороже этого предмета</div>';
         } else {
             list.innerHTML = targets.map(t => {
-                const chance = calcUpgradeChance(totalSourcePrice, t.price);
+                const chance = calcUpgradeChance(sourceItem.price, t.price);
                 const glowClass = getGlowClass(t.price);
                 const mutationIcon = t.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[t.mutation]}" alt="mutation" loading="lazy" decoding="async" style="width:16px;height:16px;top:4px;left:4px;">` : '';
                 return `
@@ -2341,19 +2333,11 @@ body{
 
     window.pickTargetFromList = function(targetId) {
         if (isSpinning) return;
-        if (selectedSourceIndices.length === 0) return;
-
-        let totalSourcePrice = 0;
-        selectedSourceIndices.forEach(idx => {
-            if (idx >= 0 && idx < inventory.length) {
-                const it = getItemById(inventory[idx]);
-                if (it) totalSourcePrice += it.price;
-            }
-        });
-
+        if (selectedSourceIndex === null) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
         const targetItem = getItemById(targetId);
-        if (!targetItem || targetItem.price <= totalSourcePrice) return;
-
+        if (!sourceItem || !targetItem) return;
+        if (targetItem.price <= sourceItem.price) return;
         selectedTargetId = targetId;
         closeModal('targetModal');
         renderInventory(); updateUpgradeScreen();
@@ -2368,11 +2352,24 @@ body{
             const totalRewards = c.rewards.length;
             let priceHtml = '';
             let isFree = false;
-            if (c.id === 'free') { priceHtml = `<span class="free-tag">FREE</span>`; isFree = true; }
-            else priceHtml = `${c.price} <img src="${COIN_IMG}" alt="coin">`;
+            let isNickCase = (c.id === 'nick1' || c.id === 'nick2');
+            
+            if (isNickCase) {
+                priceHtml = `<span class="free-tag">NICK</span>`;
+                isFree = true;
+            } else if (c.id === 'free') {
+                priceHtml = `<span class="free-tag">FREE</span>`;
+                isFree = true;
+            } else {
+                priceHtml = `${c.price} <img src="${COIN_IMG}" alt="coin">`;
+            }
             const priceClass = isFree ? 'case-price free-tag' : 'case-price';
+            
+            let extraClass = '';
+            if (isNickCase) extraClass = 'nick-case';
+
             return `
-                <div class="case-card" onclick="openCaseDetail('${c.id}')">
+                <div class="case-card ${extraClass}" onclick="openCaseDetail('${c.id}')">
                     <div class="case-card-inner">
                         <div class="case-img-wrap">
                             <img src="${c.img}" alt="${c.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
@@ -2515,6 +2512,40 @@ body{
         if (!c) return;
         const btn = document.getElementById('caseOpenActionBtn');
         if (!btn) return;
+        
+        // Логика для кейсов за приписку
+        if (c.id === 'nick1' || c.id === 'nick2') {
+            const uname = USER.tg || '';
+            const has1 = uname.includes('@BrainRoll_bot');
+            const has2 = uname.includes('|ТГК - BRAINROLL|');
+            let totalAvailable = 0;
+            if (has1) totalAvailable++;
+            if (has2) totalAvailable++;
+
+            if (totalAvailable === 0) {
+                btn.disabled = true;
+                btn.textContent = 'НУЖНА ПРИПИСКА В НИКЕ';
+                return;
+            }
+
+            const now = Date.now();
+            const cooldown = 12 * 60 * 60 * 1000;
+            const lastOpen = parseFloat(localStorage.getItem('ggbrainx_nick_case_last') || '0');
+            const timeLeft = cooldown - (now - lastOpen);
+
+            if (timeLeft > 0) {
+                btn.disabled = true;
+                const h = String(Math.floor(timeLeft / 3600000)).padStart(2, '0');
+                const m = String(Math.floor((timeLeft % 3600000) / 60000)).padStart(2, '0');
+                const s = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
+                btn.textContent = `Доступно через ${h}:${m}:${s}`;
+            } else {
+                btn.disabled = false;
+                btn.textContent = `У тебя есть ${totalAvailable} открытия!`;
+            }
+            return;
+        }
+        
         const totalPrice = c.id === 'free' ? 0 : c.price * caseOpenQty;
         if (c.id === 'free') {
             const now = Date.now();
@@ -2644,14 +2675,30 @@ body{
         const c = CASES.find(x => x.id === currentCaseId);
         if (!c) return;
         const qty = caseOpenQty;
-        if (c.id === 'free') {
+        
+        if (c.id === 'nick1' || c.id === 'nick2') {
+            const uname = USER.tg || '';
+            const has1 = uname.includes('@BrainRoll_bot');
+            const has2 = uname.includes('|ТГК - BRAINROLL|');
+            if (!has1 && !has2) {
+                showToast('Нужна приписка в нике!', 'err'); playLose(); return;
+            }
+            const now = Date.now();
+            const cooldown = 12 * 60 * 60 * 1000;
+            const lastOpen = parseFloat(localStorage.getItem('ggbrainx_nick_case_last') || '0');
+            if (now - lastOpen < cooldown) {
+                showToast('Кейс ещё не остыл', 'err'); playLose(); return;
+            }
+            localStorage.setItem('ggbrainx_nick_case_last', String(now));
+        } else if (c.id === 'free') {
             const now = Date.now();
             const timeLeft = c.freeCooldown - (now - freeCaseLastOpen);
             if (timeLeft > 0) { showToast('Кейс ещё не остыл', 'err'); playLose(); return; }
             if (qty > 1) { showToast('Бесплатный кейс можно открыть только 1 раз', 'err'); return; }
         }
-        const totalPrice = c.id === 'free' ? 0 : c.price * qty;
-        if (c.id !== 'free' && balance < totalPrice) {
+        
+        const totalPrice = c.id === 'free' || c.id === 'nick1' || c.id === 'nick2' ? 0 : c.price * qty;
+        if (c.id !== 'free' && c.id !== 'nick1' && c.id !== 'nick2' && balance < totalPrice) {
             showToast('Недостаточно монет', 'err'); playLose(); vibrate(30); return;
         }
         isCaseOpening = true;
@@ -2662,8 +2709,8 @@ body{
         const skipBtn = document.getElementById('caseSkipBtn');
         if (skipBtn) skipBtn.classList.add('show');
 
-        if (c.id !== 'free') { balance -= totalPrice; updateBalance(); }
-        else { freeCaseLastOpen = Date.now(); localStorage.setItem('ggbrainx_free_case_last', String(freeCaseLastOpen)); }
+        if (c.id !== 'free' && c.id !== 'nick1' && c.id !== 'nick2') { balance -= totalPrice; updateBalance(); }
+        else if (c.id === 'free') { freeCaseLastOpen = Date.now(); localStorage.setItem('ggbrainx_free_case_last', String(freeCaseLastOpen)); }
 
         let isRareRoll = false;
         rareRollCounter++;
@@ -2706,7 +2753,7 @@ body{
         });
         if (totalCoins > 0) balance += totalCoins;
         updateBalance();
-        renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+        renderInventory(); renderShop(); updateUpgradeScreen(); updateProfileStats(); renderProfileInventory();
         saveLocalCache(); syncUserToServer();
         showCaseResult(rewards, c, qty);
         isCaseOpening = false;
@@ -2779,49 +2826,18 @@ body{
     }
 
     function updateUpgradeScreen() {
-        // Preview нескольких картинок
-        const preview = document.getElementById('sourcePreview');
-        const nameEl = document.getElementById('sourceName');
-        const priceEl = document.getElementById('sourcePrice');
-
-        let totalSourcePrice = 0;
-        const items = [];
-        selectedSourceIndices.forEach(idx => {
-            if (idx >= 0 && idx < inventory.length) {
-                const it = getItemById(inventory[idx]);
-                if (it) { items.push(it); totalSourcePrice += it.price; }
-            }
-        });
-
-        if (preview) {
-            if (items.length === 0) {
-                preview.innerHTML = '';
-            } else {
-                preview.innerHTML = items.map(it => `
-                    <img class="multi-preview-img" src="${it.img}" alt="${it.name}" loading="lazy" ${FALLBACK_ATTR}>
-                `).join('');
-            }
-        }
-
-        if (nameEl) {
-            if (items.length === 0) {
-                nameEl.innerText = '—';
-            } else if (items.length === 1) {
-                nameEl.innerText = items[0].name;
-            } else {
-                nameEl.innerText = `${items.length} предмета`;
-            }
-        }
-        if (priceEl) {
-            if (items.length === 0) {
-                priceEl.innerHTML = '';
-            } else {
-                priceEl.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${totalSourcePrice}`;
-            }
-        }
-
-        // Цель
+        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+        if (sourceItem) {
+            sourceImg.src = sourceItem.img;
+            sourceImg.style.display = 'block';
+            sourceName.innerText = sourceItem.name;
+            sourcePrice.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${sourceItem.price}`;
+        } else {
+            sourceImg.style.display = 'none';
+            sourceName.innerText = '—';
+            sourcePrice.innerHTML = '';
+        }
         if (targetItem) {
             targetImg.src = targetItem.img;
             targetImg.style.display = 'block';
@@ -2832,24 +2848,18 @@ body{
             targetName.innerText = '—';
             targetPrice.innerHTML = '';
         }
-
-        // Шанс
-        let chance = 0;
-        if (items.length > 0 && targetItem) {
-            chance = calcUpgradeChance(totalSourcePrice, targetItem.price);
-        }
+        const chance = calculateChance();
+        const displayChance = Math.floor(chance);
         const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
         progressBar.style.strokeDashoffset = offset;
         const angle = (Math.min(chance, 100) / 100) * 360;
         arrowContainer.style.transform = `rotate(${angle}deg)`;
         chanceBig.innerText = formatChance(chance);
-
         if (chance >= 25) { chanceLabel.innerText = 'ВЫСОКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
         else if (chance >= 5) { chanceLabel.innerText = 'СРЕДНИЙ ШАНС'; chanceLabel.className = 'chance-label medium'; }
         else if (chance > 0) { chanceLabel.innerText = 'НИЗКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
         else { chanceLabel.innerText = ''; chanceLabel.className = 'chance-label hidden'; }
-
-        if (items.length > 0 && targetItem && chance > 0 && !isSpinning) {
+        if (sourceItem && targetItem && chance > 0 && !isSpinning) {
             upgradeBtn.disabled = false;
             upgradeBtn.querySelector('span').innerText = `Апгрейд - ${formatChance(chance)}`;
         } else {
@@ -2858,64 +2868,57 @@ body{
         }
     }
 
+    function calculateChance() {
+        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
+        const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+        if (!sourceItem || !targetItem) return 0;
+        return calcUpgradeChance(sourceItem.price, targetItem.price);
+    }
+
     function performUpgrade(durationMs) {
         if (isSpinning) return;
-        const activeIdxs = [...selectedSourceIndices];
-        if (activeIdxs.length === 0) return;
+        if (selectedSourceIndex === null) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
         const targetItem = getItemById(selectedTargetId);
-        if (!targetItem) return;
-
-        let totalSourcePrice = 0;
-        activeIdxs.forEach(idx => {
-            if (idx >= 0 && idx < inventory.length) {
-                const it = getItemById(inventory[idx]);
-                if (it) totalSourcePrice += it.price;
-            }
-        });
-        if (targetItem.price <= totalSourcePrice) return;
-        const chance = calcUpgradeChance(totalSourcePrice, targetItem.price);
+        if (!sourceItem || !targetItem) return;
+        if (targetItem.price <= sourceItem.price) return;
+        const chance = calculateChance();
         if (chance <= 0) return;
-
         isSpinning = true;
         upgradeBtn.disabled = true;
         upgradeBtn.querySelector('span').innerText = 'КРУТИМ...';
         inventoryRow.classList.add('locked');
         shopRow.classList.add('locked');
         playUpgradeStart(); vibrate(20);
-
         const tickCount = 30;
         const tickInterval = durationMs / tickCount;
         for (let i = 0; i < tickCount; i++) setTimeout(() => playTick(), i * tickInterval);
-
         const baseRotation = 360 * 8;
         const randomAngle = Math.random() * 360;
         const totalRotation = baseRotation + randomAngle;
         arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.12, 0.8, 0.15, 1)`;
         arrowContainer.style.transform = `rotate(${totalRotation}deg)`;
-
         const successAngle = (Math.min(chance, 100) / 100) * 360;
         const finalAngle = totalRotation % 360;
         const isSuccess = finalAngle <= successAngle;
-
+        const sourceIndex = selectedSourceIndex;
+        const targetId = selectedTargetId;
         setTimeout(() => {
             if (isSuccess) {
-                // удаляем все выбранные с конца, чтобы не сбить индексы
-                const sortedDesc = [...activeIdxs].sort((a,b) => b-a);
-                sortedDesc.forEach(idx => inventory.splice(idx, 1));
-                inventory.push(selectedTargetId);
-                showToast(`УСПЕХ! Получен ${targetItem.name}`, 'ok');
+                inventory.splice(sourceIndex, 1);
+                inventory.push(targetId);
+                showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
             } else {
-                const sortedDesc = [...activeIdxs].sort((a,b) => b-a);
-                sortedDesc.forEach(idx => inventory.splice(idx, 1));
-                showToast(`Провал... предметы потеряны`, 'err');
+                inventory.splice(sourceIndex, 1);
+                showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
                 playLose(); vibratePattern([50, 30, 100]);
             }
-            selectedSourceIndices = [];
+            selectedSourceIndex = null;
             selectedTargetId = null;
             isSpinning = false;
             updateBalance();
-            renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+            renderInventory(); renderShop(); updateUpgradeScreen(); updateProfileStats(); renderProfileInventory();
             arrowContainer.style.transition = 'none';
             arrowContainer.style.transform = 'rotate(0deg)';
             upgradeBtn.disabled = true;
@@ -2961,7 +2964,7 @@ body{
         initParticles();
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen(); renderAdminGrid();
-        renderProfileInventory(); renderMenuCases();
+        updateProfileStats(); renderProfileInventory(); renderMenuCases();
         applyCustomAvatar();
         updateAutoPromoUI();
         switchTab('menu');
