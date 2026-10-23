@@ -14,6 +14,7 @@
 
 <style>
 :root{
+  /* Оригинальная палитра (Розовая) */
   --pink-hot:#ff4d9e;
   --pink:#ff7eb9;
   --pink-soft:#ffb3d9;
@@ -40,6 +41,46 @@
   --rare-gold:#ffcf6b;
   --roulette-item-width:120px;
   --font-main:'Science Gothic', sans-serif;
+  
+  /* Цвета для нового профиля (Скриншот) */
+  --prof-bg: #0f0b15;
+  --prof-card: #17121f;
+  --prof-card-hover: #1e182b;
+  --prof-border: #2a2138;
+  --prof-text: #ffffff;
+  --prof-text-muted: #8b7d9e;
+  --prof-accent: #a855f7;
+  --prof-accent-glow: rgba(168, 85, 247, 0.3);
+  --prof-orange: #f97316;
+  --prof-orange-glow: rgba(249, 115, 22, 0.3);
+  --prof-gold: #eab308;
+  --prof-avatar-bg: #1e182b;
+}
+
+/* Новая тема (Фиолетово-оранжевая) */
+body.theme-new {
+  --pink-hot: #a855f7;
+  --pink: #c084fc;
+  --pink-soft: #e9d5ff;
+  --pink-pale: #f3e8ff;
+  --magenta: #7e22ce;
+  --purple-deep: #4c1d95;
+  --purple: #9333ea;
+  --violet: #a855f7;
+  --lavender: #d8b4fe;
+  --bg-deep: #0f0b15;
+  --bg-mid: #17121f;
+  --accent: #a855f7;
+  --accent-bright: #e9d5ff;
+  --accent-deep: #7e22ce;
+  --accent-glow: rgba(168, 85, 247, 0.45);
+  --emerald: #f97316;
+  --green: #fdba74;
+  --green-deep: #ea580c;
+  --green-bright: #ffedd5;
+  --glass-bg: rgba(30, 20, 45, .35);
+  --glass-bg-strong: rgba(30, 20, 45, .65);
+  --glass-border: rgba(168, 85, 247, .3);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;user-select:none;font-family:var(--font-main);font-weight:500;letter-spacing:0}
@@ -57,6 +98,13 @@ body{
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
+body.theme-new {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(168,85,247,.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(249,115,22,.1) 0%, transparent 50%),
+    linear-gradient(160deg,#0f0b15 0%,#17121f 50%,#0f0b15 100%);
+}
+
 #sakura{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
 .sakura-petal{
   position:absolute;top:-60px;width:18px;height:18px;
@@ -113,6 +161,7 @@ body{
   padding-bottom:28px;position:relative;flex:1 0 auto;
   contain:layout paint style;z-index:1;min-height:100vh;
 }
+body.theme-new .app { background: rgba(30, 20, 45, .2); }
 
 .top-nav-panel{
   display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;
@@ -123,6 +172,7 @@ body{
   backdrop-filter:blur(8px);
   background:linear-gradient(180deg,rgba(40,10,30,.85),rgba(40,10,30,.5));
 }
+body.theme-new .top-nav-panel { background:linear-gradient(180deg,rgba(15,11,21,.85),rgba(15,11,21,.5)); border-bottom-color: rgba(168, 85, 247, .15); }
 .top-nav-panel::-webkit-scrollbar{display:none}
 .nav-btn{
   background:transparent;border:none;border-bottom:3px solid transparent;
@@ -131,13 +181,16 @@ body{
   flex-shrink:0;font-family:var(--font-main);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
   white-space:nowrap;
 }
+body.theme-new .nav-btn { color: var(--prof-text-muted); }
 .nav-btn svg{width:18px;height:18px;flex-shrink:0;transition:color .15s;stroke-width:2.5;}
 .nav-btn img{width:18px;height:18px;object-fit:contain;}
 .nav-btn:hover{color:#fff}
 .nav-btn.active{color:#fff;border-bottom-color:var(--pink);}
+body.theme-new .nav-btn.active { border-bottom-color: var(--prof-accent); color: #fff; }
 .nav-btn.active svg,.nav-btn.active img{filter:brightness(1.1);stroke:var(--pink-soft);}
 
 .top-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(255,77,158,.05);border-bottom:2px solid rgba(255,126,185,.15);position:relative}
+body.theme-new .top-bar { background: rgba(30, 20, 45, .3); border-bottom-color: rgba(168, 85, 247, .15); }
 .top-left{display:flex;align-items:center;gap:12px}
 .logo-wrap{display:flex;align-items:center;gap:10px}
 .logo-img{
@@ -150,15 +203,25 @@ body{
 @keyframes onlinePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
 .top-right{display:flex;align-items:center;gap:8px}
 .balance-wrap{display:flex;align-items:center;background:rgba(255,77,158,.1);border:2px solid rgba(255,126,185,.3);border-radius:0;overflow:hidden}
+body.theme-new .balance-wrap { background: rgba(30, 20, 45, .5); border-color: rgba(168, 85, 247, .3); }
 .balance-wrap.pulse{animation:balancePulse .4s ease}
 @keyframes balancePulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 .balance{padding:8px 12px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:6px;color:#fff;}
 .coin-icon{width:14px;height:14px;object-fit:contain;}
 .topup-btn{width:36px;height:100%;min-height:36px;border:none;background:rgba(255,77,158,.18);color:var(--pink-soft);font-size:20px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;border-left:2px solid rgba(255,126,185,.2);transition:background .15s}
+body.theme-new .topup-btn { background: rgba(168, 85, 247, .18); border-left-color: rgba(168, 85, 247, .2); color: #fff; }
 .topup-btn:hover{background:rgba(255,77,158,.32)}
 .avatar{width:36px;height:36px;border-radius:0;background:rgba(255,77,158,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;border:2px solid rgba(255,126,185,.25);transition:border-color .15s}
+body.theme-new .avatar { background: rgba(30, 20, 45, .5); border-color: rgba(168, 85, 247, .3); }
 .avatar:hover{border-color:var(--pink)}
 .avatar img{width:100%;height:100%;object-fit:cover;}
+
+/* Кнопка смены темы */
+.theme-toggle-btn {
+  width: 36px; height: 36px; border: 2px solid var(--glass-border); background: var(--glass-bg); color: var(--pink-soft); display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 0; margin-left: 4px; transition: all .2s;
+}
+.theme-toggle-btn:hover { background: var(--glass-bg-strong); border-color: var(--pink); }
+.theme-toggle-btn svg { width: 18px; height: 18px; }
 
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:panelFadeIn .2s ease}
@@ -505,390 +568,478 @@ body{
 .topup-price-line .tpl-value img{width:14px;height:14px;}
 
 /* ========================================================
-   ПРОФИЛЬ — ПЕРЕРАБОТАН
+   НОВЫЙ ПРОФИЛЬ (Стиль скриншота)
    ======================================================== */
-.profile-page{padding:0 0 20px}
-
-/* Шапка профиля */
-.profile-hero{
-  position:relative;padding:24px 20px 20px;
-  background:
-    radial-gradient(ellipse at 50% -20%, rgba(255,77,158,.25) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 100%, rgba(168,85,247,.2) 0%, transparent 60%),
-    linear-gradient(160deg, rgba(60,20,45,.85), rgba(35,10,25,.9));
-  border-bottom:2px solid rgba(255,126,185,.2);
-  overflow:hidden;
-}
-.profile-hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(255,179,217,.3) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 90% 40%, rgba(216,180,254,.3) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 40% 80%, rgba(255,77,158,.25) 0 1.5px, transparent 2px),
-    radial-gradient(circle at 75% 15%, rgba(255,179,217,.25) 0 1.5px, transparent 2px);
-  background-size:180px 180px;
-  pointer-events:none;opacity:.9;
-}
-.profile-hero-inner{position:relative;z-index:1;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px}
-
-.profile-avatar-wrap{
-  position:relative;width:110px;height:110px;flex-shrink:0;
-}
-.profile-avatar-frame{
-  position:absolute;inset:-6px;
-  border-radius:0;
-  background:conic-gradient(from 0deg, var(--pink-hot), var(--violet), var(--magenta), var(--pink-soft), var(--pink-hot));
-  padding:3px;
-  animation:avatarRotate 8s linear infinite;
-  box-shadow:0 0 24px rgba(255,77,158,.5);
-}
-@keyframes avatarRotate{
-  to{transform:rotate(360deg)}
-}
-.profile-avatar-inner{
-  position:relative;width:100%;height:100%;background:#3a1024;
-  border-radius:0;overflow:hidden;z-index:1;
-}
-.profile-avatar-inner img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  border-radius:0;
-}
-.profile-avatar-status{
-  position:absolute;bottom:-4px;right:-4px;width:24px;height:24px;
-  background:var(--emerald);border:3px solid var(--bg-mid);border-radius:50%;
-  z-index:3;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 12px var(--emerald);
-}
-.profile-avatar-status::after{
-  content:'';width:8px;height:8px;background:#fff;border-radius:50%;
+.profile-page-new {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.profile-identity{text-align:center;width:100%}
-.profile-nick-big{
-  font-size:clamp(20px,5vw,28px);font-weight:900;color:#fff;
-  letter-spacing:.5px;line-height:1.2;margin-bottom:6px;
-  text-shadow:0 0 20px rgba(255,77,158,.4);
-  word-break:break-word;
-}
-.profile-tg-big{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:14px;font-weight:600;color:var(--pink-soft);
-  text-decoration:none;letter-spacing:.5px;line-height:1.3;
-  padding:5px 12px;background:rgba(255,77,158,.12);
-  border:2px solid rgba(255,126,185,.25);
-  transition:all .15s;
-}
-.profile-tg-big:hover{background:rgba(255,77,158,.2);border-color:var(--pink)}
-.profile-tg-big svg{width:12px;height:12px}
-
-/* Основные статы */
-.profile-stats-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  width:100%;max-width:640px;margin:20px auto 0;
-  padding:0 20px;
-}
-.profile-stat-card{
-  padding:16px 14px;
-  background:linear-gradient(145deg, rgba(255,77,158,.1), rgba(168,85,247,.06));
-  border:2px solid rgba(255,126,185,.2);
-  position:relative;overflow:hidden;
-  transition:all .2s;
-}
-.profile-stat-card:hover{
-  border-color:var(--pink);
-  background:linear-gradient(145deg, rgba(255,77,158,.16), rgba(168,85,247,.1));
-  transform:translateY(-2px);
-}
-.profile-stat-card::after{
-  content:'';position:absolute;top:-20%;right:-20%;width:60%;height:100%;
-  background:radial-gradient(circle, rgba(255,77,158,.15), transparent 70%);
-  pointer-events:none;
-}
-.profile-stat-label{
-  font-size:10px;font-weight:700;color:#c98bb0;
-  letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:8px;line-height:1.2;
-}
-.profile-stat-value{
-  font-size:22px;font-weight:900;color:#fff;
-  display:flex;align-items:center;gap:8px;line-height:1.2;
-}
-.profile-stat-value img{width:20px;height:20px;}
-.profile-stat-value .unit{
-  font-size:11px;font-weight:600;color:#c98bb0;
-  margin-left:auto;
+/* Сетка профиля */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 20px;
+    align-items: start;
 }
 
-/* Раскрывающийся инвентарь */
-.profile-inventory-section{
-  max-width:640px;margin:10px auto 0;padding:0 20px;
+@media (max-width: 1024px) {
+    .profile-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .profile-col-right {
+        grid-column: 1 / -1;
+    }
 }
-.profile-inventory-toggle{
-  width:100%;padding:16px 14px;
-  background:linear-gradient(145deg, rgba(255,77,158,.1), rgba(168,85,247,.06));
-  border:2px solid rgba(255,126,185,.2);
-  display:flex;align-items:center;gap:12px;
-  cursor:pointer;transition:all .2s;
-  text-align:left;
-}
-.profile-inventory-toggle:hover{
-  border-color:var(--pink);
-  background:linear-gradient(145deg, rgba(255,77,158,.16), rgba(168,85,247,.1));
-}
-.profile-inventory-toggle .pt-icon{
-  width:36px;height:36px;flex-shrink:0;
-  background:rgba(255,77,158,.16);
-  border:2px solid rgba(255,126,185,.3);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--pink-soft);
-}
-.profile-inventory-toggle .pt-icon svg{width:18px;height:18px}
-.profile-inventory-toggle .pt-text{flex:1;min-width:0}
-.profile-inventory-toggle .pt-title{
-  font-size:12px;font-weight:700;color:#c98bb0;
-  letter-spacing:.8px;text-transform:uppercase;
-  margin-bottom:2px;line-height:1.2;
-}
-.profile-inventory-toggle .pt-value{
-  font-size:16px;font-weight:900;color:#fff;
-  display:flex;align-items:center;gap:6px;line-height:1.2;
-}
-.profile-inventory-toggle .pt-arrow{
-  width:20px;height:20px;color:var(--pink-soft);
-  transition:transform .3s ease;flex-shrink:0;
-}
-.profile-inventory-toggle.expanded .pt-arrow{transform:rotate(180deg)}
-
-.profile-inventory-drawer{
-  max-height:0;overflow:hidden;
-  transition:max-height .4s ease,padding .3s ease,margin-top .3s ease;
-  background:rgba(20,6,14,.4);
-  border:2px solid rgba(255,126,185,.12);
-  border-top:none;
-}
-.profile-inventory-drawer.expanded{
-  max-height:600px;padding:12px;margin-top:0;
-  border-top:2px solid rgba(255,126,185,.12);
-  overflow-y:auto;
-}
-.profile-inventory-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(88px,1fr));
-  gap:8px;
-}
-.profile-inventory-item{
-  background:linear-gradient(145deg, rgba(255,77,158,.08), rgba(168,85,247,.04));
-  border:2px solid rgba(255,126,185,.15);
-  padding:10px 6px;
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  position:relative;transition:all .15s;
-}
-.profile-inventory-item:hover{
-  border-color:rgba(255,126,185,.45);
-  transform:translateY(-2px);
-}
-.profile-inventory-item img{width:52px;height:52px;object-fit:contain;}
-.profile-inventory-item .inv-name{
-  font-size:10px;font-weight:600;color:#ffe3ef;
-  text-align:center;line-height:1.15;height:24px;
-  overflow:hidden;width:100%;
-}
-.profile-inventory-item .inv-price{
-  font-size:11px;font-weight:800;color:var(--pink-soft);
-  display:flex;align-items:center;gap:2px;line-height:1.3;
-}
-.profile-inventory-item .inv-price img{width:10px;height:10px;}
-.profile-inventory-empty{
-  text-align:center;color:#9a5f7d;font-size:13px;
-  font-weight:600;padding:24px;line-height:1.3;
-  grid-column:1/-1;
+@media (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+    .profile-page-new { padding: 12px; gap: 12px; }
 }
 
-/* Заявки на пополнение */
-.deposits-block{max-width:640px;margin:10px auto 0;padding:14px;background:rgba(255,77,158,.06);border:2px solid rgba(255,126,185,.22);border-radius:0}
-.deposits-block-title{font-size:14px;font-weight:800;color:var(--pink-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
-.deposits-block-title::before{content:'';width:4px;height:12px;background:var(--pink-soft);border-radius:0}
-.deposits-count{font-size:14px;font-weight:800;color:var(--pink-soft);margin-left:auto;background:rgba(255,77,158,.14);padding:2px 8px;border-radius:0;border:2px solid rgba(255,126,185,.3);line-height:1.3}
-
-/* Кнопка админа */
-.profile-action-row{max-width:640px;margin:10px auto 0;padding:0 20px}
-
-/* Кастомизация */
-.customize-in-profile{max-width:640px;margin:20px auto 0;padding:0 20px}
-.profile-section-heading{
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:14px;
-}
-.profile-section-heading::before{
-  content:'';width:4px;height:18px;background:var(--pink);flex-shrink:0;
-}
-.profile-section-heading span{
-  font-size:13px;font-weight:800;color:#c98bb0;
-  letter-spacing:1.5px;text-transform:uppercase;
-}
-.customize-section{
-  padding:16px 14px;
-  background:linear-gradient(145deg, rgba(255,77,158,.06), rgba(168,85,247,.03));
-  border:2px solid rgba(255,126,185,.15);
-  margin-bottom:10px;
-  transition:border-color .15s;
-}
-.customize-section:hover{border-color:rgba(255,126,185,.3)}
-.customize-section-title{
-  font-size:12px;font-weight:800;color:var(--pink-soft);
-  letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;
-  line-height:1.4;
-}
-.customize-section-title svg{width:16px;height:16px;color:var(--pink)}
-
-.slider-row{display:flex;align-items:center;gap:12px}
-.slider-row input[type="range"]{
-  flex:1;-webkit-appearance:none;appearance:none;
-  height:6px;background:rgba(255,126,185,.15);
-  border-radius:0;outline:none;
-}
-.slider-row input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;
-  width:20px;height:20px;border-radius:0;
-  background:var(--pink);cursor:pointer;
-  border:2px solid var(--bg-mid);
-}
-.slider-row input[type="range"]::-moz-range-thumb{
-  width:20px;height:20px;border-radius:0;
-  background:var(--pink);cursor:pointer;
-  border:2px solid var(--bg-mid);
-}
-.slider-value{
-  font-size:14px;font-weight:800;color:#fff;
-  min-width:52px;text-align:right;line-height:1.3;
-  background:rgba(255,77,158,.16);
-  padding:6px 10px;border:2px solid rgba(255,126,185,.3);
+/* Общие карточки */
+.prof-card {
+    background: var(--prof-card);
+    border: 1px solid var(--prof-border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.avatar-upload-row{display:flex;align-items:center;gap:12px}
-.avatar-preview{
-  width:64px;height:64px;border-radius:0;
-  border:2px solid var(--pink);object-fit:cover;
-  background:#3a1024;flex-shrink:0;
+.prof-card-header {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--prof-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.avatar-upload-buttons{flex:1;display:flex;flex-direction:column;gap:6px}
-.upload-btn{
-  padding:12px 16px;border-radius:0;
-  border:2px solid rgba(255,126,185,.25);
-  background:rgba(255,77,158,.06);color:#fff;
-  font-size:12px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.5px;cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  line-height:1.4;
+.prof-card-header svg { width: 16px; height: 16px; }
+
+/* Левая колонка - Лучший дроп */
+.best-drop-card {
+    align-items: center;
+    text-align: center;
 }
-.upload-btn:hover{background:rgba(255,77,158,.12);border-color:rgba(255,126,185,.4)}
-.upload-btn svg{width:16px;height:16px}
-.reset-avatar-btn{
-  padding:8px 12px;border-radius:0;
-  border:2px solid rgba(255,107,138,.3);
-  background:rgba(255,107,138,.1);color:#ff8fa8;
-  font-size:11px;font-weight:700;cursor:pointer;
-  transition:background .15s;text-transform:uppercase;
-  line-height:1.4;
+.best-drop-card .prof-card-header { align-self: flex-start; }
+.best-drop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
 }
-.reset-avatar-btn:hover{background:rgba(255,107,138,.2)}
-
-/* Промо */
-.promo-panel{padding:24px 20px;text-align:center}
-.promo-panel h2{font-size:24px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;line-height:1.4}
-.promo-panel p{color:#c98bb0;font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.3}
-.promo-input-wrap{display:flex;gap:8px;max-width:480px;margin:0 auto}
-.promo-input-wrap .form-input{flex:1;text-transform:uppercase}
-.promo-input-wrap .action-btn{width:auto;padding:12px 16px;margin-top:0}
-
-.coming-soon {
-  display: flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 20px;text-align:center;background:rgba(40,10,30,.85);
-  border:2px dashed var(--pink);margin:20px;min-height:300px;
+.best-drop-img-wrap {
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%);
+    border: 2px solid rgba(168,85,247,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 10px 0;
 }
-.coming-soon img {width:100%;max-width:400px;object-fit:contain;margin-bottom:24px;filter:drop-shadow(0 0 15px rgba(255,77,158,.4));}
-.coming-soon-title {
-  font-size:clamp(20px,5vw,32px);font-weight:900;color:#fff;
-  text-transform:uppercase;letter-spacing:4px;
+.best-drop-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+.best-drop-label {
+    font-size: 12px;
+    color: var(--prof-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.best-drop-name {
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+}
+.best-drop-price {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--prof-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.best-drop-price img { width: 20px; height: 20px; }
+
+/* Центральная колонка */
+.profile-main-card {
+    padding: 0;
+    overflow: visible;
+}
+.profile-main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(180deg, rgba(168,85,247,0.08) 0%, transparent 100%);
+    border-bottom: 1px solid var(--prof-border);
+}
+.profile-main-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile-main-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--prof-avatar-bg);
+    border: 2px solid var(--prof-accent);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 15px var(--prof-accent-glow);
+}
+.profile-main-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profile-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.profile-main-nick {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+}
+.profile-main-tag {
+    font-size: 12px;
+    color: var(--prof-text-muted);
+    font-weight: 600;
+}
+.profile-main-id {
+    font-size: 11px;
+    color: var(--prof-text-muted);
+    font-weight: 500;
+    opacity: 0.7;
+}
+.profile-main-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.profile-main-avatar-big {
+    display: flex;
+    justify-content: center;
+}
+.profile-main-avatar-big .profile-main-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border-width: 3px;
+}
+.profile-balance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--prof-border);
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+.profile-balance-label {
+    font-size: 12px;
+    color: var(--prof-text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.profile-balance-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.profile-balance-value img { width: 18px; height: 18px; }
+.profile-balance-actions {
+    display: flex;
+    gap: 8px;
+}
+.profile-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    font-family: var(--font-main);
+}
+.profile-btn-primary {
+    background: var(--prof-orange);
+    color: #fff;
+}
+.profile-btn-primary:hover {
+    background: #ea580c;
+}
+.profile-btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--prof-text-muted);
+    border: 1px solid var(--prof-border);
+}
+.profile-btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
 }
 
-.mutation-badge{position:absolute;width:18px;height:18px;object-fit:contain;top:4px;left:4px;z-index:3;pointer-events:none}
-
-.glow-rainbow{border-color:var(--pink-soft) !important}
-.glow-purple,.glow-red,.glow-green,.glow-blue{box-shadow:none}
-
-@media (max-width:900px){
-  .inventory-row{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));padding:4px 14px 8px}
-  .shop-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
-  .topup-grid{grid-template-columns:repeat(3,1fr)}
-  :root{--card-img-size:44px}
-  .admin-grid{grid-template-columns:repeat(3,1fr)}
-  .top-bar{padding:12px 14px}
-  .menu-page{padding:14px}
-  .cases-grid{padding:0 12px;gap:8px}
-  .cases-header{padding:12px 14px 6px}
-  .section-title{padding:0 14px}
-  .upg-tabs{padding:10px 14px 0;}
+/* Статистика */
+.profile-stats-card {
+    padding: 0;
+    overflow: visible;
 }
-@media (max-width:600px){
-  .top-nav-panel{padding:0 8px;}
-  .nav-btn{padding:14px 8px;font-size:10px;gap:4px;}
-  .nav-btn svg,.nav-btn img{width:16px;height:16px;}
-  .progress-wrapper{width:240px;height:240px}
-  .chance-big{font-size:32px}
-  .item-box{min-width:0;padding:10px;max-width:none}
-  .item-box img{width:44px;height:44px}
-  .upgrade-main-btn{flex:0 1 180px;font-size:12px;padding:12px}
-  .fast-btn{width:40px;height:40px}
-  .inventory-row{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;padding:4px 10px 8px}
-  .shop-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px}
-  .shop-scroll{padding:4px 10px 8px;max-height:340px}
-  .section-title{padding-left:10px;padding-right:10px;font-size:12px}
-  .items-row{padding:10px;gap:6px}
-  .stage-controls{padding:0 10px 4px}
-  .top-bar{padding:10px 12px}
-  .balance{padding:7px 9px;font-size:14px}
-  :root{--card-img-size:40px;--card-name-size:10px;--roulette-item-width:100px}
-  .admin-grid{grid-template-columns:repeat(2,1fr)}
-  .deposit-item{grid-template-columns:36px 1fr}
-  .deposit-actions{grid-column:1/-1;flex-direction:row}
-  .dep-accept,.dep-reject{flex:1}
-  .case-card-inner{padding:8px 6px 6px;gap:6px}
-  .case-name{font-size:10px}
-  .case-price{font-size:11px;padding:3px 6px}
-  .case-img-wrap img{width:80%;height:80%}
-  .cases-grid{gap:6px;padding:0 8px;grid-template-columns:repeat(3,1fr)}
-  .case-open-main-img{width:140px;height:140px}
-  .case-open-name{font-size:14px;letter-spacing:1px}
-  .case-roulette-item img{width:44px;height:44px}
-  .case-roulette-row{height:100px}
-  .case-roulette-item .roulette-name{font-size:9px;height:20px}
-  .case-qty-btn-big{padding:10px 4px;font-size:13px}
-  .case-open-action-btn{padding:12px;font-size:13px;letter-spacing:1px}
-  .case-skip-btn{padding:10px;font-size:12px}
-  .case-possible-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;padding:0 10px}
-  .case-possible-item img{width:40px;height:40px}
-  .case-anim-box{width:150px;height:150px}
-  .case-anim-text{font-size:16px;letter-spacing:2px}
-  .case-result-img-wrap{width:100px;height:100px}
-  .case-result-name{font-size:14px}
-  .case-result-price{font-size:16px}
-  .case-multi-results{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px}
-  .case-multi-item img{width:40px;height:40px}
-  .upg-tab{font-size:12px;padding:10px 4px;min-width:90px;}
+.profile-stats-header {
+    padding: 16px 20px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--prof-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--prof-border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--prof-border);
+}
+.profile-stat-item {
+    background: var(--prof-card);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    text-align: center;
+}
+.profile-stat-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--prof-orange);
+    margin-bottom: 4px;
+}
+.profile-stat-icon svg { width: 24px; height: 24px; }
+.profile-stat-value {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+}
+.profile-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--prof-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-  /* Профиль мобильный */
-  .profile-hero{padding:20px 14px 16px}
-  .profile-avatar-wrap{width:92px;height:92px}
-  .profile-stats-grid{padding:0 14px;gap:8px}
-  .profile-stat-card{padding:14px 10px}
-  .profile-stat-value{font-size:18px}
-  .profile-inventory-section{padding:0 14px}
-  .customize-in-profile{padding:0 14px}
-  .profile-action-row{padding:0 14px}
-  .profile-inventory-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
-  .profile-inventory-item img{width:44px;height:44px}
+/* Правая колонка - Заявки */
+.profile-requests-card {
+    padding: 0;
+    overflow: visible;
+}
+.profile-requests-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--prof-border);
+}
+.profile-requests-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--prof-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.profile-requests-badge {
+    background: var(--prof-orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+.profile-requests-list {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.profile-request-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--prof-border);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.profile-request-item .req-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+.profile-request-item .req-label {
+    color: var(--prof-text-muted);
+    font-weight: 600;
+}
+.profile-request-item .req-value {
+    color: #fff;
+    font-weight: 700;
+}
+.profile-request-item .req-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+.profile-request-item .req-btn {
+    flex: 1;
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: var(--font-main);
+}
+.req-accept { background: rgba(34,197,94,0.2); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.req-accept:hover { background: rgba(34,197,94,0.3); }
+.req-reject { background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.req-reject:hover { background: rgba(239,68,68,0.3); }
+
+/* Инвентарь внизу */
+.profile-inventory-bottom {
+    grid-column: 1 / -1;
+    background: var(--prof-card);
+    border: 1px solid var(--prof-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+.profile-inventory-bottom .prof-card-header {
+    margin-bottom: 16px;
+}
+.profile-inventory-bottom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+.profile-inventory-bottom-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--prof-border);
+    border-radius: 8px;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    position: relative;
+}
+.profile-inventory-bottom-item:hover {
+    border-color: var(--prof-accent);
+    background: rgba(168,85,247,0.05);
+}
+.profile-inventory-bottom-item img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}
+.profile-inventory-bottom-item .inv-item-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    line-height: 1.1;
+    height: 24px;
+    overflow: hidden;
+    width: 100%;
+}
+.profile-inventory-bottom-item .inv-item-price {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--prof-orange);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.profile-inventory-bottom-item .inv-item-price img { width: 12px; height: 12px; }
+.profile-inventory-bottom-item .inv-item-mutation {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Скрываем старые элементы профиля, если они остались */
+.profile-hero, .profile-stats-grid-old, .profile-inventory-section, .customize-in-profile, .profile-action-row {
+    display: none !important;
+}
+
+/* Стили для скроллбара в новых блоках */
+.profile-requests-list::-webkit-scrollbar { width: 4px; }
+.profile-requests-list::-webkit-scrollbar-thumb { background: var(--prof-border); border-radius: 2px; }
+.profile-requests-list::-webkit-scrollbar-track { background: transparent; }
+
+/* Адаптив для профиля */
+@media (max-width: 768px) {
+    .profile-main-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .profile-balance-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .profile-balance-actions { width: 100%; }
+    .profile-balance-actions .profile-btn { flex: 1; justify-content: center; }
+    .profile-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 400px) {
+    .profile-stats-grid { grid-template-columns: 1fr; }
+    .profile-inventory-bottom-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
 }
 </style>
 </head>
@@ -917,6 +1068,7 @@ body{
 <div class="bg-layer"></div>
 <div class="bg-grid"></div>
 
+<!-- Модалки (без изменений) -->
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
@@ -1046,6 +1198,7 @@ body{
 <div id="sakura"></div>
 
 <div class="app" id="mainApp">
+    <!-- Навигация (без изменений) -->
     <div class="top-nav-panel">
         <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')" title="Главная">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -1102,9 +1255,24 @@ body{
                      src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" 
                      alt="avatar">
             </div>
+            <!-- НОВАЯ КНОПКА СМЕНЫ ТЕМЫ -->
+            <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="Сменить тему">
+                <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
         </div>
     </div>
 
+    <!-- Вкладка Меню (Кейсы) -->
     <div class="tab-panel active" id="panelMenu">
         <div class="menu-page">
             <div class="menu-section-title">КЕЙСЫ</div>
@@ -1112,6 +1280,7 @@ body{
         </div>
     </div>
 
+    <!-- Вкладка Апгрейдер -->
     <div class="tab-panel" id="panelUpgrade">
         <div class="upg-tabs">
             <button class="upg-tab active" onclick="switchUpgTab('main', this)">Апгрейдер</button>
@@ -1175,6 +1344,7 @@ body{
         </div>
     </div>
 
+    <!-- Вкладка Квесты -->
     <div class="tab-panel" id="panelRocket">
         <div class="coming-soon" id="rocketRestricted">
             <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/brainwinGRUST.png" alt="Скоро открытие" onerror="this.src='https://github.com/saintezz/BrainrotWin/raw/main/brainwinGRUST.png'">
@@ -1186,6 +1356,7 @@ body{
         </div>
     </div>
 
+    <!-- Вкладка Промокоды -->
     <div class="tab-panel" id="panelPromo">
         <div class="coming-soon" id="promoRestricted">
             <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/brainwinGRUST.png" alt="Скоро открытие" onerror="this.src='https://github.com/saintezz/BrainrotWin/raw/main/brainwinGRUST.png'">
@@ -1202,143 +1373,157 @@ body{
         </div>
     </div>
 
+    <!-- Вкладка Профиль (НОВЫЙ ДИЗАЙН) -->
     <div class="tab-panel" id="panelProfile">
-        <div class="profile-page">
-            <!-- Шапка профиля -->
-            <div class="profile-hero">
-                <div class="profile-hero-inner">
-                    <div class="profile-avatar-wrap">
-                        <div class="profile-avatar-frame">
-                            <div class="profile-avatar-inner">
-                                <img id="profileAvatarImg"
-                                     src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg"
-                                     alt="Avatar"
-                                     loading="lazy" decoding="async">
+        <div class="profile-page-new" id="profileNewContent">
+            <!-- Сетка профиля -->
+            <div class="profile-grid">
+                <!-- Левая колонка: Лучший дроп -->
+                <div class="prof-card best-drop-card">
+                    <div class="prof-card-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        ЛУЧШИЙ ДРОП
+                    </div>
+                    <div class="best-drop-content" id="bestDropContent">
+                        <!-- Заполняется через JS -->
+                        <div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px;">Пока нет дропа</div>
+                    </div>
+                </div>
+
+                <!-- Центральная колонка: Инфо и Статистика -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Карточка с инфо -->
+                    <div class="prof-card profile-main-card">
+                        <div class="profile-main-header">
+                            <div class="profile-main-user">
+                                <div class="profile-main-avatar" id="profileMainAvatarWrap">
+                                    <img id="profileMainAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="Avatar">
+                                </div>
+                                <div class="profile-main-info">
+                                    <div class="profile-main-nick" id="profileMainNick">Загрузка...</div>
+                                    <div class="profile-main-tag" id="profileMainTag">@...</div>
+                                </div>
+                            </div>
+                            <div class="profile-main-id" id="profileMainId">ID: ---</div>
+                        </div>
+                        <div class="profile-main-body">
+                            <div class="profile-main-avatar-big">
+                                <div class="profile-main-avatar" style="width: 100px; height: 100px; border-radius: 50%; border-width: 3px;">
+                                    <img id="profileMainAvatarBig" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="Avatar">
+                                </div>
+                            </div>
+                            <div class="profile-balance-row">
+                                <div>
+                                    <div class="profile-balance-label">БАЛАНС</div>
+                                    <div class="profile-balance-value">
+                                        <span id="profileBalanceNew">0</span>
+                                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin">
+                                    </div>
+                                </div>
+                                <div class="profile-balance-actions">
+                                    <button class="profile-btn profile-btn-primary" onclick="openTopup()">
+                                        + Пополнить
+                                    </button>
+                                    <button class="profile-btn profile-btn-secondary" onclick="showToast('Реферальная система в разработке', 'info')">
+                                        👥 Рефералы
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="profile-avatar-status"></div>
                     </div>
-                    <div class="profile-identity">
-                        <div class="profile-nick-big" id="profileNick">Загрузка...</div>
-                        <a class="profile-tg-big" id="profileTg" href="#" target="_blank">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 8.2l-1.8 8.6c-.1.6-.5.8-1 .5l-2.8-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-3 5.5-5c.2-.2 0-.3-.3-.1l-6.8 4.3-2.9-.9c-.6-.2-.6-.6.1-.9l11.3-4.4c.5-.2 1 .1.8.9z"/>
+
+                    <!-- Карточка статистики -->
+                    <div class="prof-card profile-stats-card">
+                        <div class="profile-stats-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
-                            <span id="profileTgText">@...</span>
-                        </a>
+                            СТАТИСТИКА
+                        </div>
+                        <div class="profile-stats-grid">
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                                    </svg>
+                                </div>
+                                <div class="profile-stat-value" id="statCasesCount">0</div>
+                                <div class="profile-stat-label">Кейсы</div>
+                            </div>
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 20V10"></path>
+                                        <path d="M18 20V4"></path>
+                                        <path d="M6 20v-4"></path>
+                                    </svg>
+                                </div>
+                                <div class="profile-stat-value" id="statUpgradesCount">0</div>
+                                <div class="profile-stat-label">Апгрейды</div>
+                            </div>
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                    </svg>
+                                </div>
+                                <div class="profile-stat-value" id="statPetsCount">0</div>
+                                <div class="profile-stat-label">Петы</div>
+                            </div>
+                            <div class="profile-stat-item">
+                                <div class="profile-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="profile-stat-value" id="statLevel">0</div>
+                                <div class="profile-stat-label">Уровень</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Основные статы -->
-                <div class="profile-stats-grid">
-                    <div class="profile-stat-card">
-                        <div class="profile-stat-label">Баланс</div>
-                        <div class="profile-stat-value">
-                            <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin" loading="lazy" decoding="async">
-                            <span id="profileBalance">0</span>
+                <!-- Правая колонка: Заявки (только для админа) -->
+                <div class="prof-card profile-requests-card" id="profileRequestsCard" style="display: none;">
+                    <div class="profile-requests-header">
+                        <div class="profile-requests-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            ЗАЯВКИ
                         </div>
+                        <div class="profile-requests-badge" id="requestsBadge">0</div>
                     </div>
-                    <div class="profile-stat-card">
-                        <div class="profile-stat-label">Предметов</div>
-                        <div class="profile-stat-value">
-                            <span id="profileItemsCount">0</span>
-                            <span class="unit">шт.</span>
-                        </div>
+                    <div class="profile-requests-list" id="requestsList">
+                        <div style="text-align: center; color: var(--prof-text-muted); padding: 20px; font-size: 13px;">Нет заявок</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Раскрывающийся инвентарь -->
-            <div class="profile-inventory-section">
-                <button class="profile-inventory-toggle" id="inventoryToggle" onclick="toggleInventoryDrawer()">
-                    <div class="pt-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                            <line x1="12" y1="22.08" x2="12" y2="12"/>
-                        </svg>
-                    </div>
-                    <div class="pt-text">
-                        <div class="pt-title">Мой инвентарь</div>
-                        <div class="pt-value"><span id="inventoryCountLabel">0 предметов</span></div>
-                    </div>
-                    <svg class="pt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 9l6 6 6-6"/>
+            <!-- Нижний блок: Предметы пользователя -->
+            <div class="profile-inventory-bottom">
+                <div class="prof-card-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
                     </svg>
-                </button>
-                <div class="profile-inventory-drawer" id="inventoryDrawer">
-                    <div class="profile-inventory-grid" id="profileInventoryGrid"></div>
+                    ПРЕДМЕТЫ ПОЛЬЗОВАТЕЛЯ
                 </div>
-            </div>
-
-            <!-- Заявки на пополнение -->
-            <div class="deposits-block" id="depositsBlock" style="display:none;">
-                <div class="deposits-block-title">
-                    Заявки на пополнение
-                    <span class="deposits-count" id="depositsCount">0</span>
+                <div class="profile-inventory-bottom-grid" id="profileInventoryBottomGrid">
+                    <div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px; grid-column: 1/-1;">Пока пусто</div>
                 </div>
-                <div id="depositsList"></div>
-            </div>
-
-            <!-- Кнопка админа -->
-            <div class="profile-action-row">
-                <button class="action-btn" id="adminPanelBtn" style="display:none; background: rgba(255,107,138,.15); border-color: rgba(255,107,138,.4); color:#ff8fa8;" onclick="openAdminPanel()">Открыть админ-панель</button>
-            </div>
-
-            <!-- Кастомизация -->
-            <div class="customize-in-profile">
-                <div class="profile-section-heading"><span>Настройки профиля</span></div>
-
-                <div class="customize-section">
-                    <div class="customize-section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                        Аватарка
-                    </div>
-                    <div class="avatar-upload-row">
-                        <img class="avatar-preview" id="avatarPreview" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="preview" loading="lazy" decoding="async">
-                        <div class="avatar-upload-buttons">
-                            <label class="upload-btn" for="avatarFileInput">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
-                                Загрузить
-                            </label>
-                            <button class="reset-avatar-btn" onclick="resetAvatar()">Сбросить</button>
-                        </div>
-                        <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
-                    </div>
-                </div>
-
-                <div class="customize-section">
-                    <div class="customize-section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
-                        </svg>
-                        Никнейм
-                    </div>
-                    <input type="text" class="form-input" id="customizeNickInput" placeholder="Введи свой ник" maxlength="20">
-                    <button class="action-btn" onclick="saveCustomNick()">Сохранить ник</button>
-                </div>
-
-                <div class="customize-section">
-                    <div class="customize-section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                            <line x1="2" y1="12" x2="22" y2="12"/>
-                        </svg>
-                        Прозрачность фона
-                    </div>
-                    <div class="slider-row">
-                        <input type="range" id="opacitySlider" min="5" max="100" value="55" oninput="changeOpacity(this.value)">
-                        <div class="slider-value" id="opacityValue">55%</div>
-                    </div>
-                </div>
-                <div class="msg" id="customizeMsg"></div>
             </div>
         </div>
     </div>
@@ -1475,15 +1660,6 @@ body{
           ] }
     ];
 
-    // ============================================================
-    // ШАНСЫ АПГРЕЙДА
-    // Формула: chance = 80 / (targetPrice / sourcePrice)
-    // Кап сверху — 80%.
-    //   5530 → 5539   (ratio 1.0016) → 80%
-    //   5530 → 12000  (ratio 2.17)   → 37%
-    //   5530 → 27650  (ratio 5)      → 16%
-    //   5530 → 55300  (ratio 10)     → 8%
-    // ============================================================
     const MAX_CHANCE = 80;
     const MIN_CHANCE = 0.01;
 
@@ -1527,6 +1703,10 @@ body{
     let isAdmin = false;
     let customAvatar = localStorage.getItem('ggbrainx_custom_avatar') || null;
 
+    // Статистика
+    let stats = JSON.parse(localStorage.getItem('ggbrainx_stats') || '{"cases":0,"upgrades":0,"pets":0}');
+    let bestDropId = localStorage.getItem('ggbrainx_best_drop') || null;
+
     let freeCaseLastOpen = parseFloat(localStorage.getItem('ggbrainx_free_case_last') || '0');
     let currentCaseId = null;
     let caseOpenQty = 1;
@@ -1540,6 +1720,9 @@ body{
     function saveLocalCache() {
         localStorage.setItem('ggbrainx_balance', String(balance));
         localStorage.setItem('ggbrainx_inventory', JSON.stringify(inventory));
+        localStorage.setItem('ggbrainx_stats', JSON.stringify(stats));
+        if (bestDropId) localStorage.setItem('ggbrainx_best_drop', bestDropId);
+        else localStorage.removeItem('ggbrainx_best_drop');
     }
     function getTelegramId() {
         if (USER.id) return String(USER.id);
@@ -1729,8 +1912,6 @@ body{
     const targetName = document.getElementById('targetName');
     const targetPrice = document.getElementById('targetPrice');
     const upgradeBtn = document.getElementById('upgradeBtn');
-    const profileBalance = document.getElementById('profileBalance');
-    const profileItemsCount = document.getElementById('profileItemsCount');
 
     function showToast(text, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -1756,12 +1937,12 @@ body{
 
     function applyCustomAvatar() {
         const src = customAvatar || DEFAULT_AVATAR;
-        const p = document.getElementById('profileAvatarImg');
+        const p = document.getElementById('profileMainAvatarImg');
         const t = document.getElementById('topAvatarImg');
+        const pb = document.getElementById('profileMainAvatarBig');
         if (p) p.src = src;
         if (t) t.src = src;
-        const preview = document.getElementById('avatarPreview');
-        if (preview) preview.src = src;
+        if (pb) pb.src = src;
     }
     window.handleAvatarUpload = function(event) {
         const file = event.target.files[0];
@@ -1786,35 +1967,132 @@ body{
         playClick(); vibrate(10);
     };
     function applyUserToProfile() {
-        const nickEl = document.getElementById('profileNick');
-        const tgEl = document.getElementById('profileTg');
-        const tgTextEl = document.getElementById('profileTgText');
+        const nickEl = document.getElementById('profileMainNick');
+        const tgEl = document.getElementById('profileMainTag');
+        const idEl = document.getElementById('profileMainId');
         if (nickEl) nickEl.textContent = getDisplayNick();
-        if (tgEl) { tgEl.href = USER.tgLink; }
-        if (tgTextEl) tgTextEl.textContent = USER.tg;
+        if (tgEl) tgEl.textContent = USER.tg;
+        if (idEl) idEl.textContent = 'ID: ' + (USER.id || '---');
         applyCustomAvatar();
     }
     applyUserToProfile();
 
     function updateBalance() {
         balanceDisplay.innerText = balance.toLocaleString('ru-RU');
-        profileBalance.innerText = balance.toLocaleString('ru-RU');
-        profileItemsCount.innerText = inventory.length;
-        const label = document.getElementById('inventoryCountLabel');
-        if (label) label.textContent = inventory.length + ' ' + getItemsWord(inventory.length);
+        document.getElementById('profileBalanceNew').innerText = balance.toLocaleString('ru-RU');
         balanceBox.classList.remove('pulse');
         void balanceBox.offsetWidth;
         balanceBox.classList.add('pulse');
         saveLocalCache();
         syncUserToServer();
+        updateProfileStats();
     }
-    function getItemsWord(n) {
-        const mod10 = n % 10;
-        const mod100 = n % 100;
-        if (mod10 === 1 && mod100 !== 11) return 'предмет';
-        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return 'предмета';
-        return 'предметов';
+
+    function updateProfileStats() {
+        // Статистика
+        document.getElementById('statCasesCount').innerText = stats.cases || 0;
+        document.getElementById('statUpgradesCount').innerText = stats.upgrades || 0;
+        document.getElementById('statPetsCount').innerText = stats.pets || 0;
+        // Уровень (сумма цен предметов / 1000)
+        const totalValue = inventory.reduce((sum, id) => {
+            const item = getItemById(id);
+            return sum + (item ? item.price : 0);
+        }, 0);
+        document.getElementById('statLevel').innerText = Math.floor(totalValue / 1000);
+        
+        // Лучший дроп
+        renderBestDrop();
+        // Инвентарь внизу
+        renderProfileInventoryBottom();
+        // Заявки
+        renderProfileRequests();
     }
+
+    function renderBestDrop() {
+        const container = document.getElementById('bestDropContent');
+        if (!container) return;
+        if (!bestDropId) {
+            container.innerHTML = '<div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px;">Пока нет дропа</div>';
+            return;
+        }
+        const item = getItemById(bestDropId);
+        if (!item) {
+            container.innerHTML = '<div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px;">Пока нет дропа</div>';
+            return;
+        }
+        container.innerHTML = `
+            <div class="best-drop-img-wrap">
+                <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+            </div>
+            <div class="best-drop-label">Лучший дроп</div>
+            <div class="best-drop-name">${item.name}</div>
+            <div class="best-drop-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
+        `;
+    }
+
+    function renderProfileInventoryBottom() {
+        const grid = document.getElementById('profileInventoryBottomGrid');
+        if (!grid) return;
+        if (!inventory.length) {
+            grid.innerHTML = '<div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px; grid-column: 1/-1;">Пока пусто</div>';
+            return;
+        }
+        grid.innerHTML = inventory.map(id => {
+            const item = getItemById(id);
+            if (!item) return '';
+            const mutationIcon = item.mutation ? `<img class="inv-item-mutation" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async">` : '';
+            return `
+                <div class="profile-inventory-bottom-item">
+                    ${mutationIcon}
+                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                    <div class="inv-item-name">${item.name}</div>
+                    <div class="inv-item-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderProfileRequests() {
+        const card = document.getElementById('profileRequestsCard');
+        const list = document.getElementById('requestsList');
+        const badge = document.getElementById('requestsBadge');
+        if (!isAdmin) {
+            if (card) card.style.display = 'none';
+            return;
+        }
+        if (card) card.style.display = 'block';
+        const pending = deposits.filter(d => d.status === 'pending');
+        if (badge) badge.textContent = pending.length;
+        if (!list) return;
+        if (!pending.length) {
+            list.innerHTML = '<div style="text-align: center; color: var(--prof-text-muted); padding: 20px; font-size: 13px;">Нет заявок</div>';
+            return;
+        }
+        list.innerHTML = pending.map(d => {
+            const item = getItemById(d.item_id) || { img: '', name: d.item_name };
+            return `
+                <div class="profile-request-item">
+                    <div class="req-row">
+                        <span class="req-label">Предмет:</span>
+                        <span class="req-value">${d.item_name}</span>
+                    </div>
+                    <div class="req-row">
+                        <span class="req-label">Сумма:</span>
+                        <span class="req-value" style="color: var(--prof-orange);">${d.item_price} <img src="${COIN_IMG}" style="width:12px;height:12px;vertical-align:middle;"></span>
+                    </div>
+                    <div class="req-row">
+                        <span class="req-label">Roblox:</span>
+                        <span class="req-value">${d.roblox_name}</span>
+                    </div>
+                    <div class="req-actions">
+                        <button class="req-btn req-accept" onclick="processDeposit('${d.id}', 'accepted')">✓ Принять</button>
+                        <button class="req-btn req-reject" onclick="processDeposit('${d.id}', 'rejected')">✕ Отклонить</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
     let syncTimer = null;
     function syncUserToServer() {
         if (syncTimer) clearTimeout(syncTimer);
@@ -1841,7 +2119,7 @@ body{
                 saveLocalCache();
                 updateBalance();
                 renderInventory(); renderShop(); updateUpgradeScreen();
-                renderProfileInventory();
+                updateProfileStats();
             } else {
                 syncUserToServer();
             }
@@ -1872,12 +2150,6 @@ body{
         if (navBtn) navBtn.classList.add('active');
         if (tab === 'profile') {
             updateProfile();
-            const cn = document.getElementById('customizeNickInput');
-            if (cn) cn.value = customNick || USER.nick;
-            const os = document.getElementById('opacitySlider');
-            const ov = document.getElementById('opacityValue');
-            if (os) os.value = Math.round(appOpacity * 100);
-            if (ov) ov.textContent = Math.round(appOpacity * 100) + '%';
         }
         if (tab === 'menu') renderMenuCases();
     };
@@ -1893,47 +2165,12 @@ body{
 
     function updateProfile() {
         isAdmin = ALLOWED_USERS.includes((USER.username || '').toLowerCase());
-        const adminBtn = document.getElementById('adminPanelBtn');
-        if (adminBtn) adminBtn.style.display = isAdmin ? 'block' : 'none';
-        renderProfileInventory();
-        const depositsBlock = document.getElementById('depositsBlock');
-        if (depositsBlock) {
-            if (isAdmin) { depositsBlock.style.display = 'block'; loadDeposits(); }
-            else { depositsBlock.style.display = 'none'; }
+        updateProfileStats();
+        if (isAdmin) {
+            loadDeposits();
         }
     }
 
-    window.toggleInventoryDrawer = function() {
-        playClick(); vibrate(10);
-        const toggle = document.getElementById('inventoryToggle');
-        const drawer = document.getElementById('inventoryDrawer');
-        if (!toggle || !drawer) return;
-        toggle.classList.toggle('expanded');
-        drawer.classList.toggle('expanded');
-        if (drawer.classList.contains('expanded')) renderProfileInventory();
-    };
-    function renderProfileInventory() {
-        const grid = document.getElementById('profileInventoryGrid');
-        if (!grid) return;
-        if (!inventory.length) {
-            grid.innerHTML = '<div class="profile-inventory-empty">Инвентарь пуст</div>';
-            return;
-        }
-        grid.innerHTML = inventory.map(id => {
-            const item = getItemById(id);
-            if (!item) return '';
-            const glowClass = getGlowClass(item.price);
-            const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async">` : '';
-            return `
-                <div class="profile-inventory-item ${glowClass}" style="position:relative;">
-                    ${mutationIcon}
-                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                    <div class="inv-name">${item.name}</div>
-                    <div class="inv-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
-                </div>
-            `;
-        }).join('');
-    }
     window.openTopup = function() {
         playClick(); vibrate(10);
         renderTopupGrid();
@@ -2013,41 +2250,8 @@ body{
             const admin = (USER.username || '').toLowerCase();
             const res = await fetch(API_URL + '/api/deposits?admin=' + encodeURIComponent(admin));
             const data = await res.json();
-            if (data.ok) { deposits = data.deposits || []; renderDeposits(); }
-        } catch (e) {
-            const dl = document.getElementById('depositsList');
-            if (dl) dl.innerHTML = '<div class="deposits-empty">Сервер недоступен</div>';
-        }
-    }
-    function renderDeposits() {
-        const list = document.getElementById('depositsList');
-        if (!list) return;
-        const pending = deposits.filter(d => d.status === 'pending');
-        const dc = document.getElementById('depositsCount');
-        if (dc) dc.textContent = pending.length;
-        if (!pending.length) {
-            list.innerHTML = '<div class="deposits-empty">Нет новых заявок</div>';
-            return;
-        }
-        list.innerHTML = pending.map(d => {
-            const item = getItemById(d.item_id) || { img: '', name: d.item_name };
-            const finalPrice = d.item_price;
-            return `
-                <div class="deposit-item">
-                    <img src="${item.img}" alt="" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                    <div class="deposit-info">
-                        <div class="dep-line"><span class="dep-key">TG:</span> <span class="dep-val accent">@${d.username || '—'}</span></div>
-                        <div class="dep-line"><span class="dep-key">Предмет:</span> <span class="dep-val">${d.item_name}</span></div>
-                        <div class="dep-line"><span class="dep-key">Цена:</span> <span class="dep-val accent">${finalPrice}</span></div>
-                        <div class="dep-line"><span class="dep-key">Roblox:</span> <span class="dep-val">${d.roblox_name}</span></div>
-                    </div>
-                    <div class="deposit-actions">
-                        <button class="dep-accept" onclick="processDeposit('${d.id}', 'accepted')">✓ Принять</button>
-                        <button class="dep-reject" onclick="processDeposit('${d.id}', 'rejected')">✕ Отклонить</button>
-                    </div>
-                </div>
-            `;
-        }).join('');
+            if (data.ok) { deposits = data.deposits || []; renderProfileRequests(); }
+        } catch (e) {}
     }
     window.processDeposit = async function(id, status) {
         playClick(); vibrate(10);
@@ -2192,7 +2396,7 @@ body{
                 } else {
                     inventory.push(data.value);
                     renderInventory(); renderShop(); updateUpgradeScreen();
-                    renderProfileInventory();
+                    updateProfileStats();
                     saveLocalCache(); syncUserToServer();
                     const item = getItemById(data.value);
                     if (msgTab) { msgTab.className = 'msg ok'; msgTab.textContent = `Получен: ${item ? item.name : data.value}! Осталось: ${data.remaining}`; }
@@ -2235,7 +2439,7 @@ body{
         inventory.push(id);
         updateBalance();
         renderShop(); renderInventory(); updateUpgradeScreen();
-        renderProfileInventory();
+        updateProfileStats();
         showToast(`Куплен: ${item.name}`, 'ok');
         playCoin(); vibrate(15);
     }
@@ -2251,7 +2455,7 @@ body{
         else if (selectedSourceIndex !== null && selectedSourceIndex > index) selectedSourceIndex--;
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen();
-        renderProfileInventory();
+        updateProfileStats();
         showToast(`Продан: ${item.name} (+${item.price})`, 'ok');
         playCoin(); vibrate(15);
     };
@@ -2279,7 +2483,6 @@ body{
                 </div>
             `;
         }).join('');
-        profileItemsCount.innerText = inventory.length;
     }
     window.selectSourceByIndex = function(index) {
         if (isSpinning) return;
@@ -2679,13 +2882,36 @@ body{
         }
 
         let totalCoins = 0;
+        let bestItemThisRoll = null;
+        let bestPriceThisRoll = -1;
+
         rewards.forEach(r => {
             if (r.balance) totalCoins += r.balance;
-            else if (r.itemId) { inventory.push(r.itemId); }
+            else if (r.itemId) {
+                inventory.push(r.itemId);
+                const item = getItemById(r.itemId);
+                if (item && item.price > bestPriceThisRoll) {
+                    bestPriceThisRoll = item.price;
+                    bestItemThisRoll = r.itemId;
+                }
+            }
         });
         if (totalCoins > 0) balance += totalCoins;
+
+        // Обновление статистики
+        stats.cases = (stats.cases || 0) + qty;
+        // Обновление лучшего дропа
+        if (bestItemThisRoll) {
+            const currentBest = bestDropId ? getItemById(bestDropId) : null;
+            const newBestPrice = bestPriceThisRoll;
+            if (!currentBest || newBestPrice > currentBest.price) {
+                bestDropId = bestItemThisRoll;
+            }
+        }
+
         updateBalance();
-        renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+        renderInventory(); renderShop(); updateUpgradeScreen();
+        updateProfileStats();
         saveLocalCache(); syncUserToServer();
         showCaseResult(rewards, c, qty);
         isCaseOpening = false;
@@ -2838,10 +3064,18 @@ body{
             if (isSuccess) {
                 inventory.splice(sourceIndex, 1);
                 inventory.push(targetId);
+                stats.upgrades = (stats.upgrades || 0) + 1;
+                // Обновление лучшего дропа
+                const currentBest = bestDropId ? getItemById(bestDropId) : null;
+                const newBest = getItemById(targetId);
+                if (newBest && (!currentBest || newBest.price > currentBest.price)) {
+                    bestDropId = targetId;
+                }
                 showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
             } else {
                 inventory.splice(sourceIndex, 1);
+                stats.upgrades = (stats.upgrades || 0) + 1;
                 showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
                 playLose(); vibratePattern([50, 30, 100]);
             }
@@ -2849,7 +3083,8 @@ body{
             selectedTargetId = null;
             isSpinning = false;
             updateBalance();
-            renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+            renderInventory(); renderShop(); updateUpgradeScreen();
+            updateProfileStats();
             arrowContainer.style.transition = 'none';
             arrowContainer.style.transform = 'rotate(0deg)';
             upgradeBtn.disabled = true;
@@ -2889,17 +3124,43 @@ body{
         showToast('Ник сохранён', 'ok');
     };
 
+    // --- Смена темы ---
+    function toggleTheme() {
+        document.body.classList.toggle('theme-new');
+        const isNew = document.body.classList.contains('theme-new');
+        localStorage.setItem('ggbrainx_theme_new', isNew ? '1' : '0');
+        updateThemeIcon(isNew);
+        playClick();
+    }
+    function updateThemeIcon(isNew) {
+        const icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        if (isNew) {
+            // Луна (темная тема)
+            icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+        } else {
+            // Солнце (светлая/розовая тема)
+            icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
+        }
+    }
+    // Восстановление темы
+    if (localStorage.getItem('ggbrainx_theme_new') === '1') {
+        document.body.classList.add('theme-new');
+        updateThemeIcon(true);
+    }
+
     function init() {
         applyCustomization();
         initSakura();
         initParticles();
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen(); renderAdminGrid();
-        renderProfileInventory(); renderMenuCases();
+        renderMenuCases();
         applyCustomAvatar();
         switchTab('menu');
         loadUserFromServer();
         preloadImages();
+        updateProfileStats();
     }
 
     window.addEventListener('load', () => {
