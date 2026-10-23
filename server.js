@@ -1,4 +1,4 @@
-// server.js — BrainrotWin API (Render-ready) + Topup Leaderboard
+// server.js — BrainrotWin API (Render-ready) + Topup Leaderboard + Withdraw System
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -10,15 +10,24 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
 const LUCK_FILE = path.join(DATA_DIR, 'luck.json');
 const TOPUPS_FILE = path.join(DATA_DIR, 'topups.json');
+const WITHDRAWS_FILE = path.join(DATA_DIR, 'withdraws.json');
+const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
-// Админы (в нижнем регистре, без @)
 const ADMIN_USERNAMES = ['saintezz7', 'yart11'];
 
 let promocodes = {};
 let users = {};
 let deposits = [];
 let luckState = { multiplier: 1, until: 0, by: '', ts: 0 };
-let topupHistory = {}; // { username: totalAmount }
+let topupHistory = {};
+let withdraws = [];
+let settings = {
+    withdrawTimes: [
+        { day: 'Понедельник', time: '18:00' },
+        { day: 'Среда', time: '18:00' },
+        { day: 'Пятница', time: '18:00' }
+    ]
+};
 
 function ensureDataDir() {
     try { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
@@ -39,12 +48,22 @@ function loadAll() {
     deposits = loadJSON(DEPOSITS_FILE, []);
     luckState = loadJSON(LUCK_FILE, { multiplier: 1, until: 0, by: '', ts: 0 });
     topupHistory = loadJSON(TOPUPS_FILE, {});
+    withdraws = loadJSON(WITHDRAWS_FILE, []);
+    settings = loadJSON(SETTINGS_FILE, {
+        withdrawTimes: [
+            { day: 'Понедельник', time: '18:00' },
+            { day: 'Среда', time: '18:00' },
+            { day: 'Пятница', time: '18:00' }
+        ]
+    });
 }
 function savePromos() { saveJSON(PROMO_FILE, promocodes); }
 function saveUsers() { saveJSON(USERS_FILE, users); }
 function saveDeposits() { saveJSON(DEPOSITS_FILE, deposits); }
 function saveLuck() { saveJSON(LUCK_FILE, luckState); }
 function saveTopups() { saveJSON(TOPUPS_FILE, topupHistory); }
+function saveWithdraws() { saveJSON(WITHDRAWS_FILE, withdraws); }
+function saveSettings() { saveJSON(SETTINGS_FILE, settings); }
 
 function setCORS(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -165,8 +184,6 @@ const server = http.createServer(async (req, res) => {
         }
 
         // === DEPOSITS ===
-
-        // Создать заявку на пополнение (юзер)
         if (req.method === 'POST' && req.url === '/api/deposit/create') {
             const body = await readBody(req);
             const { telegram_id, username, item_id, item_name, item_price, base_price, roblox_name } = body;
@@ -194,7 +211,6 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, deposit });
         }
 
-        // Получить список заявок (только админ)
         if (req.method === 'GET' && req.url.startsWith('/api/deposits')) {
             const url = new URL(req.url, 'http://localhost');
             const admin = url.searchParams.get('admin') || '';
@@ -204,7 +220,6 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, deposits });
         }
 
-        // Обработать заявку — принять/отклонить (только админ)
         if (req.method === 'POST' && req.url === '/api/deposit/status') {
             const body = await readBody(req);
             const { id, status, admin } = body;
@@ -238,6 +253,109 @@ const server = http.createServer(async (req, res) => {
 
             saveDeposits();
             return sendJSON(res, 200, { ok: true, deposit: dep });
+        }
+
+        // === WITHDRAWS ===
+        if (req.method === 'POST' && req.url === '/api/withdraw/create') {
+            const body = await readBody(req);
+            const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, comment } = body;
+
+            if (!telegram_id || !item_id || !roblox_name || !time_slot) {
+                return sendJSON(res, 400, { ok: false, error: 'Не хватает данных' });
+            }
+
+            const u = ensureUser(telegram_id, username);
+            
+            // Check if user has this item
+            const invIndex = u.inventory.indexOf(item_id);
+            if (invIndex === -1) {
+                return sendJSON(res, 400, { ok: false, error: 'Предмет не найден в инвентаре' });
+            }
+
+            // Remove item from inventory
+            u.inventory.splice(invIndex, 1);
+            u.updated_at = new Date().toISOString();
+            saveUsers();
+
+            const withdraw = {
+                id: 'wd_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+                telegram_id,
+                username: username || u.username || '',
+                item_id,
+                item_name: item_name || '',
+                item_price: parseInt(item_price) || 0,
+                roblox_name,
+                time_slot,
+                comment: comment || '',
+                status: 'pending',
+                created_at: new Date().toISOString()
+            };
+            withdraws.push(withdraw);
+            saveWithdraws();
+
+            return sendJSON(res, 200, { ok: true, withdraw });
+        }
+
+        if (req.method === 'GET' && req.url.startsWith('/api/withdraws')) {
+            const url = new URL(req.url, 'http://localhost');
+            const admin = url.searchParams.get('admin') || '';
+            if (!isAdmin(admin)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+            return sendJSON(res, 200, { ok: true, withdraws });
+        }
+
+        if (req.method === 'POST' && req.url === '/api/withdraw/status') {
+            const body = await readBody(req);
+            const { id, status, admin } = body;
+
+            if (!isAdmin(admin)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+            if (!id || !['accepted', 'rejected'].includes(status)) {
+                return sendJSON(res, 400, { ok: false, error: 'Неверные данные' });
+            }
+
+            const wd = withdraws.find(w => w.id === id);
+            if (!wd) return sendJSON(res, 404, { ok: false, error: 'Заявка не найдена' });
+            if (wd.status !== 'pending') return sendJSON(res, 409, { ok: false, error: 'Уже обработана' });
+
+            wd.status = status;
+            wd.processed_at = new Date().toISOString();
+            wd.processed_by = admin || 'admin';
+
+            // If rejected, return item to inventory
+            if (status === 'rejected') {
+                const u = ensureUser(wd.telegram_id, wd.username);
+                if (!Array.isArray(u.inventory)) u.inventory = [];
+                u.inventory.push(wd.item_id);
+                u.updated_at = new Date().toISOString();
+                saveUsers();
+            }
+
+            saveWithdraws();
+            return sendJSON(res, 200, { ok: true, withdraw: wd });
+        }
+
+        // === SETTINGS ===
+        if (req.method === 'GET' && req.url === '/api/settings/withdraw-times') {
+            return sendJSON(res, 200, { ok: true, times: settings.withdrawTimes });
+        }
+
+        if (req.method === 'POST' && req.url === '/api/settings/withdraw-times') {
+            const body = await readBody(req);
+            const { admin, times } = body;
+
+            if (!isAdmin(admin)) {
+                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+            }
+            if (!Array.isArray(times) || times.length !== 3) {
+                return sendJSON(res, 400, { ok: false, error: 'Нужно ровно 3 слота' });
+            }
+
+            settings.withdrawTimes = times;
+            saveSettings();
+            return sendJSON(res, 200, { ok: true, times: settings.withdrawTimes });
         }
 
         // === USER ===
