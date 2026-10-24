@@ -136,16 +136,13 @@ body{
 }
 .top-left{display:flex;align-items:center;gap:12px}
 .logo-container{display:flex;align-items:center;gap:8px}
-.logo-bid{
-  background:var(--yellow);
-  color:#000;
+.logo-brain{
+  color:var(--yellow);
   font-weight:900;
-  font-size:18px;
-  padding:4px 8px;
-  border-radius:4px;
+  font-size:22px;
   letter-spacing:1px;
 }
-.logo-brainer{
+.logo-roll{
   color:#fff;
   font-weight:900;
   font-size:22px;
@@ -197,7 +194,6 @@ body{
   margin: 16px 0;
   padding: 20px 30px;
   border-radius: 16px;
-  /* Фиолетово-розовый фон для контраста, как на фото */
   background: linear-gradient(135deg, #4b1d7a 0%, #a11d78 100%); 
   display: flex;
   align-items: center;
@@ -337,7 +333,7 @@ body{
 .case-items-count{font-size:12px;color:var(--text-muted);margin-top:8px;}
 
 /* ========================================================
-   АПГРЕЙДЕР (сохранен функционал)
+   АПГРЕЙДЕР
    ======================================================== */
 .upg-tabs{display:flex;gap:8px;margin-bottom:20px;}
 .upg-tab{flex:1;padding:12px;border-radius:8px;border:2px solid var(--line);background:var(--bg-surface);color:var(--text-muted);font-weight:700;cursor:pointer;transition:all .15s;}
@@ -416,21 +412,21 @@ body{
 .target-list-item .tl-chance{font-size:14px;font-weight:800;color:var(--purple);text-align:right;line-height:1.3}
 
 /* ========================================================
-   ПРОФИЛЬ
+   ПРОФИЛЬ (Тусклый дизайн)
    ======================================================== */
 .profile-page{
   padding: 0 0 20px;
-  background: #1a0b2e;
+  background: #101010; /* Очень темный фон */
   border-radius: 16px;
-  border: 2px solid var(--purple);
+  border: 2px solid #222; /* Тусклая рамка */
   overflow: hidden;
   margin-top: 20px;
 }
 
 .profile-hero{
   padding: 30px 20px;
-  background: #251242;
-  border-bottom: 2px solid var(--purple);
+  background: #151515;
+  border-bottom: 2px solid #222;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -442,9 +438,8 @@ body{
 .profile-avatar-frame{
   position:absolute;inset:-6px;
   border-radius:50%;
-  background: var(--orange);
+  background: #333; /* Тусклая рамка */
   padding:3px;
-  box-shadow:0 0 20px rgba(255,123,0,.5);
 }
 .profile-avatar-inner{
   position:relative;width:100%;height:100%;background:#0a0a0a;
@@ -453,22 +448,21 @@ body{
 .profile-avatar-inner img{width:100%;height:100%;object-fit:cover;}
 .profile-avatar-status{
   position:absolute;bottom:0;right:0;width:24px;height:24px;
-  background:var(--green);border:3px solid #251242;border-radius:50%;
+  background:#555;border:3px solid #151515;border-radius:50%;
   z-index:3;
 }
 
 .profile-nick-big{
-  font-size:28px;font-weight:900;color:#fff;
+  font-size:28px;font-weight:900;color:#ccc; /* Приглушенный белый */
   margin-bottom:6px;text-align:center;
 }
 .profile-tg-big{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:14px;font-weight:600;color:var(--orange);
+  font-size:14px;font-weight:600;color:#666; /* Тусклый серый */
   text-decoration:none;padding:6px 14px;
-  background:rgba(255,123,0,.1);border:2px solid var(--orange);
+  background:#1a1a1a;border:2px solid #333;
   border-radius:8px;
 }
-.profile-tg-big:hover{background:rgba(255,123,0,.2)}
 
 .profile-stats-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
@@ -477,76 +471,76 @@ body{
 .profile-stat-card{
   background:#0a0a0a;
   padding:16px;border-radius:12px;
-  border:2px solid var(--purple);
+  border:2px solid #222;
 }
 .profile-stat-label{
-  font-size:11px;font-weight:700;color:var(--text-muted);
+  font-size:11px;font-weight:700;color:#555;
   text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;
 }
 .profile-stat-value{
-  font-size:20px;font-weight:900;color:#fff;
+  font-size:20px;font-weight:900;color:#aaa;
   display:flex;align-items:center;gap:8px;
 }
-.profile-stat-value img{width:20px;height:20px;}
+.profile-stat-value img{width:20px;height:20px; filter:grayscale(50%);}
 
 .profile-inventory-section{
   padding: 0 20px 20px;
 }
 .profile-inventory-toggle{
   width:100%;padding:16px;border-radius:12px;
-  background:#0a0a0a;border:2px solid var(--purple);
+  background:#0a0a0a;border:2px solid #222;
   display:flex;align-items:center;gap:12px;
   cursor:pointer;transition:all .2s;text-align:left;
 }
-.profile-inventory-toggle:hover{border-color:var(--orange);}
-.profile-inventory-toggle .pt-title{font-size:12px;color:var(--text-muted);text-transform:uppercase;}
-.profile-inventory-toggle .pt-value{font-size:16px;font-weight:800;color:#fff;}
+.profile-inventory-toggle:hover{border-color:#444;}
+.profile-inventory-toggle .pt-title{font-size:12px;color:#555;text-transform:uppercase;}
+.profile-inventory-toggle .pt-value{font-size:16px;font-weight:800;color:#888;}
 
 .profile-inventory-drawer{
   max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;
   background:#0a0a0a;border-radius:0 0 12px 12px;border:2px solid transparent;
 }
 .profile-inventory-drawer.expanded{
-  max-height:600px;padding:16px;border-color:var(--purple);
+  max-height:600px;padding:16px;border-color:#222;
   overflow-y:auto;
 }
 .profile-inventory-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:12px;
 }
 .profile-inventory-item{
-  background:#141414;border:2px solid var(--line);border-radius:8px;
+  background:#141414;border:2px solid #222;border-radius:8px;
   padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;
 }
-.profile-inventory-item img{width:48px;height:48px;object-fit:contain;}
-.profile-inventory-item .inv-name{font-size:11px;color:#fff;text-align:center;height:26px;overflow:hidden;}
-.profile-inventory-item .inv-price{font-size:12px;color:var(--yellow);font-weight:800;}
-.profile-inventory-empty{text-align:center;color:#6a6a7a;font-size:13px;font-weight:600;padding:24px;line-height:1.3;grid-column:1/-1;}
+.profile-inventory-item img{width:48px;height:48px;object-fit:contain; filter:grayscale(20%);}
+.profile-inventory-item .inv-name{font-size:11px;color:#888;text-align:center;height:26px;overflow:hidden;}
+.profile-inventory-item .inv-price{font-size:12px;color:#666;font-weight:800;}
+.profile-inventory-empty{text-align:center;color:#444;font-size:13px;font-weight:600;padding:24px;line-height:1.3;grid-column:1/-1;}
 
 .customize-in-profile{padding: 0 20px 20px;}
-.profile-section-heading{font-size:14px;font-weight:800;color:#fff;margin-bottom:12px;text-transform:uppercase;}
+.profile-section-heading{font-size:14px;font-weight:800;color:#888;margin-bottom:12px;text-transform:uppercase;}
 .customize-section{
-  background:#0a0a0a;border:2px solid var(--purple);border-radius:12px;
+  background:#0a0a0a;border:2px solid #222;border-radius:12px;
   padding:16px;margin-bottom:12px;
 }
-.customize-section-title{font-size:12px;font-weight:800;color:var(--orange);margin-bottom:12px;text-transform:uppercase;}
+.customize-section-title{font-size:12px;font-weight:800;color:#555;margin-bottom:12px;text-transform:uppercase;}
 .form-input{
-  width:100%;padding:12px;border-radius:8px;border:2px solid var(--line);
-  background:#141414;color:#fff;font-size:16px;outline:none;
+  width:100%;padding:12px;border-radius:8px;border:2px solid #222;
+  background:#141414;color:#aaa;font-size:16px;outline:none;
 }
-.form-input:focus{border-color:var(--orange);}
+.form-input:focus{border-color:#444;}
 .action-btn{
   width:100%;padding:14px;border-radius:8px;border:none;
-  background:var(--orange);color:#000;font-size:14px;font-weight:800;
+  background:#222;color:#888;font-size:14px;font-weight:800;
   text-transform:uppercase;cursor:pointer;margin-top:10px;
 }
-.action-btn:hover{background:var(--orange-hover);}
+.action-btn:hover{background:#333;color:#aaa;}
 .avatar-upload-row{display:flex;align-items:center;gap:12px;}
-.avatar-preview{width:64px;height:64px;border-radius:50%;border:2px solid var(--orange);object-fit:cover;background:#0a0a0f;flex-shrink:0;box-shadow:0 0 14px rgba(255,123,0,.25);}
+.avatar-preview{width:64px;height:64px;border-radius:50%;border:2px solid #333;object-fit:cover;background:#0a0a0f;flex-shrink:0;}
 .avatar-upload-buttons{flex:1;display:flex;flex-direction:column;gap:6px;}
-.upload-btn{padding:12px 16px;border-radius:8px;border:2px solid rgba(255,123,0,.3);background:rgba(255,123,0,.08);color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
-.upload-btn:hover{background:rgba(255,123,0,.15);}
-.reset-avatar-btn{padding:8px 12px;border-radius:8px;border:2px solid rgba(255,0,51,.3);background:rgba(255,0,51,.08);color:var(--blood);font-size:11px;font-weight:700;cursor:pointer;}
-.reset-avatar-btn:hover{background:rgba(255,0,51,.18);}
+.upload-btn{padding:12px 16px;border-radius:8px;border:2px solid #222;background:#141414;color:#888;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.upload-btn:hover{background:#222;color:#aaa;}
+.reset-avatar-btn{padding:8px 12px;border-radius:8px;border:2px solid #222;background:#141414;color:#555;font-size:11px;font-weight:700;cursor:pointer;}
+.reset-avatar-btn:hover{background:#222;color:#888;}
 
 /* Модалки и Оверлеи */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .2s ease;padding:14px;backdrop-filter:blur(4px)}
@@ -706,7 +700,7 @@ body{
   .cases-grid{grid-template-columns:repeat(2,1fr);}
   .nav-btn span{display:none;} 
   .nav-btn{padding:8px;}
-  .logo-brainer{font-size:16px;}
+  .logo-brain,.logo-roll{font-size:16px;}
   .top-nav-panel{padding:8px 0;}
   .app{padding: 0 14px 40px;}
   .top-bar{padding:12px 0;}
@@ -891,8 +885,8 @@ body{
     <div class="top-bar">
         <div class="top-left">
             <div class="logo-container">
-                <div class="logo-bid">BID</div>
-                <div class="logo-brainer">BRAINER</div>
+                <div class="logo-brain">BRAIN</div>
+                <div class="logo-roll">ROLL</div>
             </div>
         </div>
         <div class="top-right">
