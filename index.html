@@ -521,7 +521,7 @@ body{
 .topup-price-line .tpl-value img{width:14px;height:14px;}
 
 /* ========================================================
-   НОВЫЙ ПРОФИЛЬ (Стиль скриншота)
+   НОВЫЙ ПРОФИЛЬ (Стиль скриншота) — УПРОЩЕННЫЙ
    ======================================================== */
 .profile-page-new {
     padding: 20px;
@@ -994,68 +994,6 @@ body{
     .profile-stats-grid { grid-template-columns: 1fr; }
     .profile-inventory-bottom-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
 }
-
-/* --- Модалка вывода --- */
-.withdraw-slot {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 10px;
-    border: 2px solid var(--prof-border);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
-    background: rgba(255,255,255,0.02);
-}
-.withdraw-slot:hover {
-    border-color: var(--prof-accent);
-    background: rgba(168,85,247,0.08);
-}
-.withdraw-slot.selected {
-    border-color: var(--prof-orange);
-    background: rgba(249,115,22,0.1);
-}
-.withdraw-slot .ws-day {
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
-}
-.withdraw-slot .ws-time {
-    font-size: 12px;
-    color: var(--prof-text-muted);
-}
-
-/* --- Админ панель - настройка времени --- */
-.admin-time-slot {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 8px;
-    padding: 8px;
-    background: rgba(20,6,14,.3);
-    border: 1px solid rgba(255,126,185,.15);
-    border-radius: 6px;
-}
-.admin-time-slot .slot-num {
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--prof-text-muted);
-    width: 20px;
-}
-.admin-time-slot input {
-    flex: 1;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(255,126,185,.2);
-    background: rgba(255,255,255,.05);
-    color: #fff;
-    font-size: 13px;
-    font-family: var(--font-main);
-    outline: none;
-}
-.admin-time-slot input:focus {
-    border-color: var(--prof-accent);
-}
 </style>
 </head>
 <body>
@@ -1153,15 +1091,6 @@ body{
             <button class="action-btn" onclick="createPromo()">Создать промокод</button>
             <div class="msg" id="adminMsg"></div>
         </div>
-        
-        <div class="admin-section">
-            <div class="admin-section-title">Настройка времени выводов</div>
-            <div id="adminTimeSlots">
-                <!-- Заполняется через JS -->
-            </div>
-            <button class="action-btn" onclick="saveWithdrawTimes()" style="margin-top:8px;">Сохранить время</button>
-            <div class="msg" id="adminTimeMsg"></div>
-        </div>
 
         <div class="admin-section">
             <div class="admin-section-title">Существующие промокоды</div>
@@ -1169,27 +1098,6 @@ body{
                 <div style="color:#9a5f7d; font-size:12px; font-weight:600; text-align:center; padding:10px;">Загрузка...</div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal" id="withdrawModal">
-    <div class="modal-card">
-        <button class="modal-close" onclick="closeModal('withdrawModal')">X</button>
-        <div class="modal-title">Вывод брейнрота</div>
-        <div class="form-group">
-            <label class="form-label">Ник в Roblox</label>
-            <input type="text" class="form-input" id="withdrawRoblox" placeholder="Введи ник" maxlength="40">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Выбери время вывода</label>
-            <div id="withdrawSlots" style="display:flex; flex-direction:column; gap:8px;"></div>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Комментарий</label>
-            <input type="text" class="form-input" id="withdrawComment" placeholder="Необязательно" maxlength="100">
-        </div>
-        <button class="action-btn" id="withdrawSubmitBtn" onclick="submitWithdraw()">Отправить заявку</button>
-        <div class="msg" id="withdrawMsg"></div>
     </div>
 </div>
 
@@ -1401,6 +1309,7 @@ body{
         </div>
     </div>
 
+    <!-- ПРОФИЛЬ (ВОЗВРАЩЕН) -->
     <div class="tab-panel" id="panelProfile">
         <div class="profile-page-new" id="profileNewContent">
             <div class="profile-grid">
@@ -1718,7 +1627,6 @@ body{
     let balance = parseFloat(localStorage.getItem('ggbrainx_balance') || '1000');
     let inventory = JSON.parse(localStorage.getItem('ggbrainx_inventory') || '[]');
     let deposits = [];
-    let withdraws = [];
     let topupSelectedItem = null;
     let isAdmin = false;
     let customAvatar = localStorage.getItem('ggbrainx_custom_avatar') || null;
@@ -1736,15 +1644,6 @@ body{
     let skipAnimationFlag = false;
     let activeAnimTimers = [];
     let activeAnimResolvers = [];
-
-    // Настройки вывода
-    let withdrawTimes = [
-        { day: 'Понедельник', time: '18:00' },
-        { day: 'Среда', time: '18:00' },
-        { day: 'Пятница', time: '18:00' }
-    ];
-    let selectedWithdrawItemId = null;
-    let selectedWithdrawTimeIndex = 0;
 
     function saveLocalCache() {
         localStorage.setItem('ggbrainx_balance', String(balance));
@@ -2072,7 +1971,6 @@ body{
                     <div class="inv-item-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
                     <div style="display:flex; gap:4px; width:100%; margin-top:4px;">
                         <button class="profile-btn profile-btn-secondary" style="flex:1; padding:4px; font-size:10px;" onclick="event.stopPropagation(); sellItem(${index})">Продать</button>
-                        <button class="profile-btn profile-btn-primary" style="flex:1; padding:4px; font-size:10px;" onclick="event.stopPropagation(); openWithdrawModal('${id}')">Вывод</button>
                     </div>
                 </div>
             `;
@@ -2088,7 +1986,7 @@ body{
             return;
         }
         if (card) card.style.display = 'block';
-        const pending = withdraws.filter(d => d.status === 'pending');
+        const pending = deposits.filter(d => d.status === 'pending');
         if (badge) badge.textContent = pending.length;
         if (!list) return;
         if (!pending.length) {
@@ -2111,13 +2009,9 @@ body{
                         <span class="req-label">Roblox:</span>
                         <span class="req-value">${d.roblox_name}</span>
                     </div>
-                    <div class="req-row">
-                        <span class="req-label">Время:</span>
-                        <span class="req-value">${d.time_slot}</span>
-                    </div>
                     <div class="req-actions">
-                        <button class="req-btn req-accept" onclick="processWithdraw('${d.id}', 'accepted')">✓ Принять</button>
-                        <button class="req-btn req-reject" onclick="processWithdraw('${d.id}', 'rejected')">✕ Отклонить</button>
+                        <button class="req-btn req-accept" onclick="processDeposit('${d.id}', 'accepted')">✓ Принять</button>
+                        <button class="req-btn req-reject" onclick="processDeposit('${d.id}', 'rejected')">✕ Отклонить</button>
                     </div>
                 </div>
             `;
@@ -2198,195 +2092,10 @@ body{
         isAdmin = ALLOWED_USERS.includes((USER.username || '').toLowerCase());
         updateProfileStats();
         if (isAdmin) {
-            loadWithdraws();
-            loadWithdrawTimes();
+            loadDeposits();
         }
     }
 
-    // --- Вывод ---
-    async function loadWithdrawTimes() {
-        try {
-            const res = await fetch(API_URL + '/api/settings/withdraw-times');
-            const data = await res.json();
-            if (data.ok) {
-                withdrawTimes = data.times;
-            }
-        } catch (e) { console.warn('Не удалось загрузить время выводов'); }
-    }
-
-    async function loadWithdraws() {
-        try {
-            const admin = (USER.username || '').toLowerCase();
-            const res = await fetch(API_URL + '/api/withdraws?admin=' + encodeURIComponent(admin));
-            const data = await res.json();
-            if (data.ok) { withdraws = data.withdraws || []; renderProfileRequests(); }
-        } catch (e) {}
-    }
-
-    window.openWithdrawModal = function(itemId) {
-        if (!isAdmin) {
-            // Обычный юзер
-        }
-        selectedWithdrawItemId = itemId;
-        selectedWithdrawTimeIndex = 0;
-        const item = getItemById(itemId);
-        if (!item) return;
-        
-        // Заполняем слоты времени
-        const slotsContainer = document.getElementById('withdrawSlots');
-        if (slotsContainer) {
-            slotsContainer.innerHTML = withdrawTimes.map((slot, idx) => `
-                <div class="withdraw-slot ${idx === 0 ? 'selected' : ''}" onclick="selectWithdrawSlot(${idx})">
-                    <div class="ws-day">${slot.day}</div>
-                    <div class="ws-time">${slot.time} МСК</div>
-                </div>
-            `).join('');
-        }
-        
-        document.getElementById('withdrawRoblox').value = '';
-        document.getElementById('withdrawComment').value = '';
-        document.getElementById('withdrawMsg').textContent = '';
-        document.getElementById('withdrawMsg').className = 'msg';
-        openModal('withdrawModal');
-    };
-
-    window.selectWithdrawSlot = function(index) {
-        selectedWithdrawTimeIndex = index;
-        document.querySelectorAll('.withdraw-slot').forEach((el, i) => {
-            el.classList.toggle('selected', i === index);
-        });
-    };
-
-    window.submitWithdraw = async function() {
-        const msg = document.getElementById('withdrawMsg');
-        const roblox = document.getElementById('withdrawRoblox').value.trim();
-        const comment = document.getElementById('withdrawComment').value.trim();
-        if (!roblox) { msg.className = 'msg err'; msg.textContent = 'Введи ник в Roblox'; return; }
-        if (!selectedWithdrawItemId) { msg.className = 'msg err'; msg.textContent = 'Ошибка предмета'; return; }
-        
-        const item = getItemById(selectedWithdrawItemId);
-        if (!item) return;
-        
-        const slot = withdrawTimes[selectedWithdrawTimeIndex];
-        const timeStr = `${slot.day}, ${slot.time} МСК`;
-        
-        msg.className = 'msg wait';
-        msg.textContent = 'Отправляем...';
-        
-        try {
-            const res = await fetch(API_URL + '/api/withdraw/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    telegram_id: getTelegramId(),
-                    username: USER.username || '',
-                    item_id: item.id,
-                    item_name: item.name,
-                    item_price: item.price,
-                    roblox_name: roblox,
-                    time_slot: timeStr,
-                    comment: comment
-                })
-            });
-            const data = await res.json();
-            if (data.ok) {
-                // Удаляем из локального инвентаря
-                const idx = inventory.indexOf(item.id);
-                if (idx !== -1) inventory.splice(idx, 1);
-                updateBalance();
-                renderInventory(); renderShop(); updateUpgradeScreen(); updateProfileStats();
-                saveLocalCache(); syncUserToServer();
-                
-                msg.className = 'msg ok';
-                msg.textContent = 'Заявка на вывод отправлена!';
-                showToast('Заявка на вывод создана', 'ok');
-                playCoin(); vibrate(15);
-                setTimeout(() => closeModal('withdrawModal'), 1500);
-            } else {
-                msg.className = 'msg err';
-                msg.textContent = data.error || 'Ошибка';
-                playLose();
-            }
-        } catch (e) {
-            msg.className = 'msg err';
-            msg.textContent = 'Сервер не отвечает';
-        }
-    };
-
-    window.processWithdraw = async function(id, status) {
-        playClick(); vibrate(10);
-        try {
-            const res = await fetch(API_URL + '/api/withdraw/status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status, admin: USER.username || '' })
-            });
-            const data = await res.json();
-            if (data.ok) { await loadWithdraws(); showToast('Заявка обработана', 'ok'); playCoin(); }
-            else { showToast(data.error || 'Ошибка', 'err'); playLose(); }
-        } catch (e) { showToast('Сервер недоступен', 'err'); }
-    };
-
-    // --- Админ панель ---
-    window.openAdminPanel = function() {
-        if (!isAdmin) { showToast('Нет доступа', 'err'); return; }
-        playClick();
-        renderAdminGrid(); renderPromoList(); updateAdminPreview();
-        renderAdminTimeSlots();
-        openModal('adminModal');
-    };
-
-    function renderAdminTimeSlots() {
-        const container = document.getElementById('adminTimeSlots');
-        if (!container) return;
-        container.innerHTML = withdrawTimes.map((slot, idx) => `
-            <div class="admin-time-slot">
-                <span class="slot-num">${idx + 1}</span>
-                <input type="text" id="adminTimeDay_${idx}" placeholder="День" value="${slot.day}">
-                <input type="time" id="adminTimeTime_${idx}" value="${slot.time}">
-            </div>
-        `).join('');
-    }
-
-    window.saveWithdrawTimes = async function() {
-        const msg = document.getElementById('adminTimeMsg');
-        const times = [];
-        for (let i = 0; i < 3; i++) {
-            const day = document.getElementById('adminTimeDay_' + i).value.trim();
-            const time = document.getElementById('adminTimeTime_' + i).value;
-            if (!day || !time) {
-                msg.className = 'msg err';
-                msg.textContent = 'Заполни все поля';
-                return;
-            }
-            times.push({ day, time });
-        }
-        msg.className = 'msg wait';
-        msg.textContent = 'Сохраняем...';
-        try {
-            const res = await fetch(API_URL + '/api/settings/withdraw-times', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ admin: USER.username || '', times })
-            });
-            const data = await res.json();
-            if (data.ok) {
-                withdrawTimes = data.times;
-                msg.className = 'msg ok';
-                msg.textContent = 'Время сохранено!';
-                showToast('Настройки сохранены', 'ok');
-                playCoin();
-            } else {
-                msg.className = 'msg err';
-                msg.textContent = data.error || 'Ошибка';
-            }
-        } catch (e) {
-            msg.className = 'msg err';
-            msg.textContent = 'Сервер не отвечает';
-        }
-    };
-
-    // --- Остальные функции (без изменений) ---
     window.openTopup = function() {
         playClick(); vibrate(10);
         renderTopupGrid();
@@ -2507,6 +2216,12 @@ body{
         `).join('');
     }
     window.selectAdminItem = function(id) { playClick(); selectedAdminItem = id; renderAdminGrid(); };
+    window.openAdminPanel = function() {
+        if (!isAdmin) { showToast('Нет доступа', 'err'); return; }
+        playClick();
+        renderAdminGrid(); renderPromoList(); updateAdminPreview();
+        openModal('adminModal');
+    };
     window.createPromo = async function() {
         const code = document.getElementById('adminCode').value.trim().toUpperCase();
         const uses = parseInt(document.getElementById('adminUses').value);
@@ -3343,7 +3058,6 @@ body{
         loadUserFromServer();
         preloadImages();
         updateProfileStats();
-        loadWithdrawTimes();
     }
 
     window.addEventListener('load', () => {
