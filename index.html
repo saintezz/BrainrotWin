@@ -1648,7 +1648,6 @@ body{
         const paneEl = document.getElementById('upgPane' + pane.charAt(0).toUpperCase() + pane.slice(1));
         if(paneEl) paneEl.classList.add('active');
         
-        // ИСПРАВЛЕНИЕ: Принудительный рендер при переключении вкладок
         if (pane === 'inv') renderInventory();
         if (pane === 'shop') renderShop();
     };
