@@ -14,7 +14,6 @@
 
 <style>
 :root{
-  /* Фиолетово-оранжевая палитра (основная) */
   --pink-hot: #a855f7;
   --pink: #c084fc;
   --pink-soft: #e9d5ff;
@@ -42,7 +41,7 @@
   --roulette-item-width:120px;
   --font-main:'Science Gothic', sans-serif;
   
-  /* Цвета для нового профиля (Скриншот) */
+  /* Цвета для профиля */
   --prof-bg: #0f0b15;
   --prof-card: #17121f;
   --prof-card-hover: #1e182b;
@@ -54,7 +53,6 @@
   --prof-orange: #f97316;
   --prof-orange-glow: rgba(249, 115, 22, 0.3);
   --prof-gold: #eab308;
-  --prof-avatar-bg: #1e182b;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;user-select:none;font-family:var(--font-main);font-weight:500;letter-spacing:0}
@@ -130,6 +128,43 @@ body{
   contain:layout paint style;z-index:1;min-height:100vh;
 }
 
+/* Новый верхний навбар для ПК */
+.desktop-nav-panel {
+  display: none; /* Скрыт на телефоне */
+  flex-direction: row;
+  gap: 24px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--prof-border);
+  background: var(--prof-card);
+  align-items: center;
+  justify-content: flex-start;
+  position: sticky;
+  top: 0;
+  z-index: 400;
+}
+.desktop-nav-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--prof-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 4px;
+  transition: color .15s, border-color .15s;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.desktop-nav-btn svg { width: 16px; height: 16px; }
+.desktop-nav-btn:hover { color: #fff; }
+.desktop-nav-btn.active { color: #fff; border-bottom-color: var(--prof-accent); }
+
+/* Оригинальный навбар для мобилок */
 .top-nav-panel{
   display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;
   padding:0 16px;
@@ -148,31 +183,28 @@ body{
   white-space:nowrap;
 }
 .nav-btn svg{width:18px;height:18px;flex-shrink:0;transition:color .15s;stroke-width:2.5;}
-.nav-btn img{width:18px;height:18px;object-fit:contain;}
 .nav-btn:hover{color:#fff}
 .nav-btn.active{color:#fff;border-bottom-color:var(--prof-accent);}
-.nav-btn.active svg,.nav-btn.active img{filter:brightness(1.1);stroke:var(--pink-soft);}
 
-.top-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(30, 20, 45, .3);border-bottom:2px solid rgba(168, 85, 247, .15);position:relative}
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:var(--prof-card);border-bottom:1px solid var(--prof-border);position:relative}
 .top-left{display:flex;align-items:center;gap:12px}
 .logo-wrap{display:flex;align-items:center;gap:10px}
 .logo-img{
-  height:56px;width:auto;max-width:min(62vw,380px);
+  height:36px;width:auto;max-width:min(62vw,380px);
   object-fit:contain;display:block;
   filter:drop-shadow(0 3px 8px rgba(168,85,247,.3));
 }
-@media (max-width:600px){.logo-img{height:42px;max-width:70vw}}
-.online-dot{width:8px;height:8px;border-radius:0;background:var(--emerald);animation:onlinePulse 1.5s ease-in-out infinite;}
+.online-dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:onlinePulse 1.5s ease-in-out infinite;}
 @keyframes onlinePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
-.top-right{display:flex;align-items:center;gap:8px}
-.balance-wrap{display:flex;align-items:center;background:rgba(30, 20, 45, .5);border:2px solid rgba(168, 85, 247, .3);border-radius:0;overflow:hidden}
+.top-right{display:flex;align-items:center;gap:12px}
+.balance-wrap{display:flex;align-items:center;background:rgba(255,255,255,0.03);border:1px solid var(--prof-border);border-radius:6px;overflow:hidden}
 .balance-wrap.pulse{animation:balancePulse .4s ease}
 @keyframes balancePulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-.balance{padding:8px 12px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:6px;color:#fff;}
+.balance{padding:6px 12px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:6px;color:#fff;}
 .coin-icon{width:14px;height:14px;object-fit:contain;}
-.topup-btn{width:36px;height:100%;min-height:36px;border:none;background:rgba(168, 85, 247, .18);color:#fff;font-size:20px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;border-left:2px solid rgba(168, 85, 247, .2);transition:background .15s}
+.topup-btn{width:32px;height:100%;min-height:32px;border:none;background:rgba(168, 85, 247, .18);color:#fff;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--prof-border);transition:background .15s}
 .topup-btn:hover{background:rgba(168, 85, 247, .32)}
-.avatar{width:36px;height:36px;border-radius:0;background:rgba(30, 20, 45, .5);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;border:2px solid rgba(168, 85, 247, .3);transition:border-color .15s}
+.avatar{width:32px;height:32px;border-radius:6px;background:rgba(30, 20, 45, .5);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;border:1px solid var(--prof-border);transition:border-color .15s}
 .avatar:hover{border-color:var(--pink)}
 .avatar img{width:100%;height:100%;object-fit:cover;}
 
@@ -180,28 +212,14 @@ body{
 .tab-panel.active{display:block;animation:panelFadeIn .2s ease}
 @keyframes panelFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-.access-denied{
-  position:fixed;inset:0;z-index:999999;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:30px 20px;text-align:center;
-  background:rgba(20,6,14,.98);gap:24px;
-}
-.access-denied img{
-  width:100%;max-width:420px;object-fit:contain;
-  filter:drop-shadow(0 0 18px rgba(255,77,158,.4));
-}
-.access-denied-title{
-  font-size:clamp(18px,4vw,28px);font-weight:900;color:#fff;
-  text-transform:uppercase;letter-spacing:3px;line-height:1.4;
-}
-.access-denied-sub{
-  font-size:clamp(12px,3vw,16px);font-weight:600;color:var(--pink-soft);
-  letter-spacing:1.5px;text-transform:uppercase;line-height:1.5;max-width:520px;
-}
+.access-denied{position:fixed;inset:0;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center;background:rgba(20,6,14,.98);gap:24px;}
+.access-denied img{width:100%;max-width:420px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(255,77,158,.4));}
+.access-denied-title{font-size:clamp(18px,4vw,28px);font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:3px;line-height:1.4;}
+.access-denied-sub{font-size:clamp(12px,3vw,16px);font-weight:600;color:var(--pink-soft);letter-spacing:1.5px;text-transform:uppercase;line-height:1.5;max-width:520px;}
 
 .modal{position:fixed;inset:0;background:rgba(20,6,14,.85);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .2s ease;padding:14px;backdrop-filter:blur(3px)}
 .modal.open{opacity:1;pointer-events:auto}
-.modal-card{background:linear-gradient(160deg, rgba(40,10,30,.98), rgba(28,6,20,.98));border:2px solid rgba(255,126,185,.25);border-radius:0;padding:24px 20px;width:100%;max-width:460px;text-align:center;
-  box-shadow:4px 4px 0 rgba(0,0,0,.5);transform:scale(.97);transition:transform .2s ease;position:relative;max-height:92vh;overflow-y:auto}
+.modal-card{background:linear-gradient(160deg, rgba(40,10,30,.98), rgba(28,6,20,.98));border:2px solid rgba(255,126,185,.25);border-radius:0;padding:24px 20px;width:100%;max-width:460px;text-align:center;box-shadow:4px 4px 0 rgba(0,0,0,.5);transform:scale(.97);transition:transform .2s ease;position:relative;max-height:92vh;overflow-y:auto}
 .modal.open .modal-card{transform:scale(1)}
 .modal-card.wide{max-width:680px;text-align:left;padding:24px 22px}
 .modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:0;border:2px solid rgba(255,126,185,.2);background:rgba(255,77,158,.08);color:#c98bb0;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;z-index:5}
@@ -233,16 +251,7 @@ body{
 .upg-pane.active{display:block;animation:panelFadeIn .2s ease}
 
 .cases-page{padding:0 0 20px;position:relative}
-.cases-page::before{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background-image:
-    radial-gradient(circle at 12% 20%, rgba(255,77,158,.08) 0 2px, transparent 3px),
-    radial-gradient(circle at 82% 30%, rgba(216,180,254,.09) 0 2px, transparent 3px),
-    radial-gradient(circle at 30% 70%, rgba(255,77,158,.08) 0 2px, transparent 3px),
-    radial-gradient(circle at 70% 85%, rgba(216,180,254,.07) 0 2px, transparent 3px);
-  background-size:240px 240px;
-  opacity:.9;
-}
+.cases-page::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle at 12% 20%, rgba(255,77,158,.08) 0 2px, transparent 3px),radial-gradient(circle at 82% 30%, rgba(216,180,254,.09) 0 2px, transparent 3px),radial-gradient(circle at 30% 70%, rgba(255,77,158,.08) 0 2px, transparent 3px),radial-gradient(circle at 70% 85%, rgba(216,180,254,.07) 0 2px, transparent 3px);background-size:240px 240px;opacity:.9;}
 .cases-page > *{position:relative;z-index:1}
 
 .cases-header{display:flex;flex-direction:column;gap:10px;padding:16px 20px 8px}
@@ -250,12 +259,7 @@ body{
 .cases-search:focus{border-color:var(--pink);background:rgba(255,77,158,.08)}
 .cases-search::placeholder{color:#7a4a63}
 
-.cases-title-main,.menu-section-title{font-size:clamp(20px,4vw,32px);font-weight:900;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:8px 0 4px;line-height:1.3;
-  background:linear-gradient(90deg, var(--pink-soft), var(--pink-hot), var(--violet), var(--pink-soft));
-  background-size:300% 100%;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:gradientShift 6s ease infinite;
-}
+.cases-title-main,.menu-section-title{font-size:clamp(20px,4vw,32px);font-weight:900;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:8px 0 4px;line-height:1.3;background:linear-gradient(90deg, var(--pink-soft), var(--pink-hot), var(--violet), var(--pink-soft));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 6s ease infinite;}
 @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .cases-subtitle-main{color:#c98bb0;font-size:14px;font-weight:500;text-align:center;letter-spacing:.5px;margin-bottom:16px;line-height:1.3;padding:0 10px}
 
@@ -264,37 +268,16 @@ body{
 @media (min-width:1000px){.cases-grid{grid-template-columns:repeat(5,1fr)}}
 @media (min-width:1300px){.cases-grid{grid-template-columns:repeat(6,1fr)}}
 
-.case-card{
-  position:relative;border-radius:0;
-  background:rgba(255,77,158,.05);
-  border:2px solid rgba(255,126,185,.2);
-  overflow:hidden;transition:all .2s ease;cursor:pointer;
-  box-shadow:2px 2px 0 rgba(0,0,0,.3);
-}
-.case-card:hover{
-  border-color:var(--pink);background:rgba(255,77,158,.1);
-  box-shadow:3px 3px 0 rgba(0,0,0,.4);
-  transform:translate(-1px,-1px);
-}
+.case-card{position:relative;border-radius:0;background:rgba(255,77,158,.05);border:2px solid rgba(255,126,185,.2);overflow:hidden;transition:all .2s ease;cursor:pointer;box-shadow:2px 2px 0 rgba(0,0,0,.3);}
+.case-card:hover{border-color:var(--pink);background:rgba(255,77,158,.1);box-shadow:3px 3px 0 rgba(0,0,0,.4);transform:translate(-1px,-1px);}
 .case-card-inner{position:relative;display:flex;flex-direction:column;padding:10px 8px 8px;align-items:center;gap:8px}
-.case-img-wrap{
-  position:relative;width:100%;aspect-ratio:1;border-radius:0;
-  overflow:hidden;
-  background:rgba(20,6,20,.7);
-  border:2px solid rgba(255,126,185,.15);
-  display:flex;align-items:center;justify-content:center;
-}
+.case-img-wrap{position:relative;width:100%;aspect-ratio:1;border-radius:0;overflow:hidden;background:rgba(20,6,20,.7);border:2px solid rgba(255,126,185,.15);display:flex;align-items:center;justify-content:center;}
 .case-img-wrap img{width:80%;height:80%;object-fit:contain;transition:transform .25s ease}
 .case-card:hover .case-img-wrap img{transform:scale(1.05)}
 
 .case-info{width:100%;text-align:center}
 .case-name{font-size:11px;font-weight:800;color:#fff;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
-.case-price{
-  font-size:12px;font-weight:800;
-  color:var(--pink-soft);background:rgba(255,77,158,.14);
-  border:2px solid rgba(255,126,185,.3);
-  padding:4px 8px;border-radius:0;display:inline-flex;align-items:center;justify-content:center;gap:4px;line-height:1.2;
-}
+.case-price{font-size:12px;font-weight:800;color:var(--pink-soft);background:rgba(255,77,158,.14);border:2px solid rgba(255,126,185,.3);padding:4px 8px;border-radius:0;display:inline-flex;align-items:center;justify-content:center;gap:4px;line-height:1.2;}
 .case-price img{width:12px;height:12px;}
 .case-price.free-tag{color:#fff;background:rgba(255,77,158,.35);border-color:var(--pink-soft)}
 .case-items-count{font-size:10px;color:#9a5f7d;font-weight:600;margin-top:4px;letter-spacing:.4px;line-height:1.2}
@@ -406,12 +389,7 @@ body{
 .stage-controls{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 20px 6px}
 .upgrade-main-btn{flex:0 1 220px;padding:14px 20px;border-radius:0;border:2px solid rgba(255,126,185,.4);background:rgba(255,77,158,.18);color:var(--pink-soft);font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 rgba(0,0,0,.35);line-height:1.4}
 .upgrade-main-btn:hover:not(:disabled){background:rgba(255,77,158,.3)}
-.upgrade-main-btn:not(:disabled){
-  background:linear-gradient(135deg, rgba(255,77,158,.4), rgba(224,33,138,.35), rgba(168,85,247,.35));
-  border-color:var(--pink);
-  color:#fff;
-  box-shadow:3px 3px 0 rgba(0,0,0,.4);
-}
+.upgrade-main-btn:not(:disabled){background:linear-gradient(135deg, rgba(255,77,158,.4), rgba(224,33,138,.35), rgba(168,85,247,.35));border-color:var(--pink);color:#fff;box-shadow:3px 3px 0 rgba(0,0,0,.4);}
 .upgrade-main-btn:disabled{opacity:.35;cursor:not-allowed;background:rgba(255,255,255,.03);color:#7a4a63;border-color:rgba(255,126,185,.12);box-shadow:none}
 .fast-btn{width:44px;height:44px;border-radius:0;border:2px solid rgba(255,126,185,.2);background:rgba(255,77,158,.05);color:#c98bb0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;box-shadow:2px 2px 0 rgba(0,0,0,.3)}
 .fast-btn.active{background:rgba(255,77,158,.22);border-color:var(--pink);color:#fff}
@@ -521,7 +499,7 @@ body{
 .topup-price-line .tpl-value img{width:14px;height:14px;}
 
 /* ========================================================
-   НОВЫЙ ПРОФИЛЬ (Стиль скриншота) — УПРОЩЕННЫЙ
+   ПРОФИЛЬ (Строгий стиль со скриншота)
    ======================================================== */
 .profile-page-new {
     padding: 20px;
@@ -559,7 +537,7 @@ body{
 .prof-card {
     background: var(--prof-card);
     border: 1px solid var(--prof-border);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -569,7 +547,7 @@ body{
 }
 
 .prof-card-header {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--prof-text-muted);
     text-transform: uppercase;
@@ -579,7 +557,7 @@ body{
     align-items: center;
     gap: 8px;
 }
-.prof-card-header svg { width: 16px; height: 16px; }
+.prof-card-header svg { width: 14px; height: 14px; }
 
 /* Левая колонка - Лучший дроп */
 .best-drop-card {
@@ -589,52 +567,53 @@ body{
 .best-drop-card .prof-card-header { align-self: flex-start; }
 .best-drop-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--prof-border);
+    border-radius: 8px;
+    padding: 16px;
 }
 .best-drop-img-wrap {
-    width: 140px;
-    height: 140px;
-    background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%);
-    border: 2px solid rgba(168,85,247,0.2);
-    border-radius: 12px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+    border: 1px solid var(--prof-orange);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    margin: 10px 0;
+    flex-shrink: 0;
 }
 .best-drop-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
-.best-drop-label {
-    font-size: 12px;
-    color: var(--prof-text-muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.best-drop-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    text-align: left;
 }
 .best-drop-name {
-    font-size: 18px;
-    font-weight: 900;
+    font-size: 15px;
+    font-weight: 800;
     color: #fff;
     line-height: 1.2;
 }
 .best-drop-price {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 900;
     color: var(--prof-orange);
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 6px;
 }
-.best-drop-price img { width: 20px; height: 20px; }
+.best-drop-price img { width: 16px; height: 16px; }
 
 /* Центральная колонка */
 .profile-main-card {
@@ -645,24 +624,23 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
-    background: linear-gradient(180deg, rgba(168,85,247,0.08) 0%, transparent 100%);
+    padding: 20px;
     border-bottom: 1px solid var(--prof-border);
 }
 .profile-main-user {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
 }
 .profile-main-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--prof-avatar-bg);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--prof-avatar-bg, #2a2138);
     border: 2px solid var(--prof-accent);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 0 15px var(--prof-accent-glow);
+    box-shadow: 0 0 20px var(--prof-accent-glow);
 }
 .profile-main-avatar img {
     width: 100%;
@@ -672,100 +650,21 @@ body{
 .profile-main-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
 }
 .profile-main-nick {
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
     color: #fff;
     line-height: 1.2;
 }
 .profile-main-tag {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--prof-text-muted);
     font-weight: 600;
-}
-.profile-main-id {
-    font-size: 11px;
-    color: var(--prof-text-muted);
-    font-weight: 500;
-    opacity: 0.7;
-}
-.profile-main-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.profile-main-avatar-big {
-    display: flex;
-    justify-content: center;
-}
-.profile-main-avatar-big .profile-main-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border-width: 3px;
-}
-.profile-balance-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--prof-border);
-    padding: 12px 16px;
-    border-radius: 8px;
-}
-.profile-balance-label {
-    font-size: 12px;
-    color: var(--prof-text-muted);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.profile-balance-value {
-    font-size: 20px;
-    font-weight: 900;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.profile-balance-value img { width: 18px; height: 18px; }
-.profile-balance-actions {
-    display: flex;
-    gap: 8px;
-}
-.profile-btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 800;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.15s;
-    font-family: var(--font-main);
-}
-.profile-btn-primary {
-    background: var(--prof-orange);
-    color: #fff;
-}
-.profile-btn-primary:hover {
-    background: #ea580c;
-}
-.profile-btn-secondary {
-    background: rgba(255,255,255,0.05);
-    color: var(--prof-text-muted);
-    border: 1px solid var(--prof-border);
-}
-.profile-btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
 }
 
 /* Статистика */
@@ -775,7 +674,7 @@ body{
 }
 .profile-stats-header {
     padding: 16px 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--prof-text-muted);
     text-transform: uppercase;
@@ -793,23 +692,13 @@ body{
 }
 .profile-stat-item {
     background: var(--prof-card);
-    padding: 20px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
 }
-.profile-stat-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--prof-orange);
-    margin-bottom: 4px;
-}
-.profile-stat-icon svg { width: 24px; height: 24px; }
 .profile-stat-value {
     font-size: 24px;
     font-weight: 900;
@@ -837,7 +726,7 @@ body{
     border-bottom: 1px solid var(--prof-border);
 }
 .profile-requests-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--prof-text-muted);
     text-transform: uppercase;
@@ -912,7 +801,7 @@ body{
     grid-column: 1 / -1;
     background: var(--prof-card);
     border: 1px solid var(--prof-border);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 20px;
 }
 .profile-inventory-bottom .prof-card-header {
@@ -971,7 +860,7 @@ body{
     height: 16px;
 }
 
-/* Скрываем старые элементы профиля, если они остались */
+/* Скрываем старые элементы */
 .profile-hero, .profile-stats-grid-old, .profile-inventory-section, .customize-in-profile, .profile-action-row {
     display: none !important;
 }
@@ -984,15 +873,33 @@ body{
 /* Адаптив для профиля */
 @media (max-width: 768px) {
     .profile-main-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .profile-balance-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .profile-balance-actions { width: 100%; }
-    .profile-balance-actions .profile-btn { flex: 1; justify-content: center; }
     .profile-stats-grid { grid-template-columns: 1fr 1fr; }
+    .best-drop-content { flex-direction: column; text-align: center; }
+    .best-drop-info { align-items: center; text-align: center; }
 }
 
 @media (max-width: 400px) {
     .profile-stats-grid { grid-template-columns: 1fr; }
     .profile-inventory-bottom-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+}
+
+/* ====== АДАПТИВНАЯ НАВИГАЦИЯ ====== */
+/* Скрываем верхнюю панель на мобильных, показываем нижнюю */
+@media (max-width: 768px) {
+    .desktop-nav-panel { display: none !important; }
+    .top-nav-panel { display: flex !important; }
+}
+/* Показываем верхнюю панель на ПК, скрываем нижнюю */
+@media (min-width: 769px) {
+    .desktop-nav-panel { display: flex !important; }
+    .top-nav-panel { display: none !important; }
+}
+
+/* Стили для вкладки Админ-панель */
+#panelAdmin {
+    padding: 24px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 </style>
 </head>
@@ -1040,64 +947,6 @@ body{
         </div>
         <button class="action-btn" onclick="createDeposit()">Отправить заявку</button>
         <div class="msg" id="topupMsg"></div>
-    </div>
-</div>
-
-<div class="modal" id="adminModal">
-    <div class="modal-card wide">
-        <button class="modal-close" onclick="closeModal('adminModal')">X</button>
-        <div class="admin-header">
-            <div class="admin-header-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="M9 12l2 2 4-4"/>
-                </svg>
-            </div>
-            <div class="admin-header-text">
-                <div class="admin-header-title">Admin Panel</div>
-                <div class="admin-header-sub"><span class="admin-online-dot"></span> СИСТЕМА АКТИВНА</div>
-            </div>
-        </div>
-        
-        <div class="admin-section">
-            <div class="admin-section-title">Создание промокода</div>
-            <div class="form-group">
-                <label class="form-label">Название промокода</label>
-                <input type="text" class="form-input" id="adminCode" placeholder="Например: SUPER2025" maxlength="20" oninput="updateAdminPreview()">
-            </div>
-            <div class="admin-preview">
-                <div class="admin-preview-label">Превью:</div>
-                <div class="admin-preview-value" id="adminPreviewValue"></div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Кол-во активаций</label>
-                <input type="number" class="form-input" id="adminUses" placeholder="10" min="1" value="1">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Тип награды</label>
-                <div class="radio-row">
-                    <div class="radio-option active" data-type="balance" onclick="selectPromoType('balance')">Баланс</div>
-                    <div class="radio-option" data-type="item" onclick="selectPromoType('item')">Брейнрот</div>
-                </div>
-            </div>
-            <div class="form-group" id="balanceGroup">
-                <label class="form-label">Сумма монет</label>
-                <input type="number" class="form-input" id="adminBalance" placeholder="500" min="1" value="500">
-            </div>
-            <div class="form-group" id="itemGroup" style="display:none;">
-                <label class="form-label">Выбери брейнрот</label>
-                <div class="admin-grid" id="adminGrid"></div>
-            </div>
-            <button class="action-btn" onclick="createPromo()">Создать промокод</button>
-            <div class="msg" id="adminMsg"></div>
-        </div>
-
-        <div class="admin-section">
-            <div class="admin-section-title">Существующие промокоды</div>
-            <div class="promo-list" id="promoList">
-                <div style="color:#9a5f7d; font-size:12px; font-weight:600; text-align:center; padding:10px;">Загрузка...</div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -1153,36 +1002,83 @@ body{
 <div id="sakura"></div>
 
 <div class="app" id="mainApp">
-    <div class="top-nav-panel">
-        <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')" title="Главная">
+    <!-- НОВЫЙ ВЕРХНИЙ НАВБАР (Для ПК) -->
+    <div class="desktop-nav-panel">
+        <button class="desktop-nav-btn active" id="navMenu" onclick="switchTab('menu')" title="Главная">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/>
             </svg>
             <span>Главная</span>
         </button>
-        <button class="nav-btn" id="navUpgrade" onclick="switchTab('upgrade')" title="Апгрейдер">
+        <button class="desktop-nav-btn" id="navUpgrade" onclick="switchTab('upgrade')" title="Апгрейдер">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
             </svg>
             <span>Апгрейдер</span>
         </button>
-        <button class="nav-btn" id="navRocket" onclick="switchTab('rocket')" title="Квесты">
+        <button class="desktop-nav-btn" id="navRocket" onclick="switchTab('rocket')" title="Квесты">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/>
             </svg>
             <span>Квесты</span>
         </button>
-        <button class="nav-btn" id="navPromo" onclick="switchTab('promo')" title="Промокоды">
+        <button class="desktop-nav-btn" id="navPromo" onclick="switchTab('promo')" title="Промокоды">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
             </svg>
             <span>Промокоды</span>
         </button>
-        <button class="nav-btn" id="navProfile" onclick="switchTab('profile')" title="Профиль">
+        <button class="desktop-nav-btn" id="navProfile" onclick="switchTab('profile')" title="Профиль">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
             </svg>
             <span>Профиль</span>
+        </button>
+        <button class="desktop-nav-btn" id="navAdmin" onclick="switchTab('admin')" title="Админ-панель" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Админ</span>
+        </button>
+    </div>
+
+    <!-- СТАРЫЙ НАВБАР (Для мобилок) -->
+    <div class="top-nav-panel">
+        <button class="nav-btn active" id="navMenuMobile" onclick="switchTab('menu')" title="Главная">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/>
+            </svg>
+            <span>Главная</span>
+        </button>
+        <button class="nav-btn" id="navUpgradeMobile" onclick="switchTab('upgrade')" title="Апгрейдер">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
+            </svg>
+            <span>Апгрейдер</span>
+        </button>
+        <button class="nav-btn" id="navRocketMobile" onclick="switchTab('rocket')" title="Квесты">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/>
+            </svg>
+            <span>Квесты</span>
+        </button>
+        <button class="nav-btn" id="navPromoMobile" onclick="switchTab('promo')" title="Промокоды">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+            <span>Промокоды</span>
+        </button>
+        <button class="nav-btn" id="navProfileMobile" onclick="switchTab('profile')" title="Профиль">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            </svg>
+            <span>Профиль</span>
+        </button>
+        <button class="nav-btn" id="navAdminMobile" onclick="switchTab('admin')" title="Админ-панель" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Админ</span>
         </button>
     </div>
 
@@ -1309,10 +1205,11 @@ body{
         </div>
     </div>
 
-    <!-- ПРОФИЛЬ (ВОЗВРАЩЕН) -->
+    <!-- ПРОФИЛЬ (Строгий стиль) -->
     <div class="tab-panel" id="panelProfile">
         <div class="profile-page-new" id="profileNewContent">
             <div class="profile-grid">
+                <!-- ЛУЧШИЙ ДРОП -->
                 <div class="prof-card best-drop-card">
                     <div class="prof-card-header">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1325,6 +1222,7 @@ body{
                     </div>
                 </div>
 
+                <!-- ЦЕНТР (Профиль и Статистика) -->
                 <div style="display: flex; flex-direction: column; gap: 20px;">
                     <div class="prof-card profile-main-card">
                         <div class="profile-main-header">
@@ -1337,31 +1235,6 @@ body{
                                     <div class="profile-main-tag" id="profileMainTag">@...</div>
                                 </div>
                             </div>
-                            <div class="profile-main-id" id="profileMainId">ID: ---</div>
-                        </div>
-                        <div class="profile-main-body">
-                            <div class="profile-main-avatar-big">
-                                <div class="profile-main-avatar" style="width: 100px; height: 100px; border-radius: 50%; border-width: 3px;">
-                                    <img id="profileMainAvatarBig" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="Avatar">
-                                </div>
-                            </div>
-                            <div class="profile-balance-row">
-                                <div>
-                                    <div class="profile-balance-label">БАЛАНС</div>
-                                    <div class="profile-balance-value">
-                                        <span id="profileBalanceNew">0</span>
-                                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin">
-                                    </div>
-                                </div>
-                                <div class="profile-balance-actions">
-                                    <button class="profile-btn profile-btn-primary" onclick="openTopup()">
-                                        + Пополнить
-                                    </button>
-                                    <button class="profile-btn profile-btn-secondary" onclick="showToast('Реферальная система в разработке', 'info')">
-                                        👥 Рефералы
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -1372,54 +1245,30 @@ body{
                                 <line x1="12" y1="20" x2="12" y2="4"></line>
                                 <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
-                            СТАТИСТИКА
+                            СТАТИСТИКА АККАУНТА
                         </div>
                         <div class="profile-stats-grid">
                             <div class="profile-stat-item">
-                                <div class="profile-stat-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                                        <line x1="9" y1="21" x2="9" y2="9"></line>
-                                    </svg>
-                                </div>
                                 <div class="profile-stat-value" id="statCasesCount">0</div>
-                                <div class="profile-stat-label">Кейсы</div>
+                                <div class="profile-stat-label">КЕЙСОВ ОТКРЫТО</div>
                             </div>
                             <div class="profile-stat-item">
-                                <div class="profile-stat-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 20V10"></path>
-                                        <path d="M18 20V4"></path>
-                                        <path d="M6 20v-4"></path>
-                                    </svg>
-                                </div>
                                 <div class="profile-stat-value" id="statUpgradesCount">0</div>
-                                <div class="profile-stat-label">Апгрейды</div>
+                                <div class="profile-stat-label">АПГРЕЙДОВ</div>
                             </div>
                             <div class="profile-stat-item">
-                                <div class="profile-stat-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                                    </svg>
-                                </div>
                                 <div class="profile-stat-value" id="statPetsCount">0</div>
-                                <div class="profile-stat-label">Петы</div>
+                                <div class="profile-stat-label">КРАШЕЙ СЫГРАНО</div>
                             </div>
                             <div class="profile-stat-item">
-                                <div class="profile-stat-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                </div>
                                 <div class="profile-stat-value" id="statLevel">0</div>
-                                <div class="profile-stat-label">Уровень</div>
+                                <div class="profile-stat-label">БАТЛОВ СЫГРАНО</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- ПРАВАЯ КОЛОНКА (Заявки) -->
                 <div class="prof-card profile-requests-card" id="profileRequestsCard" style="display: none;">
                     <div class="profile-requests-header">
                         <div class="profile-requests-title">
@@ -1440,6 +1289,7 @@ body{
                 </div>
             </div>
 
+            <!-- ИНВЕНТАРЬ ВНИЗУ -->
             <div class="profile-inventory-bottom">
                 <div class="prof-card-header">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1447,11 +1297,67 @@ body{
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                         <line x1="12" y1="22.08" x2="12" y2="12"></line>
                     </svg>
-                    ПРЕДМЕТЫ ПОЛЬЗОВАТЕЛЯ
+                    ИНВЕНТАРЬ
                 </div>
                 <div class="profile-inventory-bottom-grid" id="profileInventoryBottomGrid">
                     <div style="color: var(--prof-text-muted); font-size: 14px; text-align: center; padding: 20px; grid-column: 1/-1;">Пока пусто</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- НОВАЯ ВКЛАДКА АДМИН-ПАНЕЛЬ -->
+    <div class="tab-panel" id="panelAdmin">
+        <div class="admin-header" style="margin-bottom:24px;">
+            <div class="admin-header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+            </div>
+            <div class="admin-header-text">
+                <div class="admin-header-title">Admin Panel</div>
+                <div class="admin-header-sub"><span class="admin-online-dot"></span> СИСТЕМА АКТИВНА</div>
+            </div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-title">Создание промокода</div>
+            <div class="form-group">
+                <label class="form-label">Название промокода</label>
+                <input type="text" class="form-input" id="adminCode" placeholder="Например: SUPER2025" maxlength="20" oninput="updateAdminPreview()">
+            </div>
+            <div class="admin-preview">
+                <div class="admin-preview-label">Превью:</div>
+                <div class="admin-preview-value" id="adminPreviewValue"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Кол-во активаций</label>
+                <input type="number" class="form-input" id="adminUses" placeholder="10" min="1" value="1">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Тип награды</label>
+                <div class="radio-row">
+                    <div class="radio-option active" data-type="balance" onclick="selectPromoType('balance')">Баланс</div>
+                    <div class="radio-option" data-type="item" onclick="selectPromoType('item')">Брейнрот</div>
+                </div>
+            </div>
+            <div class="form-group" id="balanceGroup">
+                <label class="form-label">Сумма монет</label>
+                <input type="number" class="form-input" id="adminBalance" placeholder="500" min="1" value="500">
+            </div>
+            <div class="form-group" id="itemGroup" style="display:none;">
+                <label class="form-label">Выбери брейнрот</label>
+                <div class="admin-grid" id="adminGrid"></div>
+            </div>
+            <button class="action-btn" onclick="createPromo()">Создать промокод</button>
+            <div class="msg" id="adminMsg"></div>
+        </div>
+
+        <div class="admin-section">
+            <div class="admin-section-title">Существующие промокоды</div>
+            <div class="promo-list" id="promoList">
+                <div style="color:#9a5f7d; font-size:12px; font-weight:600; text-align:center; padding:10px;">Загрузка...</div>
             </div>
         </div>
     </div>
@@ -1946,9 +1852,10 @@ body{
             <div class="best-drop-img-wrap">
                 <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
             </div>
-            <div class="best-drop-label">Лучший дроп</div>
-            <div class="best-drop-name">${item.name}</div>
-            <div class="best-drop-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
+            <div class="best-drop-info">
+                <div class="best-drop-name">${item.name}</div>
+                <div class="best-drop-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
+            </div>
         `;
     }
 
@@ -2069,10 +1976,13 @@ body{
         }
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.desktop-nav-btn').forEach(t => t.classList.remove('active'));
         const panel = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
         const navBtn = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1));
+        const navBtnMobile = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1) + 'Mobile');
         if (panel) panel.classList.add('active');
         if (navBtn) navBtn.classList.add('active');
+        if (navBtnMobile) navBtnMobile.classList.add('active');
         if (tab === 'profile') {
             updateProfile();
         }
@@ -3058,6 +2968,15 @@ body{
         loadUserFromServer();
         preloadImages();
         updateProfileStats();
+        
+        // Показываем вкладку админа, если пользователь админ
+        if (ALLOWED_USERS.includes((USER.username || '').toLowerCase())) {
+            const navAdmin = document.getElementById('navAdmin');
+            const navAdminMobile = document.getElementById('navAdminMobile');
+            if (navAdmin) navAdmin.style.display = 'flex';
+            if (navAdminMobile) navAdminMobile.style.display = 'flex';
+            renderPromoList();
+        }
     }
 
     window.addEventListener('load', () => {
