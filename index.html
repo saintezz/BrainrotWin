@@ -331,196 +331,83 @@ body{
 .case-items-count{font-size:12px;color:var(--text-muted);margin-top:8px;}
 
 /* ========================================================
-   АПГРЕЙДЕР (НОВЫЙ ДИЗАЙН)
+   АПГРЕЙДЕР
    ======================================================== */
-.upg-container {
-  display: flex;
-  gap: 20px;
-  padding: 20px 0;
-}
+.upg-tabs{display:flex;gap:8px;margin-bottom:20px;}
+.upg-tab{flex:1;padding:12px;border-radius:8px;border:2px solid var(--line);background:var(--bg-surface);color:var(--text-muted);font-weight:700;cursor:pointer;transition:all .15s;}
+.upg-tab:hover{color:#fff}
+.upg-tab.active{border-color:var(--orange);color:#fff;background:rgba(255,123,0,.1);}
 
-.upg-column {
-  flex: 1;
-  background: var(--bg-surface);
-  border: 2px solid var(--line);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.upg-column h2 {
-  font-size: 20px;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 16px;
-  letter-spacing: .5px;
-}
-
-/* Пустое состояние для инвентаря */
-.empty-inventory-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px 20px;
-  border: 2px dashed var(--line);
-  border-radius: 12px;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
-  gap: 16px;
-  flex: 1;
-}
-
-.btn-go-cases {
-  background: #00e676; /* Ярко-зеленый как на фото */
-  color: #000;
-  font-size: 16px;
-  font-weight: 800;
-  padding: 14px 30px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all .15s;
-  text-transform: uppercase;
-  width: 100%;
-  max-width: 300px;
-}
-.btn-go-cases:hover {
-  background: #00c853;
-  transform: translateY(-2px);
-}
-
-/* Сетка инвентаря внутри колонки */
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-  overflow-y: auto;
-  max-height: 500px;
-  padding-right: 5px;
-}
-
-.inv-card {
-  background: rgba(255,255,255,.03);
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: all .15s;
-}
-.inv-card:hover { border-color: var(--orange); background: rgba(255,123,0,.05); }
-.inv-card.selected { border-color: var(--orange); background: rgba(255,123,0,.1); box-shadow: 0 0 15px rgba(255,123,0,.2); }
-.inv-card img { width: 50px; height: 50px; object-fit: contain; }
-.inv-card .name { font-size: 11px; font-weight: 600; color: #fff; text-align: center; height: 28px; overflow: hidden; }
-.inv-card .price { font-size: 12px; font-weight: 800; color: var(--yellow); display: flex; align-items: center; gap: 3px; }
-
-/* Колонка с целями */
-.search-input {
-  width: 100%;
-  padding: 12px 16px;
-  background: #0a0a0a;
-  border: 2px solid var(--line);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 16px;
-  outline: none;
-}
-.search-input:focus { border-color: var(--orange); }
-
-.empty-target-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 20px;
-  border: 2px dashed var(--line);
-  border-radius: 12px;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
-  flex: 1;
-}
-
-/* Цели */
-.targets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
-  overflow-y: auto;
-  max-height: 450px;
-  padding-right: 5px;
-}
-.target-card {
-  background: rgba(255,255,255,.03);
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: all .15s;
-}
-.target-card:hover { border-color: var(--purple); background: rgba(157,0,255,.05); }
-.target-card img { width: 50px; height: 50px; object-fit: contain; }
-.target-card .name { font-size: 11px; font-weight: 600; color: #fff; text-align: center; height: 28px; overflow: hidden; }
-.target-card .price { font-size: 12px; font-weight: 800; color: var(--yellow); display: flex; align-items: center; gap: 3px; }
-.target-card .chance { font-size: 12px; font-weight: 800; color: var(--purple); margin-top: 4px; }
-
-/* Блок апгрейда */
-.upgrade-action-block {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px solid var(--line);
-}
-
-.progress-section{display:flex;justify-content:center;padding:10px 0;}
-.progress-wrapper{position:relative;width:220px;height:220px;}
+.progress-section{display:flex;justify-content:center;padding:20px 0;}
+.progress-wrapper{position:relative;width:280px;height:280px;}
 .progress-svg{width:100%;height:100%;transform:rotate(-90deg);}
-.progress-bg{fill:none;stroke:rgba(255,255,255,.05);stroke-width:14;}
-.progress-bar{fill:none;stroke:url(#progressGradient);stroke-width:14;stroke-linecap:butt;stroke-dasharray:628;stroke-dashoffset:628;transition:stroke-dashoffset .25s ease}
+.progress-bg{fill:none;stroke:var(--bg-surface-hover);stroke-width:18;}
+.progress-bar{fill:none;stroke:url(#progressGradient);stroke-width:18;stroke-linecap:butt;stroke-dasharray:816;stroke-dashoffset:816;transition:stroke-dashoffset .25s ease}
 .arrow-container{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:flex-start;pointer-events:none;z-index:5;transform-origin:center center;will-change:transform}
-.arrow-pointer{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:18px solid var(--orange);margin-top:12px;position:relative;filter:drop-shadow(0 0 8px var(--orange))}
+.arrow-pointer{width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:22px solid var(--orange);margin-top:16px;position:relative;filter:drop-shadow(0 0 8px var(--orange))}
 .progress-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10}
-.chance-big{font-size:32px;font-weight:900;color:#fff;line-height:1.2}
-
-.upgrade-main-btn{
-  padding:16px;
-  border-radius:10px;
-  border:2px solid var(--line);
-  background:rgba(255,255,255,.04);
-  color:#9a9aac;
-  font-size:16px;
-  font-weight:900;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all .15s;
-}
+.chance-big{font-size:40px;font-weight:900;color:#fff;line-height:1.2}
+.chance-label{font-size:12px;font-weight:700;color:#8a8a9a;text-transform:uppercase;letter-spacing:1px;margin-top:6px;min-height:14px;line-height:1.2}
+.chance-label.hidden{visibility:hidden}
+.items-row{display:flex;justify-content:center;align-items:center;gap:10px;padding:12px 20px}
+.item-box{background:var(--bg-surface);border-radius:8px;padding:16px;display:flex;flex-direction:column;align-items:center;border:2px solid var(--line);min-width:140px;flex:1;max-width:190px;box-shadow:2px 2px 0 rgba(0,0,0,.4);cursor:pointer;transition:all .15s;}
+.item-box:hover{border-color:var(--orange);background:var(--bg-surface-hover);}
+.item-box .label{font-size:12px;font-weight:700;color:#8a8a9a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;line-height:1.2;text-align:center}
+.item-box img{width:56px;height:56px;object-fit:contain;margin-bottom:6px;}
+.item-box .name{font-size:13px;font-weight:600;text-align:center;margin-bottom:4px;color:#fff;height:32px;display:flex;align-items:center;justify-content:center;line-height:1.1}
+.item-box .price{font-size:14px;font-weight:800;color:var(--yellow);display:flex;align-items:center;gap:4px;margin-bottom:4px;line-height:1.3}
+.price-coin{width:14px;height:14px;object-fit:contain;}
+.swap-arrow{font-size:24px;color:var(--orange);line-height:1;font-weight:700;filter:drop-shadow(0 0 6px var(--orange))}
+.stage-controls{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 20px 6px}
+.upgrade-main-btn{flex:0 1 220px;padding:14px 20px;border-radius:8px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#9a9aac;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 rgba(0,0,0,.5);line-height:1.4}
+.upgrade-main-btn:hover:not(:disabled){background:rgba(157,0,255,.15)}
 .upgrade-main-btn:not(:disabled){
-  background:var(--orange);
-  border-color:var(--orange);
-  color:#000;
-  box-shadow:0 4px 0 #b35600;
+  background:linear-gradient(135deg, rgba(157,0,255,.4), rgba(255,123,0,.35), rgba(255,0,51,.3));
+  border-color:var(--purple);
+  color:#fff;
+  box-shadow:3px 3px 0 rgba(0,0,0,.5),0 0 20px rgba(157,0,255,.25);
 }
-.upgrade-main-btn:not(:disabled):hover{
-  background:var(--orange-hover);
-  transform:translateY(-2px);
-  box-shadow:0 6px 0 #b35600;
-}
-.upgrade-main-btn:disabled{opacity:.35;cursor:not-allowed;}
+.upgrade-main-btn:disabled{opacity:.35;cursor:not-allowed;background:rgba(255,255,255,.02);color:#5a5a6a;border-color:rgba(255,255,255,.08);box-shadow:none}
+.fast-btn{width:44px;height:44px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#8a8a9a;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;box-shadow:2px 2px 0 rgba(0,0,0,.4)}
+.fast-btn.active{background:rgba(57,255,20,.15);border-color:var(--slime);color:var(--slime)}
+.fast-btn svg{width:20px;height:20px}
+
+.section-title{font-size:14px;font-weight:800;color:#9a9aac;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding:0 20px;display:flex;align-items:center;gap:8px;line-height:1.4}
+.section-title::before{content:'';width:4px;height:14px;background:linear-gradient(180deg,var(--purple),var(--orange));border-radius:0}
+.section-block{margin-top:20px}
+
+.inventory-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;padding:4px 20px 12px}
+.shop-scroll{max-height:480px;overflow-y:auto;padding:4px 20px 12px;scrollbar-width:thin;scrollbar-color:rgba(255,123,0,.3) transparent}
+.shop-scroll::-webkit-scrollbar{width:4px}
+.shop-scroll::-webkit-scrollbar-thumb{background:rgba(255,123,0,.2);border-radius:0}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+
+.inv-card,.shop-card{background:var(--bg-surface);border-radius:8px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;border:2px solid var(--line);transition:border-color .15s,background .15s;position:relative;min-width:0;overflow:hidden;cursor:pointer;}
+.inv-card:hover,.shop-card:hover{border-color:rgba(255,123,0,.4);background:var(--bg-surface-hover)}
+.inv-card.selected{border-color:var(--orange);background:rgba(255,123,0,.08)}
+.inv-card img,.shop-card img{width:100%;max-width:52px;height:52px;object-fit:contain;margin-bottom:6px;pointer-events:none;}
+.inv-card .name,.shop-card .name{font-size:12px;font-weight:600;text-align:center;margin-bottom:4px;height:32px;overflow:hidden;color:#fff;pointer-events:none;line-height:1.1;width:100%;display:flex;align-items:center;justify-content:center}
+.inv-card .price,.shop-card .price{font-size:12px;color:var(--yellow);font-weight:800;display:flex;align-items:center;gap:3px;pointer-events:none;line-height:1.3}
+.inv-card .price img,.shop-card .price img{width:12px;height:12px;max-width:12px;max-height:12px;}
+.buy-btn{width:100%;padding:8px;border-radius:6px;border:2px solid rgba(57,255,20,.35);background:rgba(57,255,20,.1);color:var(--slime);font-size:12px;font-weight:800;cursor:pointer;transition:background .15s;text-transform:uppercase;margin-top:6px;position:relative;z-index:5;letter-spacing:.5px;line-height:1.3;box-shadow:2px 2px 0 rgba(0,0,0,.4)}
+.buy-btn:hover:not(:disabled){background:rgba(57,255,20,.22)}
+.buy-btn:disabled{opacity:.35;cursor:not-allowed;background:rgba(255,255,255,.02);color:#5a5a6a;border-color:rgba(255,255,255,.08);box-shadow:none}
+.sell-btn{width:100%;padding:8px;border-radius:6px;border:2px solid rgba(255,0,51,.25);background:rgba(255,0,51,.08);color:var(--blood);font-size:12px;font-weight:800;cursor:pointer;text-transform:uppercase;margin-top:6px;position:relative;z-index:5;letter-spacing:.5px;transition:background .15s;line-height:1.3;box-shadow:2px 2px 0 rgba(0,0,0,.4)}
+.sell-btn:hover:not(:disabled){background:rgba(255,0,51,.2)}
+.sell-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.empty-inv{color:#6a6a7a;font-size:14px;font-weight:600;text-align:center;width:100%;padding:20px;grid-column:1/-1;line-height:1.3}
+.selectable{display:flex;flex-direction:column;align-items:center;width:100%;cursor:pointer}
+.locked{pointer-events:none !important;opacity:.35 !important;filter:grayscale(.5) !important}
+
+.target-list{display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow-y:auto;padding:4px}
+.target-list-item{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:10px;padding:10px;background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.07);border-radius:0;cursor:pointer;transition:all .15s}
+.target-list-item:hover{border-color:rgba(157,0,255,.5);background:rgba(157,0,255,.06)}
+.target-list-item img{width:44px;height:44px;object-fit:contain;}
+.target-list-item .tl-info{min-width:0;text-align:left}
+.target-list-item .tl-name{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.1}
+.target-list-item .tl-price{font-size:12px;font-weight:800;color:var(--yellow);display:flex;align-items:center;gap:4px;line-height:1.3}
+.target-list-item .tl-price img{width:12px;height:12px;}
+.target-list-item .tl-chance{font-size:14px;font-weight:800;color:var(--purple);text-align:right;line-height:1.3}
 
 /* ========================================================
    ПРОФИЛЬ
@@ -805,8 +692,6 @@ body{
 @media (max-width: 992px) {
   .upg-container { flex-direction: column; }
   .upg-column { width: 100%; }
-  .inventory-grid { max-height: 300px; }
-  .targets-grid { max-height: 300px; }
 }
 
 @media (max-width: 768px) {
@@ -1047,67 +932,70 @@ body{
         <div class="cases-grid" id="menuCasesGrid"></div>
     </div>
 
-    <!-- ВКЛАДКА АПГРЕЙДЕР (НОВЫЙ ДИЗАЙН) -->
+    <!-- ВКЛАДКА АПГРЕЙДЕР -->
     <div class="tab-panel" id="panelUpgrade">
-        <div class="upg-container">
+        
+        <!-- Колесо и выбор предметов (Оригинальный вид) -->
+        <div class="upg-container" style="display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto;">
             
-            <!-- Левая колонка: Мои брейнроты -->
-            <div class="upg-column">
-                <h2>Мои брейнроты</h2>
-                
-                <!-- Если пусто, показываем это -->
-                <div class="empty-inventory-state" id="emptyInventoryState">
-                    <div>У тебя нет брейнротов. Купи их в магазине справа или открой в кейсах.</div>
-                    <button class="btn-go-cases" onclick="switchTab('menu')">К кейсам</button>
-                </div>
-
-                <!-- Сетка с предметами (скрыта, если пусто) -->
-                <div class="inventory-grid" id="inventoryGridContainer" style="display: none;">
-                    <div id="inventoryRow"></div>
-                </div>
-            </div>
-
-            <!-- Правая колонка: Брейнроты (Магазин / Цели) -->
-            <div class="upg-column">
-                <h2 id="rightColumnTitle">Брейнроты</h2>
-                
-                <!-- Блок для поиска (появляется только в режиме магазина) -->
-                <input type="text" class="search-input" id="searchInput" placeholder="Поиск брейнрота" style="display: none;" oninput="filterTargets(this.value)">
-                
-                <!-- Если предмет не выбран, показываем это -->
-                <div class="empty-target-state" id="emptyTargetState">
-                    Выбери своего брейнрота слева — здесь появятся цели для апгрейда
-                </div>
-
-                <!-- Если предмет выбран, показываем список целей -->
-                <div class="targets-grid" id="targetsGridContainer" style="display: none;">
-                    <div id="targetRow"></div>
-                </div>
-
-                <!-- Блок с колесом и кнопкой (появляется, когда выбрана цель) -->
-                <div class="upgrade-action-block" id="upgradeActionBlock" style="display: none;">
-                    <div class="progress-section">
-                        <div class="progress-wrapper">
-                            <svg class="progress-svg" viewBox="0 0 220 220">
-                                <circle class="progress-bg" cx="110" cy="110" r="100"></circle>
-                                <circle class="progress-bar" id="progressBar" cx="110" cy="110" r="100"></circle>
-                            </svg>
-                            <div class="arrow-container" id="arrowContainer">
-                                <div class="arrow-pointer"></div>
-                            </div>
-                            <div class="progress-center">
-                                <div class="chance-big" id="chanceBig">0%</div>
-                                <div class="chance-label hidden" id="chanceLabel">—</div>
-                            </div>
-                        </div>
+            <div class="progress-section" style="padding: 20px 0 0 0;">
+                <div class="progress-wrapper">
+                    <svg class="progress-svg" viewBox="0 0 340 340">
+                        <circle class="progress-bg" cx="170" cy="170" r="130"></circle>
+                        <circle class="progress-bar" id="progressBar" cx="170" cy="170" r="130"></circle>
+                    </svg>
+                    <div class="arrow-container" id="arrowContainer">
+                        <div class="arrow-pointer"></div>
                     </div>
-                    <button class="upgrade-main-btn" id="upgradeBtn" onclick="upgrade()" disabled>
-                        <span>Апгрейд - 0%</span>
-                    </button>
+                    <div class="progress-center">
+                        <div class="chance-big" id="chanceBig">0%</div>
+                        <div class="chance-label hidden" id="chanceLabel">—</div>
+                    </div>
                 </div>
             </div>
-
+            
+            <div class="items-row">
+                <div class="item-box" onclick="document.getElementById('invAnchor').scrollIntoView({behavior: 'smooth'})">
+                    <div class="label">Твой предмет</div>
+                    <img id="sourceImg" src="" alt="" style="display:none" loading="lazy" decoding="async">
+                    <div class="name" id="sourceName">—</div>
+                    <div class="price" id="sourcePrice"></div>
+                </div>
+                <div class="swap-arrow">→</div>
+                <div class="item-box" onclick="openTargetList()">
+                    <div class="label">Цель</div>
+                    <img id="targetImg" src="" alt="" style="display:none" loading="lazy" decoding="async">
+                    <div class="name" id="targetName">—</div>
+                    <div class="price" id="targetPrice"></div>
+                </div>
+            </div>
+            
+            <div class="stage-controls">
+                <button class="upgrade-main-btn" id="upgradeBtn" onclick="upgrade()" disabled>
+                    <span>Апгрейд - 0%</span>
+                </button>
+                <button class="fast-btn" id="fastUpgradeBtn" onclick="toggleFastMode()" title="Быстрый режим">
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
+
+        <div style="height: 40px;"></div> <!-- Отступ -->
+
+        <!-- ИНВЕНТАРЬ (Внизу) -->
+        <div class="section-title" id="invAnchor">Инвентарь</div>
+        <div class="inventory-row" id="inventoryRow">
+            <!-- Заполняется через JS -->
+        </div>
+
+        <!-- МАГАЗИН (Внизу) -->
+        <div class="section-title" style="margin-top: 20px;">Магазин</div>
+        <div class="shop-scroll">
+            <div class="shop-grid" id="shopRow"></div>
+        </div>
+
     </div>
 
     <div class="tab-panel" id="panelRocket">
@@ -1574,7 +1462,7 @@ body{
 
     const SPIN_DURATION = 7000;
     const SPIN_DURATION_FAST = 3000;
-    const CIRCUMFERENCE = 2 * Math.PI * 100; // Радиус изменился (было 130, стало 100)
+    const CIRCUMFERENCE = 2 * Math.PI * 130;
     let fastModeEnabled = false;
 
     let selectedSourceIndex = null;
@@ -1585,8 +1473,8 @@ body{
 
     const balanceDisplay = document.getElementById('balanceDisplay');
     const balanceBox = document.getElementById('balanceBox');
-    const inventoryRow = document.getElementById('inventoryRow'); // Теперь это div внутри сетки
-    const targetRow = document.getElementById('targetRow'); // Теперь это div внутри сетки
+    const inventoryRow = document.getElementById('inventoryRow');
+    const shopRow = document.getElementById('shopRow');
     const progressBar = document.getElementById('progressBar');
     const arrowContainer = document.getElementById('arrowContainer');
     const chanceBig = document.getElementById('chanceBig');
@@ -1677,8 +1565,8 @@ body{
         updateProfileStats();
         saveLocalCache();
         syncUserToServer();
-        renderInventory();
-        renderTargets();
+        renderInventory(); // Рендерим инвентарь внизу
+        renderShop(); // Рендерим магазин внизу
     }
     function updateProfileStats() {
         const bestEl = document.getElementById('profileBestItem');
@@ -1724,7 +1612,7 @@ body{
                 if (Array.isArray(data.user.inventory)) inventory = data.user.inventory;
                 saveLocalCache();
                 updateBalance();
-                renderInventory(); renderTargets(); updateUpgradeScreen();
+                renderInventory(); renderShop(); updateUpgradeScreen();
                 renderProfileInventory();
             } else {
                 syncUserToServer();
@@ -1761,46 +1649,10 @@ body{
         }
         if (tab === 'menu') renderMenuCases();
         if (tab === 'upgrade') {
-            updateUpgradeLayout();
+            renderInventory();
+            renderShop();
         }
     };
-
-    // Обновление интерфейса апгрейдера в зависимости от состояния
-    function updateUpgradeLayout() {
-        const emptyInv = document.getElementById('emptyInventoryState');
-        const invGrid = document.getElementById('inventoryGridContainer');
-        const emptyTarget = document.getElementById('emptyTargetState');
-        const targetsGrid = document.getElementById('targetsGridContainer');
-        const searchInput = document.getElementById('searchInput');
-        const rightTitle = document.getElementById('rightColumnTitle');
-        const upgradeAction = document.getElementById('upgradeActionBlock');
-
-        // 1. Проверяем инвентарь
-        if (inventory.length === 0) {
-            emptyInv.style.display = 'flex';
-            invGrid.style.display = 'none';
-        } else {
-            emptyInv.style.display = 'none';
-            invGrid.style.display = 'block';
-        }
-
-        // 2. Проверяем выбран ли предмет
-        if (selectedSourceIndex === null) {
-            // Режим Магазина
-            emptyTarget.style.display = 'none';
-            targetsGrid.style.display = 'block';
-            searchInput.style.display = 'block';
-            rightTitle.innerText = 'Брейнроты';
-            upgradeAction.style.display = 'none';
-            renderShop(); // Рендерим магазин
-        } else {
-            // Режим Апгрейда
-            searchInput.style.display = 'none';
-            rightTitle.innerText = 'Цели для апгрейда';
-            upgradeAction.style.display = 'flex';
-            renderTargets();
-        }
-    }
 
     function updateProfile() {
         isAdmin = ALLOWED_USERS.includes((USER.username || '').toLowerCase());
@@ -2102,7 +1954,7 @@ body{
                     playCoin(); vibrate(20);
                 } else {
                     inventory.push(data.value);
-                    renderInventory(); renderTargets(); updateUpgradeScreen();
+                    renderInventory(); renderShop(); updateUpgradeScreen();
                     renderProfileInventory();
                     saveLocalCache(); syncUserToServer();
                     const item = getItemById(data.value);
@@ -2125,243 +1977,47 @@ body{
         playClick(); vibrate(10);
     };
 
-    // РЕНДЕР МАГАЗИНА (В правой колонке)
-    function renderShop() {
-        if (!targetRow) return;
-        // Если выбран предмет, мы не показываем магазин
-        if (selectedSourceIndex !== null) return;
-        
-        targetRow.innerHTML = ITEMS.map(item => {
-            return `
-            <div class="target-card" style="border-color: rgba(57,255,20,.2);">
-                <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                <div class="name" title="${item.name}">${item.name}</div>
-                <div class="price"><img src="${COIN_IMG}" class="price-coin" alt="coin" style="width:12px;height:12px;">${item.price}</div>
-                <button class="buy-btn" onclick="buyItem('${item.id}')" ${balance < item.price || isSpinning ? 'disabled' : ''}>Купить</button>
-            </div>
-        `;
-        }).join('');
-    }
-
-    // РЕНДЕР ЦЕЛЕЙ (В правой колонке, если выбран предмет)
-    function renderTargets() {
-        if (!targetRow) return;
-        const emptyTarget = document.getElementById('emptyTargetState');
-        const targetsGrid = document.getElementById('targetsGridContainer');
-        
-        if (selectedSourceIndex === null) {
-            emptyTarget.style.display = 'none';
-            targetsGrid.style.display = 'block';
-            return;
-        }
-
-        emptyTarget.style.display = 'none';
-        targetsGrid.style.display = 'block';
-
-        const sourceItem = getItemById(inventory[selectedSourceIndex]);
-        if (!sourceItem) return;
-        const targets = ITEMS.filter(t => t.price > sourceItem.price).sort((a, b) => a.price - b.price);
-        
-        if (!targets.length) {
-            targetRow.innerHTML = '<div style="text-align:center; color:#6a6a7a; padding:20px; font-size:14px; font-weight:600; grid-column: 1 / -1;">Нет целей дороже этого предмета</div>';
-            return;
-        }
-        
-        targetRow.innerHTML = targets.map(t => {
-            const chance = calcUpgradeChance(sourceItem.price, t.price);
-            const isTarget = selectedTargetId === t.id;
-            return `
-                <div class="target-card ${isTarget ? 'selected' : ''}" onclick="pickTargetFromList('${t.id}')" style="border-color: ${isTarget ? 'var(--orange)' : 'var(--line)'}; background: ${isTarget ? 'rgba(255,123,0,.1)' : 'rgba(255,255,255,.03)'};">
-                    <img src="${t.img}" alt="${t.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                    <div class="name">${t.name}</div>
-                    <div class="price"><img src="${COIN_IMG}" alt="coin" style="width:12px;height:12px;">${t.price}</div>
-                    <div class="chance">${formatChance(chance)}</div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    // ФИЛЬТР ЦЕЛЕЙ (для поиска)
-    function filterTargets(query) {
-        const targetsGrid = document.getElementById('targetRow');
-        if (!targetsGrid) return;
-        const cards = targetsGrid.querySelectorAll('.target-card');
-        const lowerQuery = query.toLowerCase();
-        cards.forEach(card => {
-            const name = card.querySelector('.name').innerText.toLowerCase();
-            if (name.includes(lowerQuery)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    // ИНВЕНТАРЬ (в левой колонке)
+    // РЕНДЕР ИНВЕНТАРЯ (Внизу)
     function renderInventory() {
-        const emptyInv = document.getElementById('emptyInventoryState');
-        const invGrid = document.getElementById('inventoryGridContainer');
-        const container = document.getElementById('inventoryRow');
-        
-        if (!container) return;
-
+        if (!inventoryRow) return;
         if (inventory.length === 0) {
-            emptyInv.style.display = 'flex';
-            invGrid.style.display = 'none';
+            inventoryRow.innerHTML = '<div class="empty-inv" style="display:flex;flex-direction:column;align-items:center;gap:10px;">Инвентарь пуст <button onclick="switchTab(\'menu\')" style="background:var(--green);color:#000;padding:8px 16px;border-radius:6px;border:none;font-weight:800;cursor:pointer;">К кейсам</button></div>';
             return;
         }
-
-        emptyInv.style.display = 'none';
-        invGrid.style.display = 'block';
-
-        container.innerHTML = inventory.map((id, index) => {
+        inventoryRow.innerHTML = inventory.map((id, index) => {
             const item = getItemById(id);
             if (!item) return '';
             const isSelected = selectedSourceIndex === index;
             const mutationIcon = item.mutation ? `<img class="mutation-badge" src="${MUTATION_ICONS[item.mutation]}" alt="mutation" loading="lazy" decoding="async">` : '';
             return `
-                <div class="inv-card ${isSelected ? 'selected' : ''}" style="position:relative;" onclick="selectSourceByIndex(${index})">
+                <div class="inv-card ${isSelected ? 'selected' : ''}" style="position:relative;">
                     ${mutationIcon}
-                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                    <div class="name" title="${item.name}">${item.name}</div>
-                    <div class="price"><img src="${COIN_IMG}" class="price-coin" alt="coin" style="width:12px;height:12px;">${item.price}</div>
+                    <div class="selectable" onclick="selectSourceByIndex(${index})">
+                        <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                        <div class="name" title="${item.name}">${item.name}</div>
+                        <div class="price"><img src="${COIN_IMG}" class="price-coin" alt="coin">${item.price}</div>
+                    </div>
+                    <button class="sell-btn" onclick="event.stopPropagation(); sellItem(${index})" ${isSpinning ? 'disabled' : ''}>Продать</button>
                 </div>
             `;
         }).join('');
-        
         profileItemsCount.innerText = inventory.length;
     }
 
-    window.selectSourceByIndex = function(index) {
-        if (isSpinning) return;
-        if (index < 0 || index >= inventory.length) return;
-        
-        // Если кликаем на тот же предмет, снимаем выделение
-        if (selectedSourceIndex === index) {
-            selectedSourceIndex = null;
-            selectedTargetId = null;
-            updateUpgradeLayout(); // Вернет магазин
-            updateUpgradeScreen();
-            playClick();
-            return;
-        }
-
-        selectedSourceIndex = index;
-        selectedTargetId = null;
-        
-        // Переключаем правую колонку в режим апгрейда
-        updateUpgradeLayout(); 
-        renderInventory(); // Перерисовываем для выделения
-        updateUpgradeScreen();
-        playClick(); vibrate(10);
-    };
-
-    // Выбор цели из правой колонки
-    window.pickTargetFromList = function(targetId) {
-        if (isSpinning) return;
-        if (selectedSourceIndex === null) return;
-        const sourceItem = getItemById(inventory[selectedSourceIndex]);
-        const targetItem = getItemById(targetId);
-        if (!sourceItem || !targetItem) return;
-        if (targetItem.price <= sourceItem.price) return;
-        
-        selectedTargetId = targetId;
-        
-        // Перерисовываем правую колонку для выделения
-        renderTargets();
-        updateUpgradeScreen();
-        playClick(); vibrate(15);
-    };
-
-    function calculateChance() {
-        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
-        const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
-        if (!sourceItem || !targetItem) return 0;
-        return calcUpgradeChance(sourceItem.price, targetItem.price);
+    // РЕНДЕР МАГАЗИНА (Внизу)
+    function renderShop() {
+        if (!shopRow) return;
+        shopRow.innerHTML = ITEMS.map(item => {
+            return `
+            <div class="shop-card">
+                <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                <div class="name" title="${item.name}">${item.name}</div>
+                <div class="price"><img src="${COIN_IMG}" class="price-coin" alt="coin">${item.price}</div>
+                <button class="buy-btn" onclick="buyItem('${item.id}')" ${balance < item.price || isSpinning ? 'disabled' : ''}>Купить</button>
+            </div>
+        `;
+        }).join('');
     }
-
-    function updateUpgradeScreen() {
-        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
-        const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
-        
-        // Обновляем кружок и кнопку
-        const chance = calculateChance();
-        const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
-        if (progressBar) progressBar.style.strokeDashoffset = offset;
-        const angle = (Math.min(chance, 100) / 100) * 360;
-        if (arrowContainer) arrowContainer.style.transform = `rotate(${angle}deg)`;
-        if (chanceBig) chanceBig.innerText = formatChance(chance);
-        
-        if (sourceItem && targetItem && chance > 0 && !isSpinning) {
-            if (upgradeBtn) {
-                upgradeBtn.disabled = false;
-                upgradeBtn.querySelector('span').innerText = `Апгрейд - ${formatChance(chance)}`;
-            }
-        } else {
-            if (upgradeBtn) {
-                upgradeBtn.disabled = true;
-                upgradeBtn.querySelector('span').innerText = 'Апгрейд - 0%';
-            }
-        }
-    }
-
-    function performUpgrade(durationMs) {
-        if (isSpinning) return;
-        if (selectedSourceIndex === null) return;
-        const sourceItem = getItemById(inventory[selectedSourceIndex]);
-        const targetItem = getItemById(selectedTargetId);
-        if (!sourceItem || !targetItem) return;
-        if (targetItem.price <= sourceItem.price) return;
-        const chance = calculateChance();
-        if (chance <= 0) return;
-        isSpinning = true;
-        upgradeBtn.disabled = true;
-        upgradeBtn.querySelector('span').innerText = 'КРУТИМ...';
-        
-        playUpgradeStart(); vibrate(20);
-        const tickCount = 30;
-        const tickInterval = durationMs / tickCount;
-        for (let i = 0; i < tickCount; i++) setTimeout(() => playTick(), i * tickInterval);
-        const baseRotation = 360 * 8;
-        const randomAngle = Math.random() * 360;
-        const totalRotation = baseRotation + randomAngle;
-        arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.12, 0.8, 0.15, 1)`;
-        arrowContainer.style.transform = `rotate(${totalRotation}deg)`;
-        const successAngle = (Math.min(chance, 100) / 100) * 360;
-        const finalAngle = totalRotation % 360;
-        const isSuccess = finalAngle <= successAngle;
-        const sourceIndex = selectedSourceIndex;
-        const targetId = selectedTargetId;
-        
-        setTimeout(() => {
-            if (isSuccess) {
-                inventory.splice(sourceIndex, 1);
-                inventory.push(targetId);
-                showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
-                playWin(); vibratePattern([30, 50, 30, 50, 60]);
-            } else {
-                inventory.splice(sourceIndex, 1);
-                showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
-                playLose(); vibratePattern([50, 30, 100]);
-            }
-            selectedSourceIndex = null;
-            selectedTargetId = null;
-            isSpinning = false;
-            updateBalance(); // Тут вызовется renderInventory и renderTargets
-            
-            // Возвращаем интерфейс в режим магазина
-            updateUpgradeLayout();
-            updateUpgradeScreen();
-            
-            arrowContainer.style.transition = 'none';
-            arrowContainer.style.transform = 'rotate(0deg)';
-            upgradeBtn.disabled = true;
-        }, durationMs + 100);
-    }
-    window.upgrade = function() {
-        if (fastModeEnabled) performUpgrade(SPIN_DURATION_FAST);
-        else performUpgrade(SPIN_DURATION);
-    };
 
     function buyItem(id) {
         if (isSpinning) return;
@@ -2369,11 +2025,81 @@ body{
         if (!item || balance < item.price) { showToast('Недостаточно монет', 'err'); playLose(); vibrate(30); return; }
         balance -= item.price;
         inventory.push(id);
-        updateBalance(); // Вызовет рендер
+        updateBalance();
+        renderShop(); renderInventory(); updateUpgradeScreen();
         renderProfileInventory();
         showToast(`Куплен: ${item.name}`, 'ok');
         playCoin(); vibrate(15);
     }
+    
+    window.sellItem = function(index) {
+        if (isSpinning) return;
+        if (index < 0 || index >= inventory.length) return;
+        const id = inventory[index];
+        const item = getItemById(id);
+        if (!item) return;
+        inventory.splice(index, 1);
+        balance += item.price;
+        if (selectedSourceIndex === index) { selectedSourceIndex = null; selectedTargetId = null; }
+        else if (selectedSourceIndex !== null && selectedSourceIndex > index) selectedSourceIndex--;
+        updateBalance();
+        renderInventory(); renderShop(); updateUpgradeScreen();
+        renderProfileInventory();
+        showToast(`Продан: ${item.name} (+${item.price})`, 'ok');
+        playCoin(); vibrate(15);
+    };
+    
+    window.selectSourceByIndex = function(index) {
+        if (isSpinning) return;
+        if (index < 0 || index >= inventory.length) return;
+        selectedSourceIndex = index;
+        selectedTargetId = null;
+        renderInventory(); updateUpgradeScreen();
+        playClick(); vibrate(10);
+    };
+
+    window.openTargetList = function() {
+        if (isSpinning) return;
+        if (selectedSourceIndex === null) { showToast('Сначала выбери предмет в инвентаре', 'info'); return; }
+        if (selectedSourceIndex < 0 || selectedSourceIndex >= inventory.length) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
+        if (!sourceItem) return;
+        const targets = ITEMS.filter(t => t.price > sourceItem.price).sort((a, b) => a.price - b.price);
+        const list = document.getElementById('targetList');
+        if (!list) return;
+        if (!targets.length) {
+            list.innerHTML = '<div style="text-align:center; color:#6a6a7a; padding:20px; font-size:14px; font-weight:600;">Нет целей дороже этого предмета</div>';
+        } else {
+            list.innerHTML = targets.map(t => {
+                const chance = calcUpgradeChance(sourceItem.price, t.price);
+                return `
+                    <div class="target-list-item" onclick="pickTargetFromList('${t.id}')">
+                        <img src="${t.img}" alt="${t.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                        <div class="tl-info">
+                            <div class="tl-name">${t.name}</div>
+                            <div class="tl-price"><img src="${COIN_IMG}" alt="coin">${t.price}</div>
+                        </div>
+                        <div class="tl-chance">${formatChance(chance)}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        openModal('targetModal');
+        playClick(); vibrate(10);
+    };
+
+    window.pickTargetFromList = function(targetId) {
+        if (isSpinning) return;
+        if (selectedSourceIndex === null) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
+        const targetItem = getItemById(targetId);
+        if (!sourceItem || !targetItem) return;
+        if (targetItem.price <= sourceItem.price) return;
+        selectedTargetId = targetId;
+        closeModal('targetModal');
+        renderInventory(); updateUpgradeScreen();
+        playClick(); vibrate(15);
+    };
 
     function renderMenuCases() {
         const grid = document.getElementById('menuCasesGrid');
@@ -2402,7 +2128,6 @@ body{
         }).join('');
     }
 
-    // Кейсы (модалки)
     window.openCaseDetail = function(caseId) {
         if (isCaseOpening) return;
         const c = CASES.find(x => x.id === caseId);
@@ -2720,7 +2445,7 @@ body{
         });
         if (totalCoins > 0) balance += totalCoins;
         updateBalance();
-        renderInventory(); renderTargets(); updateUpgradeScreen(); renderProfileInventory();
+        renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
         saveLocalCache(); syncUserToServer();
         showCaseResult(rewards, c, qty);
         isCaseOpening = false;
@@ -2788,6 +2513,110 @@ body{
         openModal('caseResultModal');
     }
 
+    function calculateChance() {
+        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
+        const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+        if (!sourceItem || !targetItem) return 0;
+        return calcUpgradeChance(sourceItem.price, targetItem.price);
+    }
+
+    function updateUpgradeScreen() {
+        const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
+        const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+        if (sourceItem) {
+            sourceImg.src = sourceItem.img;
+            sourceImg.style.display = 'block';
+            sourceName.innerText = sourceItem.name;
+            sourcePrice.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${sourceItem.price}`;
+        } else {
+            sourceImg.style.display = 'none';
+            sourceName.innerText = '—';
+            sourcePrice.innerHTML = '';
+        }
+        if (targetItem) {
+            targetImg.src = targetItem.img;
+            targetImg.style.display = 'block';
+            targetName.innerText = targetItem.name;
+            targetPrice.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${targetItem.price}`;
+        } else {
+            targetImg.style.display = 'none';
+            targetName.innerText = '—';
+            targetPrice.innerHTML = '';
+        }
+        const chance = calculateChance();
+        const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
+        progressBar.style.strokeDashoffset = offset;
+        const angle = (Math.min(chance, 100) / 100) * 360;
+        arrowContainer.style.transform = `rotate(${angle}deg)`;
+        chanceBig.innerText = formatChance(chance);
+        if (chance >= 25) { chanceLabel.innerText = 'ВЫСОКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
+        else if (chance >= 5) { chanceLabel.innerText = 'СРЕДНИЙ ШАНС'; chanceLabel.className = 'chance-label medium'; }
+        else if (chance > 0) { chanceLabel.innerText = 'НИЗКИЙ ШАНС'; chanceLabel.className = 'chance-label'; }
+        else { chanceLabel.innerText = ''; chanceLabel.className = 'chance-label hidden'; }
+        if (sourceItem && targetItem && chance > 0 && !isSpinning) {
+            upgradeBtn.disabled = false;
+            upgradeBtn.querySelector('span').innerText = `Апгрейд - ${formatChance(chance)}`;
+        } else {
+            upgradeBtn.disabled = true;
+            upgradeBtn.querySelector('span').innerText = 'Апгрейд - 0%';
+        }
+    }
+
+    function performUpgrade(durationMs) {
+        if (isSpinning) return;
+        if (selectedSourceIndex === null) return;
+        const sourceItem = getItemById(inventory[selectedSourceIndex]);
+        const targetItem = getItemById(selectedTargetId);
+        if (!sourceItem || !targetItem) return;
+        if (targetItem.price <= sourceItem.price) return;
+        const chance = calculateChance();
+        if (chance <= 0) return;
+        isSpinning = true;
+        upgradeBtn.disabled = true;
+        upgradeBtn.querySelector('span').innerText = 'КРУТИМ...';
+        inventoryRow.classList.add('locked');
+        shopRow.classList.add('locked');
+        playUpgradeStart(); vibrate(20);
+        const tickCount = 30;
+        const tickInterval = durationMs / tickCount;
+        for (let i = 0; i < tickCount; i++) setTimeout(() => playTick(), i * tickInterval);
+        const baseRotation = 360 * 8;
+        const randomAngle = Math.random() * 360;
+        const totalRotation = baseRotation + randomAngle;
+        arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.12, 0.8, 0.15, 1)`;
+        arrowContainer.style.transform = `rotate(${totalRotation}deg)`;
+        const successAngle = (Math.min(chance, 100) / 100) * 360;
+        const finalAngle = totalRotation % 360;
+        const isSuccess = finalAngle <= successAngle;
+        const sourceIndex = selectedSourceIndex;
+        const targetId = selectedTargetId;
+        setTimeout(() => {
+            if (isSuccess) {
+                inventory.splice(sourceIndex, 1);
+                inventory.push(targetId);
+                showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
+                playWin(); vibratePattern([30, 50, 30, 50, 60]);
+            } else {
+                inventory.splice(sourceIndex, 1);
+                showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
+                playLose(); vibratePattern([50, 30, 100]);
+            }
+            selectedSourceIndex = null;
+            selectedTargetId = null;
+            isSpinning = false;
+            updateBalance();
+            renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+            arrowContainer.style.transition = 'none';
+            arrowContainer.style.transform = 'rotate(0deg)';
+            upgradeBtn.disabled = true;
+            inventoryRow.classList.remove('locked');
+            shopRow.classList.remove('locked');
+        }, durationMs + 100);
+    }
+    window.upgrade = function() {
+        if (fastModeEnabled) performUpgrade(SPIN_DURATION_FAST);
+        else performUpgrade(SPIN_DURATION);
+    };
     window.saveCustomNick = function() {
         playClick(); vibrate(10);
         const input = document.getElementById('customizeNickInput');
@@ -2810,7 +2639,7 @@ body{
         initSakura();
         initParticles();
         updateBalance();
-        renderInventory(); renderTargets(); updateUpgradeScreen(); renderAdminGrid();
+        renderInventory(); renderShop(); updateUpgradeScreen(); renderAdminGrid();
         renderProfileInventory(); renderMenuCases();
         applyCustomAvatar();
         switchTab('menu');
