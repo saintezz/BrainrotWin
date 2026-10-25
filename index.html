@@ -753,9 +753,9 @@ body{
 
 /* Адаптивность для мобилок */
 @media (max-width: 768px) {
-  .top-nav-panel { display: none; } /* Скрываем десктопное меню */
-  .burger-btn { display: block; } /* Показываем бургер */
-  .top-bar { padding: 14px 0 14px 45px; } /* Отступ слева для бургера */
+  .top-nav-panel { display: none; }
+  .burger-btn { display: block; }
+  .top-bar { padding: 14px 0 14px 45px; }
   .top-left { margin-left: 0; }
   .logo-img { height: 32px; }
   
@@ -851,7 +851,7 @@ body{
             <input type="text" class="form-input" id="topupRoblox" placeholder="Введи ник в Roblox" maxlength="40">
         </div>
         <div class="form-group" style="margin-top: 12px;">
-            <label class="form-label">Промокод на скидку (необязательно)</label>
+            <label class="form-label">Промокод на бонус (необязательно)</label>
             <input type="text" class="form-input" id="topupPromo" placeholder="Введи промокод" maxlength="20" oninput="applyTopupPromo()">
             <div class="msg" id="topupPromoMsg" style="min-height: 10px; margin-top: 5px;"></div>
         </div>
@@ -1058,12 +1058,12 @@ body{
             <div class="banner-center">
                 <div class="promo-code-box" id="dynamicPromoCode">PUOFASKY</div>
                 <div class="promo-reward-box">
-                    <span>+13%</span>
+                    <span id="promoBonusDisplay">+0%</span>
                     <span>к пополнению</span>
                 </div>
             </div>
             <div class="banner-right">
-                <button class="activate-btn" onclick="switchTab('promo')">Активировать</button>
+                <button class="activate-btn" onclick="copyPromoCode()">Скопировать</button>
             </div>
         </div>
 
@@ -2905,7 +2905,25 @@ body{
         for (let i = 0; i < 3; i++) code += numbers[Math.floor(Math.random() * numbers.length)];
         const el = document.getElementById('dynamicPromoCode');
         if (el) el.textContent = code;
+        
+        const bonus = Math.floor(Math.random() * (13 - 3 + 1)) + 3; // 3 до 13
+        const bonusEl = document.getElementById('promoBonusDisplay');
+        if (bonusEl) bonusEl.textContent = `+${bonus}%`;
+        
+        // Сохраняем код и бонус для проверки
+        localStorage.setItem('ggbrainx_dynamic_promo', code);
+        localStorage.setItem('ggbrainx_dynamic_promo_bonus', bonus);
     }
+    
+    window.copyPromoCode = function() {
+        const code = document.getElementById('dynamicPromoCode').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            showToast('Промокод скопирован!', 'ok');
+            playClick();
+        }).catch(() => {
+            showToast('Не удалось скопировать', 'err');
+        });
+    };
 
     window.addEventListener('load', () => {
         setTimeout(() => {
