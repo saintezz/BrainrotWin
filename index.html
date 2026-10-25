@@ -919,9 +919,9 @@ body{
             </div>
         </div>
 
-        <!-- Блок создания промокодов -->
+        <!-- Блок создания промокодов (на монеты) -->
         <div class="admin-section">
-            <div class="admin-section-title">Создание промокода (на процент)</div>
+            <div class="admin-section-title">Создание промокода (на монеты)</div>
             <div class="form-group">
                 <label class="form-label">Сгенерированный код</label>
                 <input type="text" class="form-input" id="adminCode" placeholder="Нажмите 'Сгенерировать'" readonly>
@@ -932,8 +932,8 @@ body{
                 <input type="number" class="form-input" id="adminUses" placeholder="10" min="1" value="1">
             </div>
             <div class="form-group">
-                <label class="form-label">Процент к пополнению (%)</label>
-                <input type="number" class="form-input" id="adminPercent" placeholder="10" min="1" value="10">
+                <label class="form-label">Сумма монет</label>
+                <input type="number" class="form-input" id="adminBalance" placeholder="500" min="1" value="500">
             </div>
             <button class="action-btn" onclick="createPromo()">Создать промокод</button>
             <div class="msg" id="adminMsg"></div>
@@ -1056,7 +1056,7 @@ body{
                 </div>
             </div>
             <div class="banner-center">
-                <div class="promo-code-box">PUOFASKY</div>
+                <div class="promo-code-box" id="dynamicPromoCode">PUOFASKY</div>
                 <div class="promo-reward-box">
                     <span>+13%</span>
                     <span>к пополнению</span>
@@ -2092,7 +2092,7 @@ body{
         loadAdminWithdraws(); 
         document.getElementById('adminCode').value = '';
         document.getElementById('adminUses').value = 1;
-        document.getElementById('adminPercent').value = 10;
+        document.getElementById('adminBalance').value = 500;
         openModal('adminModal');
     };
 
@@ -2175,20 +2175,20 @@ body{
     window.createPromo = async function() {
         const code = document.getElementById('adminCode').value.trim().toUpperCase();
         const uses = parseInt(document.getElementById('adminUses').value);
-        const percent = parseInt(document.getElementById('adminPercent').value);
+        const balanceAmt = parseInt(document.getElementById('adminBalance').value);
         const msg = document.getElementById('adminMsg');
         
         if (msg) { msg.className = 'msg'; msg.textContent = ''; }
         if (!code || code.length < 3) { if(msg){msg.className = 'msg err'; msg.textContent = 'Код минимум 3 символа';} return; }
         if (!uses || uses < 1) { if(msg){msg.className = 'msg err'; msg.textContent = 'Активаций минимум 1';} return; }
-        if (!percent || percent < 1) { if(msg){msg.className = 'msg err'; msg.textContent = 'Процент минимум 1%';} return; }
+        if (!balanceAmt || balanceAmt < 1) { if(msg){msg.className = 'msg err'; msg.textContent = 'Сумма минимум 1';} return; }
         
         if (msg) { msg.className = 'msg wait'; msg.textContent = 'Создаём...'; }
         try {
             const res = await fetch(API_URL + '/api/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code, uses, type: 'percent', value: percent, admin_username: USER.username || '' })
+                body: JSON.stringify({ code, uses, type: 'balance', value: balanceAmt, admin_username: USER.username || '' })
             });
             const data = await res.json();
             if (data.ok) {
@@ -2196,7 +2196,7 @@ body{
                 showToast('Промокод создан!', 'ok'); playCoin();
                 document.getElementById('adminCode').value = '';
                 document.getElementById('adminUses').value = 1;
-                document.getElementById('adminPercent').value = 10;
+                document.getElementById('adminBalance').value = 500;
             } else {
                 if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
             }
@@ -2891,6 +2891,20 @@ body{
         switchTab('menu');
         loadUserFromServer();
         preloadImages();
+        
+        // Генерация промокода для баннера
+        generateDynamicPromo();
+        setInterval(generateDynamicPromo, 15 * 60 * 1000);
+    }
+    
+    function generateDynamicPromo() {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '123456789';
+        let code = '';
+        for (let i = 0; i < 6; i++) code += letters[Math.floor(Math.random() * letters.length)];
+        for (let i = 0; i < 3; i++) code += numbers[Math.floor(Math.random() * numbers.length)];
+        const el = document.getElementById('dynamicPromoCode');
+        if (el) el.textContent = code;
     }
 
     window.addEventListener('load', () => {
