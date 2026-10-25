@@ -200,14 +200,14 @@ body{
    ======================================================== */
 .top-bar{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 0;
+  padding:20px 0; /* Увеличен паддинг для большого лого */
   background:var(--bg-void);
   border-bottom:2px solid var(--line);
   position: relative;
 }
 .top-left{display:flex;align-items:center;gap:12px; margin-left: 0;}
 .logo-container{display:flex;align-items:center;gap:8px}
-.logo-img { height: 40px; width: auto; max-width: 200px; object-fit: contain; }
+.logo-img { height: 80px; width: auto; max-width: 300px; object-fit: contain; }
 
 .top-right{display:flex;align-items:center;gap:12px}
 
@@ -757,7 +757,7 @@ body{
   .burger-btn { display: block; }
   .top-bar { padding: 14px 0 14px 45px; }
   .top-left { margin-left: 0; }
-  .logo-img { height: 32px; }
+  .logo-img { height: 60px; max-width: 200px; }
   
   .promo-banner{flex-direction:column;gap:16px;text-align:center;padding:16px;}
   .banner-left{flex-direction:column;}
@@ -923,9 +923,8 @@ body{
         <div class="admin-section">
             <div class="admin-section-title">Создание промокода (на монеты)</div>
             <div class="form-group">
-                <label class="form-label">Сгенерированный код</label>
-                <input type="text" class="form-input" id="adminCode" placeholder="Нажмите 'Сгенерировать'" readonly>
-                <button class="action-btn" style="margin-top: 5px; background: rgba(255,255,255,.1);" onclick="generatePromoCode()">Сгенерировать</button>
+                <label class="form-label">Название промокода</label>
+                <input type="text" class="form-input" id="adminCode" placeholder="Например: SUPER2025" maxlength="20">
             </div>
             <div class="form-group">
                 <label class="form-label">Кол-во активаций</label>
@@ -1751,7 +1750,7 @@ body{
             } else {
                 syncUserToServer();
             }
-        } catch (e) { console.warn('[SYNC] сервер недоступен'); }
+        } catch (e) { console.warn('[SYNC] Server Error'); }
     }
 
     window.openModal = function(id) { const el = document.getElementById(id); if (el) el.classList.add('open'); };
@@ -1940,7 +1939,7 @@ body{
         } catch (e) {
             topupPromoPercent = 0;
             msg.className = 'msg err'; 
-            msg.textContent = 'Ошибка сервера';
+            msg.textContent = 'Server Error';
             updateTopupPrice();
         }
     };
@@ -1979,12 +1978,12 @@ body{
                 playCoin(); vibrate(15);
                 setTimeout(() => closeModal('topupModal'), 2200);
             } else {
-                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
-                showToast(data.error || 'Ошибка', 'err'); playLose();
+                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Server Error'; }
+                showToast(data.error || 'Server Error', 'err'); playLose();
             }
         } catch (err) {
-            if (msg) { msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает'; }
-            showToast('Сервер не отвечает', 'err');
+            if (msg) { msg.className = 'msg err'; msg.textContent = 'Server Error'; }
+            showToast('Server Error', 'err');
         }
     };
 
@@ -2074,12 +2073,12 @@ body{
                 
                 setTimeout(() => closeModal('withdrawModal'), 2200);
             } else {
-                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
-                showToast(data.error || 'Ошибка', 'err'); playLose();
+                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Server Error'; }
+                showToast(data.error || 'Server Error', 'err'); playLose();
             }
         } catch (err) {
-            if (msg) { msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает'; }
-            showToast('Сервер не отвечает', 'err');
+            if (msg) { msg.className = 'msg err'; msg.textContent = 'Server Error'; }
+            showToast('Server Error', 'err');
         }
     };
 
@@ -2107,10 +2106,10 @@ body{
                 withdraws = data.withdraws || [];
                 renderAdminWithdraws();
             } else {
-                list.innerHTML = '<div style="color:#ff0033; font-size:12px; font-weight:600; text-align:center;">Ошибка загрузки</div>';
+                list.innerHTML = '<div style="color:#ff0033; font-size:12px; font-weight:600; text-align:center;">Server Error</div>';
             }
         } catch (e) {
-            list.innerHTML = '<div style="color:#ff0033; font-size:12px; font-weight:600; text-align:center;">Сервер недоступен</div>';
+            list.innerHTML = '<div style="color:#ff0033; font-size:12px; font-weight:600; text-align:center;">Server Error</div>';
         }
     }
 
@@ -2158,18 +2157,8 @@ body{
                 showToast('Заявка обработана', 'ok'); 
                 playCoin(); 
             }
-            else { showToast(data.error || 'Ошибка', 'err'); playLose(); }
-        } catch (e) { showToast('Сервер недоступен', 'err'); }
-    };
-
-    window.generatePromoCode = function() {
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const numbers = '123456789';
-        let code = '';
-        for (let i = 0; i < 6; i++) code += letters[Math.floor(Math.random() * letters.length)];
-        for (let i = 0; i < 3; i++) code += numbers[Math.floor(Math.random() * numbers.length)];
-        document.getElementById('adminCode').value = code;
-        playClick();
+            else { showToast(data.error || 'Server Error', 'err'); playLose(); }
+        } catch (e) { showToast('Server Error', 'err'); }
     };
 
     window.createPromo = async function() {
@@ -2198,9 +2187,9 @@ body{
                 document.getElementById('adminUses').value = 1;
                 document.getElementById('adminBalance').value = 500;
             } else {
-                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
+                if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Server Error'; }
             }
-        } catch (err) { if(msg){msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает.';} }
+        } catch (err) { if(msg){msg.className = 'msg err'; msg.textContent = 'Server Error';} }
     };
 
     // ==========================================
@@ -2902,7 +2891,7 @@ body{
         const numbers = '123456789';
         let code = '';
         for (let i = 0; i < 6; i++) code += letters[Math.floor(Math.random() * letters.length)];
-        for (let i = 0; i < 3; i++) code += numbers[Math.floor(Math.random() * numbers.length)];
+        for (let i = 0; i < 2; i++) code += numbers[Math.floor(Math.random() * numbers.length)];
         const el = document.getElementById('dynamicPromoCode');
         if (el) el.textContent = code;
         
@@ -2921,7 +2910,7 @@ body{
             showToast('Промокод скопирован!', 'ok');
             playClick();
         }).catch(() => {
-            showToast('Не удалось скопировать', 'err');
+            showToast('Server Error', 'err');
         });
     };
 
@@ -2940,7 +2929,7 @@ body{
             } catch(e) {}
             if (!checkAccess()) return;
             init();
-            fetch(API_URL + '/').catch(() => console.log('[WAKE] Сервер просыпается...'));
+            fetch(API_URL + '/').catch(() => console.log('[WAKE] Server Error'));
         }, 300);
     });
 </script>
