@@ -219,9 +219,10 @@ body{
 .top-left{display:flex;align-items:center;gap:12px; margin-left: 0;}
 .logo-container{display:flex;align-items:center;gap:8px}
 .logo-img {
-  height: 60px; /* Достаточно большой размер */
+  height: 100px; /* ОЧЕНЬ БОЛЬШОЙ ЛОГОТИП */
   width: auto;
   object-fit: contain;
+  filter: drop-shadow(0 4px 15px rgba(255,123,0,.3));
 }
 
 .top-right{display:flex;align-items:center;gap:12px}
@@ -263,21 +264,20 @@ body{
 .icon-btn img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
 
 /* ========================================================
-   БАННЕР (АВТО-ПРОМОКОД)
+   БАННЕР (КАК НА ФОТО)
    ======================================================== */
 .promo-banner{
   margin: 16px 0;
-  padding: 20px 30px;
+  padding: 24px 30px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #3b1a5e 0%, #7a1b5e 100%); 
+  background: linear-gradient(135deg, #2a114a 0%, #6b1450 50%, #2a114a 100%); 
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,.1);
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
-  min-height: 140px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
 }
 .promo-banner::before{
   content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -285,96 +285,105 @@ body{
   pointer-events: none;
 }
 .banner-left{
-  display: flex; flex-direction: column; gap: 8px; z-index: 1;
+  display: flex; flex-direction: column; gap: 4px; z-index: 1;
 }
 .banner-left .title{
-  font-size: 13px; font-weight: 800; color: #fff; text-transform: uppercase;
-  letter-spacing: 1px; opacity: .8;
+  font-size: 12px; font-weight: 800; color: #d08cff; text-transform: uppercase;
+  letter-spacing: 2px; opacity: .9;
+  background: rgba(208, 140, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
 }
 .banner-left .main-title{
-  font-size: 28px; font-weight: 900; color: #fff; text-transform: uppercase;
+  font-size: 32px; font-weight: 900; color: #fff; text-transform: uppercase;
   letter-spacing: 1px; line-height: 1.1;
-  text-shadow: 0 2px 10px rgba(0,0,0,.3);
+  text-shadow: 0 2px 10px rgba(0,0,0,.5);
 }
 .banner-left .sub-title{
-  font-size: 22px; font-weight: 900; color: #d08cff; text-transform: uppercase;
+  font-size: 26px; font-weight: 900; color: #e0b0ff; text-transform: uppercase;
   letter-spacing: 1px; line-height: 1.1;
 }
 
 .banner-center{
-  z-index: 1; display: flex; align-items: center; gap: 20px;
-  background: rgba(0,0,0,.3);
-  padding: 12px 24px;
+  z-index: 1; display: flex; align-items: center; gap: 24px;
+  background: rgba(0,0,0,.4);
+  padding: 16px 28px;
   border-radius: 12px;
-  border: 2px solid rgba(255,255,255,.05);
+  border: 2px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(4px);
 }
 .banner-timer-block{
-  display: flex; flex-direction: column; gap: 2px;
+  display: flex; flex-direction: column; gap: 4px;
 }
 .banner-timer-block .bt-label{
-  font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase;
+  font-size: 11px; font-weight: 700; color: #b0b0c0; text-transform: uppercase;
   letter-spacing: 1px;
 }
 .banner-timer-block .bt-value{
-  font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 2px;
+  font-size: 32px; font-weight: 900; color: #fff; letter-spacing: 2px;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 .banner-bonus-block{
-  display: flex; flex-direction: column; gap: 2px;
+  display: flex; flex-direction: column; gap: 4px;
   border-left: 2px solid rgba(255,255,255,.1);
-  padding-left: 20px;
+  padding-left: 24px;
 }
 .banner-bonus-block .bb-label{
-  font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase;
+  font-size: 11px; font-weight: 700; color: #b0b0c0; text-transform: uppercase;
   letter-spacing: 1px;
 }
 .banner-bonus-block .bb-value{
-  font-size: 28px; font-weight: 900; color: var(--slime); letter-spacing: 1px;
+  font-size: 32px; font-weight: 900; color: var(--slime); letter-spacing: 1px;
   line-height: 1;
+  text-shadow: 0 0 15px rgba(57,255,20,.3);
 }
 
 .banner-right{
   z-index: 1;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
 }
 .promo-code-display{
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,.1);
-  padding: 8px 16px;
+  display: flex; align-items: center; gap: 12px;
+  background: #000;
+  padding: 10px 20px;
   border-radius: 8px;
-  border: 1px dashed rgba(255,255,255,.3);
+  border: 2px dashed #a855f7;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
 }
 .promo-code-display .pcd-code{
-  font-size: 22px; font-weight: 900; color: #fff; letter-spacing: 2px;
+  font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 3px;
   text-transform: uppercase;
 }
 .promo-code-display .pcd-copy{
-  background: transparent; border: none; color: #fff; cursor: pointer;
+  background: transparent; border: none; color: #a855f7; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  opacity: .6; transition: opacity .2s;
+  opacity: .8; transition: opacity .2s, transform .2s;
 }
-.promo-code-display .pcd-copy:hover{ opacity: 1; }
-.promo-code-display .pcd-copy svg{ width: 18px; height: 18px; }
+.promo-code-display .pcd-copy:hover{ opacity: 1; transform: scale(1.1); }
+.promo-code-display .pcd-copy svg{ width: 20px; height: 20px; }
 
 .activate-btn{
-  background: var(--orange);
+  background: linear-gradient(180deg, #ff9a33 0%, #ff7b00 100%);
   color: #000;
   border: none;
   border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 800;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 900;
   cursor: pointer;
   transition: all .15s;
-  box-shadow: 0 4px 0 #b35600;
+  box-shadow: 0 4px 0 #b35600, 0 4px 15px rgba(255,123,0,.4);
   text-transform: uppercase;
   letter-spacing: 1px;
+  width: 100%;
 }
 .activate-btn:hover{
-  background: var(--orange-hover);
+  background: linear-gradient(180deg, #ffaa44 0%, #ff8c1a 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 #b35600;
+  box-shadow: 0 6px 0 #b35600, 0 6px 20px rgba(255,123,0,.5);
 }
 .activate-btn:active{
   transform: translateY(2px);
@@ -809,11 +818,13 @@ body{
   .top-bar { padding: 14px 0 14px 45px; } /* Отступ слева для бургера */
   .top-left { margin-left: 0; }
   
-  .logo-img { height: 40px; } /* Уменьшаем лого на мобилках */
+  .logo-img { height: 60px; } /* Уменьшаем лого на мобилках */
   
-  .promo-banner{flex-direction:column;gap:16px;text-align:center;padding:16px;}
-  .banner-center{flex-direction:column; padding: 16px; gap: 12px;}
-  .banner-right{align-items: center;}
+  .promo-banner{flex-direction:column;gap:20px;text-align:center;padding:20px;}
+  .banner-center{flex-direction:column; padding: 16px; gap: 16px; width: 100%;}
+  .banner-right{width: 100%; align-items: center;}
+  .promo-code-display { width: 100%; justify-content: center; }
+  .activate-btn { width: 100%; }
   .profile-stats-grid{grid-template-columns:1fr;}
   .cases-grid{grid-template-columns:repeat(2,1fr);}
   .app{padding: 0 14px 40px;}
@@ -835,7 +846,7 @@ body{
 <div class="mobile-menu-panel" id="mobileMenuPanel">
   <div class="mobile-menu-header">
     <div class="logo-container">
-        <img src="https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true" alt="BrainRoll" class="logo-img" style="height:40px;">
+        <img src="https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true" alt="BrainRoll" class="logo-img" style="height:50px;">
     </div>
     <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
   </div>
@@ -886,12 +897,10 @@ body{
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
         <div class="modal-title">Пополнение</div>
         
-        <!-- Авто-промокод в окне пополнения -->
-        <div style="background: rgba(157,0,255,.1); border: 2px dashed rgba(157,0,255,.4); border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: center;">
-            <div style="font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">АВТО-ПРОМОКОД</div>
-            <div id="topupPromoCodeDisplay" style="font-size: 20px; font-weight: 900; color: #d08cff; letter-spacing: 2px; text-transform: uppercase;">KRAKEN121</div>
-            <div style="font-size: 12px; font-weight: 600; color: #9a9aac; margin-top: 4px;">Бонус: <span id="topupPromoBonusDisplay" style="color: var(--slime);">+5%</span></div>
-            <div style="font-size: 10px; font-weight: 600; color: #6a6a7a; margin-top: 4px;">Действует ещё: <span id="topupPromoTimerDisplay">00:59:59</span></div>
+        <!-- Блок с активным промокодом -->
+        <div id="activePromoInfo" style="display:none; background: rgba(57,255,20,.1); border: 2px solid rgba(57,255,20,.3); border-radius: 8px; padding: 10px; margin-bottom: 16px; text-align: center;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--slime); text-transform: uppercase; letter-spacing: 1px;">✅ ПРОМОКОД АКТИВИРОВАН</div>
+            <div style="font-size: 16px; font-weight: 900; color: #fff; margin-top: 4px;">Бонус: <span id="activePromoBonus">+5%</span></div>
         </div>
 
         <div class="form-group">
@@ -1065,7 +1074,7 @@ body{
     </div>
 
     <div class="tab-panel active" id="panelMenu">
-        <!-- НОВЫЙ БАННЕР АВТО-ПРОМОКОДА -->
+        <!-- НОВЫЙ БАННЕР АВТО-ПРОМОКОДА (КАК НА ФОТО) -->
         <div class="promo-banner">
             <div class="banner-left">
                 <div class="title">АВТО-ПРОМОКОД</div>
@@ -1089,7 +1098,7 @@ body{
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </button>
                 </div>
-                <button class="activate-btn" onclick="switchTab('promo')">Активировать</button>
+                <button class="activate-btn" onclick="activateAutoPromo()">АКТИВИРОВАТЬ</button>
             </div>
         </div>
 
@@ -1422,7 +1431,6 @@ body{
 
     function getCurrentAutoPromo() {
         const now = Date.now();
-        // Используем фиксированную точку отсчета для стабильности (например, начало суток)
         const startOfDay = new Date().setHours(0, 0, 0, 0);
         const elapsed = now - startOfDay;
         const index = Math.floor(elapsed / AUTO_PROMO_INTERVAL) % AUTO_PROMOS.length;
@@ -1436,20 +1444,14 @@ body{
         const codeEl = document.getElementById('autoPromoCode');
         const bonusEl = document.getElementById('autoPromoBonus');
         const timerEl = document.getElementById('autoPromoTimer');
-        const topupCodeEl = document.getElementById('topupPromoCodeDisplay');
-        const topupBonusEl = document.getElementById('topupPromoBonusDisplay');
-        const topupTimerEl = document.getElementById('topupPromoTimerDisplay');
 
         if (codeEl) codeEl.textContent = promo.code;
         if (bonusEl) bonusEl.textContent = '+' + promo.bonus + '%';
-        if (topupCodeEl) topupCodeEl.textContent = promo.code;
-        if (topupBonusEl) topupBonusEl.textContent = '+' + promo.bonus + '%';
 
         function tick() {
             const now = Date.now();
             const diff = promo.nextChangeTime - now;
             if (diff <= 0) {
-                // Время вышло, обновляем промокод
                 updateAutoPromoDisplay();
                 return;
             }
@@ -1458,7 +1460,6 @@ body{
             const s = Math.floor((diff % (1000 * 60)) / 1000);
             const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
             if (timerEl) timerEl.textContent = timeStr;
-            if (topupTimerEl) topupTimerEl.textContent = timeStr;
             requestAnimationFrame(tick);
         }
         tick();
@@ -1471,6 +1472,32 @@ body{
         }).catch(() => {
             showToast('Не удалось скопировать', 'err');
         });
+    }
+
+    let activePromo = null; // { code, bonus }
+
+    function activateAutoPromo() {
+        const promo = getCurrentAutoPromo();
+        activePromo = { code: promo.code, bonus: promo.bonus };
+        showToast(`Промокод ${promo.code} активирован! Бонус +${promo.bonus}% к следующему пополнению.`, 'ok');
+        playWin(); vibrate(20);
+        // Обновляем отображение в окне пополнения, если оно открыто
+        if (document.getElementById('topupModal').classList.contains('open')) {
+            updateTopupPromoDisplay();
+        }
+    }
+
+    function updateTopupPromoDisplay() {
+        const infoBlock = document.getElementById('activePromoInfo');
+        const bonusSpan = document.getElementById('activePromoBonus');
+        if (activePromo) {
+            if (infoBlock) infoBlock.style.display = 'block';
+            if (bonusSpan) bonusSpan.textContent = '+' + activePromo.bonus + '%';
+        } else {
+            if (infoBlock) infoBlock.style.display = 'none';
+        }
+        // Пересчитываем цену, если выбран предмет
+        updateTopupPrice();
     }
 
     function calcUpgradeChance(sourcePrice, targetPrice) {
@@ -1955,8 +1982,7 @@ body{
         if (m) { m.textContent = ''; m.className = 'msg'; }
         topupSelectedItem = null;
         updateTopupPrice();
-        // Обновляем отображение промокода в окне пополнения
-        updateAutoPromoDisplay();
+        updateTopupPromoDisplay(); // Показываем инфу о промокоде
         openModal('topupModal');
     };
     function renderTopupGrid() {
@@ -1983,8 +2009,18 @@ body{
         if (!topupSelectedItem) { line.style.display = 'none'; return; }
         const item = getItemById(topupSelectedItem);
         if (!item) return;
+        
+        let finalPrice = item.price;
+        if (activePromo) {
+            finalPrice = Math.round(item.price * (1 + activePromo.bonus / 100));
+        }
+        
         line.style.display = 'flex';
-        val.innerHTML = `${item.price} <img src="${COIN_IMG}">`;
+        if (activePromo) {
+            val.innerHTML = `<span style="text-decoration: line-through; color: #6a6a7a; font-size: 12px; margin-right: 8px;">${item.price}</span> ${finalPrice} <img src="${COIN_IMG}">`;
+        } else {
+            val.innerHTML = `${finalPrice} <img src="${COIN_IMG}">`;
+        }
     }
     window.createDeposit = async function() {
         const msg = document.getElementById('topupMsg');
@@ -1994,6 +2030,12 @@ body{
         if (!roblox) { if(msg){msg.className = 'msg err'; msg.textContent = 'Введи Roblox ник';} return; }
         const item = getItemById(topupSelectedItem);
         if (!item) return;
+        
+        let finalPrice = item.price;
+        if (activePromo) {
+            finalPrice = Math.round(item.price * (1 + activePromo.bonus / 100));
+        }
+        
         if (msg) { msg.className = 'msg wait'; msg.textContent = 'Отправляем заявку...'; }
         try {
             const res = await fetch(API_URL + '/api/deposit/create', {
@@ -2003,7 +2045,7 @@ body{
                     telegram_id: getTelegramId(),
                     username: USER.username || '',
                     item_id: item.id, item_name: item.name,
-                    item_price: item.price, base_price: item.price,
+                    item_price: finalPrice, base_price: item.price,
                     roblox_name: roblox
                 })
             });
@@ -2012,6 +2054,11 @@ body{
                 if (msg) { msg.className = 'msg ok'; msg.textContent = `Заявка отправлена!`; }
                 showToast('Заявка отправлена!', 'ok');
                 playCoin(); vibrate(15);
+                
+                // Сбрасываем промокод после успешной заявки
+                activePromo = null;
+                updateTopupPromoDisplay();
+                
                 setTimeout(() => closeModal('topupModal'), 2200);
             } else {
                 if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
