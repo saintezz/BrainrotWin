@@ -218,17 +218,10 @@ body{
 }
 .top-left{display:flex;align-items:center;gap:12px; margin-left: 0;}
 .logo-container{display:flex;align-items:center;gap:8px}
-.logo-brain{
-  color:var(--yellow);
-  font-weight:900;
-  font-size:22px;
-  letter-spacing:1px;
-}
-.logo-roll{
-  color:#fff;
-  font-weight:900;
-  font-size:22px;
-  letter-spacing:1px;
+.logo-img {
+  height: 60px; /* Достаточно большой размер */
+  width: auto;
+  object-fit: contain;
 }
 
 .top-right{display:flex;align-items:center;gap:12px}
@@ -270,19 +263,21 @@ body{
 .icon-btn img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
 
 /* ========================================================
-   БАННЕР
+   БАННЕР (АВТО-ПРОМОКОД)
    ======================================================== */
 .promo-banner{
   margin: 16px 0;
   padding: 20px 30px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #4b1d7a 0%, #a11d78 100%); 
+  background: linear-gradient(135deg, #3b1a5e 0%, #7a1b5e 100%); 
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  min-height: 140px;
 }
 .promo-banner::before{
   content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -290,62 +285,91 @@ body{
   pointer-events: none;
 }
 .banner-left{
-  display: flex; align-items: center; gap: 20px; z-index: 1;
+  display: flex; flex-direction: column; gap: 8px; z-index: 1;
 }
-.banner-images{
-  display: flex; gap: -10px;
+.banner-left .title{
+  font-size: 13px; font-weight: 800; color: #fff; text-transform: uppercase;
+  letter-spacing: 1px; opacity: .8;
 }
-.banner-images img{
-  height: 80px; object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+.banner-left .main-title{
+  font-size: 28px; font-weight: 900; color: #fff; text-transform: uppercase;
+  letter-spacing: 1px; line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0,0,0,.3);
 }
-.banner-images img:nth-child(2){ margin-left: -20px; transform: scale(1.1); z-index: 2;}
-.banner-text{
-  display: flex; flex-direction: column; gap: 4px;
-}
-.banner-text .title{
-  font-size: 14px; font-weight: 700; color: #fff;
-}
-.banner-text .timer{
-  font-size: 24px; font-weight: 900; color: var(--yellow);
-  letter-spacing: 2px;
+.banner-left .sub-title{
+  font-size: 22px; font-weight: 900; color: #d08cff; text-transform: uppercase;
+  letter-spacing: 1px; line-height: 1.1;
 }
 
 .banner-center{
-  z-index: 1; display: flex; align-items: center; gap: 12px;
+  z-index: 1; display: flex; align-items: center; gap: 20px;
+  background: rgba(0,0,0,.3);
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,.05);
 }
-.promo-code-box{
-  background: #000;
-  border: 2px dashed var(--yellow);
-  border-radius: 8px;
-  padding: 8px 20px;
-  font-size: 22px; font-weight: 900; color: #fff;
-  letter-spacing: 3px;
+.banner-timer-block{
+  display: flex; flex-direction: column; gap: 2px;
 }
-.promo-reward-box{
-  background: var(--yellow);
-  color: #000;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 16px; font-weight: 800;
-  display: flex; flex-direction: column; align-items: center;
-  line-height: 1.1;
+.banner-timer-block .bt-label{
+  font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase;
+  letter-spacing: 1px;
 }
-.promo-reward-box span:last-child{ font-size: 10px; }
+.banner-timer-block .bt-value{
+  font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.banner-bonus-block{
+  display: flex; flex-direction: column; gap: 2px;
+  border-left: 2px solid rgba(255,255,255,.1);
+  padding-left: 20px;
+}
+.banner-bonus-block .bb-label{
+  font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.banner-bonus-block .bb-value{
+  font-size: 28px; font-weight: 900; color: var(--slime); letter-spacing: 1px;
+  line-height: 1;
+}
 
 .banner-right{
   z-index: 1;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
 }
+.promo-code-display{
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255,255,255,.3);
+}
+.promo-code-display .pcd-code{
+  font-size: 22px; font-weight: 900; color: #fff; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.promo-code-display .pcd-copy{
+  background: transparent; border: none; color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: .6; transition: opacity .2s;
+}
+.promo-code-display .pcd-copy:hover{ opacity: 1; }
+.promo-code-display .pcd-copy svg{ width: 18px; height: 18px; }
+
 .activate-btn{
   background: var(--orange);
   color: #000;
   border: none;
-  border-radius: 10px;
-  padding: 14px 28px;
-  font-size: 16px; font-weight: 800;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
   transition: all .15s;
   box-shadow: 0 4px 0 #b35600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .activate-btn:hover{
   background: var(--orange-hover);
@@ -785,13 +809,13 @@ body{
   .top-bar { padding: 14px 0 14px 45px; } /* Отступ слева для бургера */
   .top-left { margin-left: 0; }
   
+  .logo-img { height: 40px; } /* Уменьшаем лого на мобилках */
+  
   .promo-banner{flex-direction:column;gap:16px;text-align:center;padding:16px;}
-  .banner-left{flex-direction:column;}
-  .banner-center{flex-direction:column;}
-  .banner-images img{height:60px;}
+  .banner-center{flex-direction:column; padding: 16px; gap: 12px;}
+  .banner-right{align-items: center;}
   .profile-stats-grid{grid-template-columns:1fr;}
   .cases-grid{grid-template-columns:repeat(2,1fr);}
-  .logo-brain,.logo-roll{font-size:16px;}
   .app{padding: 0 14px 40px;}
 }
 </style>
@@ -811,8 +835,7 @@ body{
 <div class="mobile-menu-panel" id="mobileMenuPanel">
   <div class="mobile-menu-header">
     <div class="logo-container">
-        <div class="logo-brain">BRAIN</div>
-        <div class="logo-roll">ROLL</div>
+        <img src="https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true" alt="BrainRoll" class="logo-img" style="height:40px;">
     </div>
     <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
   </div>
@@ -862,8 +885,17 @@ body{
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
         <div class="modal-title">Пополнение</div>
+        
+        <!-- Авто-промокод в окне пополнения -->
+        <div style="background: rgba(157,0,255,.1); border: 2px dashed rgba(157,0,255,.4); border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: center;">
+            <div style="font-size: 10px; font-weight: 700; color: #9a9aac; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">АВТО-ПРОМОКОД</div>
+            <div id="topupPromoCodeDisplay" style="font-size: 20px; font-weight: 900; color: #d08cff; letter-spacing: 2px; text-transform: uppercase;">KRAKEN121</div>
+            <div style="font-size: 12px; font-weight: 600; color: #9a9aac; margin-top: 4px;">Бонус: <span id="topupPromoBonusDisplay" style="color: var(--slime);">+5%</span></div>
+            <div style="font-size: 10px; font-weight: 600; color: #6a6a7a; margin-top: 4px;">Действует ещё: <span id="topupPromoTimerDisplay">00:59:59</span></div>
+        </div>
+
         <div class="form-group">
-            <label class="form-label">Выбери предмет для пополнения</label>
+            <label class="form-label">БРАИНРОТЫ ДЛЯ ПОПОЛНЕНИЯ</label>
             <div class="topup-grid" id="topupGrid"></div>
         </div>
         <div class="topup-price-line" id="topupPriceLine" style="display:none;">
@@ -871,7 +903,7 @@ body{
             <div class="tpl-value" id="topupPriceValue">0</div>
         </div>
         <div class="form-group" style="margin-top: 12px;">
-            <label class="form-label">Твой Roblox ник</label>
+            <label class="form-label">НИК В РОБЛОКСЕ</label>
             <input type="text" class="form-input" id="topupRoblox" placeholder="Введи ник в Roblox" maxlength="40">
         </div>
         <button class="action-btn" onclick="createDeposit()">Отправить заявку</button>
@@ -1015,8 +1047,7 @@ body{
     <div class="top-bar">
         <div class="top-left">
             <div class="logo-container">
-                <div class="logo-brain">BRAIN</div>
-                <div class="logo-roll">ROLL</div>
+                <img src="https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true" alt="BrainRoll" class="logo-img">
             </div>
         </div>
         <div class="top-right">
@@ -1034,25 +1065,30 @@ body{
     </div>
 
     <div class="tab-panel active" id="panelMenu">
+        <!-- НОВЫЙ БАННЕР АВТО-ПРОМОКОДА -->
         <div class="promo-banner">
             <div class="banner-left">
-                <div class="banner-images">
-                    <img src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/Headless.webp" alt="Пират">
-                    <img src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/Polaroidini.png" alt="Единорог">
-                </div>
-                <div class="banner-text">
-                    <div class="title">Новый промокод через</div>
-                    <div class="timer">00:15:18</div>
-                </div>
+                <div class="title">АВТО-ПРОМОКОД</div>
+                <div class="main-title">НОВЫЙ БОНУС К ДЕПОЗИТУ</div>
+                <div class="sub-title">КАЖДЫЕ 2 ЧАСА</div>
             </div>
             <div class="banner-center">
-                <div class="promo-code-box">PUOFASKY</div>
-                <div class="promo-reward-box">
-                    <span>+13</span>
-                    <span>монет</span>
+                <div class="banner-timer-block">
+                    <div class="bt-label">ОСТАЛОСЬ</div>
+                    <div class="bt-value" id="autoPromoTimer">01:45:46</div>
+                </div>
+                <div class="banner-bonus-block">
+                    <div class="bb-label">БОНУС</div>
+                    <div class="bb-value" id="autoPromoBonus">+15%</div>
                 </div>
             </div>
             <div class="banner-right">
+                <div class="promo-code-display">
+                    <span class="pcd-code" id="autoPromoCode">JACKPOT</span>
+                    <button class="pcd-copy" onclick="copyAutoPromoCode()" title="Копировать">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
                 <button class="activate-btn" onclick="switchTab('promo')">Активировать</button>
             </div>
         </div>
@@ -1371,6 +1407,72 @@ body{
     const MAX_CHANCE = 80;
     const MIN_CHANCE = 0.01;
 
+    // === АВТО-ПРОМОКОДЫ ===
+    const AUTO_PROMOS = [
+        { code: 'KRAKEN121', bonus: 5 },
+        { code: 'SAINT213', bonus: 8 },
+        { code: 'EASYROLL', bonus: 7 },
+        { code: 'MOON334', bonus: 7 },
+        { code: 'SUN21', bonus: 4 },
+        { code: 'STAR482', bonus: 3 },
+        { code: 'NIGHT73', bonus: 2 },
+        { code: 'CLOUD56', bonus: 8 }
+    ];
+    const AUTO_PROMO_INTERVAL = 60 * 60 * 1000; // 1 час
+
+    function getCurrentAutoPromo() {
+        const now = Date.now();
+        // Используем фиксированную точку отсчета для стабильности (например, начало суток)
+        const startOfDay = new Date().setHours(0, 0, 0, 0);
+        const elapsed = now - startOfDay;
+        const index = Math.floor(elapsed / AUTO_PROMO_INTERVAL) % AUTO_PROMOS.length;
+        const promo = AUTO_PROMOS[index];
+        const nextChangeTime = startOfDay + (Math.floor(elapsed / AUTO_PROMO_INTERVAL) + 1) * AUTO_PROMO_INTERVAL;
+        return { ...promo, nextChangeTime };
+    }
+
+    function updateAutoPromoDisplay() {
+        const promo = getCurrentAutoPromo();
+        const codeEl = document.getElementById('autoPromoCode');
+        const bonusEl = document.getElementById('autoPromoBonus');
+        const timerEl = document.getElementById('autoPromoTimer');
+        const topupCodeEl = document.getElementById('topupPromoCodeDisplay');
+        const topupBonusEl = document.getElementById('topupPromoBonusDisplay');
+        const topupTimerEl = document.getElementById('topupPromoTimerDisplay');
+
+        if (codeEl) codeEl.textContent = promo.code;
+        if (bonusEl) bonusEl.textContent = '+' + promo.bonus + '%';
+        if (topupCodeEl) topupCodeEl.textContent = promo.code;
+        if (topupBonusEl) topupBonusEl.textContent = '+' + promo.bonus + '%';
+
+        function tick() {
+            const now = Date.now();
+            const diff = promo.nextChangeTime - now;
+            if (diff <= 0) {
+                // Время вышло, обновляем промокод
+                updateAutoPromoDisplay();
+                return;
+            }
+            const h = Math.floor(diff / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            if (timerEl) timerEl.textContent = timeStr;
+            if (topupTimerEl) topupTimerEl.textContent = timeStr;
+            requestAnimationFrame(tick);
+        }
+        tick();
+    }
+
+    function copyAutoPromoCode() {
+        const promo = getCurrentAutoPromo();
+        navigator.clipboard.writeText(promo.code).then(() => {
+            showToast('Промокод скопирован: ' + promo.code, 'ok');
+        }).catch(() => {
+            showToast('Не удалось скопировать', 'err');
+        });
+    }
+
     function calcUpgradeChance(sourcePrice, targetPrice) {
         if (!sourcePrice || !targetPrice || targetPrice <= sourcePrice) return 0;
         const ratio = targetPrice / sourcePrice;
@@ -1479,6 +1581,7 @@ body{
         urls.add(DEFAULT_AVATAR);
         urls.add('https://raw.githubusercontent.com/saintezz/BrainrotWin/main/braiwin.png');
         urls.add('https://raw.githubusercontent.com/saintezz/BrainrotWin/main/brainwinGRUST.png');
+        urls.add('https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true');
         Object.values(MUTATION_ICONS).forEach(u => urls.add(u));
         const list = [...urls];
         let i = 0;
@@ -1852,6 +1955,8 @@ body{
         if (m) { m.textContent = ''; m.className = 'msg'; }
         topupSelectedItem = null;
         updateTopupPrice();
+        // Обновляем отображение промокода в окне пополнения
+        updateAutoPromoDisplay();
         openModal('topupModal');
     };
     function renderTopupGrid() {
@@ -2791,6 +2896,7 @@ body{
         switchTab('menu');
         loadUserFromServer();
         preloadImages();
+        updateAutoPromoDisplay(); // Запускаем таймер авто-промокода
     }
 
     window.addEventListener('load', () => {
