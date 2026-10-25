@@ -396,7 +396,7 @@ const server = http.createServer(async (req, res) => {
 
         sendJSON(res, 404, { ok: false, error: 'Метод не найден' });
     } catch (err) {
-        sendJSON(res, 500, { ok: false, error: err.message });
+        sendJSON(res, 500, { ok: false, error: 'Server Error' });
     }
 });
 
