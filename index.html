@@ -171,15 +171,11 @@ body{
 .mobile-nav-btn svg { width: 20px; height: 20px; }
 
 /* ========================================================
-   ВЕРХНЯЯ НАВИГАЦИЯ (ДЕСКТОП)
+   ВЕРХНЯЯ НАВИГАЦИЯ (ДЕСКТОП) - ТЕПЕРЬ ВНУТРИ ШАПКИ
    ======================================================== */
 .top-nav-panel{
   display:flex;flex-direction:row;flex-wrap:nowrap;gap:8px;
-  padding:12px 0;
-  border-bottom:2px solid var(--line);
   overflow-x:auto;scrollbar-width:none;align-items:center;
-  position:sticky;top:0;z-index:400;
-  background:var(--bg-void);
 }
 .top-nav-panel::-webkit-scrollbar{display:none}
 
@@ -215,9 +211,14 @@ body{
   background:var(--bg-void);
   border-bottom:2px solid var(--line);
   position: relative;
+  gap: 20px;
 }
-.top-left{display:flex;align-items:center;gap:12px; margin-left: 0;}
-.logo-container{display:flex;align-items:center;gap:8px}
+.top-left{
+  display:flex;align-items:center;gap:24px; 
+  flex: 1;
+  margin-left: 0;
+}
+.logo-container{display:flex;align-items:center;gap:8px; flex-shrink: 0;}
 .logo-img {
   height: 100px; /* ОЧЕНЬ БОЛЬШОЙ ЛОГОТИП */
   width: auto;
@@ -225,7 +226,7 @@ body{
   filter: drop-shadow(0 4px 15px rgba(255,123,0,.3));
 }
 
-.top-right{display:flex;align-items:center;gap:12px}
+.top-right{display:flex;align-items:center;gap:12px; flex-shrink: 0;}
 
 .balance-wrap{
   display:flex;align-items:center;gap:10px;
@@ -816,7 +817,7 @@ body{
   .top-nav-panel { display: none; } /* Скрываем десктопное меню */
   .burger-btn { display: block; } /* Показываем бургер */
   .top-bar { padding: 14px 0 14px 45px; } /* Отступ слева для бургера */
-  .top-left { margin-left: 0; }
+  .top-left { margin-left: 0; gap: 12px; }
   
   .logo-img { height: 60px; } /* Уменьшаем лого на мобилках */
   
@@ -1029,34 +1030,33 @@ body{
 
 <div class="app" id="mainApp">
     
-    <!-- Десктопное меню -->
-    <div class="top-nav-panel">
-        <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            <span>Главное меню</span>
-        </button>
-        <button class="nav-btn" id="navUpgrade" onclick="switchTab('upgrade')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
-            <span>Апгрейдер</span>
-        </button>
-        <button class="nav-btn" id="navRocket" onclick="switchTab('rocket')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            <span>Квесты</span>
-        </button>
-        <button class="nav-btn" id="navPromo" onclick="switchTab('promo')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-            <span>Промокоды</span>
-        </button>
-        <button class="nav-btn" id="navProfile" onclick="switchTab('profile')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            <span>Профиль</span>
-        </button>
-    </div>
-
     <div class="top-bar">
         <div class="top-left">
             <div class="logo-container">
                 <img src="https://github.com/saintezz/BrainrotWin/blob/main/brainrollLOGO.png?raw=true" alt="BrainRoll" class="logo-img">
+            </div>
+            <!-- ВКЛАДКИ ТЕПЕРЬ СБОКУ ОТ ЛОГО -->
+            <div class="top-nav-panel">
+                <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    <span>Главное меню</span>
+                </button>
+                <button class="nav-btn" id="navUpgrade" onclick="switchTab('upgrade')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+                    <span>Апгрейдер</span>
+                </button>
+                <button class="nav-btn" id="navRocket" onclick="switchTab('rocket')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>Квесты</span>
+                </button>
+                <button class="nav-btn" id="navPromo" onclick="switchTab('promo')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    <span>Промокоды</span>
+                </button>
+                <button class="nav-btn" id="navProfile" onclick="switchTab('profile')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+                    <span>Профиль</span>
+                </button>
             </div>
         </div>
         <div class="top-right">
