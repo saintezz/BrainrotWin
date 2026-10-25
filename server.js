@@ -1,4 +1,3 @@
-// server.js — BrainrotWin API (Render-ready) + Topup Leaderboard + Withdraw System
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -127,6 +126,21 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, leaderboard: sorted });
         }
 
+        // === CHECK PROMO (для пополнения) ===
+        if (req.method === 'POST' && req.url === '/api/check_promo') {
+            const body = await readBody(req);
+            const { code } = body;
+            if (!code) return sendJSON(res, 400, { ok: false, error: 'Введите промокод' });
+
+            const upperCode = code.trim().toUpperCase();
+            const promo = promocodes[upperCode];
+            if (!promo) return sendJSON(res, 404, { ok: false, error: 'Промокод не найден' });
+            if (promo.uses <= 0) return sendJSON(res, 410, { ok: false, error: 'Промокод больше не активен' });
+            if (promo.type !== 'percent') return sendJSON(res, 400, { ok: false, error: 'Этот промокод не для пополнения' });
+
+            return sendJSON(res, 200, { ok: true, type: 'percent', value: promo.value });
+        }
+
         // === PROMOS ===
         if (req.method === 'POST' && req.url === '/api/create') {
             const body = await readBody(req);
@@ -142,7 +156,7 @@ const server = http.createServer(async (req, res) => {
 
             promocodes[upperCode] = {
                 code: upperCode, uses: parseInt(uses), type,
-                value: type === 'balance' ? parseInt(value) : value,
+                value: type === 'percent' ? parseInt(value) : value,
                 createdAt: new Date().toISOString()
             };
             savePromos();
@@ -173,6 +187,7 @@ const server = http.createServer(async (req, res) => {
                 if (!Array.isArray(u.inventory)) u.inventory = [];
                 u.inventory.push(promo.value);
             }
+            // Для percent - просто уменьшаем uses, эффект применяется при создании депозита
             u.updated_at = new Date().toISOString();
             saveUsers();
 
