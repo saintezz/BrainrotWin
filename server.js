@@ -3,30 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = '/tmp';
+const DATA_DIR = path.join(__dirname, 'data'); // Лучше хранить в папке проекта
+
 const PROMO_FILE = path.join(DATA_DIR, 'promocodes.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
-const LUCK_FILE = path.join(DATA_DIR, 'luck.json');
-const TOPUPS_FILE = path.join(DATA_DIR, 'topups.json');
 const WITHDRAWS_FILE = path.join(DATA_DIR, 'withdraws.json');
-const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
 const ADMIN_USERNAMES = ['saintezz7', 'yart11'];
 
 let promocodes = {};
 let users = {};
 let deposits = [];
-let luckState = { multiplier: 1, until: 0, by: '', ts: 0 };
-let topupHistory = {};
 let withdraws = [];
-let settings = {
-    withdrawTimes: [
-        { day: 'Понедельник', time: '18:00' },
-        { day: 'Среда', time: '18:00' },
-        { day: 'Пятница', time: '18:00' }
-    ]
-};
 
 function ensureDataDir() {
     try { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
@@ -45,24 +34,12 @@ function loadAll() {
     promocodes = loadJSON(PROMO_FILE, {});
     users = loadJSON(USERS_FILE, {});
     deposits = loadJSON(DEPOSITS_FILE, []);
-    luckState = loadJSON(LUCK_FILE, { multiplier: 1, until: 0, by: '', ts: 0 });
-    topupHistory = loadJSON(TOPUPS_FILE, {});
     withdraws = loadJSON(WITHDRAWS_FILE, []);
-    settings = loadJSON(SETTINGS_FILE, {
-        withdrawTimes: [
-            { day: 'Понедельник', time: '18:00' },
-            { day: 'Среда', time: '18:00' },
-            { day: 'Пятница', time: '18:00' }
-        ]
-    });
 }
 function savePromos() { saveJSON(PROMO_FILE, promocodes); }
 function saveUsers() { saveJSON(USERS_FILE, users); }
 function saveDeposits() { saveJSON(DEPOSITS_FILE, deposits); }
-function saveLuck() { saveJSON(LUCK_FILE, luckState); }
-function saveTopups() { saveJSON(TOPUPS_FILE, topupHistory); }
 function saveWithdraws() { saveJSON(WITHDRAWS_FILE, withdraws); }
-function saveSettings() { saveJSON(SETTINGS_FILE, settings); }
 
 function setCORS(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -117,30 +94,6 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
-        // === TOPUP LEADERBOARD ===
-        if (req.method === 'GET' && req.url === '/api/topup-leaderboard') {
-            const sorted = Object.entries(topupHistory)
-                .map(([username, total]) => ({ username, total }))
-                .sort((a, b) => b.total - a.total)
-                .slice(0, 10);
-            return sendJSON(res, 200, { ok: true, leaderboard: sorted });
-        }
-
-        // === CHECK PROMO (для пополнения) ===
-        if (req.method === 'POST' && req.url === '/api/check_promo') {
-            const body = await readBody(req);
-            const { code } = body;
-            if (!code) return sendJSON(res, 400, { ok: false, error: 'Введите промокод' });
-
-            const upperCode = code.trim().toUpperCase();
-            const promo = promocodes[upperCode];
-            if (!promo) return sendJSON(res, 404, { ok: false, error: 'Промокод не найден' });
-            if (promo.uses <= 0) return sendJSON(res, 410, { ok: false, error: 'Промокод больше не активен' });
-            if (promo.type !== 'percent') return sendJSON(res, 400, { ok: false, error: 'Этот промокод не для пополнения' });
-
-            return sendJSON(res, 200, { ok: true, type: 'percent', value: promo.value });
-        }
-
         // === PROMOS ===
         if (req.method === 'POST' && req.url === '/api/create') {
             const body = await readBody(req);
@@ -179,15 +132,10 @@ const server = http.createServer(async (req, res) => {
             const u = ensureUser(telegram_id);
             if (promo.type === 'balance') {
                 u.balance = (u.balance || 0) + promo.value;
-                if (u.username) {
-                    topupHistory[u.username] = (topupHistory[u.username] || 0) + promo.value;
-                    saveTopups();
-                }
             } else if (promo.type === 'item') {
                 if (!Array.isArray(u.inventory)) u.inventory = [];
                 u.inventory.push(promo.value);
             }
-            // Для percent - просто уменьшаем uses, эффект применяется при создании депозита
             u.updated_at = new Date().toISOString();
             saveUsers();
 
@@ -226,13 +174,15 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, deposit });
         }
 
+        // Получение всех депозитов (для админа)
         if (req.method === 'GET' && req.url.startsWith('/api/deposits')) {
             const url = new URL(req.url, 'http://localhost');
             const admin = url.searchParams.get('admin') || '';
             if (!isAdmin(admin)) {
                 return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
             }
-            return sendJSON(res, 200, { ok: true, deposits });
+            // Возвращаем все депозиты, клиент сам отфильтрует pending
+            return sendJSON(res, 200, { ok: true, deposits: deposits });
         }
 
         if (req.method === 'POST' && req.url === '/api/deposit/status') {
@@ -257,12 +207,6 @@ const server = http.createServer(async (req, res) => {
             if (status === 'accepted') {
                 const u = ensureUser(dep.telegram_id, dep.username);
                 u.balance = (u.balance || 0) + dep.item_price;
-
-                const nameKey = dep.username || u.username;
-                if (nameKey) {
-                    topupHistory[nameKey] = (topupHistory[nameKey] || 0) + dep.item_price;
-                    saveTopups();
-                }
                 saveUsers();
             }
 
@@ -281,13 +225,13 @@ const server = http.createServer(async (req, res) => {
 
             const u = ensureUser(telegram_id, username);
             
-            // Check if user has this item
+            // Проверка наличия предмета
             const invIndex = u.inventory.indexOf(item_id);
             if (invIndex === -1) {
                 return sendJSON(res, 400, { ok: false, error: 'Предмет не найден в инвентаре' });
             }
 
-            // Remove item from inventory
+            // Удаляем предмет из инвентаря
             u.inventory.splice(invIndex, 1);
             u.updated_at = new Date().toISOString();
             saveUsers();
@@ -317,7 +261,7 @@ const server = http.createServer(async (req, res) => {
             if (!isAdmin(admin)) {
                 return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
             }
-            return sendJSON(res, 200, { ok: true, withdraws });
+            return sendJSON(res, 200, { ok: true, withdraws: withdraws });
         }
 
         if (req.method === 'POST' && req.url === '/api/withdraw/status') {
@@ -339,7 +283,7 @@ const server = http.createServer(async (req, res) => {
             wd.processed_at = new Date().toISOString();
             wd.processed_by = admin || 'admin';
 
-            // If rejected, return item to inventory
+            // Если отклонили - возвращаем предмет
             if (status === 'rejected') {
                 const u = ensureUser(wd.telegram_id, wd.username);
                 if (!Array.isArray(u.inventory)) u.inventory = [];
@@ -350,27 +294,6 @@ const server = http.createServer(async (req, res) => {
 
             saveWithdraws();
             return sendJSON(res, 200, { ok: true, withdraw: wd });
-        }
-
-        // === SETTINGS ===
-        if (req.method === 'GET' && req.url === '/api/settings/withdraw-times') {
-            return sendJSON(res, 200, { ok: true, times: settings.withdrawTimes });
-        }
-
-        if (req.method === 'POST' && req.url === '/api/settings/withdraw-times') {
-            const body = await readBody(req);
-            const { admin, times } = body;
-
-            if (!isAdmin(admin)) {
-                return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
-            }
-            if (!Array.isArray(times) || times.length !== 3) {
-                return sendJSON(res, 400, { ok: false, error: 'Нужно ровно 3 слота' });
-            }
-
-            settings.withdrawTimes = times;
-            saveSettings();
-            return sendJSON(res, 200, { ok: true, times: settings.withdrawTimes });
         }
 
         // === USER ===
@@ -396,6 +319,7 @@ const server = http.createServer(async (req, res) => {
 
         sendJSON(res, 404, { ok: false, error: 'Метод не найден' });
     } catch (err) {
+        console.error(err);
         sendJSON(res, 500, { ok: false, error: 'Server Error' });
     }
 });
