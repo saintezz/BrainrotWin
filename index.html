@@ -1187,16 +1187,10 @@ body{
 
         <div style="height: 20px;"></div>
 
-        <!-- ПЕРЕКЛЮЧАТЕЛЬ 1: МОИ БРЕЙНРОТЫ / БРЕЙНРОТЫ -->
-        <div class="segmented-control" style="margin-bottom: 16px;">
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ: МОИ БРЕЙНРОТЫ / БРЕЙНРОТЫ (БЕЗ ВКЛАДКИ ЦЕЛЬ АПГРЕЙДА) -->
+        <div class="segmented-control" style="margin-bottom: 20px;">
             <div class="segment active" id="segmentMyItems" onclick="switchUpgradeTab('my')">Мои брейнроты</div>
             <div class="segment" id="segmentShop" onclick="switchUpgradeTab('shop')">Брейнроты</div>
-        </div>
-
-        <!-- ПЕРЕКЛЮЧАТЕЛЬ 2: ЦЕЛЬ АПГРЕЙДА / МАГАЗИН -->
-        <div class="segmented-control" style="margin-bottom: 20px;">
-            <div class="segment active" id="segmentTarget" onclick="switchUpgradeAction('target')">Цель апгрейда</div>
-            <div class="segment" id="segmentBuy" onclick="switchUpgradeAction('buy')">Магазин</div>
         </div>
 
         <!-- СЕКЦИЯ ИНВЕНТАРЯ -->
@@ -2327,7 +2321,6 @@ body{
 
     // ПЕРЕКЛЮЧАТЕЛИ В АПГРЕЙДЕРЕ
     let currentUpgradeTab = 'my'; // 'my' or 'shop'
-    let currentUpgradeAction = 'target'; // 'target' or 'buy'
 
     window.switchUpgradeTab = function(tab) {
         playClick(); vibrate(10);
@@ -2347,21 +2340,6 @@ body{
             btnShop.classList.add('active');
             invSection.style.display = 'none';
             shopSection.style.display = 'block';
-        }
-    };
-
-    window.switchUpgradeAction = function(action) {
-        playClick(); vibrate(10);
-        currentUpgradeAction = action;
-        const btnTarget = document.getElementById('segmentTarget');
-        const btnBuy = document.getElementById('segmentBuy');
-        
-        if (action === 'target') {
-            btnTarget.classList.add('active');
-            btnBuy.classList.remove('active');
-        } else {
-            btnTarget.classList.remove('active');
-            btnBuy.classList.add('active');
         }
     };
 
@@ -2912,6 +2890,8 @@ body{
     function updateUpgradeScreen() {
         const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+        
+        // Обновляем карточку "Твой предмет"
         if (sourceItem) {
             sourceImg.src = sourceItem.img;
             sourceImg.style.display = 'block';
@@ -2919,9 +2899,11 @@ body{
             sourcePrice.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${sourceItem.price}`;
         } else {
             sourceImg.style.display = 'none';
-            sourceName.innerText = '—';
+            sourceName.innerText = 'Выбери в инвентаре';
             sourcePrice.innerHTML = '';
         }
+
+        // Обновляем карточку "Цель"
         if (targetItem) {
             targetImg.src = targetItem.img;
             targetImg.style.display = 'block';
@@ -2929,9 +2911,10 @@ body{
             targetPrice.innerHTML = `<img src="${COIN_IMG}" class="price-coin" alt="coin">${targetItem.price}`;
         } else {
             targetImg.style.display = 'none';
-            targetName.innerText = '—';
+            targetName.innerText = 'Нажми сюда, чтобы выбрать';
             targetPrice.innerHTML = '';
         }
+
         const chance = calculateChance();
         const offset = CIRCUMFERENCE - (Math.min(chance, 100) / 100) * CIRCUMFERENCE;
         progressBar.style.strokeDashoffset = offset;
