@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data'); // Лучше хранить в папке проекта
+const DATA_DIR = path.join(__dirname, 'data');
 
 const PROMO_FILE = path.join(DATA_DIR, 'promocodes.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
@@ -174,14 +174,12 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, deposit });
         }
 
-        // Получение всех депозитов (для админа)
         if (req.method === 'GET' && req.url.startsWith('/api/deposits')) {
             const url = new URL(req.url, 'http://localhost');
             const admin = url.searchParams.get('admin') || '';
             if (!isAdmin(admin)) {
                 return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
             }
-            // Возвращаем все депозиты, клиент сам отфильтрует pending
             return sendJSON(res, 200, { ok: true, deposits: deposits });
         }
 
@@ -224,14 +222,12 @@ const server = http.createServer(async (req, res) => {
             }
 
             const u = ensureUser(telegram_id, username);
-            
-            // Проверка наличия предмета
+
             const invIndex = u.inventory.indexOf(item_id);
             if (invIndex === -1) {
                 return sendJSON(res, 400, { ok: false, error: 'Предмет не найден в инвентаре' });
             }
 
-            // Удаляем предмет из инвентаря
             u.inventory.splice(invIndex, 1);
             u.updated_at = new Date().toISOString();
             saveUsers();
@@ -283,7 +279,6 @@ const server = http.createServer(async (req, res) => {
             wd.processed_at = new Date().toISOString();
             wd.processed_by = admin || 'admin';
 
-            // Если отклонили - возвращаем предмет
             if (status === 'rejected') {
                 const u = ensureUser(wd.telegram_id, wd.username);
                 if (!Array.isArray(u.inventory)) u.inventory = [];
