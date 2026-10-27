@@ -10,7 +10,7 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
 const WITHDRAWS_FILE = path.join(DATA_DIR, 'withdraws.json');
 
-const ADMIN_USERNAMES = ['saintezz7', 'yart11'];
+const ADMIN_USERNAMES = ['saintezz7', 'vortyn1'];
 
 let promocodes = {};
 let users = {};
@@ -99,7 +99,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) {
         setCORS(res);
         res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('BrainrotWin server is alive');
+        res.end('Brainrot Game server is alive');
         return;
     }
 
@@ -223,8 +223,6 @@ const server = http.createServer(async (req, res) => {
         }
 
         // === WITHDRAWS ===
-        // ВАЖНО: при создании заявки предмет НЕ удаляется из инвентаря.
-        // Списывается только при статусе "accepted".
         if (req.method === 'POST' && req.url === '/api/withdraw/create') {
             const body = await readBody(req);
             const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, time_ts, comment } = body;
@@ -240,7 +238,6 @@ const server = http.createServer(async (req, res) => {
                 return sendJSON(res, 400, { ok: false, error: 'Предмет не найден в инвентаре' });
             }
 
-            // проверка: этот предмет уже на выводе?
             const alreadyPending = withdraws.some(w => w.status === 'pending' && String(w.telegram_id) === String(telegram_id) && w.item_id === item_id);
             if (alreadyPending) {
                 return sendJSON(res, 409, { ok: false, error: 'Предмет уже на выводе' });
@@ -297,7 +294,6 @@ const server = http.createServer(async (req, res) => {
             const u = ensureUser(wd.telegram_id, wd.username);
 
             if (status === 'accepted') {
-                // при одобрении — списываем предмет из инвентаря
                 if (Array.isArray(u.inventory)) {
                     const i = u.inventory.indexOf(wd.item_id);
                     if (i !== -1) u.inventory.splice(i, 1);
@@ -305,7 +301,6 @@ const server = http.createServer(async (req, res) => {
                 u.updated_at = new Date().toISOString();
                 saveUsers();
             }
-            // при rejected — ничего не делаем, предмет и так в инвентаре
 
             saveWithdraws();
             return sendJSON(res, 200, { ok: true, withdraw: wd });
@@ -316,7 +311,6 @@ const server = http.createServer(async (req, res) => {
             const id = decodeURIComponent(req.url.slice('/api/user/'.length));
             const u = ensureUser(id);
             saveUsers();
-            // добавляем pending_withdraw_ids, чтобы клиент мог показать "на выводе"
             const userOut = Object.assign({}, u, {
                 pending_withdraw_ids: computePendingWithdrawIds(id)
             });
@@ -344,4 +338,4 @@ const server = http.createServer(async (req, res) => {
 });
 
 loadAll();
-server.listen(PORT, () => console.log('Server started on port ' + PORT));
+server.listen(PORT, () => console.log('Brainrot Game server started on port ' + PORT));
