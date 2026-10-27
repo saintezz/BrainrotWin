@@ -427,7 +427,12 @@ body{
   margin-bottom:16px;
 }
 
-.cases-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));gap:16px;}
+/* === CASES: узкие карточки === */
+.cases-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+  gap:12px;
+}
 .case-card{
   background:
     radial-gradient(circle at 50% 0%, rgba(157,0,255,.1), transparent 60%),
@@ -439,7 +444,7 @@ body{
     inset 0 1px 0 var(--glass-highlight),
     inset 0 -1px 0 rgba(0,0,0,0.35),
     0 8px 24px rgba(0,0,0,0.55);
-  border-radius:12px;overflow:hidden;cursor:pointer;position:relative;
+  border-radius:10px;overflow:hidden;cursor:pointer;position:relative;
   transition: all .3s cubic-bezier(.2,.9,.2,1);
 }
 .case-card::after{
@@ -456,7 +461,7 @@ body{
     0 0 60px rgba(255,123,0,.4),
     0 0 100px rgba(157,0,255,.2);
 }
-.case-card-inner{padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.case-card-inner{padding:10px;display:flex;flex-direction:column;align-items:center;gap:8px;}
 .case-img-wrap{
   width:100%;aspect-ratio:1;
   background:rgba(0,0,0,0.45);border-radius:8px;
@@ -475,17 +480,17 @@ body{
 .case-card:hover .case-img-wrap img{transform:scale(1.08)}
 
 .case-info{width:100%;text-align:center;}
-.case-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;}
+.case-name{font-size:12px;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.15;}
 .case-price{
-  font-size:14px;font-weight:900;color:var(--yellow);
+  font-size:12px;font-weight:900;color:var(--yellow);
   background:rgba(255,214,0,.1);
-  padding:6px 12px;border-radius:6px;
-  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 8px;border-radius:5px;
+  display:inline-flex;align-items:center;gap:4px;
   border:1px solid rgba(255,214,0,.3);
 }
-.case-price img{width:14px;height:14px;}
+.case-price img{width:12px;height:12px;}
 .case-price.free-tag{color:#000;background:rgba(57,255,20,.15);border-color:rgba(57,255,20,.4)}
-.case-items-count{font-size:12px;color:var(--text-muted);margin-top:8px;}
+.case-items-count{font-size:10px;color:var(--text-muted);margin-top:4px;}
 
 .upg-tabs{display:flex;gap:8px;margin-bottom:20px;}
 .upg-tab{flex:1;padding:12px;border-radius:8px;border:2px solid var(--line);background:var(--bg-surface);color:var(--text-muted);font-weight:700;cursor:pointer;transition:all .15s;}
@@ -1049,7 +1054,7 @@ body.upgrade-locked * { cursor: wait !important; }
   .promo-code-display { width: 100%; justify-content: center; }
   .activate-btn { width: 100%; }
   .profile-stats-grid{grid-template-columns:1fr;}
-  .cases-grid{grid-template-columns:repeat(2,1fr);}
+  .cases-grid{grid-template-columns:repeat(3,1fr);}
   .app{padding: 0 14px 40px;}
 }
 
@@ -1771,74 +1776,20 @@ body.upgrade-locked * { cursor: wait !important; }
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
+    // === НОВЫЕ КЕЙСЫ (отсортированы по возрастанию цены) ===
     const CASES = [
-        { id: 'og', name: 'OG CASE', price: 8999, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/OGCASENEW.png',
-          rewards: [
-            { itemId: 'griffin', chance: 55 },
-            { itemId: 'elefantofrigo', chance: 30 },
-            { itemId: 'skibidi', chance: 9 },
-            { itemId: 'meowl', chance: 4 },
-            { itemId: 'strawberryelephant', chance: 1.9 },
-            { itemId: 'headless', chance: 0.1 }
-          ] },
-        { id: 'tacos', name: 'TACOS CASE', price: 169, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/TACOCASENEW.png',
-          rewards: [
-            { itemId: 'burguro', chance: 55 },
-            { itemId: 'lafoodcombinasion', chance: 25 },
-            { itemId: 'globba', chance: 12 },
-            { itemId: 'roseyandteddy', chance: 5 },
-            { itemId: 'lacasaboo', chance: 2.5 },
-            { itemId: 'dragon', chance: 0.5 }
-          ] },
-        { id: 'free', name: 'FREE CASE', price: 0, freeCooldown: 24*60*60*1000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/FREECASENEW.png',
-          rewards: [
-            { balance: 4, chance: 70 },
-            { balance: 10, chance: 25 },
-            { balance: 25, chance: 4.5 },
-            { balance: 100, chance: 0.5 }
-          ] },
-        { id: 'easter', name: 'EASTER CASE', price: 45, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/EASTERCASENEW.png',
-          rewards: [
-            { balance: 17, chance: 55 },
-            { balance: 25, chance: 30 },
-            { balance: 49, chance: 11 },
-            { balance: 100, chance: 3.5 },
-            { itemId: 'dragon', chance: 0.4 },
-            { itemId: 'tirilikalika', chance: 0.1 }
-          ] },
-        { id: 'newyear', name: 'NEW YEAR CASE', price: 241, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/NEWYEARNEW.png',
-          rewards: [
-            { itemId: 'jolly', chance: 55 },
-            { itemId: 'losamigos', chance: 22 },
-            { itemId: 'rubiko', chance: 12 },
-            { itemId: 'roseyandteddy', chance: 6 },
-            { itemId: 'lacasaboo', chance: 3.5 },
-            { itemId: 'dragon', chance: 1 },
-            { itemId: 'hydra', chance: 0.5 }
-          ] },
-        { id: 'fusing', name: 'FUSING CASE', price: 1830, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/FUSECASENEW.png',
-          rewards: [
-            { itemId: 'dragon', chance: 45 },
-            { itemId: 'tirilikalika', chance: 25 },
-            { itemId: 'kraken', chance: 20 },
-            { itemId: 'dragonaquanini', chance: 7 },
-            { itemId: 'antonio', chance: 1.5 },
-            { itemId: 'griffin', chance: 1 },
-            { itemId: 'skibidi', chance: 0.5 }
-          ] },
-        { id: 'polaroidini', name: 'POLLAROIDINI ALL IN', price: 109, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/NEWPOLAROIDINIALLIN.png',
-          rewards: [
-            { balance: 10, chance: 99.7 },
-            { itemId: 'polaroidini', chance: 0.3 }
-          ] },
-        { id: 'work', name: 'WORK CASE', price: 459, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/WORKINGCASE.png',
-          rewards: [
-            { itemId: 'rubiko', chance: 50 },
-            { itemId: 'lacasaboo', chance: 35 },
-            { itemId: 'dragon', chance: 10 },
-            { itemId: 'tirilikalika', chance: 4 },
-            { itemId: 'kraken', chance: 1 }
-          ] }
+        { id: 'witch', name: 'Witch Case', price: 10, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/fusecase.png', rewards: [] },
+        { id: 'fruits', name: 'Fruits Case', price: 19, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', rewards: [] },
+        { id: 'garama', name: 'Garama Case', price: 29, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/garamacase.png', rewards: [] },
+        { id: 'yeti', name: 'Yeti Case', price: 40, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/yeticase.png', rewards: [] },
+        { id: 'school', name: 'School Case', price: 59, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/SCHOOL.png', rewards: [] },
+        { id: 'arcadragon', name: 'Arcadragon Case', price: 200, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', rewards: [] },
+        { id: 'vampire', name: 'Vampire Case', price: 299, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/VampireCase.png', rewards: [] },
+        { id: 'tacos', name: 'Tacos Case', price: 340, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/tacoscase.png', rewards: [] },
+        { id: 'dragon', name: 'Dragon Case', price: 3900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/dragoncase.png', rewards: [] },
+        { id: 'strawberry', name: 'Strawberry Case', price: 8900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/strawberryaLLin.png', rewards: [] },
+        { id: 'griffin', name: 'Griffin Case', price: 17000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/GriffinCase.png', rewards: [] },
+        { id: 'orchidox', name: 'Orchidox Case', price: 54000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/orchidoxcase.png', rewards: [] }
     ];
 
     const MAX_CHANCE = 80;
@@ -2907,12 +2858,6 @@ body.upgrade-locked * { cursor: wait !important; }
         const grid = document.getElementById('menuCasesGrid');
         if (!grid) return;
         grid.innerHTML = CASES.map(c => {
-            const totalRewards = c.rewards.length;
-            let priceHtml = '';
-            let isFree = false;
-            if (c.id === 'free') { priceHtml = `<span class="free-tag">FREE</span>`; isFree = true; }
-            else priceHtml = `${c.price} <img src="${COIN_IMG}" alt="coin">`;
-            const priceClass = isFree ? 'case-price free-tag' : 'case-price';
             return `
                 <div class="case-card" onclick="openCaseDetail('${c.id}')">
                     <div class="case-card-inner">
@@ -2921,8 +2866,8 @@ body.upgrade-locked * { cursor: wait !important; }
                         </div>
                         <div class="case-info">
                             <div class="case-name">${c.name}</div>
-                            <div class="${priceClass}">${priceHtml}</div>
-                            <div class="case-items-count">${totalRewards} предметов</div>
+                            <div class="case-price">${c.price} <img src="${COIN_IMG}" alt="coin"></div>
+                            <div class="case-items-count">${c.rewards.length > 0 ? c.rewards.length + ' предметов' : '—'}</div>
                         </div>
                     </div>
                 </div>
@@ -2930,105 +2875,13 @@ body.upgrade-locked * { cursor: wait !important; }
         }).join('');
     }
 
+    // === ПРИ КЛИКЕ НА КЕЙС: "В КЕЙСАХ ПУСТО" ===
     window.openCaseDetail = function(caseId) {
         if (isCaseOpening || document.body.classList.contains('upgrade-locked')) return;
-        const c = CASES.find(x => x.id === caseId);
-        if (!c) return;
-        currentCaseId = caseId;
-        caseOpenQty = 1;
-        document.querySelectorAll('.case-qty-btn-big').forEach(b => {
-            b.classList.toggle('active', b.dataset.qty === '1');
-        });
-        document.getElementById('caseOpenImg').src = c.img;
-        document.getElementById('caseOpenName').textContent = c.name;
-        document.getElementById('caseOpenBalance').textContent = balance.toLocaleString('ru-RU');
-        const container = document.getElementById('caseRouletteContainer');
-        container.innerHTML = '';
-        buildRouletteRows(c, 1);
-        const possGrid = document.getElementById('casePossibleGrid');
-        const sortedRewards = [...c.rewards].sort((a, b) => {
-            const priceA = a.itemId ? (getItemById(a.itemId)?.price || 0) : 0;
-            const priceB = b.itemId ? (getItemById(b.itemId)?.price || 0) : 0;
-            return priceA - priceB;
-        });
-        const totalChance = c.rewards.reduce((s, r) => s + r.chance, 0);
-        possGrid.innerHTML = sortedRewards.map(rew => {
-            const chancePct = ((rew.chance / totalChance) * 100).toFixed(rew.chance < 1 ? 2 : 1);
-            if (rew.itemId) {
-                const item = getItemById(rew.itemId);
-                if (!item) return '';
-                return `
-                    <div class="case-possible-item">
-                        <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                        <div class="cp-name">${item.name}</div>
-                        <div class="cp-price"><img src="${COIN_IMG}"> ${item.price}</div>
-                        <div class="cp-chance">${chancePct}%</div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div class="case-possible-item">
-                        <img src="${COIN_IMG}" alt="coin" style="width:28px;height:28px;" loading="lazy" decoding="async">
-                        <div class="cp-name">Монеты</div>
-                        <div class="cp-price"><img src="${COIN_IMG}"> +${rew.balance}</div>
-                        <div class="cp-chance">${chancePct}%</div>
-                    </div>
-                `;
-            }
-        }).join('');
-        updateCaseOpenButton();
-        document.getElementById('caseOpenModal').classList.add('show');
-        document.body.style.overflow = 'hidden';
-        playClick(); vibrate(10);
+        showToast('В кейсах пусто', 'info');
+        playClick();
+        vibrate(10);
     };
-
-    function buildRouletteRows(c, qty) {
-        const container = document.getElementById('caseRouletteContainer');
-        container.innerHTML = '';
-        for (let r = 0; r < qty; r++) {
-            const row = document.createElement('div');
-            row.className = 'case-roulette-row';
-            row.dataset.row = r;
-            const track = document.createElement('div');
-            track.className = 'case-roulette-track';
-            track.dataset.track = r;
-            const scrollItems = [];
-            for (let k = 0; k < 12; k++) {
-                c.rewards.forEach(rew => {
-                    if (rew.itemId) {
-                        const item = getItemById(rew.itemId);
-                        if (item) scrollItems.push({ type: 'item', item: item, reward: rew });
-                    } else if (rew.balance) {
-                        scrollItems.push({ type: 'balance', amount: rew.balance, reward: rew });
-                    }
-                });
-            }
-            track.innerHTML = scrollItems.map((si, idx) => {
-                if (si.type === 'item') {
-                    return `
-                        <div class="case-roulette-item" data-index="${idx}">
-                            <img src="${si.item.img}" alt="${si.item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
-                            <div class="roulette-name">${si.item.name}</div>
-                            <div class="roulette-price"><img src="${COIN_IMG}"> ${si.item.price}</div>
-                        </div>
-                    `;
-                } else {
-                    return `
-                        <div class="case-roulette-item" data-index="${idx}">
-                            <img src="${COIN_IMG}" alt="coin" style="width:36px;height:36px;" loading="lazy" decoding="async">
-                            <div class="roulette-name">Монеты</div>
-                            <div class="roulette-price"><img src="${COIN_IMG}"> +${si.amount}</div>
-                        </div>
-                    `;
-                }
-            }).join('');
-            row.appendChild(track);
-            const pointer = document.createElement('div');
-            pointer.className = 'case-roulette-pointer';
-            row.appendChild(pointer);
-            container.appendChild(row);
-        }
-    }
 
     window.closeCaseOpen = function() {
         document.getElementById('caseOpenModal').classList.remove('show');
@@ -3042,127 +2895,8 @@ body.upgrade-locked * { cursor: wait !important; }
         document.querySelectorAll('.case-qty-btn-big').forEach(b => {
             b.classList.toggle('active', parseInt(b.dataset.qty) === qty);
         });
-        const c = CASES.find(x => x.id === currentCaseId);
-        if (c) buildRouletteRows(c, qty);
-        updateCaseOpenButton();
         playClick(); vibrate(8);
     };
-
-    function updateCaseOpenButton() {
-        const c = CASES.find(x => x.id === currentCaseId);
-        if (!c) return;
-        const btn = document.getElementById('caseOpenActionBtn');
-        if (!btn) return;
-        const totalPrice = c.id === 'free' ? 0 : c.price * caseOpenQty;
-        if (c.id === 'free') {
-            const now = Date.now();
-            const timeLeft = c.freeCooldown - (now - freeCaseLastOpen);
-            if (timeLeft > 0) { btn.disabled = true; btn.textContent = 'ЖДИ'; }
-            else { btn.disabled = false; btn.textContent = 'ОТКРЫТЬ КЕЙС'; }
-        } else {
-            if (balance < totalPrice) { btn.disabled = true; btn.textContent = 'НЕДОСТАТОЧНО МОНЕТ'; }
-            else { btn.disabled = false; btn.textContent = 'ОТКРЫТЬ КЕЙС'; }
-        }
-    }
-
-    function pickCaseReward(c) {
-        const totalChance = c.rewards.reduce((sum, r) => sum + r.chance, 0);
-        let rand = Math.random() * totalChance;
-        for (const r of c.rewards) {
-            if (rand < r.chance) return r;
-            rand -= r.chance;
-        }
-        return c.rewards[0];
-    }
-
-    function pickLegendaryReward(c) {
-        let bestReward = c.rewards[0];
-        let bestPrice = -1;
-        c.rewards.forEach(r => {
-            const p = r.itemId ? (getItemById(r.itemId)?.price || 0) : (r.balance || 0);
-            if (p > bestPrice) { bestPrice = p; bestReward = r; }
-        });
-        return bestReward;
-    }
-
-    function getRewardIndexInTrack(c, reward) {
-        let baseIndex = 0;
-        for (let i = 0; i < c.rewards.length; i++) {
-            if (c.rewards[i] === reward) { baseIndex = i; break; }
-        }
-        const perCycle = c.rewards.length;
-        const cycleOffset = 6 + Math.floor(Math.random() * 4);
-        return cycleOffset * perCycle + baseIndex;
-    }
-
-    function animateRoulette(trackEl, targetIndex, duration) {
-        return new Promise(resolve => {
-            const sampleItem = trackEl.querySelector('.case-roulette-item');
-            const itemWidth = sampleItem ? sampleItem.getBoundingClientRect().width : 120;
-            const containerWidth = trackEl.parentElement.clientWidth;
-            const targetX = -(targetIndex * itemWidth) + (containerWidth / 2) - (itemWidth / 2);
-            trackEl.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.9, 0.2, 1)`;
-            trackEl.style.transform = `translate3d(${targetX}px,0,0)`;
-            const timer = setTimeout(() => resolve(), duration + 100);
-            activeAnimTimers.push(timer);
-            activeAnimResolvers.push(resolve);
-        });
-    }
-
-    function highlightWinner(trackEl, winnerIndex) {
-        const items = trackEl.querySelectorAll('.case-roulette-item');
-        items.forEach((el, i) => {
-            if (i === winnerIndex) el.classList.add('winner');
-        });
-    }
-
-    function playCaseOpenAnimation(c, qty) {
-        return new Promise(resolve => {
-            const overlay = document.getElementById('caseAnimOverlay');
-            const img = document.getElementById('caseAnimImg');
-            const textEl = document.getElementById('caseAnimText');
-            const particles = document.getElementById('caseAnimParticles');
-            img.src = c.img;
-            textEl.textContent = 'ОТКРЫВАЕМ...';
-            particles.innerHTML = '';
-            for (let i = 0; i < 24; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'absolute';
-                p.style.left = '50%';
-                p.style.top = '50%';
-                p.style.width = '4px';
-                p.style.height = '4px';
-                p.style.background = i % 3 === 0 ? 'var(--orange)' : (i % 3 === 1 ? 'var(--purple)' : 'var(--blood)');
-                p.style.borderRadius = '0';
-                p.style.opacity = '0.7';
-                const angle = Math.random() * Math.PI * 2;
-                const dist = 100 + Math.random() * 300;
-                p.style.animation = `caseParticleFly 1.2s ease-out ${Math.random() * 0.4}s forwards`;
-                p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-                p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
-                particles.appendChild(p);
-            }
-            overlay.classList.add('show');
-            playOsc(220, 0.4, 'triangle', 0.05, 0, 800);
-            const t1 = setTimeout(() => { textEl.textContent = 'ПОЧТИ...'; playOsc(330, 0.3, 'triangle', 0.05, 0, 900); }, 500);
-            const t2 = setTimeout(() => { textEl.textContent = 'ГОТОВО!'; playWin(); }, 1000);
-            const t3 = setTimeout(() => {
-                overlay.classList.remove('show');
-                resolve();
-            }, 1400);
-            activeAnimTimers.push(t1, t2, t3);
-            activeAnimResolvers.push(resolve);
-        });
-    }
-
-    const caseParticleStyle = document.createElement('style');
-    caseParticleStyle.textContent = `
-        @keyframes caseParticleFly {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(caseParticleStyle);
 
     window.skipCaseAnimation = function() {
         skipAnimationFlag = true;
@@ -3178,82 +2912,7 @@ body.upgrade-locked * { cursor: wait !important; }
     };
 
     window.confirmOpenCase = async function() {
-        if (isCaseOpening) return;
-        const c = CASES.find(x => x.id === currentCaseId);
-        if (!c) return;
-        const qty = caseOpenQty;
-        if (c.id === 'free') {
-            const now = Date.now();
-            const timeLeft = c.freeCooldown - (now - freeCaseLastOpen);
-            if (timeLeft > 0) { showToast('Кейс ещё не остыл', 'err'); playLose(); return; }
-            if (qty > 1) { showToast('Бесплатный кейс можно открыть только 1 раз', 'err'); return; }
-        }
-        const totalPrice = c.id === 'free' ? 0 : c.price * qty;
-        if (c.id !== 'free' && balance < totalPrice) {
-            showToast('Недостаточно монет', 'err'); playLose(); vibrate(30); return;
-        }
-        isCaseOpening = true;
-        skipAnimationFlag = false;
-        activeAnimTimers = [];
-        activeAnimResolvers = [];
-
-        const skipBtn = document.getElementById('caseSkipBtn');
-        if (skipBtn) skipBtn.classList.add('show');
-
-        if (c.id !== 'free') { balance -= totalPrice; updateBalance(); }
-        else { freeCaseLastOpen = Date.now(); localStorage.setItem('ggbrainx_free_case_last', String(freeCaseLastOpen)); }
-
-        let isRareRoll = false;
-        rareRollCounter++;
-        if (rareRollCounter >= 100) { isRareRoll = true; rareRollCounter = 0; }
-        localStorage.setItem('ggbrainx_rare_roll_counter', String(rareRollCounter));
-
-        const rewards = [];
-        for (let i = 0; i < qty; i++) {
-            if (isRareRoll && i === 0) rewards.push(pickLegendaryReward(c));
-            else rewards.push(pickCaseReward(c));
-        }
-
-        await playCaseOpenAnimation(c, qty);
-
-        const tracks = document.querySelectorAll('.case-roulette-track');
-        const animPromises = [];
-        rewards.forEach((reward, idx) => {
-            const track = tracks[idx];
-            if (!track) return;
-            const targetIndex = getRewardIndexInTrack(c, reward);
-            const duration = skipAnimationFlag ? 200 : 6000;
-            animPromises.push(animateRoulette(track, targetIndex, duration));
-            const tickCount = 45;
-            for (let t = 0; t < tickCount; t++) {
-                const tt = setTimeout(() => { if (!skipAnimationFlag) playTick(); }, t * (duration / tickCount));
-                activeAnimTimers.push(tt);
-            }
-            const wt = setTimeout(() => highlightWinner(track, targetIndex), duration);
-            activeAnimTimers.push(wt);
-        });
-        await Promise.all(animPromises);
-
-        if (skipBtn) skipBtn.classList.remove('show');
-
-        if (!skipAnimationFlag) {
-            await new Promise(r => setTimeout(r, 400));
-        }
-
-        let totalCoins = 0;
-        rewards.forEach(r => {
-            if (r.balance) totalCoins += r.balance;
-            else if (r.itemId) { inventory.push(r.itemId); }
-        });
-        if (totalCoins > 0) balance += totalCoins;
-        updateBalance();
-        renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
-        if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
-        saveLocalCache(); syncUserToServer();
-        isCaseOpening = false;
-        renderMenuCases();
-        if (isRareRoll) showToast('ЛЕГЕНДАРКА! (1/100)', 'ok');
-        updateCaseOpenButton();
+        showToast('В кейсах пусто', 'info');
     };
 
     function calculateChance() {
