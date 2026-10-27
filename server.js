@@ -104,7 +104,6 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
-        // === PROMOS ===
         if (req.method === 'POST' && req.url === '/api/create') {
             const body = await readBody(req);
             const { code, uses, type, value, admin_username } = body;
@@ -156,7 +155,6 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, promocodes });
         }
 
-        // === DEPOSITS ===
         if (req.method === 'POST' && req.url === '/api/deposit/create') {
             const body = await readBody(req);
             const { telegram_id, username, item_id, item_name, item_price, base_price, roblox_name } = body;
@@ -222,7 +220,6 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, deposit: dep });
         }
 
-        // === WITHDRAWS ===
         if (req.method === 'POST' && req.url === '/api/withdraw/create') {
             const body = await readBody(req);
             const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, time_ts, comment } = body;
@@ -306,7 +303,6 @@ const server = http.createServer(async (req, res) => {
             return sendJSON(res, 200, { ok: true, withdraw: wd });
         }
 
-        // === USER ===
         if (req.method === 'GET' && req.url.startsWith('/api/user/')) {
             const id = decodeURIComponent(req.url.slice('/api/user/'.length));
             const u = ensureUser(id);
