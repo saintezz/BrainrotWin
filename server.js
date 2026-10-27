@@ -83,6 +83,16 @@ function isAdmin(username) {
     return ADMIN_USERNAMES.includes((username || '').toLowerCase());
 }
 
+function computePendingWithdrawIds(telegramId) {
+    const set = new Set();
+    for (const w of withdraws) {
+        if (w.status === 'pending' && String(w.telegram_id) === String(telegramId)) {
+            set.add(w.item_id);
+        }
+    }
+    return [...set];
+}
+
 const server = http.createServer(async (req, res) => {
     if (req.method === 'OPTIONS') { setCORS(res); res.writeHead(204); res.end(); return; }
 
@@ -213,6 +223,8 @@ const server = http.createServer(async (req, res) => {
         }
 
         // === WITHDRAWS ===
+        // ВАЖНО: при создании заявки предмет НЕ удаляется из инвентаря.
+        // Списывается только при статусе "accepted".
         if (req.method === 'POST' && req.url === '/api/withdraw/create') {
             const body = await readBody(req);
             const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, time_ts, comment } = body;
@@ -228,9 +240,11 @@ const server = http.createServer(async (req, res) => {
                 return sendJSON(res, 400, { ok: false, error: 'Предмет не найден в инвентаре' });
             }
 
-            u.inventory.splice(invIndex, 1);
-            u.updated_at = new Date().toISOString();
-            saveUsers();
+            // проверка: этот предмет уже на выводе?
+            const alreadyPending = withdraws.some(w => w.status === 'pending' && String(w.telegram_id) === String(telegram_id) && w.item_id === item_id);
+            if (alreadyPending) {
+                return sendJSON(res, 409, { ok: false, error: 'Предмет уже на выводе' });
+            }
 
             const withdraw = {
                 id: 'wd_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
@@ -280,13 +294,18 @@ const server = http.createServer(async (req, res) => {
             wd.processed_at = new Date().toISOString();
             wd.processed_by = admin || 'admin';
 
-            if (status === 'rejected') {
-                const u = ensureUser(wd.telegram_id, wd.username);
-                if (!Array.isArray(u.inventory)) u.inventory = [];
-                u.inventory.push(wd.item_id);
+            const u = ensureUser(wd.telegram_id, wd.username);
+
+            if (status === 'accepted') {
+                // при одобрении — списываем предмет из инвентаря
+                if (Array.isArray(u.inventory)) {
+                    const i = u.inventory.indexOf(wd.item_id);
+                    if (i !== -1) u.inventory.splice(i, 1);
+                }
                 u.updated_at = new Date().toISOString();
                 saveUsers();
             }
+            // при rejected — ничего не делаем, предмет и так в инвентаре
 
             saveWithdraws();
             return sendJSON(res, 200, { ok: true, withdraw: wd });
@@ -297,7 +316,11 @@ const server = http.createServer(async (req, res) => {
             const id = decodeURIComponent(req.url.slice('/api/user/'.length));
             const u = ensureUser(id);
             saveUsers();
-            return sendJSON(res, 200, { ok: true, user: u });
+            // добавляем pending_withdraw_ids, чтобы клиент мог показать "на выводе"
+            const userOut = Object.assign({}, u, {
+                pending_withdraw_ids: computePendingWithdrawIds(id)
+            });
+            return sendJSON(res, 200, { ok: true, user: userOut });
         }
         if (req.method === 'POST' && req.url === '/api/user/update') {
             const body = await readBody(req);
