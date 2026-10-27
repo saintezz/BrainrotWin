@@ -220,7 +220,7 @@ body{
 }
 .logo-container{display:flex;align-items:center;gap:8px; flex-shrink: 0;}
 .logo-img {
-  height: 100px; /* ОЧЕНЬ БОЛЬШОЙ ЛОГОТИП */
+  height: 100px;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 15px rgba(255,123,0,.3));
@@ -265,7 +265,7 @@ body{
 .icon-btn img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
 
 /* ========================================================
-   БАННЕР (КАК НА ФОТО)
+   БАННЕР
    ======================================================== */
 .promo-banner{
   margin: 16px 0;
@@ -395,14 +395,12 @@ body{
 .tab-panel.active{display:block;animation:panelFadeIn .2s ease}
 @keyframes panelFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-/* Заголовки */
 .cases-title-main{
   font-size:24px;font-weight:900;color:#fff;
   text-transform:uppercase;letter-spacing:2px;
   margin-bottom:16px;
 }
 
-/* Сетка кейсов */
 .cases-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
@@ -490,7 +488,6 @@ body{
 .fast-btn.active{background:rgba(57,255,20,.15);border-color:var(--slime);color:var(--slime)}
 .fast-btn svg{width:20px;height:20px}
 
-/* СЕГМЕНТИРОВАННЫЕ ПЕРЕКЛЮЧАТЕЛИ */
 .segmented-control {
   display: flex;
   background: var(--bg-surface);
@@ -524,7 +521,6 @@ body{
   background: rgba(255,255,255,.02);
 }
 
-/* Секция инвентаря и магазина */
 .inventory-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;padding:4px 20px 12px}
 .shop-scroll{max-height:480px;overflow-y:auto;padding:4px 20px 12px;scrollbar-width:thin;scrollbar-color:rgba(255,123,0,.3) transparent}
 .shop-scroll::-webkit-scrollbar{width:4px}
@@ -558,9 +554,7 @@ body{
 .target-list-item .tl-price img{width:12px;height:12px;}
 .target-list-item .tl-chance{font-size:14px;font-weight:800;color:var(--purple);text-align:right;line-height:1.3}
 
-/* ========================================================
-   ПРОФИЛЬ
-   ======================================================== */
+/* ПРОФИЛЬ */
 .profile-page{
   padding: 0 0 20px;
   background: #101010;
@@ -689,7 +683,7 @@ body{
 .reset-avatar-btn{padding:8px 12px;border-radius:8px;border:2px solid #222;background:#141414;color:#555;font-size:11px;font-weight:700;cursor:pointer;}
 .reset-avatar-btn:hover{background:#222;color:#888;}
 
-/* Модалки и Оверлеи */
+/* Модалки */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .2s ease;padding:14px;backdrop-filter:blur(4px)}
 .modal.open{opacity:1;pointer-events:auto}
 .modal-card{background:var(--bg-surface);border:2px solid var(--line);border-radius:12px;padding:24px;width:100%;max-width:460px;text-align:center;transform:scale(.97);transition:transform .2s ease;position:relative;max-height:92vh;overflow-y:auto}
@@ -798,17 +792,14 @@ body{
 .case-result-card{background:var(--bg-surface) !important;border:2px solid var(--line) !important;padding:22px 18px !important;position:relative;overflow:hidden;border-radius:12px !important;box-shadow:4px 4px 0 rgba(0,0,0,.6) !important}
 .case-result-card.legend{border-color:var(--yellow) !important;box-shadow:4px 4px 0 rgba(0,0,0,.6),0 0 30px rgba(255,214,0,.25) !important}
 .case-result-label{font-size:13px;font-weight:800;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:1;line-height:1.4}
-.case-result-card.legend .case-result-label{color:var(--yellow)}
 .case-result-img-wrap{position:relative;width:130px;height:130px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;z-index:1}
 .case-result-img-wrap img{width:100%;height:100%;object-fit:contain;}
 .case-result-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:1px;margin-bottom:4px;text-align:center;position:relative;z-index:1;line-height:1.3}
 .case-result-price{font-size:18px;font-weight:900;color:var(--yellow);letter-spacing:1px;margin-bottom:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:1;line-height:1.3}
-.case-result-card.legend .case-result-price{color:var(--yellow)}
 .case-result-price img{width:18px;height:18px;object-fit:contain;}
 
 .case-multi-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:6px;position:relative;z-index:1}
 .case-multi-item{background:rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px}
-.case-multi-item.legend{border-color:var(--yellow)}
 .case-multi-item img{width:44px;height:44px;object-fit:contain;}
 .case-multi-item .multi-name{font-size:10px;font-weight:600;color:#d8d8e4;text-align:center;line-height:1.1;height:24px;overflow:hidden}
 .case-multi-item .multi-price{font-size:11px;font-weight:800;color:var(--yellow);display:flex;align-items:center;gap:4px;line-height:1.3}
@@ -843,7 +834,6 @@ body{
   .upg-column { width: 100%; }
 }
 
-/* Адаптивность для мобилок */
 @media (max-width: 768px) {
   .top-nav-panel { display: none; }
   .burger-btn { display: block; }
@@ -873,7 +863,7 @@ body{
 .inv-tab-card .inv-name{font-size:12px;font-weight:700;color:#fff;text-align:center;height:32px;overflow:hidden;line-height:1.1}
 .inv-tab-card .inv-price{font-size:12px;font-weight:800;color:var(--yellow);display:flex;align-items:center;gap:4px;}
 .inv-tab-card .inv-price img{width:12px;height:12px;}
-.inv-tab-actions{display:flex;gap:6px;width:100%;}
+.inv-tab-actions{display:flex;flex-direction:column;gap:6px;width:100%;}
 .inv-tab-actions button{
   flex:1;padding:7px 4px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase;
   cursor:pointer;border:2px solid transparent;line-height:1.2;
@@ -903,13 +893,83 @@ body{
   margin-top:8px;font-size:12px;font-weight:700;color:#9a9aac;text-align:center;
   padding:8px;background:rgba(157,0,255,.06);border:2px solid rgba(157,0,255,.18);border-radius:8px;
 }
-.withdraw-time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.withdraw-time-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+  max-height:220px;overflow-y:auto;padding:4px;background:rgba(0,0,0,.25);
+  border:2px solid rgba(255,255,255,.06);border-radius:8px;
+}
 .withdraw-time-btn{
   padding:10px 4px;border-radius:8px;border:2px solid var(--line);background:var(--bg-surface);
   color:var(--text-muted);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3;
 }
-.withdraw-time-btn:hover{color:#fff;border-color:rgba(157,0,255,.4);}
+.withdraw-time-btn:hover:not(.busy):not(.active){color:#fff;border-color:rgba(157,0,255,.4);}
 .withdraw-time-btn.active{border-color:var(--purple);background:rgba(157,0,255,.14);color:#fff;}
+.withdraw-time-btn.busy{opacity:.45;cursor:not-allowed;border-color:rgba(255,0,51,.35);background:rgba(255,0,51,.06);color:var(--blood);}
+.withdraw-time-btn.busy::after{content:'УЖЕ ЗАНЯТО';display:block;font-size:8px;font-weight:900;letter-spacing:.5px;margin-top:2px;color:var(--blood);}
+
+.withdraw-warning{
+  background:linear-gradient(135deg, rgba(255,0,51,.12), rgba(255,0,51,.04));
+  border:2px solid rgba(255,0,51,.45);border-radius:10px;padding:14px 12px;margin-bottom:12px;
+  display:flex;gap:10px;align-items:flex-start;box-shadow:0 0 20px rgba(255,0,51,.15);
+}
+.withdraw-warning .ww-icon{
+  width:28px;height:28px;flex-shrink:0;border-radius:50%;background:var(--blood);color:#000;
+  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;line-height:1;
+  box-shadow:0 0 14px rgba(255,0,51,.6);animation:wwPulse 1.4s infinite;
+}
+@keyframes wwPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.withdraw-warning .ww-text{font-size:12px;font-weight:800;color:#ffb3c1;line-height:1.45;letter-spacing:.3px;text-transform:uppercase;}
+.withdraw-agree{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;
+  background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.08);border-radius:8px;
+  cursor:pointer;user-select:none;transition:all .15s;
+}
+.withdraw-agree:hover{border-color:rgba(255,123,0,.35);}
+.withdraw-agree.checked{border-color:var(--slime);background:rgba(57,255,20,.06);}
+.withdraw-agree .wa-box{
+  width:22px;height:22px;flex-shrink:0;border-radius:5px;border:2px solid #555;background:#0d0d0d;
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:transparent;transition:all .15s;
+}
+.withdraw-agree.checked .wa-box{background:var(--slime);border-color:var(--slime);color:#000;}
+.withdraw-agree .wa-label{font-size:13px;font-weight:700;color:#cfcfd8;line-height:1.3;text-transform:uppercase;letter-spacing:.4px;}
+
+/* Улучшенный апгрейдер */
+.upg-stage{
+  background:radial-gradient(ellipse at 50% 30%, rgba(157,0,255,.10), transparent 65%);
+  border:2px solid rgba(255,255,255,.06);border-radius:16px;padding:20px 14px 8px;
+  max-width:820px;margin:0 auto;
+}
+.upg-stage .progress-wrapper{width:300px;height:300px;filter:drop-shadow(0 0 25px rgba(255,123,0,.18));}
+.upg-stage .progress-bg{stroke:rgba(255,255,255,.05);}
+.upg-stage .progress-bar{stroke-width:20;filter:drop-shadow(0 0 8px rgba(255,123,0,.6));}
+.upg-stage .chance-big{font-size:44px;text-shadow:0 0 20px rgba(255,123,0,.35);}
+.upg-stage .item-box{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.25));
+  border-color:rgba(255,255,255,.09);border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);padding:16px 14px;
+}
+.upg-stage .item-box:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,123,0,.25);}
+.upg-stage .swap-arrow{font-size:26px;}
+.upg-stage .upgrade-main-btn{border-radius:12px;padding:16px 26px;font-size:15px;letter-spacing:1.5px;}
+.upg-stage .upgrade-main-btn:not(:disabled){animation:upgGlow 2.4s ease-in-out infinite;}
+@keyframes upgGlow{
+  0%,100%{box-shadow:3px 3px 0 rgba(0,0,0,.5), 0 0 20px rgba(157,0,255,.25);}
+  50%{box-shadow:3px 3px 0 rgba(0,0,0,.5), 0 0 32px rgba(255,123,0,.45);}
+}
+.upg-stage .stage-controls{gap:12px;padding-top:6px;}
+.upg-stage .fast-btn{border-radius:12px;width:48px;height:48px;}
+
+/* Фейерверки */
+.firework-layer{position:fixed;inset:0;pointer-events:none;z-index:99997;overflow:hidden;}
+.fw-spark{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  animation:fwFly .9s ease-out forwards;
+}
+@keyframes fwFly{
+  0%{transform:translate(0,0) scale(1);opacity:1;}
+  100%{transform:translate(var(--fx),var(--fy)) scale(0);opacity:0;}
+}
+.fw-burst{position:absolute;width:2px;height:2px;}
 
 /* ========================================================
    ADMIN TABS
@@ -958,7 +1018,6 @@ body{
 </head>
 <body>
 
-<!-- Мобильное меню -->
 <button class="burger-btn" onclick="toggleMobileMenu()">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1020,7 +1079,6 @@ body{
 <div id="toastContainer"></div>
 <div id="particles"></div>
 
-<!-- Модалки -->
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
@@ -1154,6 +1212,11 @@ body{
         <button class="modal-close" onclick="closeModal('withdrawModal')">X</button>
         <div class="modal-title">Вывод предметов</div>
 
+        <div class="withdraw-warning">
+            <div class="ww-icon">!</div>
+            <div class="ww-text">Если вы ставите на вывод браинрота и не заходите в нужное время — браинрот сгорает</div>
+        </div>
+
         <div class="form-group">
             <label class="form-label">Предметы для вывода</label>
             <div class="withdraw-items-grid" id="withdrawItemsGrid"></div>
@@ -1166,8 +1229,13 @@ body{
         </div>
 
         <div class="form-group">
-            <label class="form-label">Время вывода</label>
+            <label class="form-label">Время вывода (МСК)</label>
             <div class="withdraw-time-grid" id="withdrawTimeGrid"></div>
+        </div>
+
+        <div class="withdraw-agree" id="withdrawAgree" onclick="toggleWithdrawAgree()">
+            <div class="wa-box" id="withdrawAgreeBox">✓</div>
+            <div class="wa-label">Я согласен, что при неявке браинрот сгорает</div>
         </div>
 
         <button class="action-btn" onclick="createWithdraw()">Отправить заявку на вывод</button>
@@ -1291,7 +1359,7 @@ body{
     </div>
 
     <div class="tab-panel" id="panelUpgrade">
-        <div class="upg-container" style="display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto;">
+        <div class="upg-container upg-stage" style="display: flex; flex-direction: column; gap: 20px; max-width: 820px; margin: 0 auto;">
             
             <div class="progress-section" style="padding: 20px 0 0 0;">
                 <div class="progress-wrapper">
@@ -1897,6 +1965,39 @@ body{
     }
     function vibrate(ms = 15) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} }
     function vibratePattern(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
+
+    function launchFireworks() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const layer = document.createElement('div');
+        layer.className = 'firework-layer';
+        document.body.appendChild(layer);
+        const colors = ['#ff7b00','#ffd600','#9d00ff','#39ff14','#ff0033','#3b82f6'];
+        const bursts = 6;
+        for (let b = 0; b < bursts; b++) {
+            const burst = document.createElement('div');
+            burst.className = 'fw-burst';
+            burst.style.left = (15 + Math.random() * 70) + 'vw';
+            burst.style.top = (15 + Math.random() * 50) + 'vh';
+            layer.appendChild(burst);
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const sparks = 18;
+            for (let i = 0; i < sparks; i++) {
+                const s = document.createElement('div');
+                s.className = 'fw-spark';
+                s.style.background = color;
+                s.style.boxShadow = `0 0 8px ${color}`;
+                const ang = (Math.PI * 2 * i) / sparks + Math.random() * 0.3;
+                const dist = 60 + Math.random() * 90;
+                s.style.setProperty('--fx', Math.cos(ang) * dist + 'px');
+                s.style.setProperty('--fy', Math.sin(ang) * dist + 'px');
+                s.style.animationDelay = (b * 0.12) + 's';
+                burst.appendChild(s);
+            }
+        }
+        playOsc(880, 0.25, 'sine', 0.05, 0, 2000);
+        playOsc(1320, 0.3, 'sine', 0.04, 0.08, 2400);
+        setTimeout(() => layer.remove(), 2200);
+    }
 
     const SPIN_DURATION = 7000;
     const SPIN_DURATION_FAST = 3000;
@@ -2958,7 +3059,6 @@ body{
         renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
         if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
         saveLocalCache(); syncUserToServer();
-        showCaseResult(rewards, c, qty);
         isCaseOpening = false;
         closeCaseOpen();
         renderMenuCases();
@@ -3110,6 +3210,7 @@ body{
                 inventory.push(targetId);
                 showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
+                launchFireworks();
             } else {
                 inventory.splice(sourceIndex, 1);
                 showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
@@ -3155,25 +3256,48 @@ body{
        ============================================================ */
     let withdrawSelectedIndexes = [];
     let withdrawTimeSlot = null;
+    let withdrawAgree = false;
+    let busyTimeSlots = new Set();
 
-    const WITHDRAW_TIME_SLOTS = (() => {
+    function buildWithdrawTimeSlots() {
         const slots = [];
         const now = new Date();
         const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
         for (let d = 0; d < 7; d++) {
             const day = new Date(now);
             day.setDate(now.getDate() + d);
-            for (let h = 10; h <= 22; h += 2) {
-                const dt = new Date(day);
-                dt.setHours(h, 0, 0, 0);
-                if (dt.getTime() > now.getTime() + 60 * 60 * 1000) {
-                    const label = `${dt.getDate()} ${months[dt.getMonth()]} ${String(h).padStart(2,'0')}:00 МСК`;
-                    slots.push({ ts: dt.getTime(), label });
+            for (let h = 10; h <= 22; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    if (h === 22 && m > 0) continue;
+                    const dt = new Date(day);
+                    dt.setHours(h, m, 0, 0);
+                    if (dt.getTime() > now.getTime() + 30 * 60 * 1000) {
+                        const label = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} МСК ${dt.getDate()} ${months[dt.getMonth()]}`;
+                        slots.push({ ts: dt.getTime(), label });
+                    }
                 }
             }
         }
-        return slots.slice(0, 9);
-    })();
+        return slots;
+    }
+    let WITHDRAW_TIME_SLOTS = buildWithdrawTimeSlots();
+
+    async function refreshBusySlots() {
+        busyTimeSlots = new Set();
+        try {
+            const res = await fetch(API_URL + '/api/withdraws?admin=' + encodeURIComponent((USER.username || '').toLowerCase()));
+            const data = await res.json();
+            if (data.ok) {
+                const slotsByLabel = new Map(WITHDRAW_TIME_SLOTS.map(s => [s.label, s.ts]));
+                (data.withdraws || []).forEach(w => {
+                    if (w.status === 'pending') {
+                        if (w.time_ts) busyTimeSlots.add(Number(w.time_ts));
+                        else if (w.time_slot && slotsByLabel.has(w.time_slot)) busyTimeSlots.add(slotsByLabel.get(w.time_slot));
+                    }
+                });
+            }
+        } catch (e) {}
+    }
 
     function renderInventoryTab() {
         const grid = document.getElementById('inventoryTabGrid');
@@ -3219,10 +3343,13 @@ body{
         playCoin(); vibrate(15);
     };
 
-    window.openWithdrawFor = function(index) {
+    window.openWithdrawFor = async function(index) {
         if (index < 0 || index >= inventory.length) return;
         withdrawSelectedIndexes = [index];
         withdrawTimeSlot = null;
+        withdrawAgree = false;
+        WITHDRAW_TIME_SLOTS = buildWithdrawTimeSlots();
+        await refreshBusySlots();
         renderWithdrawModal();
         const r = document.getElementById('withdrawRoblox');
         const m = document.getElementById('withdrawMsg');
@@ -3230,6 +3357,13 @@ body{
         if (m) { m.textContent = ''; m.className = 'msg'; }
         openModal('withdrawModal');
         playClick(); vibrate(10);
+    };
+
+    window.toggleWithdrawAgree = function() {
+        withdrawAgree = !withdrawAgree;
+        const el = document.getElementById('withdrawAgree');
+        if (el) el.classList.toggle('checked', withdrawAgree);
+        playClick(); vibrate(8);
     };
 
     function renderWithdrawModal() {
@@ -3262,10 +3396,15 @@ body{
         if (info) info.textContent = `Выбрано: ${withdrawSelectedIndexes.length} · Сумма: ${total}`;
 
         if (timeGrid) {
-            timeGrid.innerHTML = WITHDRAW_TIME_SLOTS.map((s, i) => `
-                <button class="withdraw-time-btn ${withdrawTimeSlot === s.ts ? 'active' : ''}" onclick="pickWithdrawTime(${i})">${s.label}</button>
-            `).join('');
+            timeGrid.innerHTML = WITHDRAW_TIME_SLOTS.map((s, i) => {
+                const busy = busyTimeSlots.has(s.ts);
+                const active = withdrawTimeSlot === s.ts && !busy;
+                return `<button class="withdraw-time-btn ${busy ? 'busy' : ''} ${active ? 'active' : ''}" ${busy ? 'disabled' : ''} onclick="pickWithdrawTime(${i})">${s.label}</button>`;
+            }).join('');
         }
+
+        const agreeEl = document.getElementById('withdrawAgree');
+        if (agreeEl) agreeEl.classList.toggle('checked', withdrawAgree);
     }
 
     window.toggleWithdrawItem = function(id) {
@@ -3284,6 +3423,7 @@ body{
     window.pickWithdrawTime = function(i) {
         const slot = WITHDRAW_TIME_SLOTS[i];
         if (!slot) return;
+        if (busyTimeSlots.has(slot.ts)) return;
         withdrawTimeSlot = slot.ts;
         renderWithdrawModal();
         playClick(); vibrate(8);
@@ -3296,9 +3436,12 @@ body{
         if (!withdrawSelectedIndexes.length) { if (msg) { msg.className='msg err'; msg.textContent='Выбери предметы'; } return; }
         if (!roblox) { if (msg) { msg.className='msg err'; msg.textContent='Введи ник в Roblox'; } return; }
         if (!withdrawTimeSlot) { if (msg) { msg.className='msg err'; msg.textContent='Выбери время'; } return; }
+        if (!withdrawAgree) { if (msg) { msg.className='msg err'; msg.textContent='Подтверди согласие'; } return; }
+        if (busyTimeSlots.has(withdrawTimeSlot)) { if (msg) { msg.className='msg err'; msg.textContent='Это время уже занято'; } return; }
 
         const slot = WITHDRAW_TIME_SLOTS.find(s => s.ts === withdrawTimeSlot);
         const timeLabel = slot ? slot.label : '';
+        const timeTs = slot ? slot.ts : Date.now();
 
         if (msg) { msg.className='msg wait'; msg.textContent='Отправляем...'; }
 
@@ -3321,6 +3464,7 @@ body{
                         item_price: item.price,
                         roblox_name: roblox,
                         time_slot: timeLabel,
+                        time_ts: timeTs,
                         comment: ''
                     })
                 });
@@ -3448,7 +3592,6 @@ body{
             if (data.ok) {
                 await loadAdminWithdraws();
                 showToast('Заявка обработана', 'ok'); playCoin();
-                // если отклонили — предмет возвращается на сервере, подтянем пользователя
                 if (status === 'rejected') loadUserFromServer();
             } else {
                 showToast(data.error || 'Ошибка', 'err'); playLose();
