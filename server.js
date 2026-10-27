@@ -215,7 +215,7 @@ const server = http.createServer(async (req, res) => {
         // === WITHDRAWS ===
         if (req.method === 'POST' && req.url === '/api/withdraw/create') {
             const body = await readBody(req);
-            const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, comment } = body;
+            const { telegram_id, username, item_id, item_name, item_price, roblox_name, time_slot, time_ts, comment } = body;
 
             if (!telegram_id || !item_id || !roblox_name || !time_slot) {
                 return sendJSON(res, 400, { ok: false, error: 'Не хватает данных' });
@@ -241,6 +241,7 @@ const server = http.createServer(async (req, res) => {
                 item_price: parseInt(item_price) || 0,
                 roblox_name,
                 time_slot,
+                time_ts: time_ts ? parseInt(time_ts) : null,
                 comment: comment || '',
                 status: 'pending',
                 created_at: new Date().toISOString()
