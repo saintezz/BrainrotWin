@@ -337,7 +337,7 @@ body{
 .case-items-count{font-size:11px;color:var(--text-muted);margin-top:6px;}
 
 /* ============================================================
-   АПГРЕЙДЕР — премиальный, тонкий, детализированный
+   АПГРЕЙДЕР
    ============================================================ */
 .upg-container {
   display: flex;
@@ -353,17 +353,6 @@ body{
   display:flex;justify-content:center;
   padding:32px 0 10px 0;
   position:relative;
-}
-.progress-section::before{
-  content:'';
-  position:absolute;top:50%;left:50%;
-  width:460px;height:460px;
-  transform:translate(-50%,-50%);
-  background:
-    radial-gradient(circle, rgba(139,92,246,.12) 0%, rgba(249,115,22,.04) 45%, transparent 68%);
-  filter: blur(24px);
-  pointer-events:none;
-  z-index:0;
 }
 .progress-wrapper{
   position:relative;width:300px;height:300px;
@@ -487,7 +476,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  min-height:176px;
+  min-height:196px; /* Чуть увеличили высоту под большие картинки */
   cursor:pointer;
   transition: all .18s ease;
   position:relative;
@@ -511,23 +500,31 @@ body{
     var(--bg-surface);
 }
 .upg-card .txt {
-  font-size:11px;
-  font-weight:600;
+  font-size:12px;
+  font-weight:700;
   color:var(--text-muted);
   text-transform:uppercase;
   text-align:center;
   letter-spacing:1px;
   line-height:1.5;
 }
+.upg-card .txt.sub {
+  font-size: 10px;
+  color: rgba(154, 143, 176, 0.5);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 4px;
+  font-weight: 600;
+}
 .upg-card img {
-  width:60px;
-  height:60px;
+  width:84px; /* Увеличенные картинки */
+  height:84px;
   object-fit:contain;
-  margin-bottom:9px;
+  margin-bottom:10px;
   filter: drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .upg-card .name {
-  font-size:12px;
+  font-size:13px;
   font-weight:600;
   color:#fff;
   text-align:center;
@@ -535,7 +532,7 @@ body{
   line-height:1.15;
 }
 .upg-card .price {
-  font-size:11px;
+  font-size:12px;
   font-weight:700;
   color:var(--color-orange-soft);
   display:flex;align-items:center;gap:4px;
@@ -990,7 +987,8 @@ body{
   .cases-grid{grid-template-columns:repeat(2,1fr);}
   .app{padding: 0 14px 40px;}
   
-  .upg-card { min-height:150px; padding:12px; }
+  .upg-card { min-height:170px; padding:12px; }
+  .upg-card img { width: 72px; height: 72px; }
   .upg-card .txt { font-size:10px; }
   .progress-wrapper { width: 260px; height: 260px; }
   .chance-big { font-size: 34px; }
@@ -1282,7 +1280,7 @@ body{
 <div class="modal" id="targetModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('targetModal')">X</button>
-        <div class="modal-title">Магазин</div>
+        <div class="modal-title">Выбрать цель</div>
         <div class="target-list" id="targetList"></div>
     </div>
 </div>
@@ -1463,7 +1461,8 @@ body{
                 </div>
                 <div class="swap-arrow">»</div>
                 <div class="upg-card" id="upgCardRight" onclick="openTargetList()">
-                    <div class="txt">МАГАЗИН</div>
+                    <div class="txt">ВЫБРАТЬ ЦЕЛЬ</div>
+                    <div class="txt sub">Нажми на меня</div>
                 </div>
             </div>
             
@@ -2001,7 +2000,7 @@ body{
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
 
-    // Генерация тиков на колесе (60 меток, каждая 5-я — крупная)
+    // Генерация тиков на колесе (60 меток, строго по окружности)
     (function buildTicks(){
         if (!progressTicks) return;
         const R = 130;
@@ -2795,7 +2794,8 @@ body{
         } else {
             upgCardRight.classList.remove('filled');
             upgCardRight.innerHTML = `
-                <div class="txt">МАГАЗИН</div>
+                <div class="txt">ВЫБРАТЬ ЦЕЛЬ</div>
+                <div class="txt sub">Нажми на меня</div>
             `;
         }
 
