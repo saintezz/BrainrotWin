@@ -61,6 +61,26 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
+/* Анимация всплывающего текста УСПЕХ */
+.success-fly-text {
+  position: fixed;
+  z-index: 99999;
+  color: var(--color-orange-soft);
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  pointer-events: none;
+  text-shadow: 0 0 20px rgba(249,115,22,0.8), 0 0 40px rgba(139,92,246,0.6);
+  animation: successFly 1.5s ease-out forwards;
+}
+
+@keyframes successFly {
+  0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+  15% { opacity: 1; transform: translateY(-10px) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-80px) scale(1); }
+}
+
 #toastContainer{position:fixed;top:20px;right:20px;z-index:99998;display:flex;flex-direction:column;gap:8px;pointer-events:none}
 .toast{
   padding:14px 20px;border-radius:10px;
@@ -345,7 +365,7 @@ body{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 760px;
+  max-width: 860px; /* Чуть шире, чтобы карточки встали по бокам */
   margin: 0 auto;
   padding: 8px 0 0;
   position: relative;
@@ -389,7 +409,6 @@ body{
   transition:stroke-dashoffset .5s cubic-bezier(.22,.8,.24,1), opacity .3s ease;
   filter: drop-shadow(0 0 8px rgba(139,92,246,.55));
 }
-/* Скрываем заливку прогресса, если шанс не рассчитан */
 .progress-bar.no-chance {
   opacity: 0;
 }
@@ -460,12 +479,14 @@ body{
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
 
-/* --- Карточки предметов --- */
+/* --- Карточки предметов (УВЕЛИЧЕНЫ И РАЗДВИНУТЫ) --- */
 .items-row{
   display:flex;
   align-items:center;
-  gap:12px;
+  justify-content: space-between;
+  gap:24px; /* Расстояние между карточками и колесом */
   width: 100%;
+  padding: 0 10px;
 }
 .upg-card{
   flex: 1;
@@ -473,13 +494,13 @@ body{
     linear-gradient(180deg, rgba(255,255,255,.015), transparent),
     var(--bg-void);
   border: 1px dashed rgba(139,92,246,.32);
-  border-radius:14px;
-  padding:16px;
+  border-radius:16px;
+  padding:24px 16px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  min-height:196px; 
+  min-height: 240px; /* Карточка стала выше */
   cursor:pointer;
   transition: all .18s ease;
   position:relative;
@@ -519,35 +540,38 @@ body{
   margin-top: 4px;
   font-weight: 600;
 }
+/* Картинка стала намного больше */
 .upg-card img {
-  width:84px; 
-  height:84px;
+  width:110px; 
+  height:110px;
   object-fit:contain;
-  margin-bottom:10px;
+  margin-bottom:12px;
   filter: drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .upg-card .name {
-  font-size:13px;
+  font-size:14px;
   font-weight:600;
   color:#fff;
   text-align:center;
-  margin-bottom:6px;
+  margin-bottom:8px;
   line-height:1.15;
 }
 .upg-card .price {
-  font-size:12px;
+  font-size:13px;
   font-weight:700;
   color:var(--color-orange-soft);
   display:flex;align-items:center;gap:4px;
   background:rgba(249,115,22,.07);
   border:1px solid rgba(249,115,22,.2);
-  padding:3px 9px;border-radius:20px;
+  padding:4px 12px;border-radius:20px;
 }
-.upg-card .price img{width:11px;height:11px;margin:0;}
+.upg-card .price img{width:12px;height:12px;margin:0;}
+
 .swap-arrow{
-  font-size:20px;color:var(--color-purple-soft);
+  font-size:24px;color:var(--color-purple-soft);
   line-height:1;font-weight:600;
-  opacity:.8;
+  opacity:.6;
+  flex-shrink: 0;
 }
 
 /* --- Кнопки управления --- */
@@ -990,9 +1014,13 @@ body{
   .cases-grid{grid-template-columns:repeat(2,1fr);}
   .app{padding: 0 14px 40px;}
   
-  .upg-card { min-height:170px; padding:12px; }
-  .upg-card img { width: 72px; height: 72px; }
+  .upg-container { max-width: 100%; padding: 0 10px; }
+  .items-row { flex-direction: column; gap: 16px; }
+  .upg-card { width: 100%; min-height: 200px; }
+  .upg-card img { width: 90px; height: 90px; }
   .upg-card .txt { font-size:10px; }
+  .swap-arrow { transform: rotate(90deg); font-size: 30px; margin: -10px 0; }
+  
   .progress-wrapper { width: 260px; height: 260px; }
   .chance-big { font-size: 34px; }
   .progress-center{width:134px;height:134px;}
@@ -1443,7 +1471,6 @@ body{
     <div class="tab-panel" id="panelUpgrade">
         <div class="upg-container">
             
-            <!-- Колесо всегда на месте, но прогресс-бар скрывается, пока нет шанса -->
             <div class="progress-section">
                 <div class="progress-wrapper" id="wheelWrapper">
                     <svg class="progress-svg" viewBox="0 0 340 340">
@@ -1991,8 +2018,9 @@ body{
     function vibrate(ms = 15) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} }
     function vibratePattern(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
 
-    const SPIN_DURATION = 7000;
-    const SPIN_DURATION_FAST = 3000;
+    // Обновленные тайминги
+    const SPIN_DURATION = 7000; // Медленный 7 секунд
+    const SPIN_DURATION_FAST = 4000; // Быстрый 4 секунды
     const CIRCUMFERENCE = 2 * Math.PI * 130;
     let fastModeEnabled = false;
 
@@ -2016,8 +2044,7 @@ body{
     const progressTicks = document.getElementById('progressTicks');
 
     // ============================================================
-    // ГЕНЕРАЦИЯ ТИКОВ КОЛЕСА (ПОЛНОСТЬЮ ПЕРЕПИСАНО)
-    // Позиционируем строго по центру SVG с учетом реальных размеров
+    // ГЕНЕРАЦИЯ ТИКОВ КОЛЕСА
     // ============================================================
     function buildTicks() {
         if (!progressTicks) return;
@@ -2027,7 +2054,8 @@ body{
         const cx = wheelSize / 2;
         const cy = wheelSize / 2;
         const R = 130;
-        const R_out = (R + 6) * (wheelSize / 300); // Масштабируем под мобилки
+        // Немного отодвинули тики от края, чтобы они не резались
+        const R_out = (R + 2) * (wheelSize / 300); 
         const R_in = R_out - (isMobile ? 10 : 12);
 
         for (let i = 0; i < 60; i++) {
@@ -2051,11 +2079,9 @@ body{
             tick.style.width = (isMajor ? 2 : 1.5) + 'px';
             tick.style.height = len + 'px';
             
-            // Вычисляем угол для CSS transform
             const dx = x2 - x1, dy = y2 - y1;
             const rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
             
-            // Ставим transform-origin так, чтобы вращение было от центра
             tick.style.transform = `translate(-50%, 0) rotate(${rot}deg)`;
             tick.style.transformOrigin = '50% 0';
             tick.style.willChange = 'transform';
@@ -2064,9 +2090,8 @@ body{
         }
     }
 
-    // Перестраиваем тики при ресайзе
     window.addEventListener('resize', buildTicks);
-    setTimeout(buildTicks, 100); // Небольшая задержка для правильного рендера
+    setTimeout(buildTicks, 100);
 
     function showToast(text, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -2075,6 +2100,23 @@ body{
         toast.innerHTML = `<span>${text}</span>`;
         container.appendChild(toast);
         setTimeout(() => toast.remove(), 4200);
+    }
+
+    // Функция для создания случайных "УСПЕХ" на экране
+    function spawnSuccessText() {
+        const el = document.createElement('div');
+        el.className = 'success-fly-text';
+        el.textContent = 'УСПЕХ';
+        
+        // Рандомные координаты (чтобы не вылезало за края)
+        const x = Math.floor(Math.random() * (window.innerWidth - 150));
+        const y = Math.floor(Math.random() * (window.innerHeight - 100));
+        
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1600);
     }
 
     function applyCustomAvatar() {
@@ -2908,6 +2950,12 @@ body{
                 inventory.push(targetId);
                 showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
+
+                // СПАВН 4 ТЕКСТОВ "УСПЕХ" В РАЗНЫХ МЕСТАХ (В ТЕЧЕНИЕ 4 СЕКУНД)
+                for (let i = 0; i < 4; i++) {
+                    setTimeout(spawnSuccessText, i * 900);
+                }
+
             } else {
                 inventory.splice(sourceIndex, 1);
                 showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
