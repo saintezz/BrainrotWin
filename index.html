@@ -1325,6 +1325,17 @@ body{
     </div>
 </div>
 
+<div class="modal" id="withdrawInfoModal">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeModal('withdrawInfoModal')">X</button>
+        <div class="modal-title">Информация о выводе</div>
+        <div id="withdrawInfoContent" style="font-size:14px; font-weight:600; color:#ccc; line-height:1.6; text-align:center;">
+            Загрузка...
+        </div>
+        <button class="action-btn" style="margin-top: 20px;" onclick="closeModal('withdrawInfoModal')">Понятно</button>
+    </div>
+</div>
+
 <div class="case-anim-overlay" id="caseAnimOverlay">
     <div class="case-anim-bg"></div>
     <div class="case-anim-particles" id="caseAnimParticles"></div>
@@ -1808,21 +1819,21 @@ body{
     let isAdmin = false;
     let customAvatar = localStorage.getItem('ggbrainx_custom_avatar') || null;
 
-    let freeCaseLastOpen = parseFloat(localStorage.getItem('ggbrainx_free_case_last') || '0');
     let currentCaseId = null;
     let caseOpenQty = 1;
     let isCaseOpening = false;
-    let rareRollCounter = parseInt(localStorage.getItem('ggbrainx_rare_roll_counter') || '0') || 0;
-
-    let skipAnimationFlag = false;
-    let activeAnimTimers = [];
-    let activeAnimResolvers = [];
+    let rareRollCounter = 0;
 
     let pendingWithdrawItemIds = new Set(
         JSON.parse(localStorage.getItem('ggbrainx_pending_withdraw_items') || '[]')
     );
+
+    // Хранилище деталей вывода (время, дата) для отображения
+    let withdrawDetails = JSON.parse(localStorage.getItem('ggbrainx_withdraw_details') || '{}');
+
     function savePendingWithdraws() {
         localStorage.setItem('ggbrainx_pending_withdraw_items', JSON.stringify([...pendingWithdrawItemIds]));
+        localStorage.setItem('ggbrainx_withdraw_details', JSON.stringify(withdrawDetails));
     }
 
     function saveLocalCache() {
@@ -2004,34 +2015,58 @@ body{
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
 
-    // Генерация тиков на колесе (60 меток, идеально ровно по кругу)
-    (function buildTicks(){
+    // ============================================================
+    // ГЕНЕРАЦИЯ ТИКОВ КОЛЕСА (ПОЛНОСТЬЮ ПЕРЕПИСАНО)
+    // Позиционируем строго по центру SVG с учетом реальных размеров
+    // ============================================================
+    function buildTicks() {
         if (!progressTicks) return;
+        progressTicks.innerHTML = '';
+        const isMobile = window.innerWidth <= 768;
+        const wheelSize = isMobile ? 260 : 300;
+        const cx = wheelSize / 2;
+        const cy = wheelSize / 2;
         const R = 130;
-        const cx = 170, cy = 170;
+        const R_out = (R + 6) * (wheelSize / 300); // Масштабируем под мобилки
+        const R_in = R_out - (isMobile ? 10 : 12);
+
         for (let i = 0; i < 60; i++) {
             const angle = (i * 6) - 90;
             const rad = angle * Math.PI / 180;
             const isMajor = i % 5 === 0;
             const len = isMajor ? 11 : 5;
-            const rOuter = R + 6; // Немного отступили от края
-            const rInner = rOuter - len;
-            const x1 = cx + Math.cos(rad) * rInner;
-            const y1 = cy + Math.sin(rad) * rInner;
-            const x2 = cx + Math.cos(rad) * rOuter;
-            const y2 = cy + Math.sin(rad) * rOuter;
+            const r1 = R_out - len;
+            const r2 = R_out;
+
+            const x1 = cx + Math.cos(rad) * r1;
+            const y1 = cy + Math.sin(rad) * r1;
+            const x2 = cx + Math.cos(rad) * r2;
+            const y2 = cy + Math.sin(rad) * r2;
+
             const tick = document.createElement('div');
             tick.className = 'tick' + (isMajor ? ' major' : '');
+            tick.style.position = 'absolute';
             tick.style.left = x1 + 'px';
             tick.style.top = y1 + 'px';
             tick.style.width = (isMajor ? 2 : 1.5) + 'px';
             tick.style.height = len + 'px';
+            
+            // Вычисляем угол для CSS transform
             const dx = x2 - x1, dy = y2 - y1;
             const rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-            tick.style.transform = `translate(-50%,0) rotate(${rot}deg)`;
+            
+            // Ставим transform-origin так, чтобы вращение было от центра
+            tick.style.transform = `translate(-50%, 0) rotate(${rot}deg)`;
+            tick.style.transformOrigin = '50% 0';
+            tick.style.willChange = 'transform';
+            
             progressTicks.appendChild(tick);
         }
-    })();
+    }
+
+    // Перестраиваем тики при ресайзе
+    window.addEventListener('resize', buildTicks);
+    setTimeout(buildTicks, 100); // Небольшая задержка для правильного рендера
 
     function showToast(text, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -2596,7 +2631,7 @@ body{
                         <div class="name" title="${item.name}">${item.name}</div>
                         <div class="price"><img src="${COIN_IMG}" class="price-coin" alt="coin">${item.price}</div>
                     </div>
-                    ${onWithdraw ? `<div style="font-size:9px;font-weight:900;color:var(--text-muted);letter-spacing:.5px;margin-top:4px;">НА ВЫВОДЕ</div>` : `<button class="sell-btn" onclick="event.stopPropagation(); sellItem(${index})" ${isSpinning ? 'disabled' : ''}>Продать</button>`}
+                    ${onWithdraw ? `<div style="font-size:9px;font-weight:900;color:var(--text-muted);letter-spacing:.5px;margin-top:4px;">НА ВЫВОДЕ</div><button class="inv-wd" style="margin-top:4px;font-size:9px;padding:4px;" onclick="showWithdrawInfo('${id}')">Инфо</button>` : `<button class="sell-btn" onclick="event.stopPropagation(); sellItem(${index})" ${isSpinning ? 'disabled' : ''}>Продать</button>`}
                 </div>
             `;
         }).join('');
@@ -2915,6 +2950,29 @@ body{
         showToast('Ник сохранён', 'ok');
     };
 
+    // ============================================================
+    // ОКНО ИНФОРМАЦИИ О ВЫВОДЕ
+    // ============================================================
+    window.showWithdrawInfo = function(itemId) {
+        playClick();
+        const item = getItemById(itemId);
+        const info = withdrawDetails[itemId];
+        
+        const content = document.getElementById('withdrawInfoContent');
+        if (!content) return;
+
+        if (!info) {
+            content.innerHTML = `<div style="color:var(--color-red);">Информация о времени вывода не найдена.</div>`;
+        } else {
+            content.innerHTML = `
+                <div style="margin-bottom: 8px;">Предмет: <span style="color:#fff; font-weight:700;">${item ? item.name : 'Неизвестно'}</span></div>
+                <div style="margin-bottom: 8px;">Запланированное время: <span style="color:var(--color-orange-soft); font-weight:900; font-size:16px;">${info.time}</span></div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">Если вы не зайдете в игру в указанное время, предмет сгорит.</div>
+            `;
+        }
+        openModal('withdrawInfoModal');
+    };
+
     let withdrawSelectedIndexes = [];
     let withdrawAgree = false;
 
@@ -2937,9 +2995,12 @@ body{
                     <img class="inv-main" src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
                     <div class="inv-name" title="${item.name}">${item.name}</div>
                     <div class="inv-price"><img src="${COIN_IMG}" alt="coin">${item.price}</div>
-                    <div class="inv-tab-actions">
-                        <button class="inv-sell" onclick="sellItemFromTab(${index})" ${onWithdraw ? 'disabled' : ''}>Продать</button>
-                        <button class="inv-wd" onclick="openWithdrawFor(${index})">Вывод</button>
+                    <div class="inv-tab-actions" style="${onWithdraw ? 'display:block;' : ''}">
+                        ${onWithdraw 
+                            ? `<button class="inv-wd" style="width:100%;padding:8px;font-size:10px;" onclick="showWithdrawInfo('${id}')">Информация о выводе</button>`
+                            : `<button class="inv-sell" onclick="sellItemFromTab(${index})">Продать</button>
+                               <button class="inv-wd" onclick="openWithdrawFor(${index})">Вывод</button>`
+                        }
                     </div>
                 </div>
             `;
@@ -3081,6 +3142,7 @@ body{
                 const data = await res.json();
                 if (data.ok) {
                     pendingWithdrawItemIds.add(itemId);
+                    withdrawDetails[itemId] = { time: timeLabel, ts: Date.now() };
                     successCount++;
                 } else failCount++;
             } catch (e) { failCount++; }
@@ -3198,6 +3260,7 @@ body{
             if (data.ok) {
                 if (data.withdraw && data.withdraw.item_id && data.withdraw.telegram_id) {
                     pendingWithdrawItemIds.delete(data.withdraw.item_id);
+                    delete withdrawDetails[data.withdraw.item_id];
                     savePendingWithdraws();
                 }
                 await loadAdminWithdraws();
@@ -3212,6 +3275,14 @@ body{
     };
 
     function init() {
+        // СБРОС ЗАВИСШЕГО СОСТОЯНИЯ АПГРЕЙДА (НА СЛУЧАЙ ПЕРЕЗАГРУЗКИ)
+        isSpinning = false;
+        document.body.classList.remove('upgrade-locked');
+        if (inventoryRow) inventoryRow.classList.remove('locked');
+        if (shopRow) shopRow.classList.remove('locked');
+        selectedSourceIndex = null;
+        selectedTargetId = null;
+
         updateBalance();
         renderInventory(); renderShop(); updateUpgradeScreen(); renderAdminGrid();
         renderProfileInventory(); renderMenuCases();
