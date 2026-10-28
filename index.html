@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>BrainRoll</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -46,7 +46,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0;user-select:none;font-family:var(--font-main);font-weight:500;letter-spacing:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth; height: 100%;}
 
 body{
   background:
@@ -82,6 +82,8 @@ body{
   padding: 0 24px 40px;
   flex:1 0 auto;
   position:relative;z-index:1;
+  display: flex;
+  flex-direction: column;
 }
 
 .burger-btn {
@@ -346,14 +348,26 @@ body{
   max-width: 760px;
   margin: 0 auto;
   padding: 8px 0 0;
+  position: relative;
 }
 
 /* --- Область колеса --- */
 .progress-section{
   display:flex;justify-content:center;
-  padding:32px 0 10px 0;
+  padding: 30px 0 10px 0;
   position:relative;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
 }
+/* Скрываем зону, пока не выбраны предметы */
+.progress-section.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .progress-wrapper{
   position:relative;width:300px;height:300px;
   z-index:1;
@@ -440,22 +454,18 @@ body{
   transform-origin:center center;will-change:transform;
 }
 .arrow-pointer{
-  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  width:16px;height:22px;
-  filter: drop-shadow(0 3px 8px rgba(249,115,22,.5));
+  position:absolute;top:-6px;left:50%;
+  transform:translateX(-50%);
+  width:14px;height:20px;
+  filter: drop-shadow(0 3px 8px rgba(139,92,246,.6));
 }
 .arrow-pointer::before{
   content:'';
   position:absolute;inset:0;
-  background: linear-gradient(180deg, var(--color-orange-soft), var(--color-orange-deep));
+  background: linear-gradient(180deg, var(--color-purple-soft), var(--color-purple-deep));
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
-.arrow-pointer::after{
-  content:'';
-  position:absolute;top:4px;left:50%;transform:translateX(-50%);
-  width:4px;height:4px;border-radius:50%;
-  background:rgba(255,255,255,.9);
-}
+/* Убрали ::after (белую точку) */
 
 /* --- Карточки предметов --- */
 .items-row{
@@ -476,7 +486,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  min-height:196px; /* Чуть увеличили высоту под большие картинки */
+  min-height:196px; 
   cursor:pointer;
   transition: all .18s ease;
   position:relative;
@@ -517,7 +527,7 @@ body{
   font-weight: 600;
 }
 .upg-card img {
-  width:84px; /* Увеличенные картинки */
+  width:84px; 
   height:84px;
   object-fit:contain;
   margin-bottom:10px;
@@ -1429,7 +1439,8 @@ body{
     <div class="tab-panel" id="panelUpgrade">
         <div class="upg-container">
             
-            <div class="progress-section">
+            <!-- Зона апгрейда теперь плавно скрывается, пока не выбраны предметы -->
+            <div class="progress-section hidden" id="upgradeZone">
                 <div class="progress-wrapper" id="wheelWrapper">
                     <svg class="progress-svg" viewBox="0 0 340 340">
                         <defs>
@@ -1999,8 +2010,9 @@ body{
     const upgCardLeft = document.getElementById('upgCardLeft');
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
+    const upgradeZone = document.getElementById('upgradeZone');
 
-    // Генерация тиков на колесе (60 меток, строго по окружности)
+    // Генерация тиков на колесе (60 меток, идеально ровно по кругу)
     (function buildTicks(){
         if (!progressTicks) return;
         const R = 130;
@@ -2010,7 +2022,7 @@ body{
             const rad = angle * Math.PI / 180;
             const isMajor = i % 5 === 0;
             const len = isMajor ? 11 : 5;
-            const rOuter = R + 8;
+            const rOuter = R + 6; // Немного отступили от края
             const rInner = rOuter - len;
             const x1 = cx + Math.cos(rad) * rInner;
             const y1 = cy + Math.sin(rad) * rInner;
@@ -2189,6 +2201,7 @@ body{
         if (tab === 'upgrade') {
             renderInventory();
             renderShop();
+            updateUpgradeScreen();
         }
         if (tab === 'inventory') renderInventoryTab();
     };
@@ -2769,6 +2782,13 @@ body{
     function updateUpgradeScreen() {
         const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
+
+        // Скрываем/показываем зону апгрейда в зависимости от выбранных предметов
+        if (sourceItem && targetItem) {
+            upgradeZone.classList.remove('hidden');
+        } else {
+            upgradeZone.classList.add('hidden');
+        }
 
         if (sourceItem) {
             upgCardLeft.classList.add('filled');
