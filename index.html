@@ -356,16 +356,6 @@ body{
   display:flex;justify-content:center;
   padding: 30px 0 10px 0;
   position:relative;
-  transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
-}
-/* Скрываем зону, пока не выбраны предметы */
-.progress-section.hidden {
-  opacity: 0;
-  transform: scale(0.9);
-  pointer-events: none;
-  max-height: 0;
-  padding: 0;
-  overflow: hidden;
 }
 
 .progress-wrapper{
@@ -396,8 +386,12 @@ body{
   stroke-linecap:round;
   stroke-dasharray:816;
   stroke-dashoffset:816;
-  transition:stroke-dashoffset .5s cubic-bezier(.22,.8,.24,1);
+  transition:stroke-dashoffset .5s cubic-bezier(.22,.8,.24,1), opacity .3s ease;
   filter: drop-shadow(0 0 8px rgba(139,92,246,.55));
+}
+/* Скрываем заливку прогресса, если шанс не рассчитан */
+.progress-bar.no-chance {
+  opacity: 0;
 }
 
 .progress-ticks{position:absolute;inset:0;pointer-events:none;z-index:2;}
@@ -465,7 +459,6 @@ body{
   background: linear-gradient(180deg, var(--color-purple-soft), var(--color-purple-deep));
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
-/* Убрали ::after (белую точку) */
 
 /* --- Карточки предметов --- */
 .items-row{
@@ -1439,8 +1432,8 @@ body{
     <div class="tab-panel" id="panelUpgrade">
         <div class="upg-container">
             
-            <!-- Зона апгрейда теперь плавно скрывается, пока не выбраны предметы -->
-            <div class="progress-section hidden" id="upgradeZone">
+            <!-- Колесо всегда на месте, но прогресс-бар скрывается, пока нет шанса -->
+            <div class="progress-section">
                 <div class="progress-wrapper" id="wheelWrapper">
                     <svg class="progress-svg" viewBox="0 0 340 340">
                         <defs>
@@ -1453,7 +1446,7 @@ body{
                         <circle class="progress-outer-ring" cx="170" cy="170" r="149"></circle>
                         <circle class="progress-track" cx="170" cy="170" r="130"></circle>
                         <circle class="progress-track-inner" cx="170" cy="170" r="130"></circle>
-                        <circle class="progress-bar" id="progressBar" cx="170" cy="170" r="130"></circle>
+                        <circle class="progress-bar no-chance" id="progressBar" cx="170" cy="170" r="130"></circle>
                     </svg>
                     <div class="progress-ticks" id="progressTicks"></div>
                     <div class="arrow-container" id="arrowContainer">
@@ -2010,7 +2003,6 @@ body{
     const upgCardLeft = document.getElementById('upgCardLeft');
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
-    const upgradeZone = document.getElementById('upgradeZone');
 
     // Генерация тиков на колесе (60 меток, идеально ровно по кругу)
     (function buildTicks(){
@@ -2783,11 +2775,11 @@ body{
         const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
 
-        // Скрываем/показываем зону апгрейда в зависимости от выбранных предметов
+        // Управляем видимостью заливки прогресса
         if (sourceItem && targetItem) {
-            upgradeZone.classList.remove('hidden');
+            progressBar.classList.remove('no-chance');
         } else {
-            upgradeZone.classList.add('hidden');
+            progressBar.classList.add('no-chance');
         }
 
         if (sourceItem) {
