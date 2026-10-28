@@ -61,23 +61,24 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* Анимация всплывающего текста УСПЕХ */
+/* Анимация всплывающего текста УСПЕХ (ЗЕЛЕНЫЙ, 2 СЕКУНДЫ) */
 .success-fly-text {
   position: fixed;
   z-index: 99999;
-  color: var(--color-orange-soft);
-  font-size: 48px;
+  color: #10b981; /* Зеленый */
+  font-size: 54px;
   font-weight: 900;
   letter-spacing: 4px;
   text-transform: uppercase;
   pointer-events: none;
-  text-shadow: 0 0 20px rgba(249,115,22,0.8), 0 0 40px rgba(139,92,246,0.6);
-  animation: successFly 1.5s ease-out forwards;
+  text-shadow: 0 0 20px rgba(16,185,129,0.6), 0 0 40px rgba(16,185,129,0.3);
+  animation: successFly 2s ease-out forwards;
 }
 
 @keyframes successFly {
   0% { opacity: 0; transform: translateY(20px) scale(0.8); }
   15% { opacity: 1; transform: translateY(-10px) scale(1.1); }
+  80% { opacity: 1; transform: translateY(-30px) scale(1); }
   100% { opacity: 0; transform: translateY(-80px) scale(1); }
 }
 
@@ -98,8 +99,8 @@ body{
 @keyframes toastOut{to{opacity:0;transform:translateX(30px)}}
 
 .app{
-  width:100%;max-width:1400px;margin:0 auto;
-  padding: 0 24px 40px;
+  width:100%;max-width:100%;margin:0 auto;
+  padding: 0 20px 40px;
   flex:1 0 auto;
   position:relative;z-index:1;
   display: flex;
@@ -399,9 +400,10 @@ body{
   stroke: rgba(139,92,246,.07);
   stroke-width:16;
 }
+/* Убрали градиенты, теперь просто фиолетовый */
 .progress-bar{
   fill:none;
-  stroke: url(#upgGrad);
+  stroke: var(--color-purple);
   stroke-width:18;
   stroke-linecap:round;
   stroke-dasharray:816;
@@ -413,15 +415,8 @@ body{
   opacity: 0;
 }
 
+/* Тики полностью убраны из кода, стили оставлены на случай возврата */
 .progress-ticks{position:absolute;inset:0;pointer-events:none;z-index:2;}
-.tick {
-  position: absolute;
-  background: rgba(255,255,255,.07);
-  border-radius: 1px;
-}
-.tick.major {
-  background: rgba(167,139,250,.4);
-}
 
 /* Центр колеса */
 .progress-center{
@@ -484,7 +479,7 @@ body{
   display:flex;
   align-items:center;
   justify-content: space-between;
-  gap:24px; /* Расстояние между карточками и колесом */
+  gap:24px; 
   width: 100%;
   padding: 0 10px;
 }
@@ -500,7 +495,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  min-height: 240px; /* Карточка стала выше */
+  min-height: 240px; 
   cursor:pointer;
   transition: all .18s ease;
   position:relative;
@@ -540,7 +535,6 @@ body{
   margin-top: 4px;
   font-weight: 600;
 }
-/* Картинка стала намного больше */
 .upg-card img {
   width:110px; 
   height:110px;
@@ -1475,10 +1469,10 @@ body{
                 <div class="progress-wrapper" id="wheelWrapper">
                     <svg class="progress-svg" viewBox="0 0 340 340">
                         <defs>
+                            <!-- Убран градиент, теперь просто фиолетовый -->
                             <linearGradient id="upgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#a78bfa"/>
-                                <stop offset="55%" stop-color="#8b5cf6"/>
-                                <stop offset="100%" stop-color="#f97316"/>
+                                <stop offset="0%" stop-color="#8b5cf6"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
                             </linearGradient>
                         </defs>
                         <circle class="progress-outer-ring" cx="170" cy="170" r="149"></circle>
@@ -2043,56 +2037,6 @@ body{
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
 
-    // ============================================================
-    // ГЕНЕРАЦИЯ ТИКОВ КОЛЕСА
-    // ============================================================
-    function buildTicks() {
-        if (!progressTicks) return;
-        progressTicks.innerHTML = '';
-        const isMobile = window.innerWidth <= 768;
-        const wheelSize = isMobile ? 260 : 300;
-        const cx = wheelSize / 2;
-        const cy = wheelSize / 2;
-        const R = 130;
-        // Немного отодвинули тики от края, чтобы они не резались
-        const R_out = (R + 2) * (wheelSize / 300); 
-        const R_in = R_out - (isMobile ? 10 : 12);
-
-        for (let i = 0; i < 60; i++) {
-            const angle = (i * 6) - 90;
-            const rad = angle * Math.PI / 180;
-            const isMajor = i % 5 === 0;
-            const len = isMajor ? 11 : 5;
-            const r1 = R_out - len;
-            const r2 = R_out;
-
-            const x1 = cx + Math.cos(rad) * r1;
-            const y1 = cy + Math.sin(rad) * r1;
-            const x2 = cx + Math.cos(rad) * r2;
-            const y2 = cy + Math.sin(rad) * r2;
-
-            const tick = document.createElement('div');
-            tick.className = 'tick' + (isMajor ? ' major' : '');
-            tick.style.position = 'absolute';
-            tick.style.left = x1 + 'px';
-            tick.style.top = y1 + 'px';
-            tick.style.width = (isMajor ? 2 : 1.5) + 'px';
-            tick.style.height = len + 'px';
-            
-            const dx = x2 - x1, dy = y2 - y1;
-            const rot = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-            
-            tick.style.transform = `translate(-50%, 0) rotate(${rot}deg)`;
-            tick.style.transformOrigin = '50% 0';
-            tick.style.willChange = 'transform';
-            
-            progressTicks.appendChild(tick);
-        }
-    }
-
-    window.addEventListener('resize', buildTicks);
-    setTimeout(buildTicks, 100);
-
     function showToast(text, type = 'info') {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
@@ -2116,7 +2060,7 @@ body{
         el.style.top = y + 'px';
         
         document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1600);
+        setTimeout(() => el.remove(), 2000);
     }
 
     function applyCustomAvatar() {
@@ -2704,7 +2648,7 @@ body{
         renderShop(); renderInventory(); updateUpgradeScreen();
         renderProfileInventory();
         if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
-        showToast(`Куплен: ${item.name}`, 'ok');
+        // Убрано уведомление "Куплено"
         playCoin(); vibrate(15);
     }
     
