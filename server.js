@@ -181,8 +181,6 @@ const server = http.createServer(async (req, res) => {
   }
 
   try {
-    // === ТЕХПЕРЕРЫВ: разрешаем всем, но в обработчиках проверяем админа ===
-    // Читаем тело заранее, чтобы знать username для проверки.
     if (req.method === 'POST') {
       try { await readBody(req); } catch (e) { req.__body = {}; }
     }
@@ -193,7 +191,6 @@ const server = http.createServer(async (req, res) => {
         (req.method === 'POST' && req.url === '/api/admin/maintenance');
 
       if (!allowed) {
-        // Определяем username: из initData (приоритет) или из body
         const initUser = validateTelegramInitData(req.headers['x-telegram-init-data']);
         const bodyUser = req.__body || {};
         const effectiveUsername = (initUser?.username || bodyUser.username || '').toLowerCase();
@@ -201,11 +198,9 @@ const server = http.createServer(async (req, res) => {
         if (!isAdmin(effectiveUsername)) {
           return sendJSON(res, 503, { ok: false, error: 'MAINTENANCE', message: 'Технический перерыв' });
         }
-        // Админ — пропускаем
       }
     }
 
-    // === MAINTENANCE ===
     if (req.method === 'GET' && req.url === '/api/maintenance') {
       return sendJSON(res, 200, { ok: true, maintenance });
     }
@@ -394,8 +389,6 @@ const server = http.createServer(async (req, res) => {
 
 loadAll();
 
-// === ОДНОРАЗОВАЯ МИГРАЦИЯ: всем баланс ровно 1000 ===
-// Запустите сервер один раз, потом удалите этот блок.
 (function migrateBalances() {
   let changed = false;
   for (const id in users) {
