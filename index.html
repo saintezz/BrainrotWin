@@ -65,7 +65,7 @@ body{
 .success-fly-text {
   position: fixed;
   z-index: 99999;
-  color: #10b981; /* Зеленый */
+  color: #10b981;
   font-size: 54px;
   font-weight: 900;
   letter-spacing: 4px;
@@ -82,21 +82,8 @@ body{
   100% { opacity: 0; transform: translateY(-80px) scale(1); }
 }
 
-#toastContainer{position:fixed;top:20px;right:20px;z-index:99998;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{
-  padding:14px 20px;border-radius:10px;
-  background: var(--bg-surface);
-  border:2px solid var(--line);
-  font-size:14px;font-weight:700;line-height:1.4;color:#fff;
-  animation:toastIn .25s ease,toastOut .25s ease 3.7s forwards;
-  max-width:320px;display:flex;align-items:center;gap:8px;
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.toast.ok{border-color:var(--color-orange)}
-.toast.err{border-color:var(--color-red)}
-.toast.info{border-color:var(--color-purple)}
-@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes toastOut{to{opacity:0;transform:translateX(30px)}}
+/* Тосты полностью убраны из стилей, так как они не используются */
+#toastContainer{display: none;}
 
 .app{
   width:100%;max-width:100%;margin:0 auto;
@@ -321,43 +308,45 @@ body{
   margin-bottom:16px;
 }
 
+/* УЛУЧШЕННЫЕ КАРТОЧКИ КЕЙСОВ */
 .cases-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(165px, 1fr));
-  gap:14px;
+  grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); /* Увеличено */
+  gap:20px;
 }
 .case-card{
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
-  border-radius:12px;overflow:hidden;cursor:pointer;position:relative;
-  transition: transform .2s ease, border-color .2s ease;
+  border-radius:16px;overflow:hidden;cursor:pointer;position:relative;
+  transition: transform .25s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color .25s ease, box-shadow .25s ease;
 }
 .case-card:hover{
   border-color: var(--color-purple);
-  transform: translateY(-3px);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 15px 30px -10px rgba(139,92,246,0.4);
 }
-.case-card-inner{padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.case-card-inner{padding:18px;display:flex;flex-direction:column;align-items:center;gap:14px;}
 .case-img-wrap{
   width:100%;aspect-ratio:1;
-  background: var(--bg-void);border-radius:8px;
+  background: var(--bg-void);border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   border:1px solid rgba(255,255,255,.05);
   position:relative;overflow:hidden;
 }
-.case-img-wrap img{width:80%;height:80%;object-fit:contain;transition:transform .25s ease}
-.case-card:hover .case-img-wrap img{transform:scale(1.08)}
+.case-img-wrap img{width:85%;height:85%;object-fit:contain;transition:transform .3s ease}
+.case-card:hover .case-img-wrap img{transform:scale(1.1) rotate(2deg)}
 
 .case-info{width:100%;text-align:center;}
-.case-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.15;}
+.case-name{font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.15;}
 .case-price{
-  font-size:14px;font-weight:900;color:var(--color-orange-soft);
+  font-size:15px;font-weight:900;color:var(--color-orange-soft);
   background:rgba(249,115,22,.1);
-  padding:6px 12px;border-radius:6px;
-  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:8px;
+  display:inline-flex;align-items:center;gap:8px;
   border:1px solid rgba(249,115,22,.3);
 }
-.case-price img{width:14px;height:14px;}
-.case-items-count{font-size:11px;color:var(--text-muted);margin-top:6px;}
+.case-price img{width:16px;height:16px;}
+.case-items-count{font-size:12px;color:var(--text-muted);margin-top:8px;font-weight:600;}
 
 /* ============================================================
    АПГРЕЙДЕР
@@ -366,13 +355,12 @@ body{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 860px; /* Чуть шире, чтобы карточки встали по бокам */
+  max-width: 860px;
   margin: 0 auto;
   padding: 8px 0 0;
   position: relative;
 }
 
-/* --- Область колеса --- */
 .progress-section{
   display:flex;justify-content:center;
   padding: 30px 0 10px 0;
@@ -415,10 +403,8 @@ body{
   opacity: 0;
 }
 
-/* Тики полностью убраны из кода, стили оставлены на случай возврата */
 .progress-ticks{position:absolute;inset:0;pointer-events:none;z-index:2;}
 
-/* Центр колеса */
 .progress-center{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
@@ -455,7 +441,6 @@ body{
   text-transform:uppercase;
 }
 
-/* Стрелка-указатель */
 .arrow-container{
   position:absolute;top:0;left:0;width:100%;height:100%;
   pointer-events:none;z-index:5;
@@ -474,7 +459,6 @@ body{
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
 
-/* --- Карточки предметов (УВЕЛИЧЕНЫ И РАЗДВИНУТЫ) --- */
 .items-row{
   display:flex;
   align-items:center;
@@ -568,7 +552,6 @@ body{
   flex-shrink: 0;
 }
 
-/* --- Кнопки управления --- */
 .stage-controls{
   display:flex;
   justify-content:center;
@@ -630,7 +613,6 @@ body{
 }
 .fast-btn svg{width:20px;height:20px}
 
-/* --- Переключатель вкладок --- */
 .segmented-control{
   display: flex;
   background: var(--bg-void);
@@ -904,11 +886,12 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:10px;font-weight:600;color:var(--text-muted);line-height:1.2}
 
+/* Убран текст "ОТКРЫВАЕМ..." */
 .case-anim-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-void);overflow:hidden}
 .case-anim-overlay.show{display:flex}
 .case-anim-box{position:relative;width:200px;height:200px;z-index:2}
 .case-anim-box img{width:100%;height:100%;object-fit:contain;}
-.case-anim-text{font-size:20px;font-weight:900;letter-spacing:4px;color:var(--color-purple-soft);margin-top:24px;z-index:2;line-height:1.4}
+.case-anim-text{display:none;} /* Убран */
 
 .access-denied{
   position:fixed;inset:0;z-index:999999;
@@ -1469,7 +1452,6 @@ body{
                 <div class="progress-wrapper" id="wheelWrapper">
                     <svg class="progress-svg" viewBox="0 0 340 340">
                         <defs>
-                            <!-- Убран градиент, теперь просто фиолетовый -->
                             <linearGradient id="upgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#8b5cf6"/>
                                 <stop offset="100%" stop-color="#8b5cf6"/>
@@ -1711,19 +1693,109 @@ body{
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
+    // НОВАЯ НАЧИНКА И ИЗМЕНЕННЫЕ КАРТИНКИ КЕЙСОВ
     const CASES = [
-        { id: 'witch', name: 'Witch Case', price: 10, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/fusecase.png', rewards: [] },
-        { id: 'fruits', name: 'Fruits Case', price: 19, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', rewards: [] },
-        { id: 'garama', name: 'Garama Case', price: 29, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/garamacase.png', rewards: [] },
-        { id: 'yeti', name: 'Yeti Case', price: 40, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/yeticase.png', rewards: [] },
-        { id: 'school', name: 'School Case', price: 59, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/SCHOOL.png', rewards: [] },
-        { id: 'arcadragon', name: 'Arcadragon Case', price: 200, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', rewards: [] },
-        { id: 'vampire', name: 'Vampire Case', price: 299, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/VampireCase.png', rewards: [] },
-        { id: 'tacos', name: 'Tacos Case', price: 340, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/tacoscase.png', rewards: [] },
-        { id: 'dragon', name: 'Dragon Case', price: 3900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/dragoncase.png', rewards: [] },
-        { id: 'strawberry', name: 'Strawberry Case', price: 8900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/strawberryaLLin.png', rewards: [] },
-        { id: 'griffin', name: 'Griffin Case', price: 17000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/GriffinCase.png', rewards: [] },
-        { id: 'orchidox', name: 'Orchidox Case', price: 54000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/orchidoxcase.png', rewards: [] }
+        { 
+            id: 'witch', 
+            name: 'Witch Case', 
+            price: 10, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/fusecase.png', 
+            rewards: [
+                { id: 'lagrande', chance: 76 }, { id: 'nuclearo', chance: 22 }, { id: 'cupid', chance: 1.5 }, 
+                { id: 'garama', chance: 0.3 }, { id: 'burguro', chance: 0.2 }, { id: 'popcuru', chance: 0.1 }
+            ] 
+        },
+        { 
+            id: 'fruits', 
+            name: 'Fruits Case', 
+            price: 19, 
+            img: 'https://github.com/saintezz/BrainrotWin/blob/main/FRUITSCASE.png?raw=true', // ЗАМЕНЕНА КАРТИНКА
+            rewards: [
+                { id: 'lagrande', chance: 30 }, { id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 15 }, { id: 'waverider', chance: 5 }
+            ] 
+        },
+        { 
+            id: 'garama', 
+            name: 'Garama Case', 
+            price: 29, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/garamacase.png', 
+            rewards: [
+                { id: 'nuclearo', chance: 40 }, { id: 'cupid', chance: 40 }, { id: 'garama', chance: 15 }, { id: 'burguro', chance: 5 }
+            ] 
+        },
+        { 
+            id: 'yeti', 
+            name: 'Yeti Case', 
+            price: 40, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/yeticase.png', 
+            rewards: [
+                { id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 40 }, { id: 'burguro', chance: 9.99 }, { id: 'polaroidini', chance: 0.01 }
+            ] 
+        },
+        { 
+            id: 'school', 
+            name: 'School Case', 
+            price: 59, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/SCHOOL.png', 
+            rewards: [
+                { id: 'witchbroom', chance: 60 }, { id: 'garama', chance: 20 }, { id: 'lafoodcombinasion', chance: 5 }, { id: 'cerberus', chance: 4 }, { id: 'losadmins', chance: 1 }
+            ] 
+        },
+        { 
+            id: 'arcadragon', 
+            name: 'Arcadragon Case', 
+            price: 200, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', 
+            rewards: [
+                { id: 'cerberus', chance: 60 }, { id: 'globba', chance: 20 }, { id: 'dugdugdug', chance: 10 }, { id: 'guest666', chance: 5 }, { id: 'rubiko', chance: 4 }, { id: 'dragon', chance: 1 }
+            ] 
+        },
+        { 
+            id: 'vampire', 
+            name: 'Vampire Case', 
+            price: 299, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/VampireCase.png', 
+            rewards: [
+                { id: 'dugdugdug', chance: 50 }, { id: 'losamigos', chance: 30 }, { id: 'losadmins', chance: 12 }, { id: 'ricodinero', chance: 8 }
+            ] 
+        },
+        { 
+            id: 'tacos', 
+            name: 'Tacos Case', 
+            price: 340, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/tacoscase.png', 
+            rewards: [
+                { id: 'guest666', chance: 77 }, { id: 'losadmins', chance: 13 }, { id: 'rubiko', chance: 10 }
+            ] 
+        },
+        { 
+            id: 'dragon', 
+            name: 'Dragon Case', 
+            price: 3900, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/dragoncase.png', 
+            rewards: [
+                { id: 'kraken', chance: 70 }, { id: 'digi', chance: 15 }, { id: 'kalikabros', chance: 10 }, { id: 'dragonaquanini', chance: 4.9 }, { id: 'meowl', chance: 0.1 }
+            ] 
+        },
+        { 
+            id: 'strawberry', 
+            name: 'Strawberry Case', 
+            price: 8900, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/strawberryaLLin.png', 
+            rewards: [
+                { id: 'griffin', chance: 70 }, { id: 'elefantofrigo', chance: 20 }, { id: 'skibidi', chance: 5 }, { id: 'meowl', chance: 5 }
+            ] 
+        },
+        { 
+            id: 'griffin', 
+            name: 'Griffin Case', 
+            price: 17000, 
+            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/GriffinCase.png', 
+            rewards: [
+                { id: 'skibidi', chance: 50 }, { id: 'johnpork', chance: 30 }, { id: 'meowl', chance: 17 }, { id: 'strawberryelephant', chance: 3 }
+            ] 
+        }
+        // Orchidox Case убран
     ];
 
     const MAX_CHANCE = 80;
@@ -1780,9 +1852,9 @@ body{
     function copyAutoPromoCode() {
         const promo = getCurrentAutoPromo();
         navigator.clipboard.writeText(promo.code).then(() => {
-            showToast('Промокод скопирован: ' + promo.code, 'ok');
+            // showToast убран
         }).catch(() => {
-            showToast('Не удалось скопировать', 'err');
+            // showToast убран
         });
     }
 
@@ -1791,7 +1863,7 @@ body{
     function activateAutoPromo() {
         const promo = getCurrentAutoPromo();
         activePromo = { code: promo.code, bonus: promo.bonus };
-        showToast(`Промокод ${promo.code} активирован! Бонус +${promo.bonus}% к следующему пополнению.`, 'ok');
+        // showToast убран
         playWin(); vibrate(20);
         if (document.getElementById('topupModal').classList.contains('open')) {
             updateTopupPromoDisplay();
@@ -1845,11 +1917,12 @@ body{
     let isCaseOpening = false;
     let rareRollCounter = 0;
 
+    // СИСТЕМА АНТИДЮПА
+    let upgradeInProgress = JSON.parse(localStorage.getItem('ggbrainx_upgrade_in_progress') || 'null');
+
     let pendingWithdrawItemIds = new Set(
         JSON.parse(localStorage.getItem('ggbrainx_pending_withdraw_items') || '[]')
     );
-
-    // Хранилище деталей вывода (время, дата) для отображения
     let withdrawDetails = JSON.parse(localStorage.getItem('ggbrainx_withdraw_details') || '{}');
 
     function savePendingWithdraws() {
@@ -2012,9 +2085,8 @@ body{
     function vibrate(ms = 15) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} }
     function vibratePattern(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
 
-    // Обновленные тайминги
-    const SPIN_DURATION = 7000; // Медленный 7 секунд
-    const SPIN_DURATION_FAST = 4000; // Быстрый 4 секунды
+    const SPIN_DURATION = 7000;
+    const SPIN_DURATION_FAST = 4000;
     const CIRCUMFERENCE = 2 * Math.PI * 130;
     let fastModeEnabled = false;
 
@@ -2038,21 +2110,14 @@ body{
     const progressTicks = document.getElementById('progressTicks');
 
     function showToast(text, type = 'info') {
-        const container = document.getElementById('toastContainer');
-        const toast = document.createElement('div');
-        toast.className = 'toast ' + type;
-        toast.innerHTML = `<span>${text}</span>`;
-        container.appendChild(toast);
-        setTimeout(() => toast.remove(), 4200);
+        // Уведомления отключены
     }
 
-    // Функция для создания случайных "УСПЕХ" на экране
     function spawnSuccessText() {
         const el = document.createElement('div');
         el.className = 'success-fly-text';
         el.textContent = 'УСПЕХ';
         
-        // Рандомные координаты (чтобы не вылезало за края)
         const x = Math.floor(Math.random() * (window.innerWidth - 150));
         const y = Math.floor(Math.random() * (window.innerHeight - 100));
         
@@ -2075,14 +2140,13 @@ body{
     window.handleAvatarUpload = function(event) {
         const file = event.target.files[0];
         if (!file) return;
-        if (!file.type.startsWith('image/')) { showToast('Только изображения', 'err'); return; }
-        if (file.size > 2 * 1024 * 1024) { showToast('Максимум 2 МБ', 'err'); return; }
+        if (!file.type.startsWith('image/')) { return; }
+        if (file.size > 2 * 1024 * 1024) { return; }
         const reader = new FileReader();
         reader.onload = (e) => {
             customAvatar = e.target.result;
             localStorage.setItem('ggbrainx_custom_avatar', customAvatar);
             applyCustomAvatar();
-            showToast('Аватарка загружена', 'ok');
             playCoin(); vibrate(15);
         };
         reader.readAsDataURL(file);
@@ -2091,7 +2155,6 @@ body{
         customAvatar = null;
         localStorage.removeItem('ggbrainx_custom_avatar');
         applyCustomAvatar();
-        showToast('Аватарка сброшена', 'ok');
         playClick(); vibrate(10);
     };
     function applyUserToProfile() {
@@ -2344,18 +2407,16 @@ body{
             const data = await res.json();
             if (data.ok) {
                 if (msg) { msg.className = 'msg ok'; msg.textContent = `Заявка отправлена!`; }
-                showToast('Заявка отправлена!', 'ok');
                 playCoin(); vibrate(15);
                 activePromo = null;
                 updateTopupPromoDisplay();
                 setTimeout(() => closeModal('topupModal'), 2200);
             } else {
                 if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
-                showToast(data.error || 'Ошибка', 'err'); playLose();
+                playLose();
             }
         } catch (err) {
             if (msg) { msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает'; }
-            showToast('Сервер не отвечает', 'err');
         }
     };
     async function loadDeposits() {
@@ -2410,11 +2471,11 @@ body{
             const data = await res.json();
             if (data.ok) {
                 await loadDeposits();
-                showToast('Заявка обработана', 'ok'); playCoin();
+                playCoin();
                 if (document.getElementById('adminModal').classList.contains('open')) loadAdminDeposits();
             }
-            else { showToast(data.error || 'Ошибка', 'err'); playLose(); }
-        } catch (e) { showToast('Сервер недоступен', 'err'); }
+            else { playLose(); }
+        } catch (e) { }
     };
     window.selectPromoType = function(type) {
         playClick();
@@ -2442,7 +2503,7 @@ body{
     }
     window.selectAdminItem = function(id) { playClick(); selectedAdminItem = id; renderAdminGrid(); };
     window.openAdminPanel = function() {
-        if (!isAdmin) { showToast('Нет доступа', 'err'); return; }
+        if (!isAdmin) { return; }
         playClick();
         renderAdminGrid(); renderPromoList(); updateAdminPreview();
         switchAdminTab('promo');
@@ -2475,7 +2536,7 @@ body{
             const data = await res.json();
             if (data.ok) {
                 if (msg) { msg.className = 'msg ok'; msg.textContent = 'Промокод создан: ' + code; }
-                showToast('Промокод создан!', 'ok'); playCoin();
+                playCoin();
                 document.getElementById('adminCode').value = '';
                 document.getElementById('adminUses').value = 1;
                 selectedAdminItem = null;
@@ -2544,7 +2605,6 @@ body{
                     balance += data.value;
                     updateBalance();
                     if (msgTab) { msgTab.className = 'msg ok'; msgTab.textContent = `+${data.value} монет! Осталось: ${data.remaining}`; }
-                    showToast(`+${data.value} монет!`, 'ok');
                     playCoin(); vibrate(20);
                 } else {
                     inventory.push(data.value);
@@ -2554,13 +2614,12 @@ body{
                     saveLocalCache(); syncUserToServer();
                     const item = getItemById(data.value);
                     if (msgTab) { msgTab.className = 'msg ok'; msgTab.textContent = `Получен: ${item ? item.name : data.value}! Осталось: ${data.remaining}`; }
-                    showToast(`Получен: ${item ? item.name : data.value}`, 'ok');
                     playWin(); vibratePattern([20, 40, 20]);
                 }
                 inputTab.value = '';
             } else {
                 if (msgTab) { msgTab.className = 'msg err'; msgTab.textContent = data.error || 'Ошибка'; }
-                showToast(data.error || 'Ошибка', 'err'); playLose();
+                playLose();
             }
         } catch (err) { if(msgTab){msgTab.className = 'msg err'; msgTab.textContent = 'Сервер не отвечает.';} }
     };
@@ -2569,7 +2628,6 @@ body{
         fastModeEnabled = !fastModeEnabled;
         const btn = document.getElementById('fastUpgradeBtn');
         if (btn) btn.classList.toggle('active', fastModeEnabled);
-        showToast(fastModeEnabled ? 'Быстрый режим' : 'Обычный режим', 'info');
         playClick(); vibrate(10);
     };
 
@@ -2641,22 +2699,21 @@ body{
     function buyItem(id) {
         if (isSpinning || document.body.classList.contains('upgrade-locked')) return;
         const item = getItemById(id);
-        if (!item || balance < item.price) { showToast('Недостаточно монет', 'err'); playLose(); vibrate(30); return; }
+        if (!item || balance < item.price) { playLose(); vibrate(30); return; }
         balance -= item.price;
         inventory.push(id);
         updateBalance();
         renderShop(); renderInventory(); updateUpgradeScreen();
         renderProfileInventory();
         if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
-        // Убрано уведомление "Куплено"
-        playCoin(); vibrate(15);
+        playCoin(); vibrate(15); // Убрано showToast
     }
     
     window.sellItem = function(index) {
         if (isSpinning || document.body.classList.contains('upgrade-locked')) return;
         if (index < 0 || index >= inventory.length) return;
         const id = inventory[index];
-        if (pendingWithdrawItemIds.has(id)) { showToast('Предмет на выводе', 'err'); playLose(); return; }
+        if (pendingWithdrawItemIds.has(id)) { playLose(); return; }
         const item = getItemById(id);
         if (!item) return;
         inventory.splice(index, 1);
@@ -2667,7 +2724,6 @@ body{
         renderInventory(); renderShop(); updateUpgradeScreen();
         renderProfileInventory();
         if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
-        showToast(`Продан: ${item.name} (+${item.price})`, 'ok');
         playCoin(); vibrate(15);
     };
     
@@ -2675,7 +2731,7 @@ body{
         if (isSpinning || document.body.classList.contains('upgrade-locked')) return;
         if (index < 0 || index >= inventory.length) return;
         const id = inventory[index];
-        if (pendingWithdrawItemIds.has(id)) { showToast('Предмет на выводе', 'err'); return; }
+        if (pendingWithdrawItemIds.has(id)) { playLose(); return; }
         selectedSourceIndex = index;
         selectedTargetId = null;
         renderInventory(); updateUpgradeScreen();
@@ -2684,7 +2740,7 @@ body{
 
     window.openTargetList = function() {
         if (isSpinning || document.body.classList.contains('upgrade-locked')) return;
-        if (selectedSourceIndex === null) { showToast('Сначала выбери предмет в инвентаре', 'info'); return; }
+        if (selectedSourceIndex === null) { playLose(); return; }
         if (selectedSourceIndex < 0 || selectedSourceIndex >= inventory.length) return;
         const sourceItem = getItemById(inventory[selectedSourceIndex]);
         if (!sourceItem) return;
@@ -2738,7 +2794,7 @@ body{
                         <div class="case-info">
                             <div class="case-name">${c.name}</div>
                             <div class="case-price">${c.price} <img src="${COIN_IMG}" alt="coin"></div>
-                            <div class="case-items-count">${c.rewards.length > 0 ? c.rewards.length + ' предметов' : '—'}</div>
+                            <div class="case-items-count">${c.rewards.length} предметов</div>
                         </div>
                     </div>
                 </div>
@@ -2748,9 +2804,22 @@ body{
 
     window.openCaseDetail = function(caseId) {
         if (isCaseOpening || document.body.classList.contains('upgrade-locked')) return;
-        showToast('В кейсах пусто', 'info');
-        playClick();
-        vibrate(10);
+        playClick(); vibrate(10);
+        
+        const c = CASES.find(x => x.id === caseId);
+        if (!c) return;
+
+        currentCaseId = caseId;
+        const modal = document.getElementById('caseOpenModal');
+        if (!modal) return;
+        
+        document.getElementById('caseOpenName').textContent = c.name;
+        document.getElementById('caseOpenImg').src = c.img;
+        document.getElementById('caseOpenBalance').textContent = balance.toLocaleString('ru-RU');
+        document.getElementById('caseRouletteContainer').innerHTML = '';
+        
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
     };
 
     window.closeCaseOpen = function() {
@@ -2782,7 +2851,66 @@ body{
     };
 
     window.confirmOpenCase = async function() {
-        showToast('В кейсах пусто', 'info');
+        const c = CASES.find(x => x.id === currentCaseId);
+        if (!c) return;
+        const totalCost = c.price * caseOpenQty;
+        
+        if (balance < totalCost) {
+            playLose(); vibrate(30);
+            return;
+        }
+
+        balance -= totalCost;
+        updateBalance();
+        document.getElementById('caseOpenBalance').textContent = balance.toLocaleString('ru-RU');
+        
+        isCaseOpening = true;
+        const btn = document.getElementById('caseOpenActionBtn');
+        btn.disabled = true;
+        btn.textContent = 'ОТКРЫВАЕМ...';
+
+        const animOverlay = document.getElementById('caseAnimOverlay');
+        animOverlay.classList.add('show');
+        
+        playUpgradeStart(); vibrate(20);
+        
+        setTimeout(() => {
+            animOverlay.classList.remove('show');
+            
+            for (let i = 0; i < caseOpenQty; i++) {
+                const rng = Math.random() * 100;
+                let currentChance = 0;
+                let wonItemId = c.rewards[0].id; 
+                
+                for (const reward of c.rewards) {
+                    currentChance += reward.chance;
+                    if (rng <= currentChance) {
+                        wonItemId = reward.id;
+                        break;
+                    }
+                }
+                inventory.push(wonItemId);
+                
+                setTimeout(() => {
+                    const wonItem = getItemById(wonItemId);
+                    if (wonItem) {
+                        // showToast убран
+                    }
+                }, i * 500);
+            }
+
+            updateBalance();
+            renderInventory(); renderShop(); updateUpgradeScreen();
+            renderProfileInventory();
+            if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
+            
+            playWin(); vibratePattern([30, 50, 30, 50, 60]);
+            
+            isCaseOpening = false;
+            btn.disabled = false;
+            btn.textContent = 'ОТКРЫТЬ КЕЙС';
+            
+        }, 2000);
     };
 
     function calculateChance() {
@@ -2796,7 +2924,6 @@ body{
         const sourceItem = selectedSourceIndex !== null ? getItemById(inventory[selectedSourceIndex]) : null;
         const targetItem = selectedTargetId ? getItemById(selectedTargetId) : null;
 
-        // Управляем видимостью заливки прогресса
         if (sourceItem && targetItem) {
             progressBar.classList.remove('no-chance');
         } else {
@@ -2864,6 +2991,10 @@ body{
         isSpinning = true;
         document.body.classList.add('upgrade-locked');
 
+        // СОХРАНЯЕМ СТАТУС "В ПРОЦЕССЕ" В LOCALSTORAGE (ДЛЯ АНТИДЮПА)
+        upgradeInProgress = { sourceItemId: inventory[selectedSourceIndex], targetId: selectedTargetId };
+        localStorage.setItem('ggbrainx_upgrade_in_progress', JSON.stringify(upgradeInProgress));
+
         upgradeBtn.disabled = true;
         upgradeBtn.querySelector('span').innerText = 'КРУТИМ...';
         inventoryRow.classList.add('locked');
@@ -2892,7 +3023,6 @@ body{
             if (isSuccess) {
                 inventory.splice(sourceIndex, 1);
                 inventory.push(targetId);
-                showToast(`УСПЕХ! Получен ${getItemById(targetId).name}`, 'ok');
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
 
                 // СПАВН 4 ТЕКСТОВ "УСПЕХ" В РАЗНЫХ МЕСТАХ (В ТЕЧЕНИЕ 4 СЕКУНД)
@@ -2902,7 +3032,6 @@ body{
 
             } else {
                 inventory.splice(sourceIndex, 1);
-                showToast(`Провал... ${getItemById(sourceItem.id).name} потерян`, 'err');
                 playLose(); vibratePattern([50, 30, 100]);
             }
             selectedSourceIndex = null;
@@ -2917,6 +3046,10 @@ body{
             upgradeBtn.disabled = true;
             inventoryRow.classList.remove('locked');
             shopRow.classList.remove('locked');
+            
+            // ОЧИЩАЕМ СТАТУС ПОСЛЕ ЗАВЕРШЕНИЯ
+            upgradeInProgress = null;
+            localStorage.removeItem('ggbrainx_upgrade_in_progress');
         }, durationMs + 100);
     }
     window.upgrade = function() {
@@ -2939,12 +3072,8 @@ body{
             if (msg) { msg.className = 'msg ok'; msg.textContent = 'Ник сохранён: ' + val; }
         }
         applyUserToProfile();
-        showToast('Ник сохранён', 'ok');
     };
 
-    // ============================================================
-    // ОКНО ИНФОРМАЦИИ О ВЫВОДЕ
-    // ============================================================
     window.showWithdrawInfo = function(itemId) {
         playClick();
         const item = getItemById(itemId);
@@ -3003,7 +3132,7 @@ body{
         if (isSpinning || document.body.classList.contains('upgrade-locked')) return;
         if (index < 0 || index >= inventory.length) return;
         const id = inventory[index];
-        if (pendingWithdrawItemIds.has(id)) { showToast('Предмет на выводе', 'err'); playLose(); return; }
+        if (pendingWithdrawItemIds.has(id)) { playLose(); return; }
         const item = getItemById(id);
         if (!item) return;
         inventory.splice(index, 1);
@@ -3014,14 +3143,13 @@ body{
         renderInventory(); renderShop(); updateUpgradeScreen();
         renderProfileInventory();
         renderInventoryTab();
-        showToast(`Продан: ${item.name} (+${item.price})`, 'ok');
         playCoin(); vibrate(15);
     };
 
     window.openWithdrawFor = async function(index) {
         if (document.body.classList.contains('upgrade-locked')) return;
         if (index < 0 || index >= inventory.length) return;
-        if (pendingWithdrawItemIds.has(inventory[index])) { showToast('Уже на выводе', 'err'); return; }
+        if (pendingWithdrawItemIds.has(inventory[index])) { playLose(); return; }
         withdrawSelectedIndexes = [index];
         withdrawAgree = false;
         renderWithdrawModal();
@@ -3146,13 +3274,11 @@ body{
             renderInventory();
             renderProfileInventory();
             if (document.getElementById('panelUpgrade')?.classList.contains('active')) updateUpgradeScreen();
-            showToast(`Заявка на вывод: ${successCount} предм.`, 'ok');
             playWin(); vibrate(20);
-            if (failCount > 0) showToast(`${failCount} не удалось`, 'err');
             setTimeout(() => closeModal('withdrawModal'), 1000);
         } else {
             if (msg) { msg.className='msg err'; msg.textContent='Не удалось отправить'; }
-            showToast('Ошибка вывода', 'err'); playLose();
+            playLose();
         }
     };
 
@@ -3259,15 +3385,29 @@ body{
                 if ((USER.username || '').toLowerCase() === (data.withdraw?.username || '').toLowerCase()) {
                     await loadUserFromServer();
                 }
-                showToast('Заявка обработана', 'ok'); playCoin();
+                playCoin();
             } else {
-                showToast(data.error || 'Ошибка', 'err'); playLose();
+                playLose();
             }
-        } catch (e) { showToast('Сервер недоступен', 'err'); }
+        } catch (e) { }
     };
 
     function init() {
-        // СБРОС ЗАВИСШЕГО СОСТОЯНИЯ АПГРЕЙДА (НА СЛУЧАЙ ПЕРЕЗАГРУЗКИ)
+        // ОБРАБОТКА АНТИДЮПА
+        if (upgradeInProgress) {
+            // Если при загрузке обнаружен незавершенный апгрейд - сжигаем предмет
+            const idx = inventory.findIndex((id, i) => id === upgradeInProgress.sourceItemId);
+            if (idx !== -1) {
+                inventory.splice(idx, 1);
+                saveLocalCache();
+                updateBalance();
+                playLose(); // Звук проигрыша для уведомления
+            }
+            // Очищаем флаг
+            upgradeInProgress = null;
+            localStorage.removeItem('ggbrainx_upgrade_in_progress');
+        }
+
         isSpinning = false;
         document.body.classList.remove('upgrade-locked');
         if (inventoryRow) inventoryRow.classList.remove('locked');
