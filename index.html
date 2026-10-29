@@ -32,7 +32,11 @@ body{
   padding:0;position:relative; overflow-x:hidden;overflow-y:auto; -webkit-font-smoothing:antialiased;
 }
 #toastContainer{display: none;}
-.app{width:100%;max-width:100%;margin:0 auto;padding: 0 20px 40px;flex:1 0 auto;position:relative;z-index:1;display: flex;flex-direction:column; transition: padding-left 0.3s ease;}
+.app{
+  width:100%; max-width:100%; margin:0 auto; padding: 0 20px 40px;
+  flex:1 0 auto; position:relative; z-index:1;
+  display: flex; flex-direction: column;
+}
 .burger-btn{display: none;background: transparent;border: none;color: #fff;cursor: pointer;padding: 8px;position: absolute;left: 14px;top: 14px;z-index: 500;}
 .burger-btn svg{width: 28px; height: 28px; stroke: currentColor;}
 .mobile-menu-overlay{display: none;position: fixed;inset: 0;background: rgba(0,0,0,.85);z-index: 600;}
@@ -396,26 +400,40 @@ body{
 /* ================== LIVE DROPS ================== */
 .live-drops-panel {
   display: none;
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   width: 280px;
-  max-height: 70vh;
+  max-height: calc(100vh - 120px);
   background: rgba(14, 10, 20, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
-  z-index: 800;
+  z-index: 10;
   overflow: hidden;
   flex-direction: column;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  transition: opacity 0.3s, transform 0.3s;
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 @media (min-width: 1300px) {
   .live-drops-panel { display: flex; }
-  .app { padding-left: 320px; padding-right: 20px; }
+  .app { 
+    padding-left: 0; 
+    padding-right: 0; 
+    flex-direction: row;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start;
+    padding-top: 16px;
+  }
+  .app > .top-bar, 
+  .app > .tab-panel { width: 100%; }
+  .app-inner { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .live-drops-panel { 
+    position: sticky;
+    top: 16px;
+    margin-left: 20px;
+  }
 }
 .live-drops-header {
   padding: 16px;
@@ -611,19 +629,6 @@ body{
   </div>
 </div>
 
-<!-- Live Drops Лента -->
-<div class="live-drops-panel" id="liveDropsPanel">
-  <div class="live-drops-header">
-    <div class="live-drops-title">
-      <div class="live-drops-dot"></div>
-      Live Drops
-    </div>
-  </div>
-  <div class="live-drops-scroll" id="liveDropsScroll">
-    <!-- Сюда будут падать элементы -->
-  </div>
-</div>
-
 <div id="toastContainer"></div>
 
 <div class="modal" id="topupModal">
@@ -809,204 +814,220 @@ body{
 </div>
 
 <div class="app" id="mainApp">
-    <div class="top-bar">
-        <div class="top-left">
-            <div class="logo-container">
-                <img src="https://github.com/saintezz/BrainrotWin/blob/main/braingameLOGO.png?raw=true" alt="BrainRoll" class="logo-img">
-            </div>
-            <div class="top-nav-panel">
-                <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')"><span>Главное меню</span></button>
-                <button class="nav-btn" id="navUpgrade" onclick="switchTab('upgrade')"><span>Апгрейдер</span></button>
-                <button class="nav-btn" id="navInventory" onclick="switchTab('inventory')"><span>Инвентарь</span></button>
-                <button class="nav-btn" id="navPromo" onclick="switchTab('promo')"><span>Промокоды</span></button>
-                <button class="nav-btn" id="navProfile" onclick="switchTab('profile')"><span>Профиль</span></button>
-            </div>
+    <!-- Live Drops Лента -->
+    <div class="live-drops-panel" id="liveDropsPanel">
+      <div class="live-drops-header">
+        <div class="live-drops-title">
+          <div class="live-drops-dot"></div>
+          Live Drops
         </div>
-        <div class="top-right">
-            <div class="balance-wrap" id="balanceBox">
-                <div class="balance">
-                    <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin" class="coin-icon">
-                    <span id="balanceDisplay">0</span>
-                </div>
-                <button class="topup-btn" onclick="openTopup()">+</button>
-            </div>
-            <div class="icon-btn avatar-btn" onclick="switchTab('profile')">
-                <img id="topAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="avatar">
-            </div>
-        </div>
+      </div>
+      <div class="live-drops-scroll" id="liveDropsScroll">
+        <!-- Сюда будут падать элементы -->
+      </div>
     </div>
 
-    <div class="tab-panel active" id="panelMenu">
-        <div class="promo-banner">
-            <div class="banner-left">
-                <div class="title">АВТО-ПРОМОКОД</div>
-                <div class="main-title">НОВЫЙ БОНУС К ДЕПОЗИТУ</div>
-                <div class="sub-title">КАЖДЫЕ 2 ЧАСА</div>
-            </div>
-            <div class="banner-center">
-                <div class="banner-timer-block">
-                    <div class="bt-label">ОСТАЛОСЬ</div>
-                    <div class="bt-value" id="autoPromoTimer">01:45:46</div>
+    <!-- Обертка для контента -->
+    <div class="app-inner">
+        <div class="top-bar">
+            <div class="top-left">
+                <div class="logo-container">
+                    <img src="https://github.com/saintezz/BrainrotWin/blob/main/braingameLOGO.png?raw=true" alt="BrainRoll" class="logo-img">
                 </div>
-                <div class="banner-bonus-block">
-                    <div class="bb-label">БОНУС</div>
-                    <div class="bb-value" id="autoPromoBonus">+15%</div>
+                <div class="top-nav-panel">
+                    <button class="nav-btn active" id="navMenu" onclick="switchTab('menu')"><span>Главное меню</span></button>
+                    <button class="nav-btn" id="navUpgrade" onclick="switchTab('upgrade')"><span>Апгрейдер</span></button>
+                    <button class="nav-btn" id="navInventory" onclick="switchTab('inventory')"><span>Инвентарь</span></button>
+                    <button class="nav-btn" id="navPromo" onclick="switchTab('promo')"><span>Промокоды</span></button>
+                    <button class="nav-btn" id="navProfile" onclick="switchTab('profile')"><span>Профиль</span></button>
                 </div>
             </div>
-            <div class="banner-right">
-                <div class="promo-code-display">
-                    <span class="pcd-code" id="autoPromoCode">JACKPOT</span>
-                    <button class="pcd-copy" onclick="copyAutoPromoCode()" title="Копировать">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <div class="top-right">
+                <div class="balance-wrap" id="balanceBox">
+                    <div class="balance">
+                        <img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png" alt="coin" class="coin-icon">
+                        <span id="balanceDisplay">0</span>
+                    </div>
+                    <button class="topup-btn" onclick="openTopup()">+</button>
+                </div>
+                <div class="icon-btn avatar-btn" onclick="switchTab('profile')">
+                    <img id="topAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="avatar">
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-panel active" id="panelMenu">
+            <div class="promo-banner">
+                <div class="banner-left">
+                    <div class="title">АВТО-ПРОМОКОД</div>
+                    <div class="main-title">НОВЫЙ БОНУС К ДЕПОЗИТУ</div>
+                    <div class="sub-title">КАЖДЫЕ 2 ЧАСА</div>
+                </div>
+                <div class="banner-center">
+                    <div class="banner-timer-block">
+                        <div class="bt-label">ОСТАЛОСЬ</div>
+                        <div class="bt-value" id="autoPromoTimer">01:45:46</div>
+                    </div>
+                    <div class="banner-bonus-block">
+                        <div class="bb-label">БОНУС</div>
+                        <div class="bb-value" id="autoPromoBonus">+15%</div>
+                    </div>
+                </div>
+                <div class="banner-right">
+                    <div class="promo-code-display">
+                        <span class="pcd-code" id="autoPromoCode">JACKPOT</span>
+                        <button class="pcd-copy" onclick="copyAutoPromoCode()" title="Копировать">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                    </div>
+                    <button class="activate-btn" onclick="activateAutoPromo()">АКТИВИРОВАТЬ</button>
+                </div>
+            </div>
+            <div class="cases-title-main">Кейсы</div>
+            <div class="cases-grid" id="menuCasesGrid"></div>
+        </div>
+
+        <div class="tab-panel" id="panelUpgrade">
+            <div class="upg-container">
+                <div class="progress-section">
+                    <div class="progress-wrapper" id="wheelWrapper">
+                        <svg class="progress-svg" viewBox="0 0 340 340">
+                            <defs>
+                                <linearGradient id="upgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#8b5cf6"/>
+                                </linearGradient>
+                            </defs>
+                            <circle class="progress-outer-ring" cx="170" cy="170" r="149"></circle>
+                            <circle class="progress-track" cx="170" cy="170" r="130"></circle>
+                            <circle class="progress-track-inner" cx="170" cy="170" r="130"></circle>
+                            <circle class="progress-bar no-chance" id="progressBar" cx="170" cy="170" r="130"></circle>
+                        </svg>
+                        <div class="progress-ticks" id="progressTicks"></div>
+                        <div class="arrow-container" id="arrowContainer"><div class="arrow-pointer"></div></div>
+                        <div class="progress-center">
+                            <div class="chance-big" id="chanceBig">?%</div>
+                            <div class="chance-label">ШАНС</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="items-row">
+                    <div class="upg-card" id="upgCardLeft" onclick="document.getElementById('invAnchor').scrollIntoView({behavior: 'smooth'})">
+                        <div class="txt">ВЫБЕРИТЕ В ИНВЕНТАРЕ</div>
+                    </div>
+                    <div class="swap-arrow">»</div>
+                    <div class="upg-card" id="upgCardRight" onclick="openTargetList()">
+                        <div class="txt">ВЫБРАТЬ ЦЕЛЬ</div>
+                        <div class="txt sub">Нажми на меня</div>
+                    </div>
+                </div>
+                <div class="stage-controls">
+                    <button class="upgrade-main-btn" id="upgradeBtn" onclick="upgrade()" disabled><span>АПГРЕЙД</span></button>
+                    <button class="fast-btn" id="fastUpgradeBtn" onclick="toggleFastMode()" title="Быстрый режим">
+                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </button>
                 </div>
-                <button class="activate-btn" onclick="activateAutoPromo()">АКТИВИРОВАТЬ</button>
+                <div class="segmented-control" style="margin-top: 12px;">
+                    <div class="segment active" id="segmentMyItems" onclick="switchUpgradeTab('my')">МОИ ПРЕДМЕТЫ</div>
+                    <div class="segment" id="segmentShop" onclick="switchUpgradeTab('shop')">МАГАЗИН</div>
+                </div>
+                <div id="inventorySection" style="display: block; margin-top: 14px;">
+                    <div class="section-title" id="invAnchor">Инвентарь</div>
+                    <div class="inventory-row" id="inventoryRow"></div>
+                </div>
+                <div id="shopSection" style="display: none; margin-top: 14px;">
+                    <div class="section-title">Магазин</div>
+                    <div class="shop-scroll"><div class="shop-grid" id="shopRow"></div></div>
+                </div>
             </div>
         </div>
-        <div class="cases-title-main">Кейсы</div>
-        <div class="cases-grid" id="menuCasesGrid"></div>
-    </div>
 
-    <div class="tab-panel" id="panelUpgrade">
-        <div class="upg-container">
-            <div class="progress-section">
-                <div class="progress-wrapper" id="wheelWrapper">
-                    <svg class="progress-svg" viewBox="0 0 340 340">
-                        <defs>
-                            <linearGradient id="upgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#8b5cf6"/>
-                            </linearGradient>
-                        </defs>
-                        <circle class="progress-outer-ring" cx="170" cy="170" r="149"></circle>
-                        <circle class="progress-track" cx="170" cy="170" r="130"></circle>
-                        <circle class="progress-track-inner" cx="170" cy="170" r="130"></circle>
-                        <circle class="progress-bar no-chance" id="progressBar" cx="170" cy="170" r="130"></circle>
-                    </svg>
-                    <div class="progress-ticks" id="progressTicks"></div>
-                    <div class="arrow-container" id="arrowContainer"><div class="arrow-pointer"></div></div>
-                    <div class="progress-center">
-                        <div class="chance-big" id="chanceBig">?%</div>
-                        <div class="chance-label">ШАНС</div>
+        <div class="tab-panel" id="panelInventory">
+            <div class="cases-title-main" style="margin-top:8px;">Мой инвентарь</div>
+            <div id="inventoryTabGrid" class="inventory-row" style="padding:4px 0 12px;"></div>
+        </div>
+
+        <div class="tab-panel" id="panelPromo">
+            <div class="promo-panel" id="promoAdminContent" style="padding:24px 20px;text-align:center;">
+                <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;">Активация промокода</h2>
+                <p style="color:var(--text-muted);font-size:15px;font-weight:600;margin-bottom:16px;">Введи код и получи награду</p>
+                <div class="promo-input-wrap" style="display:flex;gap:8px;max-width:480px;margin:0 auto;">
+                    <input type="text" class="form-input" id="promoInput" placeholder="ВВЕДИ ПРОМОКОД" maxlength="20" style="flex:1;text-transform:uppercase">
+                    <button class="action-btn" onclick="activatePromo()" style="width:auto;padding:12px 16px;margin-top:0;">Активировать</button>
+                </div>
+                <div class="msg" id="promoMsg"></div>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="panelProfile">
+            <div class="profile-page">
+                <div class="profile-hero">
+                    <div class="profile-avatar-wrap">
+                        <div class="profile-avatar-frame">
+                            <div class="profile-avatar-inner">
+                                <img id="profileAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg">
+                            </div>
+                        </div>
+                        <div class="profile-avatar-status"></div>
+                    </div>
+                    <div class="profile-nick-big" id="profileNick">Игрок</div>
+                    <a class="profile-tg-big" id="profileTg" href="#" target="_blank"><span id="profileTgText">@username</span></a>
+                </div>
+                <div class="profile-stats-grid">
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-label">Баланс</div>
+                        <div class="profile-stat-value"><img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png"><span id="profileBalance">0</span></div>
+                    </div>
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-label">Предметов</div>
+                        <div class="profile-stat-value"><span id="profileItemsCount">0</span><span style="font-size:12px;color:var(--text-muted);">шт.</span></div>
+                    </div>
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-label">Лучший предмет</div>
+                        <div class="profile-stat-value" id="profileBestItem" style="font-size:14px;">—</div>
                     </div>
                 </div>
-            </div>
-            <div class="items-row">
-                <div class="upg-card" id="upgCardLeft" onclick="document.getElementById('invAnchor').scrollIntoView({behavior: 'smooth'})">
-                    <div class="txt">ВЫБЕРИТЕ В ИНВЕНТАРЕ</div>
+                <div class="profile-inventory-section">
+                    <button class="profile-inventory-toggle" id="inventoryToggle" onclick="toggleInventoryDrawer()">
+                        <div class="pt-text">
+                            <div class="pt-title">Мой инвентарь</div>
+                            <div class="pt-value"><span id="inventoryCountLabel">0 предметов</span></div>
+                        </div>
+                    </button>
+                    <div class="profile-inventory-drawer" id="inventoryDrawer">
+                        <div class="profile-inventory-grid" id="profileInventoryGrid"></div>
+                    </div>
                 </div>
-                <div class="swap-arrow">»</div>
-                <div class="upg-card" id="upgCardRight" onclick="openTargetList()">
-                    <div class="txt">ВЫБРАТЬ ЦЕЛЬ</div>
-                    <div class="txt sub">Нажми на меня</div>
+                <div class="deposits-block" id="depositsBlock" style="display:none;">
+                    <div class="deposits-block-title">Заявки на пополнение <span class="deposits-count" id="depositsCount">0</span></div>
+                    <div id="depositsList"></div>
                 </div>
-            </div>
-            <div class="stage-controls">
-                <button class="upgrade-main-btn" id="upgradeBtn" onclick="upgrade()" disabled><span>АПГРЕЙД</span></button>
-                <button class="fast-btn" id="fastUpgradeBtn" onclick="toggleFastMode()" title="Быстрый режим">
-                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                </button>
-            </div>
-            <div class="segmented-control" style="margin-top: 12px;">
-                <div class="segment active" id="segmentMyItems" onclick="switchUpgradeTab('my')">МОИ ПРЕДМЕТЫ</div>
-                <div class="segment" id="segmentShop" onclick="switchUpgradeTab('shop')">МАГАЗИН</div>
-            </div>
-            <div id="inventorySection" style="display: block; margin-top: 14px;">
-                <div class="section-title" id="invAnchor">Инвентарь</div>
-                <div class="inventory-row" id="inventoryRow"></div>
-            </div>
-            <div id="shopSection" style="display: none; margin-top: 14px;">
-                <div class="section-title">Магазин</div>
-                <div class="shop-scroll"><div class="shop-grid" id="shopRow"></div></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="tab-panel" id="panelInventory">
-        <div class="cases-title-main" style="margin-top:8px;">Мой инвентарь</div>
-        <div id="inventoryTabGrid" class="inventory-row" style="padding:4px 0 12px;"></div>
-    </div>
-
-    <div class="tab-panel" id="panelPromo">
-        <div class="promo-panel" id="promoAdminContent" style="padding:24px 20px;text-align:center;">
-            <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;">Активация промокода</h2>
-            <p style="color:var(--text-muted);font-size:15px;font-weight:600;margin-bottom:16px;">Введи код и получи награду</p>
-            <div class="promo-input-wrap" style="display:flex;gap:8px;max-width:480px;margin:0 auto;">
-                <input type="text" class="form-input" id="promoInput" placeholder="ВВЕДИ ПРОМОКОД" maxlength="20" style="flex:1;text-transform:uppercase">
-                <button class="action-btn" onclick="activatePromo()" style="width:auto;padding:12px 16px;margin-top:0;">Активировать</button>
-            </div>
-            <div class="msg" id="promoMsg"></div>
-        </div>
-    </div>
-
-    <div class="tab-panel" id="panelProfile">
-        <div class="profile-page">
-            <div class="profile-hero">
-                <div class="profile-avatar-wrap">
-                    <div class="profile-avatar-frame">
-                        <div class="profile-avatar-inner">
-                            <img id="profileAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg">
+                <div class="profile-action-row" style="max-width:640px;margin:10px auto 0;padding:0 20px;">
+                    <button class="action-btn" id="adminPanelBtn" style="display:none; background: var(--bg-surface-hover); border-color: var(--color-purple); color:var(--color-purple-soft);" onclick="openAdminPanel()">Открыть админ-панель</button>
+                </div>
+                <div class="customize-in-profile">
+                    <div class="profile-section-heading">Настройки профиля</div>
+                    <div class="customize-section">
+                        <div class="customize-section-title">Аватарка</div>
+                        <div class="avatar-upload-row">
+                            <img class="avatar-preview" id="avatarPreview" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="preview">
+                            <div class="avatar-upload-buttons">
+                                <label class="upload-btn" for="avatarFileInput">Загрузить</label>
+                                <button class="reset-avatar-btn" onclick="resetAvatar()">Сбросить</button>
+                            </div>
+                            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
                         </div>
                     </div>
-                    <div class="profile-avatar-status"></div>
-                </div>
-                <div class="profile-nick-big" id="profileNick">Игрок</div>
-                <a class="profile-tg-big" id="profileTg" href="#" target="_blank"><span id="profileTgText">@username</span></a>
-            </div>
-            <div class="profile-stats-grid">
-                <div class="profile-stat-card">
-                    <div class="profile-stat-label">Баланс</div>
-                    <div class="profile-stat-value"><img src="https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png"><span id="profileBalance">0</span></div>
-                </div>
-                <div class="profile-stat-card">
-                    <div class="profile-stat-label">Предметов</div>
-                    <div class="profile-stat-value"><span id="profileItemsCount">0</span><span style="font-size:12px;color:var(--text-muted);">шт.</span></div>
-                </div>
-                <div class="profile-stat-card">
-                    <div class="profile-stat-label">Лучший предмет</div>
-                    <div class="profile-stat-value" id="profileBestItem" style="font-size:14px;">—</div>
-                </div>
-            </div>
-            <div class="profile-inventory-section">
-                <button class="profile-inventory-toggle" id="inventoryToggle" onclick="toggleInventoryDrawer()">
-                    <div class="pt-text">
-                        <div class="pt-title">Мой инвентарь</div>
-                        <div class="pt-value"><span id="inventoryCountLabel">0 предметов</span></div>
+                    <div class="customize-section">
+                        <div class="customize-section-title">Никнейм</div>
+                        <input type="text" class="form-input" id="customizeNickInput" placeholder="Введи свой ник" maxlength="20">
+                        <button class="action-btn" onclick="saveCustomNick()">Сохранить ник</button>
                     </div>
-                </button>
-                <div class="profile-inventory-drawer" id="inventoryDrawer">
-                    <div class="profile-inventory-grid" id="profileInventoryGrid"></div>
+                    <div class="msg" id="customizeMsg"></div>
                 </div>
-            </div>
-            <div class="deposits-block" id="depositsBlock" style="display:none;">
-                <div class="deposits-block-title">Заявки на пополнение <span class="deposits-count" id="depositsCount">0</span></div>
-                <div id="depositsList"></div>
-            </div>
-            <div class="profile-action-row" style="max-width:640px;margin:10px auto 0;padding:0 20px;">
-                <button class="action-btn" id="adminPanelBtn" style="display:none; background: var(--bg-surface-hover); border-color: var(--color-purple); color:var(--color-purple-soft);" onclick="openAdminPanel()">Открыть админ-панель</button>
-            </div>
-            <div class="customize-in-profile">
-                <div class="profile-section-heading">Настройки профиля</div>
-                <div class="customize-section">
-                    <div class="customize-section-title">Аватарка</div>
-                    <div class="avatar-upload-row">
-                        <img class="avatar-preview" id="avatarPreview" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg" alt="preview">
-                        <div class="avatar-upload-buttons">
-                            <label class="upload-btn" for="avatarFileInput">Загрузить</label>
-                            <button class="reset-avatar-btn" onclick="resetAvatar()">Сбросить</button>
-                        </div>
-                        <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
-                    </div>
-                </div>
-                <div class="customize-section">
-                    <div class="customize-section-title">Никнейм</div>
-                    <input type="text" class="form-input" id="customizeNickInput" placeholder="Введи свой ник" maxlength="20">
-                    <button class="action-btn" onclick="saveCustomNick()">Сохранить ник</button>
-                </div>
-                <div class="msg" id="customizeMsg"></div>
             </div>
         </div>
-    </div>
-</div>
+    </div> <!-- Конец .app-inner -->
+</div> <!-- Конец .app -->
 
 <script>
 // ================== КОНСТАНТЫ ==================
@@ -1185,30 +1206,56 @@ function renderLiveDrops(drops) {
   const container = document.getElementById('liveDropsScroll');
   if (!container) return;
 
-  // Если нет дропов, показываем заглушку
   if (!drops.length) {
-    container.innerHTML = `<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px;">Пока нет дропов...</div>`;
+    if (!container.querySelector('.live-drop-empty')) {
+        container.innerHTML = `<div class="live-drop-empty" style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px;">Пока нет дропов...</div>`;
+    }
     return;
   }
 
-  let html = '';
-  drops.forEach(drop => {
+  // Убираем заглушку, если есть
+  const emptyEl = container.querySelector('.live-drop-empty');
+  if (emptyEl) emptyEl.remove();
+
+  // Ищем, какие элементы уже есть в DOM
+  const existingIds = new Set();
+  container.querySelectorAll('.live-drop-item').forEach(el => {
+    if (el.dataset.dropId) existingIds.add(el.dataset.dropId);
+  });
+
+  // Берем новые дропы, которых еще нет на странице
+  const newDrops = drops.filter(d => !existingIds.has(d.id));
+
+  // Вставляем новые элементы сверху (в правильном порядке, чтобы самый свежий был выше)
+  newDrops.reverse().forEach(drop => {
     const item = getItemById(drop.item_id);
     if (!item) return;
-    const rClass = getRarityClass(item.price);
-    html += `
-      <div class="live-drop-item ${rClass}">
-        <img class="live-drop-img" src="${item.img}" alt="${item.name}" ${FALLBACK_ATTR}>
-        <div class="live-drop-info">
-          <div class="live-drop-user">@${drop.username}</div>
-          <div class="live-drop-item-name">${drop.item_name}</div>
-          <div class="live-drop-source">${drop.source}</div>
-        </div>
-        <div class="live-drop-price"><img src="${COIN_IMG}">${drop.price}</div>
+    
+    const el = document.createElement('div');
+    el.className = `live-drop-item ${getRarityClass(item.price)}`;
+    el.dataset.dropId = drop.id;
+    
+    el.innerHTML = `
+      <img class="live-drop-img" src="${item.img}" alt="${item.name}" ${FALLBACK_ATTR}>
+      <div class="live-drop-info">
+        <div class="live-drop-user">@${drop.username}</div>
+        <div class="live-drop-item-name">${drop.item_name}</div>
+        <div class="live-drop-source">${drop.source}</div>
       </div>
+      <div class="live-drop-price"><img src="${COIN_IMG}">${drop.price}</div>
     `;
+
+    // Добавляем сверху
+    container.prepend(el);
   });
-  container.innerHTML = html;
+
+  // Ограничиваем количество элементов до 20
+  const items = container.querySelectorAll('.live-drop-item');
+  if (items.length > 20) {
+    for (let i = 20; i < items.length; i++) {
+      items[i].remove(); // удаляем старые снизу
+    }
+  }
 }
 
 // ================== ТЕХПЕРЕРЫВ ==================
