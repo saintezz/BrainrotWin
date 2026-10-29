@@ -435,6 +435,33 @@ body{
     margin-left: 20px;
   }
 }
+
+/* Мобильная версия Live Drops */
+@media (max-width: 1299px) {
+  .live-drops-panel {
+    display: flex;
+    width: 100%;
+    max-height: 200px;
+    margin-bottom: 16px;
+    position: relative;
+    top: 0;
+    margin-left: 0;
+  }
+  .live-drops-scroll {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px;
+    gap: 10px;
+    scrollbar-width: none;
+  }
+  .live-drops-scroll::-webkit-scrollbar { display: none; }
+  .live-drop-item {
+    flex: 0 0 220px;
+    width: 220px;
+  }
+}
+
 .live-drops-header {
   padding: 16px;
   background: linear-gradient(135deg, rgba(139,92,246,.2), rgba(249,115,22,.2));
@@ -442,6 +469,7 @@ body{
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 .live-drops-title {
   font-size: 14px;
@@ -498,17 +526,51 @@ body{
   width: 40px; height: 40px; object-fit: contain;
   background: var(--bg-void); border-radius: 8px; padding: 4px;
   border: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
 }
 .live-drop-info { flex: 1; min-width: 0; }
-.live-drop-user { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.live-drop-source { font-size: 10px; font-weight: 600; color: var(--color-orange-soft); }
-.live-drop-item-name { font-size: 11px; font-weight: 600; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.live-drop-user { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+.live-drop-item-name { font-size: 11px; font-weight: 600; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+.live-drop-source { font-size: 10px; font-weight: 600; color: var(--color-orange-soft); line-height: 1.2; }
 .live-drop-price {
   font-size: 12px; font-weight: 800; color: var(--color-orange-soft);
   display: flex; align-items: center; gap: 3px; background: rgba(249,115,22,0.1);
   padding: 4px 6px; border-radius: 6px;
+  flex-shrink: 0;
 }
 .live-drop-price img { width: 10px; height: 10px; }
+
+/* ================== АНОНСЫ ================== */
+.announcement-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+.announcement-box {
+  background: linear-gradient(135deg, rgba(24,18,36,0.95), rgba(34,24,51,0.95));
+  border: 2px solid var(--color-purple);
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(139,92,246,0.3), inset 0 0 15px rgba(139,92,246,0.1);
+  backdrop-filter: blur(8px);
+  animation: dropIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes dropIn {
+  0% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 @media (max-width: 768px) {
   .top-nav-panel { display: none; }
@@ -614,6 +676,9 @@ body{
   <button class="mobile-nav-btn" id="mNavProfile" onclick="switchTab('profile'); toggleMobileMenu()">Профиль</button>
 </div>
 
+<!-- Контейнер для анонсов -->
+<div class="announcement-container" id="announcementContainer"></div>
+
 <!-- Экран техперерыва -->
 <div class="maintenance-overlay" id="maintenanceOverlay" style="display:none;">
   <div class="maintenance-bg-glow"></div>
@@ -676,6 +741,7 @@ body{
             <button class="admin-tab" id="adminTabDeposits" onclick="switchAdminTab('deposits')">Пополнения <span class="admin-tab-count" id="adminDepCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabWithdraws" onclick="switchAdminTab('withdraws')">Выводы <span class="admin-tab-count" id="adminWdCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabMaintenance" onclick="switchAdminTab('maintenance')">Техперерыв</button>
+            <button class="admin-tab" id="adminTabAbuse" onclick="switchAdminTab('abuse')">Админ Абьюз</button>
         </div>
         <div class="admin-tab-panel active" id="adminPanelPromo">
             <div class="admin-section">
@@ -739,6 +805,18 @@ body{
                 <button class="action-btn" id="maintenanceToggleBtn" onclick="toggleMaintenance()" style="background:var(--color-orange);border-color:var(--color-orange);color:#fff;">Включить техперерыв</button>
                 <div class="msg" id="maintenanceMsg"></div>
                 <div style="margin-top:12px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.5;">Админы могут играть во время техперерыва.</div>
+            </div>
+        </div>
+        <div class="admin-tab-panel" id="adminPanelAbuse">
+            <div class="admin-mini-stat"><span class="stat-dot"></span> Инструменты администратора</div>
+            <div class="admin-section">
+                <div class="admin-section-title">Анонсы</div>
+                <div class="form-group">
+                    <label class="form-label">Текст сообщения</label>
+                    <input type="text" class="form-input" id="adminAnnounceText" placeholder="Введите текст анонса..." maxlength="100">
+                </div>
+                <button class="action-btn" id="announceBtn" onclick="sendAnnouncement()" style="background: linear-gradient(135deg, var(--color-purple), var(--color-purple-deep)); border-color: var(--color-purple); color: #fff;">Отправить</button>
+                <div class="msg" id="announceMsg"></div>
             </div>
         </div>
     </div>
@@ -1151,7 +1229,8 @@ let activePromo = null;
 let maintenanceEnabled = false;
 let maintenanceInterval = null;
 let liveDropsInterval = null;
-let lastLiveDropId = null;
+let announcementInterval = null;
+let lastAnnouncementId = null;
 
 const SPIN_DURATION = 7000;
 const SPIN_DURATION_FAST = 4000;
@@ -1256,6 +1335,40 @@ function renderLiveDrops(drops) {
       items[i].remove(); // удаляем старые снизу
     }
   }
+}
+
+// ================== АНОНСЫ ==================
+async function checkAnnouncement() {
+  try {
+    const res = await fetch(API_URL + '/api/announcement');
+    const data = await res.json();
+    if (data.ok) {
+      renderAnnouncement(data.announcement);
+    }
+  } catch (e) {}
+}
+
+function renderAnnouncement(ann) {
+  const container = document.getElementById('announcementContainer');
+  if (!container) return;
+
+  if (!ann) {
+    // Если анонс пропал (истекло время), убираем с экрана
+    container.innerHTML = '';
+    lastAnnouncementId = null;
+    return;
+  }
+
+  // Если этот анонс уже показан, ничего не делаем
+  if (lastAnnouncementId === ann.timestamp) return;
+
+  lastAnnouncementId = ann.timestamp;
+  container.innerHTML = '';
+  
+  const el = document.createElement('div');
+  el.className = 'announcement-box';
+  el.textContent = ann.text;
+  container.appendChild(el);
 }
 
 // ================== ТЕХПЕРЕРЫВ ==================
@@ -1600,7 +1713,7 @@ window.activatePromo = async function() {
 };
 window.switchAdminTab = function(tab) {
   playClick(); vibrate(8);
-  ['promo','deposits','withdraws','maintenance'].forEach(t => {
+  ['promo','deposits','withdraws','maintenance','abuse'].forEach(t => {
     const btn = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
     const panel = document.getElementById('adminPanel' + t.charAt(0).toUpperCase() + t.slice(1));
     if (btn) btn.classList.toggle('active', t === tab);
@@ -1610,7 +1723,46 @@ window.switchAdminTab = function(tab) {
   if (tab === 'withdraws') loadAdminWithdraws();
   if (tab === 'promo') renderPromoList();
   if (tab === 'maintenance') loadMaintenanceStatus();
+  if (tab === 'abuse') {
+    document.getElementById('adminAnnounceText').value = '';
+    document.getElementById('announceMsg').textContent = '';
+  }
 };
+
+window.sendAnnouncement = async function() {
+  const textEl = document.getElementById('adminAnnounceText');
+  const msg = document.getElementById('announceMsg');
+  const btn = document.getElementById('announceBtn');
+  const text = textEl.value.trim();
+  if (!text) { if (msg) { msg.className = 'msg err'; msg.textContent = 'Введите текст'; } return; }
+
+  if (msg) { msg.className = 'msg wait'; msg.textContent = 'Отправка...'; }
+  if (btn) btn.disabled = true;
+
+  try {
+    const res = await fetch(API_URL + '/api/admin/announce', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_username: USER.username || '', text })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      if (msg) { msg.className = 'msg ok'; msg.textContent = 'Анонс отправлен!'; }
+      playWin(); vibrate(20);
+      textEl.value = '';
+      checkAnnouncement(); // Мгновенно показываем себе
+      setTimeout(() => { if (btn) btn.disabled = false; }, 10000); // Блокируем кнопку на 10 сек
+    } else {
+      if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
+      if (btn) btn.disabled = false;
+      playLose();
+    }
+  } catch (e) {
+    if (msg) { msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает'; }
+    if (btn) btn.disabled = false;
+  }
+};
+
 async function loadAdminDeposits() {
   const list = document.getElementById('adminDepositsList'); const countEl = document.getElementById('adminDepCount'); if (!list) return;
   try {
@@ -2132,12 +2284,16 @@ async function init() {
   
   await loadUserFromServer();
   await fetchLiveDrops();
+  await checkAnnouncement();
   
   if (maintenanceInterval) clearInterval(maintenanceInterval);
   maintenanceInterval = setInterval(checkMaintenance, 1000);
 
   if (liveDropsInterval) clearInterval(liveDropsInterval);
   liveDropsInterval = setInterval(fetchLiveDrops, 3000);
+
+  if (announcementInterval) clearInterval(announcementInterval);
+  announcementInterval = setInterval(checkAnnouncement, 1000);
 }
 window.addEventListener('load', () => {
   setTimeout(async () => {
