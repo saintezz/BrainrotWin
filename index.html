@@ -861,7 +861,6 @@ body{
 .case-open-main-img{width:180px;height:180px;object-fit:contain;margin:10px auto;}
 .case-open-name{font-size:18px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:20px;}
 
-/* Контейнер для нескольких рулеток */
 .case-roulette-wrapper{width:100%;max-width:1100px;padding:0 16px;margin-bottom:12px; display: flex; flex-direction: column; gap: 12px;}
 .case-roulette-row{width:100%;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(90deg, var(--bg-void), var(--bg-surface), var(--bg-void));border:1px solid rgba(139,92,246,0.3);height:130px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);}
 .case-roulette-row::before,.case-roulette-row::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:8;pointer-events:none}
@@ -902,7 +901,6 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2}
 
-/* Убран текст "ОТКРЫВАЕМ..." */
 .case-anim-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-void);overflow:hidden}
 .case-anim-overlay.show{display:flex}
 .case-anim-box{position:relative;width:200px;height:200px;z-index:2}
@@ -2731,7 +2729,6 @@ body{
         const rouletteContainer = document.getElementById('caseRouletteContainer');
         rouletteContainer.innerHTML = '';
         
-        // Генерируем нужное количество лент в зависимости от caseOpenQty
         for (let q = 0; q < caseOpenQty; q++) {
             const row = document.createElement('div');
             row.className = 'case-roulette-row';
@@ -2794,7 +2791,7 @@ body{
         });
         playClick(); vibrate(8);
         if (currentCaseId) {
-            openCaseDetail(currentCaseId); // перерисовываем ленты
+            openCaseDetail(currentCaseId);
         }
     };
 
@@ -2825,7 +2822,6 @@ body{
         setTimeout(() => {
             animOverlay.classList.remove('show');
             
-            // Для каждой ленты определяем свой выигрыш
             const tracks = document.querySelectorAll('.case-roulette-track');
             
             for (let q = 0; q < caseOpenQty; q++) {
@@ -2945,8 +2941,20 @@ body{
         isSpinning = true;
         document.body.classList.add('upgrade-locked');
 
-        upgradeInProgress = { sourceItemId: inventory[selectedSourceIndex], targetId: selectedTargetId };
+        // СИСТЕМА ЗАЩИТЫ: Сохраняем статус в localStorage и МГНОВЕННО удаляем предмет из инвентаря
+        const sourceIndex = selectedSourceIndex;
+        const targetId = selectedTargetId;
+
+        upgradeInProgress = { 
+            sourceItemId: inventory[sourceIndex], 
+            targetId: targetId,
+            inventoryBackup: [...inventory] // Бэкап на случай если что-то пойдет не так
+        };
         localStorage.setItem('ggbrainx_upgrade_in_progress', JSON.stringify(upgradeInProgress));
+
+        inventory.splice(sourceIndex, 1);
+        saveLocalCache();
+        renderInventory(); // Обновляем визуально, но игрок не увидит из-за блокировки
 
         upgradeBtn.disabled = true;
         upgradeBtn.querySelector('span').innerText = 'КРУТИМ...';
@@ -2969,12 +2977,8 @@ body{
         const chanceAngle = (Math.min(chance, 100) / 100) * 360;
         const isSuccess = finalAngle <= chanceAngle;
 
-        const sourceIndex = selectedSourceIndex;
-        const targetId = selectedTargetId;
-
         setTimeout(() => {
             if (isSuccess) {
-                inventory.splice(sourceIndex, 1);
                 inventory.push(targetId);
                 playWin(); vibratePattern([30, 50, 30, 50, 60]);
 
@@ -2983,7 +2987,6 @@ body{
                 }
 
             } else {
-                inventory.splice(sourceIndex, 1);
                 playLose(); vibratePattern([50, 30, 100]);
             }
             selectedSourceIndex = null;
@@ -2999,6 +3002,7 @@ body{
             inventoryRow.classList.remove('locked');
             shopRow.classList.remove('locked');
             
+            // ОЧИЩАЕМ СТАТУС
             upgradeInProgress = null;
             localStorage.removeItem('ggbrainx_upgrade_in_progress');
         }, durationMs + 100);
@@ -3344,16 +3348,17 @@ body{
     };
 
     function init() {
+        // ОБРАБОТКА АНТИДЮПА ПРИ ПЕРЕЗАГРУЗКЕ
         if (upgradeInProgress) {
-            const idx = inventory.findIndex((id, i) => id === upgradeInProgress.sourceItemId);
-            if (idx !== -1) {
-                inventory.splice(idx, 1);
-                saveLocalCache();
-                updateBalance();
-                playLose();
-            }
+            // Предмет уже удален при старте апгрейда, поэтому просто очищаем флаг
+            // Если нужно вернуть предмет при сбое, можно использовать inventoryBackup
+            // Но по условию задачи - предмет сгорает
             upgradeInProgress = null;
             localStorage.removeItem('ggbrainx_upgrade_in_progress');
+            
+            // Восстанавливаем инвентарь из бэкапа на случай если что-то пошло не так
+            // Но лучше просто очистить
+            playLose(); // Звук проигрыша для уведомления
         }
 
         isSpinning = false;
