@@ -119,7 +119,22 @@ function saveMaintenance() { saveJSON(MAINTENANCE_FILE, maintenance); }
 
 function setCORS(res) { res.setHeader('Access-Control-Allow-Origin', '*'); res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Telegram-Init-Data'); }
 function sendJSON(res, status, data) { setCORS(res); res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); }
-function readBody(req) { return new Promise((resolve, reject) => { let body = ''; req.on('data', c => body += c.toString()); req.on('end', () => { try { resolve(body ? JSON.parse(body) : {}); } catch (e) { reject(new Error('Неверный JSON')); } }); req.on('error', reject); }); }
+
+function readBody(req) {
+  if (req.__body !== undefined) return Promise.resolve(req.__body);
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', c => body += c.toString());
+    req.on('end', () => {
+      try {
+        const parsed = body ? JSON.parse(body) : {};
+        req.__body = parsed;
+        resolve(parsed);
+      } catch (e) { reject(new Error('Неверный JSON')); }
+    });
+    req.on('error', reject);
+  });
+}
 
 function validateTelegramInitData(initData) {
   if (!initData || BOT_TOKEN === 'ЗАМЕНИТЕ_НА_ВАШ_ТОКЕН') return null;
@@ -158,16 +173,35 @@ function publicUser(u, telegramId) { return { balance: u.balance || 0, inventory
 const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') { setCORS(res); res.writeHead(204); res.end(); return; }
 
-  if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) { setCORS(res); res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end('Brainrot Game server is alive'); return; }
+  if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) {
+    setCORS(res);
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Brainrot Game server is alive');
+    return;
+  }
 
   try {
-    // === ТЕХПЕРЕРЫВ: разрешаем только статус и управление ===
+    // === ТЕХПЕРЕРЫВ: разрешаем всем, но в обработчиках проверяем админа ===
+    // Читаем тело заранее, чтобы знать username для проверки.
+    if (req.method === 'POST') {
+      try { await readBody(req); } catch (e) { req.__body = {}; }
+    }
+
     if (maintenance.enabled) {
       const allowed =
         (req.method === 'GET' && req.url === '/api/maintenance') ||
         (req.method === 'POST' && req.url === '/api/admin/maintenance');
+
       if (!allowed) {
-        return sendJSON(res, 503, { ok: false, error: 'MAINTENANCE', message: 'Технический перерыв' });
+        // Определяем username: из initData (приоритет) или из body
+        const initUser = validateTelegramInitData(req.headers['x-telegram-init-data']);
+        const bodyUser = req.__body || {};
+        const effectiveUsername = (initUser?.username || bodyUser.username || '').toLowerCase();
+
+        if (!isAdmin(effectiveUsername)) {
+          return sendJSON(res, 503, { ok: false, error: 'MAINTENANCE', message: 'Технический перерыв' });
+        }
+        // Админ — пропускаем
       }
     }
 
