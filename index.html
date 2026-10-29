@@ -86,7 +86,7 @@ body{
 .promo-code-display .pcd-copy{background: transparent; border: none; color: var(--color-purple-soft); cursor: pointer;display: flex; align-items: center; justify-content: center;opacity: .8; transition: opacity .2s, transform .2s;}
 .promo-code-display .pcd-copy:hover{ opacity: 1; transform: scale(1.1); }
 .promo-code-display .pcd-copy svg{ width: 20px; height: 20px; }
-.activate-btn{background: linear-gradient(135deg, var(--color-orange), var(--color-orange-deep));color: #fff;border: none;border-radius: 8px;padding: 14px 36px;font-size: 16px;font-weight: 900;cursor:pointer;transition: all .15s;text-transform: uppercase;letter-spacing: 1px;width: 100%;box-shadow: 0 10px 24px -10px rgba(249,115,22,.7);}
+.activate-btn{background: linear-gradient(135deg, var(--color-orange), var(--color-orange-deep));color: #fff;border: none;border-radius: 8px;padding: 14px 36px;font-size: 16px;font-weight:900;cursor:pointer;transition: all .15s;text-transform: uppercase;letter-spacing: 1px;width: 100%;box-shadow: 0 10px 24px -10px rgba(249,115,22,.7);}
 .activate-btn:hover{filter: brightness(1.12); transform: translateY(-1px);}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
@@ -1367,7 +1367,8 @@ function renderAnnouncement(ann) {
   
   const el = document.createElement('div');
   el.className = 'announcement-box';
-  el.textContent = ann.text;
+  // Форматируем как "Ник: Текст"
+  el.innerHTML = `<span style="color:var(--color-orange-soft); font-weight:900;">${ann.username || ann.by}:</span> ${ann.text}`;
   container.appendChild(el);
 }
 
