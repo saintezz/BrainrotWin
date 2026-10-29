@@ -122,7 +122,6 @@ body{
 .arrow-pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:14px;height:20px;filter: drop-shadow(0 3px 8px rgba(139,92,246,.6));}
 .arrow-pointer::before{content:'';position:absolute;inset:0;background: linear-gradient(180deg, var(--color-purple-soft), var(--color-purple-deep));clip-path: polygon(50% 100%, 0 0, 100% 0);}
 
-/* ==== КАРТОЧКИ АПГРЕЙДА (УВЕЛИЧЕННЫЕ) ==== */
 .items-row{display:flex;align-items:stretch;justify-content: space-between;gap:24px;width: 100%;padding: 0 10px;}
 .upg-card{
   flex: 1;
@@ -159,7 +158,6 @@ body{
 .segmented-control .segment{flex: 1;text-align: center;padding: 13px;font-size: 12px;font-weight:600;color: var(--text-muted);cursor: pointer;border-radius: 8px;transition: all .2s;border: 1px solid transparent;text-transform: uppercase;letter-spacing:.6px;}
 .segmented-control .segment.active{color: #fff;background:linear-gradient(180deg, rgba(139,92,246,.16), rgba(139,92,246,.06)),var(--bg-surface);border: 1px solid rgba(139,92,246,.32);}
 
-/* ==== ИНВЕНТАРЬ / МАГАЗИН ==== */
 .inventory-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;padding:4px 0 12px;}
 .shop-scroll{max-height:480px;overflow-y:auto;padding:4px 0 12px;scrollbar-width:thin;}
 .shop-scroll::-webkit-scrollbar{width:8px}
@@ -221,7 +219,6 @@ body{
 .target-list-item .tl-price{font-size:12px;font-weight:800;color:var(--color-orange-soft);display:flex;align-items:center;gap:4px;line-height:1.3}
 .target-list-item .tl-price img{width:12px;height:12px;}
 
-/* ==== ПРОФИЛЬ ==== */
 .profile-page{padding: 0 0 20px;background: var(--bg-surface);border-radius: 16px;border: 1px solid var(--glass-border);overflow: hidden;margin-top: 20px;}
 .profile-hero{padding: 30px 20px;background:radial-gradient(500px 200px at 50% 0%, rgba(139,92,246,.16), transparent 70%),var(--bg-surface-hover);border-bottom: 1px solid var(--glass-border);display: flex;flex-direction: column;align-items: center;}
 .profile-avatar-wrap{position:relative;width:110px;height:110px;margin-bottom:16px;}
@@ -265,7 +262,6 @@ body{
 .reset-avatar-btn{padding:8px 12px;border-radius:8px;border:1px solid var(--glass-border);background:var(--bg-void);color:var(--text-muted);font-size:11px;font-weight:700;cursor:pointer;}
 .reset-avatar-btn:hover{color:#fff;}
 
-/* ==== МОДАЛКИ ==== */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .2s ease;padding:14px}
 .modal.open{opacity:1;pointer-events:auto}
 .modal-card{background: var(--bg-surface);border: 1px solid var(--glass-border);border-radius:12px;padding:24px;width:100%;max-width:460px;text-align:center;position:relative;max-height:92vh;overflow-y:auto;}
@@ -308,7 +304,6 @@ body{
 .promo-list-item .code{font-size:13px;font-weight:800;color:var(--color-orange-soft);}
 .promo-list-item .pl-uses{font-size:14px;font-weight:800;color:var(--color-orange-soft);text-align:right;}
 
-/* ==== КЕЙС ОТКРЫТИЕ ==== */
 .case-open-modal{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;align-items:center;background:var(--bg-void);overflow-y:auto;padding:20px 0 40px}
 .case-open-modal.show{display:flex;}
 .case-open-header{width:100%;max-width:1100px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
@@ -348,16 +343,36 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2}
 
-/* ==== ДОСТУП ==== */
+/* ==== ТЕХПЕРЕРЫВ ==== */
+.maintenance-overlay{
+  position:fixed;inset:0;z-index:999998;
+  background:var(--bg-void);
+  display:flex;align-items:center;justify-content:center;
+  padding:30px 20px;text-align:center;
+}
+.maintenance-content{display:flex;flex-direction:column;align-items:center;gap:24px;max-width:560px;}
+.maintenance-spinner{
+  width:120px;height:120px;color:var(--color-orange);
+  animation:spin 2s linear infinite;
+  filter: drop-shadow(0 0 24px rgba(249,115,22,.6));
+}
+.maintenance-spinner svg{width:100%;height:100%;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.maintenance-title{
+  font-size:clamp(36px,8vw,72px);font-weight:900;color:#fff;
+  text-transform:uppercase;letter-spacing:6px;line-height:1;
+  text-shadow: 0 0 30px rgba(249,115,22,.4);
+}
+.maintenance-subtitle{
+  font-size:clamp(14px,2.4vw,20px);font-weight:800;
+  color:var(--color-orange-soft);letter-spacing:4px;text-transform:uppercase;
+}
+.maintenance-hint{
+  font-size:14px;font-weight:600;color:var(--text-muted);
+  letter-spacing:1px;text-transform:uppercase;
+}
+
 .access-denied{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:30px 20px;text-align:center;background:var(--bg-void);overflow:hidden;}
-.access-denied-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:20px;max-width:560px;}
-.access-denied-title{font-size:clamp(28px,6vw,56px);font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:6px;line-height:1;}
-.access-denied-subtitle{font-size:clamp(14px,2.4vw,20px);font-weight:800;color:var(--color-purple-soft);letter-spacing:4px;text-transform:uppercase;}
-.access-denied-timer{font-size:clamp(44px,10vw,88px);font-weight:900;color:#fff;letter-spacing:6px;font-variant-numeric:tabular-nums;line-height:1;}
-.access-denied-date{font-size:13px;font-weight:800;color:var(--color-orange-soft);letter-spacing:3px;text-transform:uppercase;padding:8px 18px;border-radius:8px;border:1px solid rgba(249,115,22,.4);background:rgba(249,115,22,.1);}
-.access-denied-tg{font-size:14px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;}
-.access-denied-tg a{color:var(--color-purple-soft);text-decoration:none;font-weight:900;}
-.access-denied-tg a:hover{ color:#fff; }
 .deposits-block{max-width:640px;margin:10px auto 0;padding:14px;background:rgba(139,92,246,.05);border:1px solid var(--color-purple);border-radius:8px;}
 .deposits-block-title{font-size:14px;font-weight:800;color:var(--color-purple-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
 .deposits-count{font-size:14px;font-weight:800;color:var(--color-purple-soft);margin-left:auto;background:rgba(139,92,246,.12);padding:2px 8px;border-radius:4px;border:1px solid var(--color-purple);line-height:1.3}
@@ -432,8 +447,8 @@ body{
 .withdraw-agree .wa-box{width:22px;height:22px;flex-shrink:0;border-radius:5px;border:1px solid var(--text-muted);background:var(--bg-void);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:transparent;transition:all .15s;}
 .withdraw-agree.checked .wa-box{background:var(--color-orange);border-color:var(--color-orange);color:#fff;}
 .withdraw-agree .wa-label{font-size:13px;font-weight:700;color:#ccc;line-height:1.3;text-transform:uppercase;letter-spacing:.4px;}
-.admin-tabs{display:flex;gap:6px;margin-bottom:14px;}
-.admin-tab{flex:1;padding:10px 6px;border-radius:8px;border:1px solid var(--glass-border);background: var(--bg-surface);color:var(--text-muted);font-size:12px;font-weight:800;text-transform:uppercase;cursor:pointer;transition:all .15s;letter-spacing:.5px;position:relative;}
+.admin-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.admin-tab{flex:1;min-width:90px;padding:10px 6px;border-radius:8px;border:1px solid var(--glass-border);background: var(--bg-surface);color:var(--text-muted);font-size:12px;font-weight:800;text-transform:uppercase;cursor:pointer;transition:all .15s;letter-spacing:.5px;position:relative;}
 .admin-tab:hover{color:#fff;}
 .admin-tab.active{background: linear-gradient(135deg, var(--color-purple), var(--color-purple-deep));border-color: var(--color-purple);color:#fff;}
 .admin-tab .admin-tab-count{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--color-red);color:#fff;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;}
@@ -479,13 +494,16 @@ body{
   <button class="mobile-nav-btn" id="mNavProfile" onclick="switchTab('profile'); toggleMobileMenu()">Профиль</button>
 </div>
 
-<div class="access-denied" id="accessDeniedScreen" style="display:none;">
-  <div class="access-denied-content">
-    <div class="access-denied-title">ДОСТУП ЗАКРЫТ</div>
-    <div class="access-denied-subtitle">РЕЛИЗ BRAINGAME</div>
-    <div class="access-denied-timer" id="accessDeniedTimer">??:??:??</div>
-    <div class="access-denied-date">29 ОКТЯБРЯ — 12:00 МСК</div>
-    <div class="access-denied-tg">ТГК: <a href="https://t.me/brainroll" target="_blank">brainroll</a></div>
+<div class="maintenance-overlay" id="maintenanceOverlay" style="display:none;">
+  <div class="maintenance-content">
+    <div class="maintenance-spinner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+    </div>
+    <div class="maintenance-title">ТЕХ ПЕРЕРЫВ</div>
+    <div class="maintenance-subtitle">ИГРА ВРЕМЕННО НЕДОСТУПНА</div>
+    <div class="maintenance-hint">Попробуйте зайти позже</div>
   </div>
 </div>
 
@@ -535,6 +553,7 @@ body{
             <button class="admin-tab active" id="adminTabPromo" onclick="switchAdminTab('promo')">Промокоды</button>
             <button class="admin-tab" id="adminTabDeposits" onclick="switchAdminTab('deposits')">Пополнения <span class="admin-tab-count" id="adminDepCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabWithdraws" onclick="switchAdminTab('withdraws')">Выводы <span class="admin-tab-count" id="adminWdCount" data-zero="1"></span></button>
+            <button class="admin-tab" id="adminTabMaintenance" onclick="switchAdminTab('maintenance')">Техперерыв</button>
         </div>
         <div class="admin-tab-panel active" id="adminPanelPromo">
             <div class="admin-section">
@@ -586,6 +605,17 @@ body{
             <div class="admin-section">
                 <div class="admin-section-title">Выводы</div>
                 <div id="adminWithdrawsList"><div class="admin-request-empty">Загрузка...</div></div>
+            </div>
+        </div>
+        <div class="admin-tab-panel" id="adminPanelMaintenance">
+            <div class="admin-mini-stat"><span class="stat-dot"></span> Управление техническим перерывом</div>
+            <div class="admin-section">
+                <div class="admin-section-title">Технический перерыв</div>
+                <div id="maintenanceStatus" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:14px;padding:12px;background:rgba(139,92,246,.08);border:1px solid var(--color-purple);border-radius:8px;text-align:center;">
+                    Статус: <span style="color:var(--color-orange-soft);">загрузка...</span>
+                </div>
+                <button class="action-btn" id="maintenanceToggleBtn" onclick="toggleMaintenance()" style="background:var(--color-orange);border-color:var(--color-orange);color:#fff;">Включить техперерыв</button>
+                <div class="msg" id="maintenanceMsg"></div>
             </div>
         </div>
     </div>
@@ -863,7 +893,7 @@ body{
 <script>
 // ================== КОНСТАНТЫ ==================
 const API_URL = 'https://brainrotwin.onrender.com';
-const ALLOWED_USERS = ['saintezz7', 'vortyn1'];
+const ADMIN_USERNAMES = ['saintezz7', 'vortyn1'];
 const COIN_IMG = 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/bw.png';
 const DEFAULT_AVATAR = 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg';
 const FALLBACK_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='100%25' height='100%25' fill='%23181224'/><text x='50%25' y='55%25' fill='%239a8fb0' font-size='20' text-anchor='middle'>?</text></svg>";
@@ -875,7 +905,6 @@ const MUTATION_ICONS = {
   lava: 'https://raw.githubusercontent.com/saintezz/SaintGLOSSARY/main/mutation/Lava_Mutation_Icon.webp'
 };
 
-// ================== КАТАЛОГ ==================
 const ITEMS = [
   { id: 'lagrande', name: 'La Grande Combination', price: 4, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/lagrande.webp' },
   { id: 'nuclearo', name: 'Nuclearo Dinausauro', price: 12, img: 'https://raw.githubusercontent.com/forerer-afk/brainroterX/main/nuclearo.png' },
@@ -950,7 +979,6 @@ const CASES = [
 const MAX_CHANCE = 80;
 const MIN_CHANCE = 0.01;
 
-// ================== РЕДКОСТЬ ==================
 function getRarityClass(price) {
   if (price < 100) return 'rarity-common';
   if (price < 500) return 'rarity-uncommon';
@@ -959,7 +987,6 @@ function getRarityClass(price) {
   return 'rarity-legendary';
 }
 
-// ================== СОСТОЯНИЕ ==================
 let USER = { nick: 'Гость', tg: '@guest', tgLink: '#', id: null, username: null };
 let customNick = localStorage.getItem('ggbrainx_custom_nick') || null;
 let customAvatar = localStorage.getItem('ggbrainx_custom_avatar') || null;
@@ -980,6 +1007,8 @@ let fastModeEnabled = false;
 let promoType = 'balance';
 let selectedAdminItem = null;
 let activePromo = null;
+let maintenanceEnabled = false;
+let maintenanceInterval = null;
 
 const SPIN_DURATION = 7000;
 const SPIN_DURATION_FAST = 4000;
@@ -1018,8 +1047,31 @@ function getTelegramId() {
 function getDisplayNick() { return customNick || USER.nick; }
 function getItemById(id) { return ITEMS.find(item => item.id === id) || CASE_ONLY_ITEMS.find(item => item.id === id); }
 
+// ================== ТЕХПЕРЕРЫВ ==================
+function applyMaintenanceState(enabled) {
+  maintenanceEnabled = !!enabled;
+  const ov = document.getElementById('maintenanceOverlay');
+  const app = document.getElementById('mainApp');
+  if (!ov || !app) return;
+  if (maintenanceEnabled) {
+    ov.style.display = 'flex';
+    app.style.display = 'none';
+  } else {
+    ov.style.display = 'none';
+    app.style.display = '';
+  }
+}
+async function checkMaintenance() {
+  try {
+    const res = await fetch(API_URL + '/api/maintenance');
+    const data = await res.json();
+    if (data.ok) applyMaintenanceState(data.maintenance.enabled);
+  } catch (e) {}
+}
+
 // ================== СЕРВЕР ==================
 async function api(path, body) {
+  if (maintenanceEnabled) return { ok: false, error: 'MAINTENANCE' };
   const initDataRaw = window.Telegram?.WebApp?.initData || '';
   const headers = { 'Content-Type': 'application/json' };
   if (initDataRaw) headers['X-Telegram-Init-Data'] = initDataRaw;
@@ -1092,6 +1144,7 @@ window.closeModal = function(id) { const el = document.getElementById(id); if (e
 document.querySelectorAll('.modal').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('open'); }); });
 window.toggleMobileMenu = function() { document.getElementById('mobileMenuOverlay').classList.toggle('open'); document.getElementById('mobileMenuPanel').classList.toggle('open'); playClick(); };
 window.switchTab = function(tab) {
+  if (maintenanceEnabled) return;
   if (document.body.classList.contains('upgrade-locked')) return;
   playClick(); vibrate(10);
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1135,7 +1188,7 @@ function applyUserToProfile() {
 applyUserToProfile();
 function syncCosmeticsToServer() { api('/api/user/update', { custom_nick: customNick || '', avatar: customAvatar || '' }).catch(()=>{}); }
 function updateProfile() {
-  isAdmin = ALLOWED_USERS.includes((USER.username || '').toLowerCase());
+  isAdmin = ADMIN_USERNAMES.includes((USER.username || '').toLowerCase());
   const adminBtn = document.getElementById('adminPanelBtn');
   if (adminBtn) adminBtn.style.display = isAdmin ? 'block' : 'none';
   renderProfileInventory(); updateProfileStats();
@@ -1176,6 +1229,7 @@ window.saveCustomNick = function() {
 
 // ================== ПОПОЛНЕНИЕ ==================
 window.openTopup = function() {
+  if (maintenanceEnabled) return;
   if (document.body.classList.contains('upgrade-locked')) return;
   playClick(); vibrate(10);
   renderTopupGrid();
@@ -1255,7 +1309,14 @@ function renderAdminGrid() {
   grid.innerHTML = ITEMS.map(item => `<div class="admin-item ${selectedAdminItem === item.id ? 'selected' : ''}" onclick="selectAdminItem('${item.id}')"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}><div class="name">${item.name}</div></div>`).join('');
 }
 window.selectAdminItem = function(id) { playClick(); selectedAdminItem = id; renderAdminGrid(); };
-window.openAdminPanel = function() { if (!isAdmin) return; playClick(); renderAdminGrid(); renderPromoList(); updateAdminPreview(); switchAdminTab('promo'); loadAdminDeposits(); loadAdminWithdraws(); openModal('adminModal'); };
+window.openAdminPanel = function() {
+  if (!isAdmin) return;
+  playClick();
+  renderAdminGrid(); renderPromoList(); updateAdminPreview();
+  switchAdminTab('promo');
+  loadAdminDeposits(); loadAdminWithdraws(); loadMaintenanceStatus();
+  openModal('adminModal');
+};
 window.createPromo = async function() {
   const code = document.getElementById('adminCode').value.trim().toUpperCase();
   const uses = parseInt(document.getElementById('adminUses').value);
@@ -1307,7 +1368,7 @@ window.activatePromo = async function() {
 };
 window.switchAdminTab = function(tab) {
   playClick(); vibrate(8);
-  ['promo','deposits','withdraws'].forEach(t => {
+  ['promo','deposits','withdraws','maintenance'].forEach(t => {
     const btn = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
     const panel = document.getElementById('adminPanel' + t.charAt(0).toUpperCase() + t.slice(1));
     if (btn) btn.classList.toggle('active', t === tab);
@@ -1316,6 +1377,7 @@ window.switchAdminTab = function(tab) {
   if (tab === 'deposits') loadAdminDeposits();
   if (tab === 'withdraws') loadAdminWithdraws();
   if (tab === 'promo') renderPromoList();
+  if (tab === 'maintenance') loadMaintenanceStatus();
 };
 async function loadAdminDeposits() {
   const list = document.getElementById('adminDepositsList'); const countEl = document.getElementById('adminDepCount'); if (!list) return;
@@ -1356,6 +1418,56 @@ window.processWithdraw = async function(id, status) {
     if (data.ok) { await loadAdminWithdraws(); if ((USER.username || '').toLowerCase() === (data.withdraw?.username || '').toLowerCase()) await loadUserFromServer(); playCoin(); }
     else playLose();
   } catch (e) {}
+};
+
+// ================== ТЕХПЕРЕРЫВ (АДМИН) ==================
+async function loadMaintenanceStatus() {
+  const el = document.getElementById('maintenanceStatus');
+  const btn = document.getElementById('maintenanceToggleBtn');
+  if (!el || !btn) return;
+  try {
+    const res = await fetch(API_URL + '/api/maintenance');
+    const data = await res.json();
+    if (!data.ok) throw new Error();
+    const m = data.maintenance;
+    if (m.enabled) {
+      el.innerHTML = `Статус: <span style="color:var(--color-red);">ВКЛЮЧЁН</span>${m.since ? `<br><span style="font-size:11px;color:var(--text-muted);">с ${new Date(m.since).toLocaleString('ru-RU')}</span>` : ''}`;
+      btn.textContent = 'Выключить техперерыв';
+      btn.style.background = 'var(--color-purple)';
+      btn.style.borderColor = 'var(--color-purple)';
+    } else {
+      el.innerHTML = `Статус: <span style="color:var(--color-orange-soft);">ВЫКЛЮЧЕН</span>`;
+      btn.textContent = 'Включить техперерыв';
+      btn.style.background = 'var(--color-orange)';
+      btn.style.borderColor = 'var(--color-orange)';
+    }
+    applyMaintenanceState(m.enabled);
+  } catch (e) {
+    el.innerHTML = 'Статус: <span style="color:var(--color-red);">ошибка</span>';
+  }
+}
+window.toggleMaintenance = async function() {
+  const msg = document.getElementById('maintenanceMsg');
+  if (msg) { msg.className = 'msg wait'; msg.textContent = 'Применяем...'; }
+  try {
+    const res = await fetch(API_URL + '/api/admin/maintenance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_username: USER.username || '', enabled: !maintenanceEnabled })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      if (msg) { msg.className = 'msg ok'; msg.textContent = data.maintenance.enabled ? 'Техперерыв включён' : 'Техперерыв выключен'; }
+      playCoin(); vibrate(20);
+      await loadMaintenanceStatus();
+      await checkMaintenance();
+    } else {
+      if (msg) { msg.className = 'msg err'; msg.textContent = data.error || 'Ошибка'; }
+      playLose();
+    }
+  } catch (e) {
+    if (msg) { msg.className = 'msg err'; msg.textContent = 'Сервер не отвечает'; }
+  }
 };
 
 // ================== МАГАЗИН / ИНВЕНТАРЬ ==================
@@ -1527,6 +1639,7 @@ function renderMenuCases() {
 }
 window.openCaseDetail = function(caseId) {
   if (isCaseOpening || document.body.classList.contains('upgrade-locked')) return;
+  if (maintenanceEnabled) return;
   playClick(); vibrate(10);
   const c = CASES.find(x => x.id === caseId); if (!c) return;
   currentCaseId = caseId;
@@ -1575,48 +1688,28 @@ window.setCaseOpenQty = function(qty) {
 window.confirmOpenCase = async function() {
   const c = CASES.find(x => x.id === currentCaseId); if (!c) return;
   if (isCaseOpening) return;
+  if (maintenanceEnabled) return;
   isCaseOpening = true;
-
-  // Сброс всех лент к началу (чтобы каждый раз крутилось «по новой»)
-  document.querySelectorAll('.case-roulette-track').forEach(t => {
-    t.style.transition = 'none';
-    t.style.transform = 'translateX(0px)';
-  });
-
+  document.querySelectorAll('.case-roulette-track').forEach(t => { t.style.transition = 'none'; t.style.transform = 'translateX(0px)'; });
   const btn = document.getElementById('caseOpenActionBtn');
   if (btn) { btn.disabled = true; btn.textContent = 'ОТКРЫВАЕМ...'; }
-
   let data;
   try { data = await api('/api/case/open', { case_id: currentCaseId, qty: caseOpenQty }); } catch (e) { data = { ok: false }; }
-
-  if (!data.ok) {
-    isCaseOpening = false;
-    if (btn) { btn.disabled = false; btn.textContent = 'ОТКРЫТЬ КЕЙС'; }
-    playLose(); vibrate(30);
-    return;
-  }
-
-  // Небольшая пауза чтобы сброс transform применился
+  if (!data.ok) { isCaseOpening = false; if (btn) { btn.disabled = false; btn.textContent = 'ОТКРЫТЬ КЕЙС'; } playLose(); vibrate(30); return; }
   setTimeout(() => {
     const tracks = document.querySelectorAll('.case-roulette-track');
     const ITEM_WIDTH = 120;
     data.won.forEach((wonId, q) => {
-      const track = tracks[q];
-      if (!track) return;
-      const row = track.parentElement;
-      const rowWidth = row ? row.clientWidth : 0;
+      const track = tracks[q]; if (!track) return;
+      const row = track.parentElement; const rowWidth = row ? row.clientWidth : 0;
       const targetIndex = 120;
       const scroll = targetIndex * ITEM_WIDTH - rowWidth / 2 + ITEM_WIDTH / 2;
       const items = track.children;
       if (items[targetIndex]) {
         const wonItem = getItemById(wonId);
-        if (wonItem) {
-          items[targetIndex].dataset.itemId = wonItem.id;
-          items[targetIndex].innerHTML = `<img src="${wonItem.img}" alt="${wonItem.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}><div class="roulette-name">${wonItem.name}</div><div class="roulette-price"><img src="${COIN_IMG}">${wonItem.price}</div>`;
-        }
+        if (wonItem) { items[targetIndex].dataset.itemId = wonItem.id; items[targetIndex].innerHTML = `<img src="${wonItem.img}" alt="${wonItem.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}><div class="roulette-name">${wonItem.name}</div><div class="roulette-price"><img src="${COIN_IMG}">${wonItem.price}</div>`; }
       }
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
+      track.style.transition = 'none'; track.style.transform = 'translateX(0px)';
       void track.offsetWidth;
       track.style.transition = `transform 10s cubic-bezier(0.12, 0.8, 0.12, 1)`;
       track.style.transform = `translateX(-${scroll}px)`;
@@ -1626,8 +1719,7 @@ window.confirmOpenCase = async function() {
       playWin(); vibratePattern([30,50,30,50,60]);
       isCaseOpening = false;
       if (btn) { btn.disabled = false; btn.textContent = 'ОТКРЫТЬ КЕЙС'; }
-      const cb = document.getElementById('caseOpenBalance');
-      if (cb) cb.textContent = balance.toLocaleString('ru-RU');
+      const cb = document.getElementById('caseOpenBalance'); if (cb) cb.textContent = balance.toLocaleString('ru-RU');
       renderInventory(); renderInventoryTab(); renderProfileInventory();
       if (currentCaseId) openCaseDetail(currentCaseId);
     }, 10000);
@@ -1737,31 +1829,20 @@ window.copyAutoPromoCode = function() { const promo = getCurrentAutoPromo(); nav
 window.activateAutoPromo = function() { const promo = getCurrentAutoPromo(); activePromo = { code: promo.code, bonus: promo.bonus }; playWin(); vibrate(20); if (document.getElementById('topupModal').classList.contains('open')) updateTopupPromoDisplay(); };
 function updateTopupPromoDisplay() { const infoBlock = document.getElementById('activePromoInfo'); const bonusSpan = document.getElementById('activePromoBonus'); if (activePromo) { if (infoBlock) infoBlock.style.display = 'block'; if (bonusSpan) bonusSpan.textContent = '+' + activePromo.bonus + '%'; } else if (infoBlock) infoBlock.style.display = 'none'; updateTopupPrice(); }
 
-// ================== ДОСТУП ==================
-function checkAccess() {
-  const uname = (USER.username || '').toLowerCase();
-  if (!ALLOWED_USERS.includes(uname)) { document.getElementById('accessDeniedScreen').style.display = 'flex'; document.getElementById('mainApp').style.display = 'none'; startAccessDeniedTimer(); return false; }
-  return true;
-}
-function startAccessDeniedTimer() {
-  const RELEASE_TS = new Date('2026-10-29T12:00:00+03:00').getTime();
-  const el = document.getElementById('accessDeniedTimer'); if (!el) return;
-  function tick() { const diff = RELEASE_TS - Date.now(); if (diff <= 0) { el.textContent = 'РЕЛИЗ'; return; } const total = Math.floor(diff / 1000); const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60; el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; setTimeout(tick, 1000); }
-  tick();
-}
-
 // ================== СТАРТ ==================
 async function init() {
   isSpinning = false; document.body.classList.remove('upgrade-locked');
   selectedSourceIndex = null; selectedTargetId = null;
   applyCustomAvatar(); renderMenuCases(); updateAutoPromoDisplay(); switchTab('menu');
+  await checkMaintenance();
   await loadUserFromServer();
   renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
+  if (maintenanceInterval) clearInterval(maintenanceInterval);
+  maintenanceInterval = setInterval(checkMaintenance, 15000);
 }
 window.addEventListener('load', () => {
   setTimeout(async () => {
     try { const tg = window.Telegram?.WebApp; const u = tg?.initDataUnsafe?.user; if (u?.username) { USER.username = u.username; USER.tg = '@' + u.username; USER.tgLink = 'https://t.me/' + u.username; USER.nick = '@' + u.username; applyUserToProfile(); } } catch(e) {}
-    if (!checkAccess()) return;
     await init();
     fetch(API_URL + '/').catch(() => console.log('[WAKE] Сервер просыпается...'));
   }, 300);
