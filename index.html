@@ -61,7 +61,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* Анимация всплывающего текста УСПЕХ (ЗЕЛЕНЫЙ, 2 СЕКУНДЫ) */
+/* Анимация всплывающего текста УСПЕХ */
 .success-fly-text {
   position: fixed;
   z-index: 99999;
@@ -82,7 +82,6 @@ body{
   100% { opacity: 0; transform: translateY(-80px) scale(1); }
 }
 
-/* Тосты полностью убраны из стилей, так как они не используются */
 #toastContainer{display: none;}
 
 .app{
@@ -311,7 +310,7 @@ body{
 /* УЛУЧШЕННЫЕ КАРТОЧКИ КЕЙСОВ */
 .cases-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); /* Увеличено */
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
   gap:20px;
 }
 .case-card{
@@ -388,7 +387,6 @@ body{
   stroke: rgba(139,92,246,.07);
   stroke-width:16;
 }
-/* Убрали градиенты, теперь просто фиолетовый */
 .progress-bar{
   fill:none;
   stroke: var(--color-purple);
@@ -635,6 +633,7 @@ body{
     var(--bg-surface);
   border: 1px solid rgba(139,92,246,.32);
 }
+
 /* ======================== */
 
 .inventory-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;padding:4px 0 12px;}
@@ -836,6 +835,9 @@ body{
 .promo-list-item .code{font-size:13px;font-weight:800;color:var(--color-orange-soft);}
 .promo-list-item .pl-uses{font-size:14px;font-weight:800;color:var(--color-orange-soft);text-align:right;}
 
+/* ============================================================
+   ОКНО ОТКРЫТИЯ КЕЙСА (РУЛЕТКА)
+   ============================================================ */
 .case-open-modal{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;align-items:center;background:var(--bg-void);overflow-y:auto;padding:20px 0 40px}
 .case-open-modal.show{display:flex;}
 .case-open-header{width:100%;max-width:1100px;padding:0 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
@@ -886,12 +888,11 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:10px;font-weight:600;color:var(--text-muted);line-height:1.2}
 
-/* Убран текст "ОТКРЫВАЕМ..." */
 .case-anim-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-void);overflow:hidden}
 .case-anim-overlay.show{display:flex}
 .case-anim-box{position:relative;width:200px;height:200px;z-index:2}
 .case-anim-box img{width:100%;height:100%;object-fit:contain;}
-.case-anim-text{display:none;} /* Убран */
+.case-anim-text{display:none;}
 
 .access-denied{
   position:fixed;inset:0;z-index:999999;
@@ -1693,109 +1694,18 @@ body{
         { id: 'lavastrawberry', name: 'Lava Strawberry Elephant', price: 56000, img: 'https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/LavaStrawberry.webp', mutation: 'lava' }
     ];
 
-    // НОВАЯ НАЧИНКА И ИЗМЕНЕННЫЕ КАРТИНКИ КЕЙСОВ
     const CASES = [
-        { 
-            id: 'witch', 
-            name: 'Witch Case', 
-            price: 10, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/fusecase.png', 
-            rewards: [
-                { id: 'lagrande', chance: 76 }, { id: 'nuclearo', chance: 22 }, { id: 'cupid', chance: 1.5 }, 
-                { id: 'garama', chance: 0.3 }, { id: 'burguro', chance: 0.2 }, { id: 'popcuru', chance: 0.1 }
-            ] 
-        },
-        { 
-            id: 'fruits', 
-            name: 'Fruits Case', 
-            price: 19, 
-            img: 'https://github.com/saintezz/BrainrotWin/blob/main/FRUITSCASE.png?raw=true', // ЗАМЕНЕНА КАРТИНКА
-            rewards: [
-                { id: 'lagrande', chance: 30 }, { id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 15 }, { id: 'waverider', chance: 5 }
-            ] 
-        },
-        { 
-            id: 'garama', 
-            name: 'Garama Case', 
-            price: 29, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/garamacase.png', 
-            rewards: [
-                { id: 'nuclearo', chance: 40 }, { id: 'cupid', chance: 40 }, { id: 'garama', chance: 15 }, { id: 'burguro', chance: 5 }
-            ] 
-        },
-        { 
-            id: 'yeti', 
-            name: 'Yeti Case', 
-            price: 40, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/yeticase.png', 
-            rewards: [
-                { id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 40 }, { id: 'burguro', chance: 9.99 }, { id: 'polaroidini', chance: 0.01 }
-            ] 
-        },
-        { 
-            id: 'school', 
-            name: 'School Case', 
-            price: 59, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/SCHOOL.png', 
-            rewards: [
-                { id: 'witchbroom', chance: 60 }, { id: 'garama', chance: 20 }, { id: 'lafoodcombinasion', chance: 5 }, { id: 'cerberus', chance: 4 }, { id: 'losadmins', chance: 1 }
-            ] 
-        },
-        { 
-            id: 'arcadragon', 
-            name: 'Arcadragon Case', 
-            price: 200, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', 
-            rewards: [
-                { id: 'cerberus', chance: 60 }, { id: 'globba', chance: 20 }, { id: 'dugdugdug', chance: 10 }, { id: 'guest666', chance: 5 }, { id: 'rubiko', chance: 4 }, { id: 'dragon', chance: 1 }
-            ] 
-        },
-        { 
-            id: 'vampire', 
-            name: 'Vampire Case', 
-            price: 299, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/VampireCase.png', 
-            rewards: [
-                { id: 'dugdugdug', chance: 50 }, { id: 'losamigos', chance: 30 }, { id: 'losadmins', chance: 12 }, { id: 'ricodinero', chance: 8 }
-            ] 
-        },
-        { 
-            id: 'tacos', 
-            name: 'Tacos Case', 
-            price: 340, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/tacoscase.png', 
-            rewards: [
-                { id: 'guest666', chance: 77 }, { id: 'losadmins', chance: 13 }, { id: 'rubiko', chance: 10 }
-            ] 
-        },
-        { 
-            id: 'dragon', 
-            name: 'Dragon Case', 
-            price: 3900, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/dragoncase.png', 
-            rewards: [
-                { id: 'kraken', chance: 70 }, { id: 'digi', chance: 15 }, { id: 'kalikabros', chance: 10 }, { id: 'dragonaquanini', chance: 4.9 }, { id: 'meowl', chance: 0.1 }
-            ] 
-        },
-        { 
-            id: 'strawberry', 
-            name: 'Strawberry Case', 
-            price: 8900, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/strawberryaLLin.png', 
-            rewards: [
-                { id: 'griffin', chance: 70 }, { id: 'elefantofrigo', chance: 20 }, { id: 'skibidi', chance: 5 }, { id: 'meowl', chance: 5 }
-            ] 
-        },
-        { 
-            id: 'griffin', 
-            name: 'Griffin Case', 
-            price: 17000, 
-            img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/GriffinCase.png', 
-            rewards: [
-                { id: 'skibidi', chance: 50 }, { id: 'johnpork', chance: 30 }, { id: 'meowl', chance: 17 }, { id: 'strawberryelephant', chance: 3 }
-            ] 
-        }
-        // Orchidox Case убран
+        { id: 'witch', name: 'Witch Case', price: 10, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/fusecase.png', rewards: [{ id: 'lagrande', chance: 76 }, { id: 'nuclearo', chance: 22 }, { id: 'cupid', chance: 1.5 }, { id: 'garama', chance: 0.3 }, { id: 'burguro', chance: 0.2 }, { id: 'popcuru', chance: 0.1 }] },
+        { id: 'fruits', name: 'Fruits Case', price: 19, img: 'https://github.com/saintezz/BrainrotWin/blob/main/FRUITSCASE.png?raw=true', rewards: [{ id: 'lagrande', chance: 30 }, { id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 15 }, { id: 'waverider', chance: 5 }] },
+        { id: 'garama', name: 'Garama Case', price: 29, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/garamacase.png', rewards: [{ id: 'nuclearo', chance: 40 }, { id: 'cupid', chance: 40 }, { id: 'garama', chance: 15 }, { id: 'burguro', chance: 5 }] },
+        { id: 'yeti', name: 'Yeti Case', price: 40, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/yeticase.png', rewards: [{ id: 'nuclearo', chance: 50 }, { id: 'cupid', chance: 40 }, { id: 'burguro', chance: 9.99 }, { id: 'polaroidini', chance: 0.01 }] },
+        { id: 'school', name: 'School Case', price: 59, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/SCHOOL.png', rewards: [{ id: 'witchbroom', chance: 60 }, { id: 'garama', chance: 20 }, { id: 'lafoodcombinasion', chance: 5 }, { id: 'cerberus', chance: 4 }, { id: 'losadmins', chance: 1 }] },
+        { id: 'arcadragon', name: 'Arcadragon Case', price: 200, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/ARCAcase.png', rewards: [{ id: 'cerberus', chance: 60 }, { id: 'globba', chance: 20 }, { id: 'dugdugdug', chance: 10 }, { id: 'guest666', chance: 5 }, { id: 'rubiko', chance: 4 }, { id: 'dragon', chance: 1 }] },
+        { id: 'vampire', name: 'Vampire Case', price: 299, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/VampireCase.png', rewards: [{ id: 'dugdugdug', chance: 50 }, { id: 'losamigos', chance: 30 }, { id: 'losadmins', chance: 12 }, { id: 'ricodinero', chance: 8 }] },
+        { id: 'tacos', name: 'Tacos Case', price: 340, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/tacoscase.png', rewards: [{ id: 'guest666', chance: 77 }, { id: 'losadmins', chance: 13 }, { id: 'rubiko', chance: 10 }] },
+        { id: 'dragon', name: 'Dragon Case', price: 3900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/dragoncase.png', rewards: [{ id: 'kraken', chance: 70 }, { id: 'digi', chance: 15 }, { id: 'kalikabros', chance: 10 }, { id: 'dragonaquanini', chance: 4.9 }, { id: 'meowl', chance: 0.1 }] },
+        { id: 'strawberry', name: 'Strawberry Case', price: 8900, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/strawberryaLLin.png', rewards: [{ id: 'griffin', chance: 70 }, { id: 'elefantofrigo', chance: 20 }, { id: 'skibidi', chance: 5 }, { id: 'meowl', chance: 5 }] },
+        { id: 'griffin', name: 'Griffin Case', price: 17000, img: 'https://raw.githubusercontent.com/saintezz/BrainrotWin/main/GriffinCase.png', rewards: [{ id: 'skibidi', chance: 50 }, { id: 'johnpork', chance: 30 }, { id: 'meowl', chance: 17 }, { id: 'strawberryelephant', chance: 3 }] }
     ];
 
     const MAX_CHANCE = 80;
@@ -1851,11 +1761,7 @@ body{
 
     function copyAutoPromoCode() {
         const promo = getCurrentAutoPromo();
-        navigator.clipboard.writeText(promo.code).then(() => {
-            // showToast убран
-        }).catch(() => {
-            // showToast убран
-        });
+        navigator.clipboard.writeText(promo.code).then(() => {}).catch(() => {});
     }
 
     let activePromo = null;
@@ -1863,7 +1769,6 @@ body{
     function activateAutoPromo() {
         const promo = getCurrentAutoPromo();
         activePromo = { code: promo.code, bonus: promo.bonus };
-        // showToast убран
         playWin(); vibrate(20);
         if (document.getElementById('topupModal').classList.contains('open')) {
             updateTopupPromoDisplay();
@@ -1917,7 +1822,6 @@ body{
     let isCaseOpening = false;
     let rareRollCounter = 0;
 
-    // СИСТЕМА АНТИДЮПА
     let upgradeInProgress = JSON.parse(localStorage.getItem('ggbrainx_upgrade_in_progress') || 'null');
 
     let pendingWithdrawItemIds = new Set(
@@ -2108,10 +2012,6 @@ body{
     const upgCardLeft = document.getElementById('upgCardLeft');
     const upgCardRight = document.getElementById('upgCardRight');
     const progressTicks = document.getElementById('progressTicks');
-
-    function showToast(text, type = 'info') {
-        // Уведомления отключены
-    }
 
     function spawnSuccessText() {
         const el = document.createElement('div');
@@ -2706,7 +2606,7 @@ body{
         renderShop(); renderInventory(); updateUpgradeScreen();
         renderProfileInventory();
         if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
-        playCoin(); vibrate(15); // Убрано showToast
+        playCoin(); vibrate(15);
     }
     
     window.sellItem = function(index) {
@@ -2816,7 +2716,56 @@ body{
         document.getElementById('caseOpenName').textContent = c.name;
         document.getElementById('caseOpenImg').src = c.img;
         document.getElementById('caseOpenBalance').textContent = balance.toLocaleString('ru-RU');
-        document.getElementById('caseRouletteContainer').innerHTML = '';
+        
+        // Строим рулетку
+        const rouletteContainer = document.getElementById('caseRouletteContainer');
+        rouletteContainer.innerHTML = '';
+        
+        const row = document.createElement('div');
+        row.className = 'case-roulette-row';
+        const track = document.createElement('div');
+        track.className = 'case-roulette-track';
+        track.id = 'caseRouletteTrack';
+        
+        // Генерируем ленту предметов для анимации (много элементов)
+        const totalItems = 60;
+        for (let i = 0; i < totalItems; i++) {
+            const reward = c.rewards[Math.floor(Math.random() * c.rewards.length)];
+            const item = getItemById(reward.id);
+            if (!item) continue;
+            
+            const itemEl = document.createElement('div');
+            itemEl.className = 'case-roulette-item';
+            itemEl.innerHTML = `
+                <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                <div class="roulette-name">${item.name}</div>
+                <div class="roulette-price"><img src="${COIN_IMG}">${item.price}</div>
+            `;
+            track.appendChild(itemEl);
+        }
+        
+        // Добавляем выигрышный предмет в центр (будет вычислен при клике)
+        row.appendChild(track);
+        const pointer = document.createElement('div');
+        pointer.className = 'case-roulette-pointer';
+        row.appendChild(pointer);
+        
+        rouletteContainer.appendChild(row);
+
+        // Заполняем блок "Что может выпасть"
+        const possibleGrid = document.getElementById('casePossibleGrid');
+        possibleGrid.innerHTML = c.rewards.map(r => {
+            const item = getItemById(r.id);
+            if (!item) return '';
+            return `
+                <div class="case-possible-item">
+                    <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+                    <div class="cp-name">${item.name}</div>
+                    <div class="cp-price"><img src="${COIN_IMG}">${item.price}</div>
+                    <div class="cp-chance">${r.chance}%</div>
+                </div>
+            `;
+        }).join('');
         
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -2835,19 +2784,6 @@ body{
             b.classList.toggle('active', parseInt(b.dataset.qty) === qty);
         });
         playClick(); vibrate(8);
-    };
-
-    window.skipCaseAnimation = function() {
-        skipAnimationFlag = true;
-        activeAnimTimers.forEach(t => clearTimeout(t));
-        activeAnimTimers = [];
-        activeAnimResolvers.forEach(r => { try { r(); } catch(e){} });
-        activeAnimResolvers = [];
-        const overlay = document.getElementById('caseAnimOverlay');
-        if (overlay) overlay.classList.remove('show');
-        document.querySelectorAll('.case-roulette-track').forEach(track => {
-            track.style.transition = 'transform 200ms ease-out';
-        });
     };
 
     window.confirmOpenCase = async function() {
@@ -2877,40 +2813,72 @@ body{
         setTimeout(() => {
             animOverlay.classList.remove('show');
             
-            for (let i = 0; i < caseOpenQty; i++) {
-                const rng = Math.random() * 100;
-                let currentChance = 0;
-                let wonItemId = c.rewards[0].id; 
-                
-                for (const reward of c.rewards) {
-                    currentChance += reward.chance;
-                    if (rng <= currentChance) {
-                        wonItemId = reward.id;
-                        break;
-                    }
+            // Определяем выигрышный предмет
+            const rng = Math.random() * 100;
+            let currentChance = 0;
+            let wonItemId = c.rewards[0].id; 
+            
+            for (const reward of c.rewards) {
+                currentChance += reward.chance;
+                if (rng <= currentChance) {
+                    wonItemId = reward.id;
+                    break;
                 }
+            }
+            
+            // Добавляем в инвентарь
+            for (let i = 0; i < caseOpenQty; i++) {
                 inventory.push(wonItemId);
-                
-                setTimeout(() => {
-                    const wonItem = getItemById(wonItemId);
-                    if (wonItem) {
-                        // showToast убран
-                    }
-                }, i * 500);
             }
 
-            updateBalance();
-            renderInventory(); renderShop(); updateUpgradeScreen();
-            renderProfileInventory();
-            if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
+            // Анимация рулетки
+            const track = document.getElementById('caseRouletteTrack');
+            if (track) {
+                const itemWidth = 120; // Ширина одного элемента
+                const centerOffset = 50; // Смещение для центрирования (половина ширины контейнера)
+                
+                // Находим индекс выигрышного элемента (должен быть в середине ленты)
+                // Для визуального эффекта просто прокручиваем на случайное расстояние
+                const randomScroll = 3000 + Math.random() * 2000;
+                
+                track.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)';
+                track.style.transform = `translateX(-${randomScroll}px)`;
+                
+                setTimeout(() => {
+                    updateBalance();
+                    renderInventory(); renderShop(); updateUpgradeScreen();
+                    renderProfileInventory();
+                    if (document.getElementById('panelInventory')?.classList.contains('active')) renderInventoryTab();
+                    
+                    playWin(); vibratePattern([30, 50, 30, 50, 60]);
+                    
+                    isCaseOpening = false;
+                    btn.disabled = false;
+                    btn.textContent = 'ОТКРЫТЬ КЕЙС';
+                }, 4000);
+            } else {
+                isCaseOpening = false;
+                btn.disabled = false;
+                btn.textContent = 'ОТКРЫТЬ КЕЙС';
+                updateBalance();
+                renderInventory(); renderShop(); updateUpgradeScreen();
+                renderProfileInventory();
+            }
             
-            playWin(); vibratePattern([30, 50, 30, 50, 60]);
-            
-            isCaseOpening = false;
-            btn.disabled = false;
-            btn.textContent = 'ОТКРЫТЬ КЕЙС';
-            
-        }, 2000);
+        }, 1000);
+    };
+
+    window.skipCaseAnimation = function() {
+        skipAnimationFlag = true;
+        activeAnimTimers.forEach(t => clearTimeout(t));
+        activeAnimTimers = [];
+        activeAnimResolvers.forEach(r => { try { r(); } catch(e){} });
+        activeAnimResolvers = [];
+        const overlay = document.getElementById('caseAnimOverlay');
+        if (overlay) overlay.classList.remove('show');
+        document.querySelectorAll('.case-roulette-track').forEach(track => {
+            track.style.transition = 'transform 200ms ease-out';
+        });
     };
 
     function calculateChance() {
@@ -3393,17 +3361,14 @@ body{
     };
 
     function init() {
-        // ОБРАБОТКА АНТИДЮПА
         if (upgradeInProgress) {
-            // Если при загрузке обнаружен незавершенный апгрейд - сжигаем предмет
             const idx = inventory.findIndex((id, i) => id === upgradeInProgress.sourceItemId);
             if (idx !== -1) {
                 inventory.splice(idx, 1);
                 saveLocalCache();
                 updateBalance();
-                playLose(); // Звук проигрыша для уведомления
+                playLose();
             }
-            // Очищаем флаг
             upgradeInProgress = null;
             localStorage.removeItem('ggbrainx_upgrade_in_progress');
         }
