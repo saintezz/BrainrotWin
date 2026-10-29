@@ -14,6 +14,7 @@ const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
 const WITHDRAWS_FILE = path.join(DATA_DIR, 'withdraws.json');
 const MAINTENANCE_FILE = path.join(DATA_DIR, 'maintenance.json');
 const ANNOUNCEMENT_FILE = path.join(DATA_DIR, 'announcement.json');
+const STATS_FILE = path.join(DATA_DIR, 'stats.json');
 
 const ADMIN_USERNAMES = ['saintezz7', 'vortyn1'];
 
@@ -100,8 +101,9 @@ function calcUpgradeChance(sourcePrice, targetPrice) {
 
 let promocodes = {}, users = {}, deposits = [], withdraws = [];
 let maintenance = { enabled: false, since: null, by: '' };
-let liveDrops = [];
-let currentAnnouncement = null; // { text, timestamp, by, username }
+let currentAnnouncement = null;
+let stats = { total_upgrades: 0, total_cases: 0 };
+let onlineUsers = new Map(); // telegram_id -> last_seen_timestamp
 
 function ensureDataDir() { try { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {} }
 function loadJSON(file, fallback) { try { if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (err) { console.error('[ERROR] Load', file, err.message); } return fallback; }
@@ -114,6 +116,7 @@ function loadAll() {
   withdraws = loadJSON(WITHDRAWS_FILE, []);
   maintenance = loadJSON(MAINTENANCE_FILE, { enabled: false, since: null, by: '' });
   currentAnnouncement = loadJSON(ANNOUNCEMENT_FILE, null);
+  stats = loadJSON(STATS_FILE, { total_upgrades: 0, total_cases: 0 });
 }
 function savePromos() { saveJSON(PROMO_FILE, promocodes); }
 function saveUsers() { saveJSON(USERS_FILE, users); }
@@ -121,20 +124,23 @@ function saveDeposits() { saveJSON(DEPOSITS_FILE, deposits); }
 function saveWithdraws() { saveJSON(WITHDRAWS_FILE, withdraws); }
 function saveMaintenance() { saveJSON(MAINTENANCE_FILE, maintenance); }
 function saveAnnouncement() { saveJSON(ANNOUNCEMENT_FILE, currentAnnouncement); }
+function saveStats() { saveJSON(STATS_FILE, stats); }
 
-function addLiveDrop(username, itemId, source) {
-  const item = getItem(itemId);
-  if (!item) return;
-  liveDrops.unshift({
-    id: Date.now().toString() + Math.random().toString(36).slice(2, 6),
-    username: username || 'Аноним',
-    item_id: itemId,
-    item_name: item.name,
-    price: item.price,
-    source: source || 'Кейс',
-    time: new Date().toISOString()
-  });
-  if (liveDrops.length > 30) liveDrops = liveDrops.slice(0, 30);
+function updateOnline(telegramId) {
+  if (!telegramId) return;
+  onlineUsers.set(String(telegramId), Date.now());
+}
+function getOnlineCount() {
+  const now = Date.now();
+  let count = 0;
+  for (const [id, time] of onlineUsers) {
+    if (now - time < 60000) { // Активен в последние 60 секунд
+      count++;
+    } else {
+      onlineUsers.delete(id);
+    }
+  }
+  return count;
 }
 
 function setCORS(res) { res.setHeader('Access-Control-Allow-Origin', '*'); res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Telegram-Init-Data'); }
@@ -205,12 +211,11 @@ const server = http.createServer(async (req, res) => {
       try { await readBody(req); } catch (e) { req.__body = {}; }
     }
 
-    if (req.method === 'GET' && req.url === '/api/live-drops') {
-      return sendJSON(res, 200, { ok: true, drops: liveDrops });
+    if (req.method === 'GET' && req.url === '/api/stats') {
+      return sendJSON(res, 200, { ok: true, online: getOnlineCount(), upgrades: stats.total_upgrades, cases: stats.total_cases });
     }
 
     if (req.method === 'GET' && req.url === '/api/announcement') {
-      // Проверяем, не истекло ли 10 секунд
       if (currentAnnouncement && (Date.now() - currentAnnouncement.timestamp > 10000)) {
         currentAnnouncement = null;
         saveAnnouncement();
@@ -221,7 +226,7 @@ const server = http.createServer(async (req, res) => {
     if (maintenance.enabled) {
       const allowed =
         (req.method === 'GET' && req.url === '/api/maintenance') ||
-        (req.method === 'GET' && req.url === '/api/live-drops') ||
+        (req.method === 'GET' && req.url === '/api/stats') ||
         (req.method === 'GET' && req.url === '/api/announcement') ||
         (req.method === 'POST' && req.url === '/api/admin/maintenance');
 
@@ -290,7 +295,7 @@ const server = http.createServer(async (req, res) => {
       promo.uses -= 1; savePromos();
       const u = ensureUser(user.id, user.username);
       if (promo.type === 'balance') u.balance = (u.balance || 0) + promo.value;
-      else if (promo.type === 'item') { if (!Array.isArray(u.inventory)) u.inventory = []; u.inventory.push(promo.value); addLiveDrop(u.username || 'Игрок', promo.value, 'Промокод'); }
+      else if (promo.type === 'item') { if (!Array.isArray(u.inventory)) u.inventory = []; u.inventory.push(promo.value); }
       u.updated_at = new Date().toISOString(); saveUsers();
       return sendJSON(res, 200, { ok: true, type: promo.type, value: promo.value, remaining: promo.uses });
     }
@@ -299,6 +304,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/api/case/open') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { case_id, qty } = body;
       const c = CASES[case_id]; if (!c) return sendJSON(res, 404, { ok: false, error: 'Кейс не найден' });
       const quantity = Math.max(1, Math.min(5, parseInt(qty) || 1));
@@ -311,15 +317,19 @@ const server = http.createServer(async (req, res) => {
         const rng = Math.random() * 100; let acc = 0; let wonId = c.rewards[0].id;
         for (const r of c.rewards) { acc += r.chance; if (rng <= acc) { wonId = r.id; break; } }
         u.inventory.push(wonId); wonItems.push(wonId);
-        addLiveDrop(u.username || 'Игрок', wonId, 'Кейс');
       }
       u.updated_at = new Date().toISOString(); saveUsers();
+      
+      stats.total_cases += quantity;
+      saveStats();
+      
       return sendJSON(res, 200, { ok: true, won: wonItems, new_balance: u.balance, inventory: u.inventory });
     }
 
     if (req.method === 'POST' && req.url === '/api/upgrade') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { source_item_id, target_item_id } = body;
       const src = getItem(source_item_id), tgt = getItem(target_item_id);
       if (!src || !tgt) return sendJSON(res, 404, { ok: false, error: 'Предмет не найден' });
@@ -333,27 +343,31 @@ const server = http.createServer(async (req, res) => {
       const success = Math.random() * 100 <= chance;
       if (success) { 
         u.inventory.push(target_item_id); 
-        addLiveDrop(u.username || 'Игрок', target_item_id, 'Апгрейдер'); 
       }
       u.updated_at = new Date().toISOString(); saveUsers();
+      
+      stats.total_upgrades += 1;
+      saveStats();
+      
       return sendJSON(res, 200, { ok: true, success, chance, won_item: success ? target_item_id : null, new_balance: u.balance, inventory: u.inventory });
     }
 
     if (req.method === 'POST' && req.url === '/api/shop/buy') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { item_id } = body;
       const item = getItem(item_id); if (!item) return sendJSON(res, 404, { ok: false, error: 'Предмет не найден' });
       const u = ensureUser(user.id, user.username);
       if (u.balance < item.price) return sendJSON(res, 400, { ok: false, error: 'Недостаточно монет' });
       u.balance -= item.price; u.inventory.push(item_id);
-      addLiveDrop(u.username || 'Игрок', item_id, 'Магазин');
       u.updated_at = new Date().toISOString(); saveUsers();
       return sendJSON(res, 200, { ok: true, new_balance: u.balance, inventory: u.inventory });
     }
     if (req.method === 'POST' && req.url === '/api/shop/sell') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { item_id } = body;
       const item = getItem(item_id); if (!item) return sendJSON(res, 404, { ok: false, error: 'Предмет не найден' });
       const u = ensureUser(user.id, user.username);
@@ -368,6 +382,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/api/deposit/create') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { item_id, roblox_name } = body;
       if (!item_id || !roblox_name) return sendJSON(res, 400, { ok: false, error: 'Не хватает данных' });
       const u = ensureUser(user.id, user.username);
@@ -396,6 +411,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/api/withdraw/create') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { item_id, roblox_name, time_slot, comment } = body;
       if (!item_id || !roblox_name || !time_slot) return sendJSON(res, 400, { ok: false, error: 'Не хватает данных' });
       const u = ensureUser(user.id, user.username);
@@ -426,12 +442,14 @@ const server = http.createServer(async (req, res) => {
 
     if (req.method === 'GET' && req.url.startsWith('/api/user/')) {
       const id = decodeURIComponent(req.url.slice('/api/user/'.length));
+      updateOnline(id);
       const u = ensureUser(id); saveUsers();
       return sendJSON(res, 200, { ok: true, user: publicUser(u, id) });
     }
     if (req.method === 'POST' && req.url === '/api/user/update') {
       const body = await readBody(req);
       const user = getTelegramUser(req, body); if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
+      updateOnline(user.id);
       const { custom_nick, avatar } = body;
       const u = ensureUser(user.id, user.username);
       if (typeof custom_nick === 'string') u.custom_nick = custom_nick.slice(0, 20);
