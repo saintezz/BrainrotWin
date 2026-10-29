@@ -12,6 +12,7 @@ const PROMO_FILE = path.join(DATA_DIR, 'promocodes.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const DEPOSITS_FILE = path.join(DATA_DIR, 'deposits.json');
 const WITHDRAWS_FILE = path.join(DATA_DIR, 'withdraws.json');
+const MAINTENANCE_FILE = path.join(DATA_DIR, 'maintenance.json');
 
 const ADMIN_USERNAMES = ['saintezz7', 'vortyn1'];
 
@@ -97,15 +98,24 @@ function calcUpgradeChance(sourcePrice, targetPrice) {
 }
 
 let promocodes = {}, users = {}, deposits = [], withdraws = [];
+let maintenance = { enabled: false, since: null, by: '' };
 
 function ensureDataDir() { try { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {} }
 function loadJSON(file, fallback) { try { if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (err) { console.error('[ERROR] Load', file, err.message); } return fallback; }
 function saveJSON(file, data) { try { ensureDataDir(); fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8'); } catch (err) { console.error('[ERROR] Save', file, err.message); } }
-function loadAll() { promocodes = loadJSON(PROMO_FILE, {}); users = loadJSON(USERS_FILE, {}); deposits = loadJSON(DEPOSITS_FILE, []); withdraws = loadJSON(WITHDRAWS_FILE, []); }
+
+function loadAll() {
+  promocodes = loadJSON(PROMO_FILE, {});
+  users = loadJSON(USERS_FILE, {});
+  deposits = loadJSON(DEPOSITS_FILE, []);
+  withdraws = loadJSON(WITHDRAWS_FILE, []);
+  maintenance = loadJSON(MAINTENANCE_FILE, { enabled: false, since: null, by: '' });
+}
 function savePromos() { saveJSON(PROMO_FILE, promocodes); }
 function saveUsers() { saveJSON(USERS_FILE, users); }
 function saveDeposits() { saveJSON(DEPOSITS_FILE, deposits); }
 function saveWithdraws() { saveJSON(WITHDRAWS_FILE, withdraws); }
+function saveMaintenance() { saveJSON(MAINTENANCE_FILE, maintenance); }
 
 function setCORS(res) { res.setHeader('Access-Control-Allow-Origin', '*'); res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Telegram-Init-Data'); }
 function sendJSON(res, status, data) { setCORS(res); res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); }
@@ -147,9 +157,34 @@ function publicUser(u, telegramId) { return { balance: u.balance || 0, inventory
 
 const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') { setCORS(res); res.writeHead(204); res.end(); return; }
+
   if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) { setCORS(res); res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end('Brainrot Game server is alive'); return; }
 
   try {
+    // === ТЕХПЕРЕРЫВ: разрешаем только статус и управление ===
+    if (maintenance.enabled) {
+      const allowed =
+        (req.method === 'GET' && req.url === '/api/maintenance') ||
+        (req.method === 'POST' && req.url === '/api/admin/maintenance');
+      if (!allowed) {
+        return sendJSON(res, 503, { ok: false, error: 'MAINTENANCE', message: 'Технический перерыв' });
+      }
+    }
+
+    // === MAINTENANCE ===
+    if (req.method === 'GET' && req.url === '/api/maintenance') {
+      return sendJSON(res, 200, { ok: true, maintenance });
+    }
+    if (req.method === 'POST' && req.url === '/api/admin/maintenance') {
+      const body = await readBody(req);
+      const admin = (body.admin_username || '').toLowerCase();
+      if (!isAdmin(admin)) return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
+      const { enabled } = body;
+      maintenance = { enabled: !!enabled, since: enabled ? new Date().toISOString() : null, by: enabled ? admin : '' };
+      saveMaintenance();
+      return sendJSON(res, 200, { ok: true, maintenance });
+    }
+
     if (req.method === 'POST' && req.url === '/api/create') {
       const body = await readBody(req);
       const { code, uses, type, value, admin_username } = body;
