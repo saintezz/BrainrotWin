@@ -164,38 +164,44 @@ body{
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
 .section-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:10px;padding:0 10px;text-transform:uppercase;}
 
-.rarity-common { border-color: #3b82f6 !important; box-shadow: 0 0 0 1px rgba(59,130,246,.4), 0 6px 18px -8px rgba(59,130,246,.6) !important; }
-.rarity-common:hover { box-shadow: 0 0 0 1px rgba(59,130,246,.7), 0 10px 24px -8px rgba(59,130,246,.8) !important; }
-.rarity-uncommon { border-color: #22c55e !important; box-shadow: 0 0 0 1px rgba(34,197,94,.4), 0 6px 18px -8px rgba(34,197,94,.6) !important; }
-.rarity-uncommon:hover { box-shadow: 0 0 0 1px rgba(34,197,94,.7), 0 10px 24px -8px rgba(34,197,94,.8) !important; }
-.rarity-rare { border-color: #eab308 !important; box-shadow: 0 0 0 1px rgba(234,179,8,.4), 0 6px 18px -8px rgba(234,179,8,.6) !important; }
-.rarity-rare:hover { box-shadow: 0 0 0 1px rgba(234,179,8,.7), 0 10px 24px -8px rgba(234,179,8,.8) !important; }
-.rarity-epic { border-color: #a855f7 !important; box-shadow: 0 0 0 1px rgba(168,85,247,.4), 0 6px 18px -8px rgba(168,85,247,.6) !important; }
-.rarity-epic:hover { box-shadow: 0 0 0 1px rgba(168,85,247,.7), 0 10px 24px -8px rgba(168,85,247,.8) !important; }
-.rarity-legendary {
-  border: 2px solid transparent !important;
-  background:
-    linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
-    linear-gradient(135deg, #ff0000, #ff8800, #ffff00, #00ff00, #00aaff, #aa00ff, #ff0000) border-box !important;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 6px 24px -6px rgba(255,136,0,.7) !important;
-  animation: rainbowShift 4s linear infinite;
+/* ==== НОВАЯ ОБВОДКА (ПОЛОСКА СВЕРХУ) ==== */
+.inv-card,.shop-card,.inv-tab-card,.profile-inventory-item,.upg-card.filled,.case-possible-item,.withdraw-item,.admin-item{
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.rarity-legendary:hover {
-  box-shadow: 0 0 0 2px rgba(255,255,255,.15), 0 10px 32px -6px rgba(255,136,0,.9) !important;
-}
-@keyframes rainbowShift {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-
-.inv-card,.shop-card{
+/* Базовый стиль для карточек (без бордера редкости, только фон) */
+.inv-card,.shop-card,.inv-tab-card,.profile-inventory-item{
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
-  border-radius:10px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;
-  transition:transform .15s, border-color .15s;position:relative;min-width:0;overflow:hidden;cursor:pointer;
+  border-radius: 10px;
 }
-.inv-card:hover,.shop-card:hover{ transform: translateY(-3px); }
-.inv-card.selected{border-color: var(--color-purple) !important;background:rgba(139,92,246,.1);}
+
+/* Полоска сверху через псевдоэлемент */
+.rarity-common::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #3b82f6; border-radius: 10px 10px 0 0; z-index: 10; }
+.rarity-uncommon::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #22c55e; border-radius: 10px 10px 0 0; z-index: 10; }
+.rarity-rare::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #eab308; border-radius: 10px 10px 0 0; z-index: 10; }
+.rarity-epic::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #a855f7; border-radius: 10px 10px 0 0; z-index: 10; }
+.rarity-legendary::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00aaff, #aa00ff, #ff0000); background-size: 200% 100%; animation: rainbowShift 4s linear infinite; border-radius: 10px 10px 0 0; z-index: 10; }
+
+/* Легкая подсветка снизу для красоты (опционально) */
+.rarity-common { box-shadow: inset 0 -2px 10px -4px rgba(59,130,246,.3) !important; border-color: transparent !important; }
+.rarity-uncommon { box-shadow: inset 0 -2px 10px -4px rgba(34,197,94,.3) !important; border-color: transparent !important; }
+.rarity-rare { box-shadow: inset 0 -2px 10px -4px rgba(234,179,8,.3) !important; border-color: transparent !important; }
+.rarity-epic { box-shadow: inset 0 -2px 10px -4px rgba(168,85,247,.3) !important; border-color: transparent !important; }
+.rarity-legendary { box-shadow: inset 0 -2px 15px -4px rgba(255,136,0,.5) !important; border-color: transparent !important; }
+
+/* Ховер эффекты */
+.inv-card:hover,.shop-card:hover,.inv-tab-card:hover,.profile-inventory-item:hover{ transform: translateY(-3px); }
+.rarity-common:hover { box-shadow: 0 6px 15px -5px rgba(59,130,246,.5) !important; }
+.rarity-uncommon:hover { box-shadow: 0 6px 15px -5px rgba(34,197,94,.5) !important; }
+.rarity-rare:hover { box-shadow: 0 6px 15px -5px rgba(234,179,8,.5) !important; }
+.rarity-epic:hover { box-shadow: 0 6px 15px -5px rgba(168,85,247,.5) !important; }
+.rarity-legendary:hover { box-shadow: 0 6px 20px -5px rgba(255,136,0,.6) !important; }
+
+@keyframes rainbowShift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+/* Восстановление стандартных стилей для остальных элементов */
 .inv-card img,.shop-card img{width:100%;max-width:70px;height:70px;object-fit:contain;margin-bottom:8px;pointer-events:none;}
 .inv-card .name,.shop-card .name{font-size:12px;font-weight:600;text-align:center;margin-bottom:4px;height:32px;overflow:hidden;color:#fff;pointer-events:none;line-height:1.15;width:100%;display:flex;align-items:center;justify-content:center}
 .inv-card .price,.shop-card .price{font-size:12px;color:var(--color-orange-soft);font-weight:800;display:flex;align-items:center;gap:3px;pointer-events:none;line-height:1.3}
@@ -341,33 +347,14 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2}
 
-.maintenance-overlay{
-  position:fixed;inset:0;z-index:999998;
-  background:var(--bg-void);
-  display:flex;align-items:center;justify-content:center;
-  padding:30px 20px;text-align:center;
-}
+.maintenance-overlay{position:fixed;inset:0;z-index:999998;background:var(--bg-void);display:flex;align-items:center;justify-content:center;padding:30px 20px;text-align:center;}
 .maintenance-content{display:flex;flex-direction:column;align-items:center;gap:24px;max-width:560px;}
-.maintenance-spinner{
-  width:120px;height:120px;color:var(--color-orange);
-  animation:spin 2s linear infinite;
-  filter: drop-shadow(0 0 24px rgba(249,115,22,.6));
-}
+.maintenance-spinner{width:120px;height:120px;color:var(--color-orange);animation:spin 2s linear infinite;filter: drop-shadow(0 0 24px rgba(249,115,22,.6));}
 .maintenance-spinner svg{width:100%;height:100%;}
 @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-.maintenance-title{
-  font-size:clamp(36px,8vw,72px);font-weight:900;color:#fff;
-  text-transform:uppercase;letter-spacing:6px;line-height:1;
-  text-shadow: 0 0 30px rgba(249,115,22,.4);
-}
-.maintenance-subtitle{
-  font-size:clamp(14px,2.4vw,20px);font-weight:800;
-  color:var(--color-orange-soft);letter-spacing:4px;text-transform:uppercase;
-}
-.maintenance-hint{
-  font-size:14px;font-weight:600;color:var(--text-muted);
-  letter-spacing:1px;text-transform:uppercase;
-}
+.maintenance-title{font-size:clamp(36px,8vw,72px);font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:6px;line-height:1;text-shadow: 0 0 30px rgba(249,115,22,.4);}
+.maintenance-subtitle{font-size:clamp(14px,2.4vw,20px);font-weight:800;color:var(--color-orange-soft);letter-spacing:4px;text-transform:uppercase;}
+.maintenance-hint{font-size:14px;font-weight:600;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;}
 
 .deposits-block{max-width:640px;margin:10px auto 0;padding:14px;background:rgba(139,92,246,.05);border:1px solid var(--color-purple);border-radius:8px;}
 .deposits-block-title{font-size:14px;font-weight:800;color:var(--color-purple-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
@@ -1600,32 +1587,79 @@ function updateUpgradeScreen() {
   if (chanceBig) chanceBig.innerText = chance > 0 ? formatChance(chance) : '?%';
   if (upgradeBtn) upgradeBtn.disabled = !(src && tgt && chance > 0 && !isSpinning);
 }
+
 async function performUpgrade(durationMs) {
   if (isSpinning) return;
   if (selectedSourceIndex === null) return;
   const srcItem = getItemById(inventory[selectedSourceIndex]);
   const tgtItem = getItemById(selectedTargetId);
   if (!srcItem || !tgtItem || tgtItem.price <= srcItem.price) return;
-  isSpinning = true; document.body.classList.add('upgrade-locked');
+
+  isSpinning = true;
+  document.body.classList.add('upgrade-locked');
   const arrowContainer = document.getElementById('arrowContainer');
   const upgradeBtn = document.getElementById('upgradeBtn');
   if (upgradeBtn) { upgradeBtn.disabled = true; upgradeBtn.querySelector('span').innerText = 'КРУТИМ...'; }
   playUpgradeStart(); vibrate(20);
+
   let data;
-  try { data = await api('/api/upgrade', { source_item_id: srcItem.id, target_item_id: tgtItem.id }); } catch (e) { data = { ok: false }; }
-  if (!data.ok) { isSpinning = false; document.body.classList.remove('upgrade-locked'); if (upgradeBtn) { upgradeBtn.disabled = false; upgradeBtn.querySelector('span').innerText = 'АПГРЕЙД'; } playLose(); vibrate(30); return; }
-  const tickCount = 30; const tickInterval = durationMs / tickCount;
-  for (let i = 0; i < tickCount; i++) setTimeout(() => playTick(), i * tickInterval);
-  const baseRotation = 360 * 5;
-  const randomAngle = Math.random() * 360;
-  const totalRotation = baseRotation + randomAngle;
-  if (arrowContainer) { arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.2, 0.8, 0.2, 1)`; arrowContainer.style.transform = `rotate(${totalRotation}deg)`; }
-  setTimeout(() => {
-    if (data.success) { playWin(); vibratePattern([30,50,30,50,60]); for (let i = 0; i < 4; i++) setTimeout(spawnSuccessText, i * 900); }
-    else { playLose(); vibratePattern([50,30,100]); }
-    selectedSourceIndex = null; selectedTargetId = null; isSpinning = false;
+  try {
+    data = await api('/api/upgrade', { source_item_id: srcItem.id, target_item_id: tgtItem.id });
+  } catch (e) {
+    data = { ok: false };
+  }
+
+  if (!data.ok) {
+    isSpinning = false;
     document.body.classList.remove('upgrade-locked');
-    if (arrowContainer) { arrowContainer.style.transition = 'none'; arrowContainer.style.transform = 'rotate(0deg)'; }
+    if (upgradeBtn) { upgradeBtn.disabled = false; upgradeBtn.querySelector('span').innerText = 'АПГРЕЙД'; }
+    playLose(); vibrate(30);
+    return;
+  }
+
+  const chance = Math.max(MIN_CHANCE, Math.min(MAX_CHANCE, data.chance || 0));
+  const chanceAngle = (chance / 100) * 360; 
+
+  let finalAngleDeg;
+  if (data.success) {
+    const margin = Math.min(2, chanceAngle * 0.15);
+    finalAngleDeg = margin + Math.random() * (chanceAngle - margin * 2);
+  } else {
+    const failZone = 360 - chanceAngle;
+    const margin = Math.min(2, failZone * 0.15);
+    finalAngleDeg = chanceAngle + margin + Math.random() * (failZone - margin * 2);
+  }
+
+  const baseRotation = 360 * 5;
+  const targetRotation = baseRotation + finalAngleDeg;
+
+  const tickCount = 30;
+  const tickInterval = durationMs / tickCount;
+  for (let i = 0; i < tickCount; i++) setTimeout(() => playTick(), i * tickInterval);
+
+  if (arrowContainer) {
+    arrowContainer.style.transition = 'none';
+    arrowContainer.style.transform = 'rotate(0deg)';
+    void arrowContainer.offsetWidth;
+    arrowContainer.style.transition = `transform ${durationMs}ms cubic-bezier(0.2, 0.8, 0.2, 1)`;
+    arrowContainer.style.transform = `rotate(${targetRotation}deg)`;
+  }
+
+  setTimeout(() => {
+    if (data.success) {
+      playWin(); vibratePattern([30,50,30,50,60]);
+      for (let i = 0; i < 4; i++) setTimeout(spawnSuccessText, i * 900);
+    } else {
+      playLose(); vibratePattern([50,30,100]);
+    }
+    selectedSourceIndex = null;
+    selectedTargetId = null;
+    isSpinning = false;
+    document.body.classList.remove('upgrade-locked');
+    if (arrowContainer) {
+      arrowContainer.style.transition = 'none';
+      arrowContainer.style.transform = 'rotate(0deg)';
+    }
     applyServerUser({ balance: data.new_balance, inventory: data.inventory });
     updateUpgradeScreen();
   }, durationMs + 100);
@@ -1676,7 +1710,16 @@ window.openCaseDetail = function(caseId) {
     rc.appendChild(row);
   }
   const pg = document.getElementById('casePossibleGrid');
-  pg.innerHTML = c.rewards.map(r => { const item = getItemById(r.id); if (!item) return ''; return `<div class="case-possible-item ${getRarityClass(item.price)}"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}><div class="cp-name">${item.name}</div><div class="cp-price"><img src="${COIN_IMG}">${item.price}</div><div class="cp-chance">${r.chance}%</div></div>`; }).join('');
+  const showChance = isCurrentUserAdmin();
+  pg.innerHTML = c.rewards.map(r => {
+    const item = getItemById(r.id); if (!item) return '';
+    return `<div class="case-possible-item ${getRarityClass(item.price)}">
+      <img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async" ${FALLBACK_ATTR}>
+      <div class="cp-name">${item.name}</div>
+      <div class="cp-price"><img src="${COIN_IMG}">${item.price}</div>
+      ${showChance ? `<div class="cp-chance" style="font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2">${r.chance}%</div>` : ''}
+    </div>`;
+  }).join('');
   modal.classList.add('show');
   document.body.style.overflow = 'hidden';
 };
