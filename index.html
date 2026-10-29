@@ -103,7 +103,6 @@ body{
 .case-price img{width:18px;height:18px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));}
 .case-items-count{font-size:12px;color:var(--text-muted);margin-top:12px;font-weight:600; letter-spacing: 0.5px;}
 
-/* ==== АПГРЕЙДЕР ==== */
 .upg-container{display: flex;flex-direction: column;gap: 20px;max-width: 960px;margin: 0 auto;padding: 8px 0 0;position: relative;}
 .progress-section{display:flex;justify-content:center;padding: 30px 0 10px 0;position:relative;}
 .progress-wrapper{position:relative;width:300px;height:300px;z-index:1;}
@@ -165,7 +164,6 @@ body{
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
 .section-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:10px;padding:0 10px;text-transform:uppercase;}
 
-/* ==== ПОДСВЕТКА РЕДКОСТИ ==== */
 .rarity-common { border-color: #3b82f6 !important; box-shadow: 0 0 0 1px rgba(59,130,246,.4), 0 6px 18px -8px rgba(59,130,246,.6) !important; }
 .rarity-common:hover { box-shadow: 0 0 0 1px rgba(59,130,246,.7), 0 10px 24px -8px rgba(59,130,246,.8) !important; }
 .rarity-uncommon { border-color: #22c55e !important; box-shadow: 0 0 0 1px rgba(34,197,94,.4), 0 6px 18px -8px rgba(34,197,94,.6) !important; }
@@ -343,7 +341,6 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2}
 
-/* ==== ТЕХПЕРЕРЫВ ==== */
 .maintenance-overlay{
   position:fixed;inset:0;z-index:999998;
   background:var(--bg-void);
@@ -372,7 +369,6 @@ body{
   letter-spacing:1px;text-transform:uppercase;
 }
 
-.access-denied{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:30px 20px;text-align:center;background:var(--bg-void);overflow:hidden;}
 .deposits-block{max-width:640px;margin:10px auto 0;padding:14px;background:rgba(139,92,246,.05);border:1px solid var(--color-purple);border-radius:8px;}
 .deposits-block-title{font-size:14px;font-weight:800;color:var(--color-purple-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;line-height:1.4}
 .deposits-count{font-size:14px;font-weight:800;color:var(--color-purple-soft);margin-left:auto;background:rgba(139,92,246,.12);padding:2px 8px;border-radius:4px;border:1px solid var(--color-purple);line-height:1.3}
@@ -616,6 +612,7 @@ body{
                 </div>
                 <button class="action-btn" id="maintenanceToggleBtn" onclick="toggleMaintenance()" style="background:var(--color-orange);border-color:var(--color-orange);color:#fff;">Включить техперерыв</button>
                 <div class="msg" id="maintenanceMsg"></div>
+                <div style="margin-top:12px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.5;">Админы могут играть во время техперерыва.</div>
             </div>
         </div>
     </div>
@@ -1045,6 +1042,7 @@ function getTelegramId() {
   return guestId;
 }
 function getDisplayNick() { return customNick || USER.nick; }
+function isCurrentUserAdmin() { return ADMIN_USERNAMES.includes((USER.username || '').toLowerCase()); }
 function getItemById(id) { return ITEMS.find(item => item.id === id) || CASE_ONLY_ITEMS.find(item => item.id === id); }
 
 // ================== ТЕХПЕРЕРЫВ ==================
@@ -1053,7 +1051,8 @@ function applyMaintenanceState(enabled) {
   const ov = document.getElementById('maintenanceOverlay');
   const app = document.getElementById('mainApp');
   if (!ov || !app) return;
-  if (maintenanceEnabled) {
+  const amAdmin = isCurrentUserAdmin();
+  if (maintenanceEnabled && !amAdmin) {
     ov.style.display = 'flex';
     app.style.display = 'none';
   } else {
@@ -1065,13 +1064,16 @@ async function checkMaintenance() {
   try {
     const res = await fetch(API_URL + '/api/maintenance');
     const data = await res.json();
-    if (data.ok) applyMaintenanceState(data.maintenance.enabled);
+    if (data.ok) {
+      maintenanceEnabled = !!data.maintenance.enabled;
+      applyMaintenanceState(maintenanceEnabled);
+    }
   } catch (e) {}
 }
 
 // ================== СЕРВЕР ==================
 async function api(path, body) {
-  if (maintenanceEnabled) return { ok: false, error: 'MAINTENANCE' };
+  if (maintenanceEnabled && !isCurrentUserAdmin()) return { ok: false, error: 'MAINTENANCE' };
   const initDataRaw = window.Telegram?.WebApp?.initData || '';
   const headers = { 'Content-Type': 'application/json' };
   if (initDataRaw) headers['X-Telegram-Init-Data'] = initDataRaw;
@@ -1144,7 +1146,7 @@ window.closeModal = function(id) { const el = document.getElementById(id); if (e
 document.querySelectorAll('.modal').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('open'); }); });
 window.toggleMobileMenu = function() { document.getElementById('mobileMenuOverlay').classList.toggle('open'); document.getElementById('mobileMenuPanel').classList.toggle('open'); playClick(); };
 window.switchTab = function(tab) {
-  if (maintenanceEnabled) return;
+  if (maintenanceEnabled && !isCurrentUserAdmin()) return;
   if (document.body.classList.contains('upgrade-locked')) return;
   playClick(); vibrate(10);
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1188,7 +1190,7 @@ function applyUserToProfile() {
 applyUserToProfile();
 function syncCosmeticsToServer() { api('/api/user/update', { custom_nick: customNick || '', avatar: customAvatar || '' }).catch(()=>{}); }
 function updateProfile() {
-  isAdmin = ADMIN_USERNAMES.includes((USER.username || '').toLowerCase());
+  isAdmin = isCurrentUserAdmin();
   const adminBtn = document.getElementById('adminPanelBtn');
   if (adminBtn) adminBtn.style.display = isAdmin ? 'block' : 'none';
   renderProfileInventory(); updateProfileStats();
@@ -1229,7 +1231,7 @@ window.saveCustomNick = function() {
 
 // ================== ПОПОЛНЕНИЕ ==================
 window.openTopup = function() {
-  if (maintenanceEnabled) return;
+  if (maintenanceEnabled && !isCurrentUserAdmin()) return;
   if (document.body.classList.contains('upgrade-locked')) return;
   playClick(); vibrate(10);
   renderTopupGrid();
@@ -1441,6 +1443,7 @@ async function loadMaintenanceStatus() {
       btn.style.background = 'var(--color-orange)';
       btn.style.borderColor = 'var(--color-orange)';
     }
+    maintenanceEnabled = !!m.enabled;
     applyMaintenanceState(m.enabled);
   } catch (e) {
     el.innerHTML = 'Статус: <span style="color:var(--color-red);">ошибка</span>';
@@ -1639,7 +1642,7 @@ function renderMenuCases() {
 }
 window.openCaseDetail = function(caseId) {
   if (isCaseOpening || document.body.classList.contains('upgrade-locked')) return;
-  if (maintenanceEnabled) return;
+  if (maintenanceEnabled && !isCurrentUserAdmin()) return;
   playClick(); vibrate(10);
   const c = CASES.find(x => x.id === caseId); if (!c) return;
   currentCaseId = caseId;
@@ -1688,7 +1691,7 @@ window.setCaseOpenQty = function(qty) {
 window.confirmOpenCase = async function() {
   const c = CASES.find(x => x.id === currentCaseId); if (!c) return;
   if (isCaseOpening) return;
-  if (maintenanceEnabled) return;
+  if (maintenanceEnabled && !isCurrentUserAdmin()) return;
   isCaseOpening = true;
   document.querySelectorAll('.case-roulette-track').forEach(t => { t.style.transition = 'none'; t.style.transform = 'translateX(0px)'; });
   const btn = document.getElementById('caseOpenActionBtn');
@@ -1835,6 +1838,7 @@ async function init() {
   selectedSourceIndex = null; selectedTargetId = null;
   applyCustomAvatar(); renderMenuCases(); updateAutoPromoDisplay(); switchTab('menu');
   await checkMaintenance();
+  applyMaintenanceState(maintenanceEnabled);
   await loadUserFromServer();
   renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
   if (maintenanceInterval) clearInterval(maintenanceInterval);
