@@ -31,8 +31,6 @@ body{
   color:var(--text-main); min-height:100vh; display:flex;flex-direction:column;align-items:stretch;
   padding:0;position:relative; overflow-x:hidden;overflow-y:auto; -webkit-font-smoothing:antialiased;
 }
-.success-fly-text{position:fixed;z-index:99999;color:#10b981;font-size:54px;font-weight:900;letter-spacing:4px;text-transform:uppercase;pointer-events:none;text-shadow:0 0 20px rgba(16,185,129,0.6),0 0 40px rgba(16,185,129,0.3);animation:successFly 2s ease-out forwards;}
-@keyframes successFly{0%{opacity:0;transform:translateY(20px) scale(0.8);}15%{opacity:1;transform:translateY(-10px) scale(1.1);}80%{opacity:1;transform:translateY(-30px) scale(1);}100%{opacity:0;transform:translateY(-80px) scale(1);}}
 #toastContainer{display: none;}
 .app{width:100%;max-width:100%;margin:0 auto;padding: 0 20px 40px;flex:1 0 auto;position:relative;z-index:1;display: flex;flex-direction: column;}
 .burger-btn{display: none;background: transparent;border: none;color: #fff;cursor: pointer;padding: 8px;position: absolute;left: 14px;top: 14px;z-index: 500;}
@@ -164,44 +162,35 @@ body{
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
 .section-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:10px;padding:0 10px;text-transform:uppercase;}
 
-/* ==== НОВАЯ ОБВОДКА (ПОЛОСКА СВЕРХУ) ==== */
-.inv-card,.shop-card,.inv-tab-card,.profile-inventory-item,.upg-card.filled,.case-possible-item,.withdraw-item,.admin-item{
-  position: relative;
-  overflow: hidden;
-  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+/* ==== СТАРЫЕ ОБВОДКИ (КАК БЫЛО) ==== */
+.rarity-common { border-color: #3b82f6 !important; box-shadow: 0 0 0 1px rgba(59,130,246,.4), 0 6px 18px -8px rgba(59,130,246,.6) !important; }
+.rarity-common:hover { box-shadow: 0 0 0 1px rgba(59,130,246,.7), 0 10px 24px -8px rgba(59,130,246,.8) !important; }
+.rarity-uncommon { border-color: #22c55e !important; box-shadow: 0 0 0 1px rgba(34,197,94,.4), 0 6px 18px -8px rgba(34,197,94,.6) !important; }
+.rarity-uncommon:hover { box-shadow: 0 0 0 1px rgba(34,197,94,.7), 0 10px 24px -8px rgba(34,197,94,.8) !important; }
+.rarity-rare { border-color: #eab308 !important; box-shadow: 0 0 0 1px rgba(234,179,8,.4), 0 6px 18px -8px rgba(234,179,8,.6) !important; }
+.rarity-rare:hover { box-shadow: 0 0 0 1px rgba(234,179,8,.7), 0 10px 24px -8px rgba(234,179,8,.8) !important; }
+.rarity-epic { border-color: #a855f7 !important; box-shadow: 0 0 0 1px rgba(168,85,247,.4), 0 6px 18px -8px rgba(168,85,247,.6) !important; }
+.rarity-epic:hover { box-shadow: 0 0 0 1px rgba(168,85,247,.7), 0 10px 24px -8px rgba(168,85,247,.8) !important; }
+/* Убрали анимацию hue-rotate, оставили только красивую обводку */
+.rarity-legendary {
+  border: 2px solid transparent !important;
+  background:
+    linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+    linear-gradient(135deg, #ff0000, #ff8800, #ffff00, #00ff00, #00aaff, #aa00ff, #ff0000) border-box !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 6px 24px -6px rgba(255,136,0,.7) !important;
 }
-/* Базовый стиль для карточек (без бордера редкости, только фон) */
-.inv-card,.shop-card,.inv-tab-card,.profile-inventory-item{
+.rarity-legendary:hover {
+  box-shadow: 0 0 0 2px rgba(255,255,255,.15), 0 10px 32px -6px rgba(255,136,0,.9) !important;
+}
+
+.inv-card,.shop-card{
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
-  border-radius: 10px;
+  border-radius:10px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;
+  transition:transform .15s, border-color .15s;position:relative;min-width:0;overflow:hidden;cursor:pointer;
 }
-
-/* Полоска сверху через псевдоэлемент */
-.rarity-common::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #3b82f6; border-radius: 10px 10px 0 0; z-index: 10; }
-.rarity-uncommon::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #22c55e; border-radius: 10px 10px 0 0; z-index: 10; }
-.rarity-rare::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #eab308; border-radius: 10px 10px 0 0; z-index: 10; }
-.rarity-epic::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #a855f7; border-radius: 10px 10px 0 0; z-index: 10; }
-.rarity-legendary::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00aaff, #aa00ff, #ff0000); background-size: 200% 100%; animation: rainbowShift 4s linear infinite; border-radius: 10px 10px 0 0; z-index: 10; }
-
-/* Легкая подсветка снизу для красоты (опционально) */
-.rarity-common { box-shadow: inset 0 -2px 10px -4px rgba(59,130,246,.3) !important; border-color: transparent !important; }
-.rarity-uncommon { box-shadow: inset 0 -2px 10px -4px rgba(34,197,94,.3) !important; border-color: transparent !important; }
-.rarity-rare { box-shadow: inset 0 -2px 10px -4px rgba(234,179,8,.3) !important; border-color: transparent !important; }
-.rarity-epic { box-shadow: inset 0 -2px 10px -4px rgba(168,85,247,.3) !important; border-color: transparent !important; }
-.rarity-legendary { box-shadow: inset 0 -2px 15px -4px rgba(255,136,0,.5) !important; border-color: transparent !important; }
-
-/* Ховер эффекты */
-.inv-card:hover,.shop-card:hover,.inv-tab-card:hover,.profile-inventory-item:hover{ transform: translateY(-3px); }
-.rarity-common:hover { box-shadow: 0 6px 15px -5px rgba(59,130,246,.5) !important; }
-.rarity-uncommon:hover { box-shadow: 0 6px 15px -5px rgba(34,197,94,.5) !important; }
-.rarity-rare:hover { box-shadow: 0 6px 15px -5px rgba(234,179,8,.5) !important; }
-.rarity-epic:hover { box-shadow: 0 6px 15px -5px rgba(168,85,247,.5) !important; }
-.rarity-legendary:hover { box-shadow: 0 6px 20px -5px rgba(255,136,0,.6) !important; }
-
-@keyframes rainbowShift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
-
-/* Восстановление стандартных стилей для остальных элементов */
+.inv-card:hover,.shop-card:hover{ transform: translateY(-3px); }
+.inv-card.selected{border-color: var(--color-purple) !important;background:rgba(139,92,246,.1);}
 .inv-card img,.shop-card img{width:100%;max-width:70px;height:70px;object-fit:contain;margin-bottom:8px;pointer-events:none;}
 .inv-card .name,.shop-card .name{font-size:12px;font-weight:600;text-align:center;margin-bottom:4px;height:32px;overflow:hidden;color:#fff;pointer-events:none;line-height:1.15;width:100%;display:flex;align-items:center;justify-content:center}
 .inv-card .price,.shop-card .price{font-size:12px;color:var(--color-orange-soft);font-weight:800;display:flex;align-items:center;gap:3px;pointer-events:none;line-height:1.3}
@@ -1125,7 +1114,6 @@ function playLose(){playOsc(220,0.25,'triangle',0.05,0,500);playOsc(180,0.3,'tri
 function playUpgradeStart(){const c=getAudioCtx();if(!c)return;try{const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();f.type='lowpass';f.frequency.value=1200;o.type='triangle';o.frequency.setValueAtTime(140,c.currentTime);o.frequency.exponentialRampToValueAtTime(420,c.currentTime+0.5);g.gain.setValueAtTime(0.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(0.04,c.currentTime+0.06);g.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+0.55);o.connect(f);f.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+0.6);}catch(e){}}
 function vibrate(ms=15){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
 function vibratePattern(p){try{if(navigator.vibrate)navigator.vibrate(p);}catch(e){}}
-function spawnSuccessText(){const el=document.createElement('div');el.className='success-fly-text';el.textContent='УСПЕХ';el.style.left=Math.floor(Math.random()*(window.innerWidth-150))+'px';el.style.top=Math.floor(Math.random()*(window.innerHeight-100))+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),2000);}
 
 // ================== МОДАЛКИ / НАВИГАЦИЯ ==================
 window.openModal = function(id) { const el = document.getElementById(id); if (el) el.classList.add('open'); };
@@ -1648,7 +1636,7 @@ async function performUpgrade(durationMs) {
   setTimeout(() => {
     if (data.success) {
       playWin(); vibratePattern([30,50,30,50,60]);
-      for (let i = 0; i < 4; i++) setTimeout(spawnSuccessText, i * 900);
+      // Текст "УСПЕХ" убран
     } else {
       playLose(); vibratePattern([50,30,100]);
     }
