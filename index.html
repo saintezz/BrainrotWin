@@ -32,7 +32,7 @@ body{
   padding:0;position:relative; overflow-x:hidden;overflow-y:auto; -webkit-font-smoothing:antialiased;
 }
 #toastContainer{display: none;}
-.app{width:100%;max-width:100%;margin:0 auto;padding: 0 20px 40px;flex:1 0 auto;position:relative;z-index:1;display: flex;flex-direction: column;}
+.app{width:100%;max-width:100%;margin:0 auto;padding: 0 20px 40px;flex:1 0 auto;position:relative;z-index:1;display: flex;flex-direction:column; transition: padding-left 0.3s ease;}
 .burger-btn{display: none;background: transparent;border: none;color: #fff;cursor: pointer;padding: 8px;position: absolute;left: 14px;top: 14px;z-index: 500;}
 .burger-btn svg{width: 28px; height: 28px; stroke: currentColor;}
 .mobile-menu-overlay{display: none;position: fixed;inset: 0;background: rgba(0,0,0,.85);z-index: 600;}
@@ -162,7 +162,6 @@ body{
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
 .section-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:10px;padding:0 10px;text-transform:uppercase;}
 
-/* ==== СТАРЫЕ ОБВОДКИ (КАК БЫЛО) ==== */
 .rarity-common { border-color: #3b82f6 !important; box-shadow: 0 0 0 1px rgba(59,130,246,.4), 0 6px 18px -8px rgba(59,130,246,.6) !important; }
 .rarity-common:hover { box-shadow: 0 0 0 1px rgba(59,130,246,.7), 0 10px 24px -8px rgba(59,130,246,.8) !important; }
 .rarity-uncommon { border-color: #22c55e !important; box-shadow: 0 0 0 1px rgba(34,197,94,.4), 0 6px 18px -8px rgba(34,197,94,.6) !important; }
@@ -335,7 +334,6 @@ body{
 .case-possible-item .cp-price img{width:12px;height:12px;}
 .case-possible-item .cp-chance{font-size:11px;font-weight:700;color:var(--color-purple-soft);line-height:1.2}
 
-/* ==== УЛУЧШЕННЫЙ ТЕХПЕРЕРЫВ ==== */
 .maintenance-overlay{
   position:fixed;inset:0;z-index:999998;
   background:var(--bg-void);
@@ -394,6 +392,106 @@ body{
 .dep-reject:hover{background:rgba(239,68,68,.26)}
 .deposits-empty{text-align:center;color:var(--text-muted);font-size:13px;font-weight:600;padding:12px;line-height:1.3}
 .mutation-badge{position:absolute;width:18px;height:18px;object-fit:contain;top:4px;left:4px;z-index:3;pointer-events:none}
+
+/* ================== LIVE DROPS ================== */
+.live-drops-panel {
+  display: none;
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px;
+  max-height: 70vh;
+  background: rgba(14, 10, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  z-index: 800;
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  transition: opacity 0.3s, transform 0.3s;
+}
+@media (min-width: 1300px) {
+  .live-drops-panel { display: flex; }
+  .app { padding-left: 320px; padding-right: 20px; }
+}
+.live-drops-header {
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(139,92,246,.2), rgba(249,115,22,.2));
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-drops-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-drops-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #ef4444;
+  box-shadow: 0 0 10px #ef4444; animation: pulseDot 1.5s infinite;
+}
+@keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+.live-drops-scroll {
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: none;
+}
+.live-drops-scroll::-webkit-scrollbar { display: none; }
+.live-drop-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideInDrop 0.4s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+}
+.live-drop-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--color-purple);
+}
+.live-drop-item.rarity-common::before { background: #3b82f6; }
+.live-drop-item.rarity-uncommon::before { background: #22c55e; }
+.live-drop-item.rarity-rare::before { background: #eab308; }
+.live-drop-item.rarity-epic::before { background: #a855f7; }
+.live-drop-item.rarity-legendary::before {
+  background: linear-gradient(180deg, #ff0000, #ff8800, #ffff00, #00ff00, #00aaff, #aa00ff);
+}
+@keyframes slideInDrop {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.live-drop-img {
+  width: 40px; height: 40px; object-fit: contain;
+  background: var(--bg-void); border-radius: 8px; padding: 4px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.live-drop-info { flex: 1; min-width: 0; }
+.live-drop-user { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.live-drop-source { font-size: 10px; font-weight: 600; color: var(--color-orange-soft); }
+.live-drop-item-name { font-size: 11px; font-weight: 600; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.live-drop-price {
+  font-size: 12px; font-weight: 800; color: var(--color-orange-soft);
+  display: flex; align-items: center; gap: 3px; background: rgba(249,115,22,0.1);
+  padding: 4px 6px; border-radius: 6px;
+}
+.live-drop-price img { width: 10px; height: 10px; }
+
 @media (max-width: 768px) {
   .top-nav-panel { display: none; }
   .burger-btn { display: block; }
@@ -498,7 +596,7 @@ body{
   <button class="mobile-nav-btn" id="mNavProfile" onclick="switchTab('profile'); toggleMobileMenu()">Профиль</button>
 </div>
 
-<!-- Улучшенный экран техперерыва -->
+<!-- Экран техперерыва -->
 <div class="maintenance-overlay" id="maintenanceOverlay" style="display:none;">
   <div class="maintenance-bg-glow"></div>
   <div class="maintenance-content">
@@ -510,6 +608,19 @@ body{
     <div class="maintenance-title">ТЕХ ПЕРЕРЫВ</div>
     <div class="maintenance-subtitle">ИГРА ВРЕМЕННО НЕДОСТУПНА</div>
     <div class="maintenance-hint">Обновление серверов...</div>
+  </div>
+</div>
+
+<!-- Live Drops Лента -->
+<div class="live-drops-panel" id="liveDropsPanel">
+  <div class="live-drops-header">
+    <div class="live-drops-title">
+      <div class="live-drops-dot"></div>
+      Live Drops
+    </div>
+  </div>
+  <div class="live-drops-scroll" id="liveDropsScroll">
+    <!-- Сюда будут падать элементы -->
   </div>
 </div>
 
@@ -998,7 +1109,6 @@ let USER = { nick: 'Гость', tg: '@guest', tgLink: '#', id: null, username: 
 let customNick = localStorage.getItem('ggbrainx_custom_nick') || null;
 let customAvatar = localStorage.getItem('ggbrainx_custom_avatar') || null;
 
-// Загружаем баланс и инвентарь из кэша, чтобы при перезагрузке всё было на месте
 let balance = parseFloat(localStorage.getItem('ggbrainx_cached_balance') || '0');
 let inventory = JSON.parse(localStorage.getItem('ggbrainx_cached_inventory') || '[]');
 
@@ -1019,6 +1129,8 @@ let selectedAdminItem = null;
 let activePromo = null;
 let maintenanceEnabled = false;
 let maintenanceInterval = null;
+let liveDropsInterval = null;
+let lastLiveDropId = null;
 
 const SPIN_DURATION = 7000;
 const SPIN_DURATION_FAST = 4000;
@@ -1057,6 +1169,47 @@ function getTelegramId() {
 function getDisplayNick() { return customNick || USER.nick; }
 function isCurrentUserAdmin() { return ADMIN_USERNAMES.includes((USER.username || '').toLowerCase()); }
 function getItemById(id) { return ITEMS.find(item => item.id === id) || CASE_ONLY_ITEMS.find(item => item.id === id); }
+
+// ================== LIVE DROPS ==================
+async function fetchLiveDrops() {
+  try {
+    const res = await fetch(API_URL + '/api/live-drops');
+    const data = await res.json();
+    if (data.ok && Array.isArray(data.drops)) {
+      renderLiveDrops(data.drops);
+    }
+  } catch (e) {}
+}
+
+function renderLiveDrops(drops) {
+  const container = document.getElementById('liveDropsScroll');
+  if (!container) return;
+
+  // Если нет дропов, показываем заглушку
+  if (!drops.length) {
+    container.innerHTML = `<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px;">Пока нет дропов...</div>`;
+    return;
+  }
+
+  let html = '';
+  drops.forEach(drop => {
+    const item = getItemById(drop.item_id);
+    if (!item) return;
+    const rClass = getRarityClass(item.price);
+    html += `
+      <div class="live-drop-item ${rClass}">
+        <img class="live-drop-img" src="${item.img}" alt="${item.name}" ${FALLBACK_ATTR}>
+        <div class="live-drop-info">
+          <div class="live-drop-user">@${drop.username}</div>
+          <div class="live-drop-item-name">${drop.item_name}</div>
+          <div class="live-drop-source">${drop.source}</div>
+        </div>
+        <div class="live-drop-price"><img src="${COIN_IMG}">${drop.price}</div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
 
 // ================== ТЕХПЕРЕРЫВ ==================
 function applyMaintenanceState(enabled) {
@@ -1113,7 +1266,6 @@ function applyServerUser(data) {
   if (Array.isArray(data.inventory)) inventory = data.inventory;
   if (Array.isArray(data.pending_withdraw_ids)) pendingWithdrawItemIds = new Set(data.pending_withdraw_ids);
   
-  // Сохраняем в кэш
   saveCache();
 
   updateBalanceUI();
@@ -1924,7 +2076,6 @@ async function init() {
   selectedSourceIndex = null; selectedTargetId = null;
   applyCustomAvatar(); renderMenuCases(); updateAutoPromoDisplay();
   
-  // Сразу показываем закэшированные данные (мгновенно)
   updateBalanceUI();
   renderInventory(); renderShop(); updateUpgradeScreen(); renderProfileInventory();
 
@@ -1932,12 +2083,14 @@ async function init() {
   await checkMaintenance();
   applyMaintenanceState(maintenanceEnabled);
   
-  // Загружаем данные с сервера в фоне
   await loadUserFromServer();
+  await fetchLiveDrops();
   
   if (maintenanceInterval) clearInterval(maintenanceInterval);
-  // Проверяем техперерыв каждую секунду для мгновенной реакции
   maintenanceInterval = setInterval(checkMaintenance, 1000);
+
+  if (liveDropsInterval) clearInterval(liveDropsInterval);
+  liveDropsInterval = setInterval(fetchLiveDrops, 3000);
 }
 window.addEventListener('load', () => {
   setTimeout(async () => {
