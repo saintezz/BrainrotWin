@@ -863,6 +863,64 @@ body{
 .game-result-profit img { width: 26px; height: 26px; }
 .catch-close-btn { max-width: 220px; width: 100%; }
 
+/* ================== АДМИН: ТАБЫ / ЗАЯВКИ ================== */
+.admin-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.admin-tab{flex:0 1 auto;padding:10px 14px;border-radius:8px;border:1px solid var(--glass-border);background:var(--bg-surface);color:var(--text-muted);font-family:var(--font-main);font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.admin-tab:hover{color:#fff;border-color:rgba(139,92,246,.5);}
+.admin-tab.active{color:#fff;background:linear-gradient(135deg,var(--color-purple),var(--color-purple-deep));border-color:var(--color-purple);}
+.admin-tab-count{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--color-orange);color:#1a0f05;font-size:10px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;line-height:1;}
+.admin-tab-count[data-zero="1"]{display:none;}
+.admin-tab-panel{display:none;}
+.admin-tab-panel.active{display:block;}
+.admin-mini-stat{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:12px;border-radius:8px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.4px;text-transform:uppercase;line-height:1.4;}
+.stat-dot{width:7px;height:7px;border-radius:50%;background:var(--color-orange);box-shadow:0 0 8px rgba(249,115,22,.8);flex-shrink:0;}
+.admin-request-empty{padding:16px;text-align:center;font-size:12px;font-weight:600;color:var(--text-muted);}
+.admin-request-card{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;background:var(--bg-surface);border:1px solid var(--glass-border);border-radius:8px;padding:10px;margin-bottom:8px;}
+.admin-request-card .req-img{width:44px;height:44px;object-fit:contain;}
+.admin-request-info{min-width:0;font-size:12px;font-weight:600;line-height:1.35;color:#d8d8e4;}
+.req-line{display:flex;gap:5px;flex-wrap:wrap;}
+.req-key{color:var(--text-muted);font-size:11px;font-weight:700;}
+.req-val{color:#fff;font-weight:700;overflow-wrap:anywhere;}
+.req-val.accent{color:var(--color-purple-soft);}
+.admin-request-actions{display:flex;flex-direction:column;gap:4px;min-width:88px;}
+.promo-list .pl-icon img{width:32px;height:32px;object-fit:contain;}
+.promo-list .pl-info{min-width:0;text-align:left;}
+.promo-list .pl-reward{font-size:11px;font-weight:600;color:var(--text-muted);line-height:1.3;}
+.promo-list .pl-uses-label{font-size:9px;font-weight:700;color:var(--text-muted);text-align:right;text-transform:uppercase;letter-spacing:.3px;}
+.promo-list .pl-uses.empty{color:var(--color-red);}
+
+/* ================== БАНЫ ================== */
+.ban-btn-row{display:flex;gap:10px;margin-top:4px;}
+.ban-btn{flex:1;padding:14px 10px;border-radius:10px;border:1px solid var(--color-red);background:rgba(239,68,68,.12);color:#ff6b6b;font-family:var(--font-main);font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;}
+.ban-btn:hover{background:rgba(239,68,68,.24);transform:translateY(-1px);}
+.ban-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.ban-btn.unban{border-color:var(--color-purple);background:rgba(139,92,246,.14);color:var(--color-purple-soft);}
+.ban-btn.unban:hover{background:rgba(139,92,246,.26);}
+.ban-list-user{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.ban-list-avatar{width:32px;height:32px;border-radius:50%;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ban-list-badge{font-size:9px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:var(--color-orange-soft);border:1px solid rgba(249,115,22,.5);background:rgba(249,115,22,.1);padding:2px 6px;border-radius:5px;line-height:1.3;}
+.ban-list-badge.pending{color:var(--color-purple-soft);border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.1);}
+
+/* Градиентный текст "фиолетово-оранжевый" */
+.ban-gradient{background:linear-gradient(95deg,var(--color-purple-soft) 0%,#c084fc 32%,var(--color-orange-soft) 72%,var(--color-orange) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
+@supports not (background-clip: text) {
+  .ban-gradient{background:none;color:var(--color-orange-soft);-webkit-text-fill-color:currentColor;}
+}
+.ban-overlay{position:fixed;inset:0;z-index:9999997;display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;background:radial-gradient(900px 520px at 12% 0%,rgba(139,92,246,.30),transparent 62%),radial-gradient(800px 520px at 90% 100%,rgba(249,115,22,.24),transparent 62%),#08050e;}
+.ban-overlay.show{display:flex;animation:banOverlayIn .3s ease-out;}
+@keyframes banOverlayIn{from{opacity:0;}to{opacity:1;}}
+.ban-card{position:relative;width:100%;max-width:560px;padding:42px 30px 34px;border-radius:22px;text-align:center;background:linear-gradient(160deg,rgba(26,19,39,.99),rgba(11,7,18,.99));border:1px solid rgba(249,115,22,.45);box-shadow:0 30px 90px -30px rgba(249,115,22,.55),0 0 70px -25px rgba(139,92,246,.65),inset 0 1px 0 rgba(255,255,255,.05);}
+.ban-icon{width:78px;height:78px;margin:0 auto 20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;background:radial-gradient(circle at 35% 25%,rgba(239,68,68,.3),rgba(239,68,68,.08));border:2px solid rgba(239,68,68,.55);box-shadow:0 0 34px rgba(239,68,68,.4);}
+.ban-title{font-size:clamp(18px,5.5vw,36px);font-weight:900;letter-spacing:1.5px;text-transform:uppercase;line-height:1.08;}
+.ban-subtitle{margin-top:10px;font-size:clamp(12px,2.8vw,16px);font-weight:900;letter-spacing:2px;text-transform:uppercase;line-height:1.35;}
+.ban-reason-block{margin-top:26px;padding:16px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--glass-border);}
+.ban-reason-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.ban-reason-value{font-size:17px;font-weight:800;line-height:1.45;overflow-wrap:anywhere;}
+.ban-footnote{margin-top:22px;font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.5px;line-height:1.55;}
+.unban-icon{width:68px;height:68px;margin:2px auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;background:rgba(139,92,246,.12);border:2px solid rgba(249,115,22,.5);box-shadow:0 0 30px rgba(249,115,22,.3);}
+.unban-reason-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin:22px 0 8px;}
+.unban-reason-value{font-size:16px;font-weight:800;line-height:1.45;overflow-wrap:anywhere;padding:14px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--glass-border);}
+
 /* ================== MOBILE ================== */
 @media (max-width: 768px) {
   .top-nav-panel { display: none; }
@@ -897,6 +955,16 @@ body{
   .game-timer { font-size: 20px; padding: 6px 12px; }
   .result-coin-stage { width: 130px; height: 130px; }
   .inventory-hero { align-items: flex-start; }
+  .admin-tabs{gap:6px;}
+  .admin-tab{padding:8px 10px;font-size:11px;}
+  .admin-request-card{grid-template-columns:36px 1fr;align-items:start;}
+  .admin-request-card .req-img{width:36px;height:36px;}
+  .admin-request-actions{grid-column:1/-1;flex-direction:row;min-width:0;}
+  .admin-request-actions .dep-accept,.admin-request-actions .dep-reject{flex:1;}
+  .ban-card{padding:32px 16px 26px;border-radius:18px;}
+  .ban-icon{width:64px;height:64px;font-size:30px;margin-bottom:16px;}
+  .ban-reason-block{margin-top:20px;padding:14px;}
+  .ban-reason-value{font-size:15px;}
 }
 </style>
 </head>
@@ -946,6 +1014,29 @@ body{
 
 <div id="toastContainer"></div>
 
+<div class="ban-overlay" id="banOverlay" role="alert" aria-live="assertive">
+  <div class="ban-card">
+    <div class="ban-icon">⛔</div>
+    <div class="ban-title ban-gradient">ВЫ<br>ЗАБЛОКИРОВАНЫ</div>
+    <div class="ban-subtitle ban-gradient">ПО РЕШЕНИЮ АДМИНИСТРАЦИИ</div>
+    <div class="ban-reason-block">
+      <div class="ban-reason-label">ПРИЧИНА:</div>
+      <div class="ban-reason-value ban-gradient" id="banReasonText">—</div>
+    </div>
+    <div class="ban-footnote">Доступ к игре закрыт. Если считаешь блокировку ошибкой — напиши администратору.</div>
+  </div>
+</div>
+
+<div class="modal" id="unbanModal">
+    <div class="modal-card">
+        <div class="unban-icon">✅</div>
+        <div class="modal-title ban-gradient" style="font-size:25px;letter-spacing:1.5px;margin-bottom:0;">ВЫ РАЗБАНЕНЫ</div>
+        <div class="unban-reason-label">ПРИЧИНА:</div>
+        <div class="unban-reason-value"><span class="ban-gradient" id="unbanReasonText">—</span></div>
+        <button class="action-btn" style="margin-top:22px;" onclick="ackUnban()">Понятно</button>
+    </div>
+</div>
+
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">X</button>
@@ -991,6 +1082,7 @@ body{
             <button class="admin-tab" id="adminTabDeposits" onclick="switchAdminTab('deposits')">Пополнения <span class="admin-tab-count" id="adminDepCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabWithdraws" onclick="switchAdminTab('withdraws')">Выводы <span class="admin-tab-count" id="adminWdCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabMaintenance" onclick="switchAdminTab('maintenance')">Техперерыв</button>
+            <button class="admin-tab" id="adminTabBans" onclick="switchAdminTab('bans')">Баны <span class="admin-tab-count" id="adminBanTabCount" data-zero="1"></span></button>
             <button class="admin-tab" id="adminTabAbuse" onclick="switchAdminTab('abuse')">Админ Абьюз</button>
         </div>
         <div class="admin-tab-panel active" id="adminPanelPromo">
@@ -1067,6 +1159,29 @@ body{
                 </div>
                 <button class="action-btn" id="announceBtn" onclick="sendAnnouncement()" style="background: linear-gradient(135deg, var(--color-purple), var(--color-purple-deep)); border-color: var(--color-purple); color: #fff;">Отправить</button>
                 <div class="msg" id="announceMsg"></div>
+            </div>
+        </div>
+        <div class="admin-tab-panel" id="adminPanelBans">
+            <div class="admin-mini-stat"><span class="stat-dot"></span> Блокировка пользователей</div>
+            <div class="admin-section">
+                <div class="admin-section-title">Бан / разбан</div>
+                <div class="form-group">
+                    <label class="form-label">Юзер в тг</label>
+                    <input type="text" class="form-input" id="adminBanTarget" placeholder="@username или ID" maxlength="64" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Причина</label>
+                    <input type="text" class="form-input" id="adminBanReasonInput" placeholder="Например: читы / спам" maxlength="120" autocomplete="off">
+                </div>
+                <div class="ban-btn-row">
+                    <button class="ban-btn" id="adminBanBtn" onclick="adminBanUser()">БАН</button>
+                    <button class="ban-btn unban" id="adminUnbanBtn" onclick="adminUnbanUser()">РАЗБАН</button>
+                </div>
+                <div class="msg" id="adminBanMsg"></div>
+            </div>
+            <div class="admin-section">
+                <div class="admin-section-title">Забаненные</div>
+                <div id="adminBansList"><div class="admin-request-empty">Загрузка...</div></div>
             </div>
         </div>
     </div>
@@ -1332,8 +1447,9 @@ body{
             <p style="color:var(--text-muted);font-size:15px;font-weight:600;margin-bottom:16px;">Введи код и получи награду</p>
             <div class="promo-input-wrap" style="display:flex;gap:8px;max-width:480px;margin:0 auto;">
                 <input type="text" class="form-input" id="promoInput" placeholder="ВВЕДИ ПРОМОКОД" maxlength="20" style="flex:1;text-transform:uppercase">
-                <button class="action-btn" onclick="activatePromo()" style="width:auto;padding:12px 16px;margin-top:0;">Активировать</button>
+                <button class="action-btn" id="promoActivateBtn" onclick="activatePromo()" style="width:auto;padding:12px 16px;margin-top:0;">Активировать</button>
             </div>
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.5px;text-transform:uppercase;">1 человек — 1 активация промокода</div>
             <div class="msg" id="promoMsg"></div>
         </div>
     </div>
@@ -1541,6 +1657,10 @@ let maintenanceEnabled = false;
 let maintenanceInterval = null;
 let announcementInterval = null;
 let lastAnnouncementId = null;
+let isPromoActivating = false;
+let banPollInterval = null;
+let currentBan = null;
+let pendingUnbanNotice = null;
 
 // Catch Game Vars
 let catchGameActive = false;
@@ -1687,7 +1807,11 @@ async function api(path, body) {
   if (initDataRaw) headers['X-Telegram-Init-Data'] = initDataRaw;
   const payload = Object.assign({ telegram_id: getTelegramId(), username: USER.username || '' }, body || {});
   const res = await fetch(API_URL + path, { method: 'POST', headers, body: JSON.stringify(payload) });
-  return res.json();
+  const data = await res.json();
+  if (data && data.error === 'BANNED') {
+    showBanOverlay(data.ban || null);
+  }
+  return data;
 }
 
 function saveCache() {
@@ -1711,6 +1835,12 @@ function applyServerUser(data) {
   if (typeof data.balance === 'number') balance = data.balance;
   if (Array.isArray(data.inventory)) inventory = data.inventory;
   if (Array.isArray(data.pending_withdraw_ids)) pendingWithdrawItemIds = new Set(data.pending_withdraw_ids);
+
+  if (Object.prototype.hasOwnProperty.call(data, 'banned')) {
+    if (data.banned) showBanOverlay(data.ban || null);
+    else hideBanOverlay();
+  }
+  if (data.unban_notice) showUnbanNotice(data.unban_notice);
   
   saveCache();
 
@@ -1724,7 +1854,7 @@ function applyServerUser(data) {
 
 async function loadUserFromServer() {
   try {
-    const res = await fetch(API_URL + '/api/user/' + encodeURIComponent(getTelegramId()));
+    const res = await fetch(API_URL + '/api/user/' + encodeURIComponent(getTelegramId()) + '?username=' + encodeURIComponent(USER.username || ''), { cache: 'no-store' });
     const data = await res.json();
     if (data.ok && data.user) {
       const u = data.user;
@@ -1740,6 +1870,90 @@ async function loadUserFromServer() {
     }
   } catch (e) { console.warn('[SYNC] сервер недоступен, используем кэш'); }
 }
+
+// ================== БАНЫ ==================
+function refreshBodyScrollLock() {
+  const anyOpen =
+    !!document.querySelector('.modal.open') ||
+    !!document.getElementById('banOverlay')?.classList.contains('show') ||
+    !!document.getElementById('caseOpenModal')?.classList.contains('show');
+  document.body.style.overflow = anyOpen ? 'hidden' : '';
+}
+
+function showBanOverlay(ban) {
+  currentBan = ban || null;
+  const ov = document.getElementById('banOverlay');
+  const reasonEl = document.getElementById('banReasonText');
+  if (reasonEl) reasonEl.textContent = (ban && ban.reason) ? ban.reason : 'Не указана';
+  if (!ov) return;
+  const wasOpen = ov.classList.contains('show');
+  ov.classList.add('show');
+  try { closeCaseOpen(); } catch (e) {}
+  ['topupModal', 'adminModal', 'targetModal', 'withdrawModal', 'withdrawInfoModal', 'unbanModal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+  });
+  refreshBodyScrollLock();
+  if (!wasOpen) { playLose(); vibratePattern([60, 40, 120]); }
+}
+
+function hideBanOverlay() {
+  const ov = document.getElementById('banOverlay');
+  if (ov) ov.classList.remove('show');
+  refreshBodyScrollLock();
+}
+
+function showUnbanNotice(notice) {
+  if (!notice || !notice.reason) return;
+  const modal = document.getElementById('unbanModal');
+  const alreadyOpen = !!(modal && modal.classList.contains('open'));
+  if (alreadyOpen && pendingUnbanNotice &&
+      pendingUnbanNotice.reason === notice.reason && pendingUnbanNotice.at === notice.at) {
+    return;
+  }
+  pendingUnbanNotice = notice;
+  const reasonEl = document.getElementById('unbanReasonText');
+  if (reasonEl) reasonEl.textContent = notice.reason;
+  if (!alreadyOpen) {
+    openModal('unbanModal');
+    playWin();
+    vibratePattern([30, 40, 30]);
+  }
+  refreshBodyScrollLock();
+}
+
+async function ackUnban() {
+  playClick(); vibrate(10);
+  closeModal('unbanModal');
+  pendingUnbanNotice = null;
+  refreshBodyScrollLock();
+  try {
+    await fetch(API_URL + '/api/unban/ack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telegram_id: getTelegramId() })
+    });
+  } catch (e) {}
+}
+document.getElementById('unbanModal')?.addEventListener('click', (e) => {
+  if (e.target === document.getElementById('unbanModal')) ackUnban();
+});
+
+async function checkBanStatus() {
+  try {
+    const url = API_URL + '/api/ban/status?telegram_id=' + encodeURIComponent(getTelegramId()) +
+      '&username=' + encodeURIComponent(USER.username || '');
+    const res = await fetch(url, { cache: 'no-store' });
+    const data = await res.json();
+    if (!data || !data.ok) return;
+    if (data.banned) showBanOverlay(data.ban || null);
+    else hideBanOverlay();
+    if (data.unban_notice) showUnbanNotice(data.unban_notice);
+  } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) checkBanStatus();
+});
 
 function updateBalanceUI() {
   const bd = document.getElementById('balanceDisplay');
@@ -1968,7 +2182,7 @@ window.openAdminPanel = function() {
   playClick();
   renderAdminGrid(); renderPromoList(); updateAdminPreview();
   switchAdminTab('promo');
-  loadAdminDeposits(); loadAdminWithdraws(); loadMaintenanceStatus();
+  loadAdminDeposits(); loadAdminWithdraws(); loadMaintenanceStatus(); loadAdminBans();
   openModal('adminModal');
 };
 window.createPromo = async function() {
@@ -2006,10 +2220,15 @@ async function renderPromoList() {
   } catch (err) { list.innerHTML = '<div style="color:var(--color-red); font-size:12px; font-weight:600; text-align:center; padding:16px;">Сервер спит</div>'; }
 }
 window.activatePromo = async function() {
+  if (isPromoActivating) return;
   const inputTab = document.getElementById('promoInput');
   const msgTab = document.getElementById('promoMsg');
+  const btn = document.getElementById('promoActivateBtn');
+  if (!inputTab) return;
   const code = inputTab.value.trim().toUpperCase();
   if (!code) { if(msgTab){msgTab.className='msg err';msgTab.textContent='Введи промокод';} return; }
+  isPromoActivating = true;
+  if (btn) btn.disabled = true;
   if (msgTab) { msgTab.className='msg wait'; msgTab.textContent='Проверяем...'; }
   try {
     const data = await api('/api/activate', { code });
@@ -2019,10 +2238,14 @@ window.activatePromo = async function() {
       inputTab.value = ''; await loadUserFromServer();
     } else { if (msgTab) { msgTab.className='msg err'; msgTab.textContent = data.error || 'Ошибка'; } playLose(); }
   } catch (err) { if(msgTab){msgTab.className='msg err';msgTab.textContent='Сервер не отвечает.';} }
+  finally {
+    isPromoActivating = false;
+    if (btn) btn.disabled = false;
+  }
 };
 window.switchAdminTab = function(tab) {
   playClick(); vibrate(8);
-  ['promo','deposits','withdraws','maintenance','abuse'].forEach(t => {
+  ['promo','deposits','withdraws','maintenance','bans','abuse'].forEach(t => {
     const btn = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
     const panel = document.getElementById('adminPanel' + t.charAt(0).toUpperCase() + t.slice(1));
     if (btn) btn.classList.toggle('active', t === tab);
@@ -2032,6 +2255,7 @@ window.switchAdminTab = function(tab) {
   if (tab === 'withdraws') loadAdminWithdraws();
   if (tab === 'promo') renderPromoList();
   if (tab === 'maintenance') loadMaintenanceStatus();
+  if (tab === 'bans') loadAdminBans();
   if (tab === 'abuse') {
     document.getElementById('adminAnnounceText').value = '';
     document.getElementById('announceMsg').textContent = '';
@@ -2071,6 +2295,113 @@ window.sendAnnouncement = async function() {
     if (btn) btn.disabled = false;
   }
 };
+
+// ================== АДМИН: БАНЫ ==================
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function banTargetArg(s) {
+  return String(s == null ? '' : s).replace(/[^A-Za-z0-9_@-]/g, '');
+}
+function setBanMsg(kind, text) {
+  const msg = document.getElementById('adminBanMsg');
+  if (!msg) return;
+  msg.className = 'msg ' + (kind === 'ok' ? 'ok' : kind === 'err' ? 'err' : 'wait');
+  msg.textContent = text;
+}
+window.adminBanUser = async function() {
+  if (!isAdmin) return;
+  const targetEl = document.getElementById('adminBanTarget');
+  const reasonEl = document.getElementById('adminBanReasonInput');
+  const target = (targetEl?.value || '').trim();
+  const reason = (reasonEl?.value || '').trim();
+  if (!target) { setBanMsg('err', 'Введи юзера в тг'); return; }
+  if (!reason) { setBanMsg('err', 'Укажи причину бана'); return; }
+  playClick(); vibrate(10);
+  setBanMsg('wait', 'Баним...');
+  try {
+    const res = await fetch(API_URL + '/api/admin/ban', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_username: USER.username || '', username: USER.username || '', target, reason })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      const uname = data.user?.username || target;
+      setBanMsg('ok', data.pending ? 'Готово. Юзер ещё не заходил — бан сработает при входе.' : 'Забанен: @' + uname);
+      if (reasonEl) reasonEl.value = '';
+      loadAdminBans();
+      checkBanStatus();
+    } else {
+      setBanMsg('err', data.error || 'Ошибка');
+    }
+  } catch (e) {
+    setBanMsg('err', 'Сервер не отвечает');
+  }
+};
+window.adminUnbanUser = async function() {
+  if (!isAdmin) return;
+  const targetEl = document.getElementById('adminBanTarget');
+  const reasonEl = document.getElementById('adminBanReasonInput');
+  const target = (targetEl?.value || '').trim();
+  const reason = (reasonEl?.value || '').trim();
+  if (!target) { setBanMsg('err', 'Введи юзера в тг'); return; }
+  playClick(); vibrate(10);
+  setBanMsg('wait', 'Разбаниваем...');
+  try {
+    const res = await fetch(API_URL + '/api/admin/unban', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ admin_username: USER.username || '', username: USER.username || '', target, reason })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      const uname = data.user?.username || target;
+      setBanMsg('ok', 'Разбанен: @' + uname + (data.reason ? ' · причина: ' + data.reason : ''));
+      if (reasonEl) reasonEl.value = '';
+      loadAdminBans();
+      checkBanStatus();
+    } else {
+      setBanMsg('err', data.error || 'Ошибка');
+    }
+  } catch (e) {
+    setBanMsg('err', 'Сервер не отвечает');
+  }
+};
+window.adminUnbanFromList = function(target) {
+  const targetEl = document.getElementById('adminBanTarget');
+  if (targetEl) targetEl.value = '@' + String(target || '').replace(/^@+/, '');
+  adminUnbanUser();
+};
+async function loadAdminBans() {
+  const list = document.getElementById('adminBansList');
+  const tabCount = document.getElementById('adminBanTabCount');
+  if (!list) return;
+  try {
+    const res = await fetch(API_URL + '/api/admin/bans?admin=' + encodeURIComponent(USER.username || ''), { cache: 'no-store' });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'error');
+    const bans = Array.isArray(data.bans) ? data.bans : [];
+    if (tabCount) { tabCount.textContent = bans.length; tabCount.dataset.zero = bans.length ? '0' : '1'; }
+    if (!bans.length) { list.innerHTML = '<div class="admin-request-empty">Забаненных нет</div>'; return; }
+    list.innerHTML = bans.map(b => {
+      const uname = b.username ? '@' + escapeHtml(b.username) : escapeHtml(b.id || '—');
+      const when = b.at ? new Date(b.at).toLocaleString('ru-RU') : '—';
+      const arg = banTargetArg(b.username || b.id || '');
+      return `<div class="admin-request-card">
+        <div class="ban-list-avatar">⛔</div>
+        <div class="admin-request-info">
+          <div class="ban-list-user"><span class="req-val accent">${uname}</span>${b.pending ? '<span class="ban-list-badge pending">ещё не заходил</span>' : '<span class="ban-list-badge">забанен</span>'}</div>
+          <div class="req-line"><span class="req-key">Причина:</span> <span class="req-val">${escapeHtml(b.reason || 'Не указана')}</span></div>
+          <div class="req-line"><span class="req-key">Когда:</span> <span class="req-val">${escapeHtml(when)}</span></div>
+        </div>
+        <div class="admin-request-actions"><button class="dep-reject" onclick="adminUnbanFromList('${arg}')">Разбан</button></div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="admin-request-empty">Не удалось загрузить</div>';
+  }
+}
 
 async function loadAdminDeposits() {
   const list = document.getElementById('adminDepositsList'); const countEl = document.getElementById('adminDepCount'); if (!list) return;
@@ -2889,6 +3220,7 @@ async function init() {
   applyMaintenanceState(maintenanceEnabled);
   
   await loadUserFromServer();
+  await checkBanStatus();
   await checkAnnouncement();
   
   if (maintenanceInterval) clearInterval(maintenanceInterval);
@@ -2896,6 +3228,9 @@ async function init() {
 
   if (announcementInterval) clearInterval(announcementInterval);
   announcementInterval = setInterval(checkAnnouncement, 1000);
+
+  if (banPollInterval) clearInterval(banPollInterval);
+  banPollInterval = setInterval(checkBanStatus, 8000);
 }
 window.addEventListener('load', () => {
   setTimeout(async () => {
