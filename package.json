@@ -1,16 +1,13 @@
 {
-  "name": "ggbrainx-server",
+  "name": "brainroll",
   "version": "1.0.0",
+  "private": true,
+  "description": "BrainRoll Telegram Mini App (frontend + Node.js backend)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "engines": {
-    "node": "18.20.4"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "better-sqlite3": "^11.5.0"
+    "node": ">=18"
   }
 }
