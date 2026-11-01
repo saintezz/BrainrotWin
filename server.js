@@ -19,7 +19,7 @@ const BANS_FILE = path.join(DATA_DIR, 'bans.json');
 
 const ADMIN_USERNAMES = ['saintezz7', 'vortyn1'];
 
-const START_BALANCE = 500;
+const START_BALANCE = 350;
 
 const ITEMS = {
   lagrande: { name: 'La Grande Combination', price: 4 },
