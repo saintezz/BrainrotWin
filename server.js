@@ -233,6 +233,15 @@ function ensureUser(telegramId, username) {
 }
 function isAdmin(username) { return ADMIN_USERNAMES.includes((username || '').toLowerCase()); }
 function computePendingWithdrawIds(telegramId) { const s = new Set(); for (const w of withdraws) { if (w.status === 'pending' && String(w.telegram_id) === String(telegramId)) s.add(w.item_id); } return [...s]; }
+function computePendingWithdrawDetails(telegramId) {
+  const map = {};
+  for (const w of withdraws) {
+    if (w.status === 'pending' && String(w.telegram_id) === String(telegramId)) {
+      map[w.item_id] = { time: w.time_slot, ts: w.created_at };
+    }
+  }
+  return map;
+}
 function publicUser(u, telegramId) {
   const banned = isBannedUser(u);
   return {
@@ -242,6 +251,7 @@ function publicUser(u, telegramId) {
     custom_nick: u.custom_nick || '',
     avatar: u.avatar || '',
     pending_withdraw_ids: computePendingWithdrawIds(telegramId),
+    pending_withdraw_details: computePendingWithdrawDetails(telegramId),
     banned,
     ban: banned ? banInfo(u) : null,
     unban_notice: (u.unban_notice && !u.unban_notice.seen) ? { reason: u.unban_notice.reason || 'Решение администрации', at: u.unban_notice.at || null } : null
