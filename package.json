@@ -1,13 +1,15 @@
 {
-  "name": "brainroll",
+  "name": "brainroll-backend",
   "version": "1.0.0",
-  "private": true,
-  "description": "BrainRoll Telegram Mini App (frontend + Node.js backend)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "dotenv": "^16.4.5"
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.0.0"
   }
 }
