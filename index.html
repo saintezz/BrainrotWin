@@ -150,6 +150,27 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--lilac);outline-
 .icon-btn.avatar-btn{border-color:var(--lilac-line)}
 .icon-btn img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--r-md) - 3px)}
 
+/* ★ Кнопка музыки */
+.music-btn{
+  width:42px;height:42px;border-radius:var(--r-md);
+  background:var(--bg-surface-hover);border:1px solid var(--line-mid);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:var(--text-muted);transition:all .18s var(--ease);
+  padding:0;flex-shrink:0;
+}
+.music-btn:hover{border-color:var(--lilac-line);color:var(--lilac)}
+.music-btn.playing{
+  color:var(--green);
+  border-color:var(--green-line);
+  background:var(--green-soft);
+  box-shadow:var(--green-glow-soft);
+}
+.music-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.music-btn .music-off{display:block}
+.music-btn .music-on{display:none}
+.music-btn.playing .music-off{display:none}
+.music-btn.playing .music-on{display:block}
+
 .top-bar .logo-container { display: none; }
 
 /* UPGRADER */
@@ -666,7 +687,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--lilac);outline-
   .balance{font-size:13px}
   .coin-icon{width:15px;height:15px}
   .topup-btn{width:22px;height:22px;font-size:14px}
-  .icon-btn{width:38px;height:38px}
+  .icon-btn,.music-btn{width:38px;height:38px}
   .app{padding:0 var(--s-3) var(--s-5)}
   .upg-wheel-wrap{width:240px;height:240px}
   .upg-wheel-center{width:120px;height:120px}
@@ -679,6 +700,10 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--lilac);outline-
 </style>
 </head>
 <body>
+
+<audio id="bgMusic" loop preload="auto" style="display:none;">
+  <source src="https://github.com/saintezz/BrainrotWin/raw/main/desktop-20261108-09140003_weXBcXcf.mp3" type="audio/mpeg">
+</audio>
 
 <div id="telegramWarning">ВЫ НЕ В ТЕЛЕГРАММ</div>
 
@@ -901,6 +926,19 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--lilac);outline-
             <div class="balance"><img src="https://github.com/saintezz/brainrolltester/blob/main/bgmonet.png?raw=true" class="coin-icon"><span id="balanceDisplayTop">0</span></div>
             <button class="topup-btn" onclick="openTopup()">+</button>
           </div>
+          <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Музыка" title="Музыка">
+            <svg class="music-off" viewBox="0 0 24 24">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            </svg>
+            <svg class="music-on" viewBox="0 0 24 24">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+          </button>
           <div class="icon-btn avatar-btn" onclick="switchTab('profile')">
             <img id="topAvatarImg" src="https://raw.githubusercontent.com/saintezz/ggbrainXv2/main/avavatarochka.jpg">
           </div>
@@ -1302,6 +1340,57 @@ let promoType = 'balance', selectedAdminItem = null, activePromo = null;
 let maintenanceEnabled = false, maintenanceInterval = null, announcementInterval = null, lastAnnouncementId = null;
 let isPromoActivating = false, banPollInterval = null, currentBan = null, pendingUnbanNotice = null;
 let stakingInfo = null, stakingTierSelected = null, stakingInterval = null;
+
+/* ★ МУЗЫКА */
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+let musicStarted = false;
+let musicEnabled = localStorage.getItem('brainroll_music') !== 'off';
+
+function setMusicState(playing) {
+  if (!musicBtn) return;
+  musicBtn.classList.toggle('playing', playing);
+}
+function tryStartMusic() {
+  if (!bgMusic || !musicEnabled) return;
+  bgMusic.volume = 0.4;
+  const p = bgMusic.play();
+  if (p && p.then) {
+    p.then(() => { musicStarted = true; setMusicState(true); })
+     .catch(() => { musicStarted = false; setMusicState(false); });
+  }
+}
+window.toggleMusic = function() {
+  if (!bgMusic) return;
+  playClick();
+  if (bgMusic.paused) {
+    musicEnabled = true;
+    localStorage.setItem('brainroll_music', 'on');
+    tryStartMusic();
+  } else {
+    musicEnabled = false;
+    localStorage.setItem('brainroll_music', 'off');
+    bgMusic.pause();
+    setMusicState(false);
+  }
+};
+function initMusicAutoplay() {
+  if (!bgMusic) return;
+  if (musicEnabled) {
+    const handler = () => {
+      tryStartMusic();
+      document.removeEventListener('touchstart', handler);
+      document.removeEventListener('click', handler);
+      document.removeEventListener('keydown', handler);
+    };
+    document.addEventListener('touchstart', handler, { once: true, passive: true });
+    document.addEventListener('click', handler, { once: true });
+    document.addEventListener('keydown', handler, { once: true });
+    tryStartMusic();
+  } else {
+    setMusicState(false);
+  }
+}
 
 function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
@@ -2155,6 +2244,8 @@ async function init() {
   announcementInterval = setInterval(checkAnnouncement, 1000);
   if (banPollInterval) clearInterval(banPollInterval);
   banPollInterval = setInterval(checkBanStatus, 8000);
+
+  initMusicAutoplay();
 }
 window.addEventListener('load', ()=>{
   setTimeout(async ()=>{
