@@ -35,13 +35,8 @@
 *{user-select:none;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;height:100%}
 body{
-  background:
-    radial-gradient(1200px 700px at 12% -8%, rgba(183,148,246,.16), transparent 58%),
-    radial-gradient(1000px 560px at 92% 4%, rgba(124,95,191,.12), transparent 58%),
-    var(--bg-void);
-  color:var(--text-main);min-height:100vh;display:flex;flex-direction:column;
-  padding:0;position:relative;overflow-x:hidden;overflow-y:auto;
-  -webkit-font-smoothing:antialiased;
+  background:radial-gradient(1200px 700px at 12% -8%, rgba(183,148,246,.16), transparent 58%),radial-gradient(1000px 560px at 92% 4%, rgba(124,95,191,.12), transparent 58%),var(--bg-void);
+  color:var(--text-main);min-height:100vh;display:flex;flex-direction:column;padding:0;position:relative;overflow-x:hidden;overflow-y:auto;-webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;display:block}
 button,input,select{font:inherit;color:inherit}
@@ -49,7 +44,6 @@ button{cursor:pointer;background:none;border:none}
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-thumb{background:var(--lilac-deep);border-radius:9px;border:2px solid var(--bg-void)}
 
-/* Layout */
 .app-wrapper{display:flex;width:100%;min-height:100vh;max-width:1180px;margin:0 auto}
 .app-content{flex:1;min-width:0;display:flex;flex-direction:column}
 .app{padding:0 var(--s-5) var(--s-8);width:100%;display:flex;flex-direction:column}
@@ -57,7 +51,6 @@ button{cursor:pointer;background:none;border:none}
 .tab-panel.active{display:block;animation:fadeUp .32s var(--ease-out)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* Sidebar */
 .side-nav{position:sticky;top:0;align-self:flex-start;width:220px;flex-shrink:0;height:100vh;display:flex;flex-direction:column;gap:6px;padding:22px 12px;background:#0d0b16;border-right:1px solid var(--line-mid);z-index:90}
 .side-nav-logo{padding:0 8px 18px;border-bottom:1px solid var(--line);margin-bottom:10px;display:flex;justify-content:center}
 .side-nav-logo img{height:58px;filter:drop-shadow(0 0 14px rgba(183,148,246,.65))}
@@ -73,11 +66,9 @@ button{cursor:pointer;background:none;border:none}
 .side-nav-music svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .side-nav-music .music-off{display:block}.side-nav-music .music-on{display:none}
 .side-nav-music.playing .music-off{display:none}.side-nav-music.playing .music-on{display:block}
-
 .side-nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:690}
 .side-nav-overlay.open{display:block}
 
-/* Top bar */
 .burger-btn{display:none;background:var(--bg-elevated);border:1px solid var(--line-mid);color:var(--lilac);cursor:pointer;padding:9px;border-radius:var(--r-sm);box-shadow:var(--lilac-glow-soft);flex-shrink:0}
 .burger-btn svg{width:24px;height:24px;stroke:currentColor;stroke-width:2.4}
 .top-bar{display:flex;justify-content:space-between;align-items:center;padding:var(--s-3) var(--s-5);background:linear-gradient(180deg, #141120, #0d0b16);border-bottom:1px solid var(--line-mid);position:sticky;top:0;z-index:100;gap:var(--s-4);box-shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -94,7 +85,6 @@ button{cursor:pointer;background:none;border:none}
 .icon-btn img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--r-md) - 3px)}
 .top-bar .logo-container{display:none}
 
-/* Menu / promo banner */
 .promo-banner{margin:var(--s-5) 0;padding:var(--s-7) var(--s-8);border-radius:var(--r-xl);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s-5)}
 .banner-left{display:flex;flex-direction:column;gap:7px}
 .banner-left .title{font-size:10px;font-weight:800;color:var(--lilac-bright);text-transform:uppercase;letter-spacing:.18em;background:var(--lilac-soft);padding:5px 11px;border-radius:var(--r-xs);display:inline-block;width:fit-content;border:1px solid var(--lilac-line)}
@@ -113,7 +103,6 @@ button{cursor:pointer;background:none;border:none}
 .promo-code-display .pcd-copy svg{width:19px;height:19px}
 .activate-btn{background:linear-gradient(135deg, rgba(183,148,246,.20), rgba(183,148,246,.08));color:var(--lilac-bright);border:1px solid var(--lilac-line);border-radius:var(--r-md);padding:14px 32px;font-size:14px;font-weight:800;cursor:pointer;text-transform:uppercase;width:100%}
 
-/* Cases */
 .cases-hero{margin:var(--s-5) 0;padding:var(--s-7) var(--s-8);border-radius:var(--r-xl);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);display:flex;align-items:center;justify-content:space-between;gap:var(--s-6);flex-wrap:wrap}
 .cases-hero-left{display:flex;flex-direction:column;gap:9px}
 .cases-hero-kicker{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lilac);display:inline-flex;align-items:center;gap:9px}
@@ -143,7 +132,6 @@ button{cursor:pointer;background:none;border:none}
 .case-open-hint svg{width:14px;height:14px}
 .cases-empty{grid-column:1/-1;text-align:center;padding:var(--s-8) var(--s-5);color:var(--text-muted);font-size:13.5px;font-weight:600}
 
-/* Case open modal */
 .case-open-modal{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;align-items:center;background:var(--bg-void);overflow-y:auto;padding:var(--s-5) 0 var(--s-8)}
 .case-open-modal.show{display:flex}
 .case-open-header{width:100%;max-width:1120px;padding:0 var(--s-5);display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s-2)}
@@ -151,8 +139,7 @@ button{cursor:pointer;background:none;border:none}
 .case-open-balance{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800;color:var(--green);padding:10px 16px;background:var(--green-soft);border-radius:var(--r-md);border:1px solid var(--green-line)}
 .case-open-balance img{width:15px;height:15px}
 .case-open-stage{position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin:var(--s-2) auto 0}
-.case-open-stage-bg{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle, rgba(183,148,246,.18), transparent 65%);animation:stagePulse 3s infinite alternate}
-@keyframes stagePulse{0%{opacity:.4;transform:scale(.94)}100%{opacity:1;transform:scale(1.12)}}
+.case-open-stage-bg{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle, rgba(183,148,246,.18), transparent 65%)}
 .case-open-main-img{width:190px;height:190px;object-fit:contain;position:relative;z-index:1}
 .case-open-name{font-family:var(--font-display);font-size:20px;font-weight:700;color:#fff;text-transform:uppercase;text-align:center;margin:var(--s-2) 0 var(--s-5)}
 .case-roulette-wrapper{width:100%;max-width:1120px;padding:0 var(--s-4);margin-bottom:var(--s-4);display:flex;flex-direction:column;gap:var(--s-3)}
@@ -167,7 +154,7 @@ button{cursor:pointer;background:none;border:none}
 .case-roulette-item .roulette-name{font-size:10px;font-weight:600;color:var(--text-soft);text-align:center;line-height:1.15;height:24px;overflow:hidden}
 .case-roulette-item .roulette-price{font-size:11px;font-weight:800;color:var(--lilac);display:flex;align-items:center;gap:4px}
 .case-roulette-item .roulette-price img{width:11px;height:11px}
-.case-roulette-pointer{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--lilac);z-index:10;box-shadow:0 0 14px rgba(183,148,246,1)}
+.case-roulette-pointer{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--lilac);z-index:10}
 .case-roulette-pointer::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--lilac)}
 .case-qty-row{display:flex;gap:9px;margin-bottom:var(--s-4);width:100%;max-width:620px;padding:0 var(--s-5)}
 .case-qty-btn-big{flex:1;padding:13px 9px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-surface);color:var(--text-muted);font-size:13px;font-weight:800;cursor:pointer}
@@ -182,7 +169,6 @@ button{cursor:pointer;background:none;border:none}
 .case-possible-item .cp-price{font-size:11.5px;font-weight:800;color:var(--lilac);display:flex;align-items:center;gap:4px}
 .case-possible-item .cp-price img{width:11px;height:11px}
 
-/* Upgrader */
 .upg-container{display:flex;flex-direction:column;gap:var(--s-5);max-width:980px;margin:0 auto;padding:var(--s-5) 0 0}
 .upg-wheel-section{display:flex;flex-direction:column;align-items:center;padding:var(--s-4) 0}
 .upg-wheel-wrap{position:relative;width:320px;height:320px;display:flex;align-items:center;justify-content:center}
@@ -234,7 +220,6 @@ button{cursor:pointer;background:none;border:none}
 .empty-inv{color:var(--text-muted);font-size:13px;font-weight:600;text-align:center;width:100%;padding:var(--s-5);grid-column:1/-1}
 .selectable{display:flex;flex-direction:column;align-items:center;width:100%;cursor:pointer}
 
-/* Target modal */
 .target-list{display:flex;flex-direction:column;gap:7px;max-height:60vh;overflow-y:auto;padding:5px}
 .target-list-item{display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:11px;padding:11px;border-radius:var(--r-md);cursor:pointer;border:1px solid var(--line-mid);background:var(--bg-surface)}
 .target-list-item:hover{border-color:var(--lilac-line)}
@@ -244,54 +229,15 @@ button{cursor:pointer;background:none;border:none}
 .target-list-item .tl-price img{width:12px;height:12px}
 .target-list-item .tl-chance{font-size:11.5px;font-weight:800;color:var(--lilac-bright)}
 
-/* Mines */
-.mines-layout{display:flex;gap:var(--s-5);max-width:1020px;margin:0 auto;padding:var(--s-3) 0 var(--s-5);align-items:flex-start}
-.mines-board-wrap{flex:1;display:flex;justify-content:center;padding:var(--s-4);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);border-radius:var(--r-lg)}
-.mines-board{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;width:100%;max-width:480px;aspect-ratio:1}
-.mine-cell{background:var(--bg-surface-hover);border:1px solid var(--line-mid);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;padding:7px}
-.mine-cell img{width:88%;height:88%;object-fit:contain;pointer-events:none}
-.mine-cell.opened{background:var(--bg-void);border-color:var(--line);cursor:default}
-.mine-cell.bomb{background:var(--red-soft);border-color:var(--red-line)}
-.mine-cell.disabled{cursor:default;pointer-events:none}
-.mines-controls{width:308px;flex-shrink:0;display:flex;flex-direction:column;gap:var(--s-3);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);border-radius:var(--r-lg);padding:var(--s-4)}
-.mines-control-title{font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase}
-.mines-bet-input{display:flex;align-items:center;gap:9px}
-.mines-bet-input button{width:40px;height:40px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-surface-hover);color:#fff;font-size:19px;font-weight:800;cursor:pointer}
-.mines-bet-input input{flex:1;height:40px;text-align:center;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);color:#fff;font-size:17px;font-weight:800;outline:none}
-.mines-multipliers{display:flex;gap:7px;flex-wrap:wrap}
-.mines-mult-btn{flex:1;min-width:46px;padding:9px 7px;border-radius:var(--r-sm);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-muted);font-size:12.5px;font-weight:800;cursor:pointer}
-.mines-mult-btn.active{background:var(--lilac-soft);border-color:var(--lilac-line);color:var(--lilac)}
-.mines-info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 13px;background:var(--bg-elevated);border:1px solid var(--line-mid);border-radius:var(--r-md);font-size:12.5px;font-weight:700;color:var(--text-muted)}
-.mines-info-row span:last-child{color:var(--lilac-bright);font-weight:800}
-.mines-start-btn{width:100%;padding:14px;border-radius:var(--r-md);border:1px solid var(--lilac-line);background:var(--lilac-soft);color:var(--lilac-bright);font-size:13px;font-weight:800;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px}
-.mines-start-btn.cashout{background:var(--yellow-soft);border-color:var(--yellow-line);color:var(--yellow)}
-
-/* Inventory tab */
-.inventory-page{padding:var(--s-1) 0 var(--s-5)}
-.inventory-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s-4);margin-bottom:var(--s-4);flex-wrap:wrap}
-.inventory-hero-title{font-family:var(--font-display);font-size:clamp(22px,4vw,28px);font-weight:700;text-transform:uppercase;color:#fff}
-.inventory-hero-sub{font-size:11.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-top:7px}
-.inventory-hero-stats{display:flex;gap:var(--s-3);flex-wrap:wrap}
-.inv-hero-pill{display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:var(--r-md);background:var(--lilac-soft);border:1px solid var(--lilac-line);font-size:12.5px;font-weight:800;color:var(--lilac-bright)}
-.inv-hero-pill img{width:16px;height:16px}
-.inventory-tab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:var(--s-3)}
-.inv-tab-card{padding:15px 11px;display:flex;flex-direction:column;align-items:center;gap:9px;border:1px solid var(--line-mid);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border-radius:var(--r-md)}
-.inv-tab-card img.inv-main{width:54px;height:54px;object-fit:contain}
-.inv-tab-card .inv-name{font-size:11.5px;font-weight:700;color:var(--text-soft);text-align:center;height:32px;overflow:hidden;line-height:1.15;display:flex;align-items:center;justify-content:center}
-.inv-tab-card .inv-price{font-size:11.5px;font-weight:800;color:var(--lilac);display:flex;align-items:center;gap:5px}
-.inv-tab-card .inv-price img{width:12px;height:12px}
-.inv-tab-actions{display:flex;flex-direction:column;gap:7px;width:100%}
-.inv-tab-actions button{flex:1;padding:8px 5px;border-radius:var(--r-xs);font-size:10px;font-weight:800;text-transform:uppercase;cursor:pointer;border:1px solid transparent}
-.inv-sell{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
-.inv-wd{background:var(--lilac-soft);color:var(--lilac);border-color:var(--lilac-line)}
-.inv-wd-disabled{background:var(--bg-elevated);color:var(--text-muted);border-color:var(--line-mid);cursor:not-allowed;opacity:.6}
-
-/* Bonuses */
 .bonus-page{padding:var(--s-2) 0 var(--s-8);display:flex;flex-direction:column;gap:var(--s-5)}
 .bonus-card{border-radius:var(--r-lg);overflow:hidden;padding:var(--s-6);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--line-mid)}
 .bonus-card-title{font-family:var(--font-display);font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#fff;margin-bottom:7px;display:flex;align-items:center;gap:9px}
 .bonus-card-title::before{content:'';width:3px;height:16px;border-radius:2px;background:linear-gradient(180deg, var(--lilac), var(--lilac-deep))}
 .bonus-card-sub{font-size:12px;color:var(--text-muted);margin-bottom:var(--s-5);line-height:1.6}
+.closed-box{padding:var(--s-5);border-radius:var(--r-md);background:linear-gradient(135deg, rgba(255,126,166,.10), rgba(255,126,166,.03));border:1px dashed var(--red-line);text-align:center}
+.closed-box .cb-icon{font-size:32px;margin-bottom:10px}
+.closed-box .cb-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.closed-box .cb-sub{font-size:12px;color:var(--text-muted);line-height:1.5}
 
 .promo-new{display:flex;gap:var(--s-5);align-items:center;flex-wrap:wrap;padding:var(--s-6);border-radius:var(--r-lg);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--line-mid)}
 .promo-new-left{flex:0 1 260px;min-width:200px;display:flex;flex-direction:column;gap:5px}
@@ -316,7 +262,6 @@ button{cursor:pointer;background:none;border:none}
 .staking-claim-btn{margin-top:var(--s-3);width:100%;padding:12px;border-radius:var(--r-md);border:1px solid var(--lilac-line);background:var(--lilac-soft);color:var(--lilac-bright);font-size:12.5px;font-weight:800;text-transform:uppercase;cursor:pointer}
 .staking-claim-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* Profile */
 .profile-page{padding:0 0 var(--s-8);background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border-radius:var(--r-xl);border:1px solid var(--line-mid);overflow:hidden;margin-top:var(--s-5)}
 .profile-hero{padding:var(--s-8) var(--s-5) var(--s-6);background:radial-gradient(600px 300px at 50% 0%, rgba(183,148,246,.18), transparent 70%);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center}
 .profile-avatar-wrap{position:relative;width:112px;height:112px;margin-bottom:var(--s-5)}
@@ -344,74 +289,6 @@ button{cursor:pointer;background:none;border:none}
 .best-drop-actions{display:flex;flex-direction:column;gap:9px;align-items:flex-end}
 .best-drop-btn{padding:8px 14px;border-radius:var(--r-sm);background:var(--bg-elevated);border:1px solid var(--line-mid);color:var(--text-soft);font-size:10px;font-weight:800;text-transform:uppercase;cursor:pointer}
 .best-drop-empty{display:flex;align-items:center;justify-content:center;padding:var(--s-7);color:var(--text-muted);font-size:13px;text-align:center;width:100%;border:1px dashed var(--line-mid);border-radius:var(--r-md);background:var(--bg-elevated)}
-
-/* Modals */
-.modal{position:fixed;inset:0;background:rgba(5,4,10,.84);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .22s;padding:var(--s-4)}
-.modal.open{opacity:1;pointer-events:auto}
-.modal-card{background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);border-radius:var(--r-lg);padding:var(--s-6);width:100%;max-width:480px;text-align:center;position:relative;max-height:92vh;overflow-y:auto}
-.modal-card.wide{max-width:700px;text-align:left;padding:var(--s-6) var(--s-5)}
-.modal-close{position:absolute;top:13px;right:13px;width:32px;height:32px;border-radius:var(--r-sm);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.modal-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;margin-bottom:var(--s-4)}
-.form-group{margin-bottom:var(--s-4);text-align:left}
-.form-label{display:block;font-size:11.5px;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px}
-.msg{margin-top:11px;font-size:12.5px;font-weight:700;min-height:16px;text-align:center}
-.msg.ok{color:var(--green)} .msg.err{color:var(--red)} .msg.wait{color:var(--lilac-bright)}
-
-/* Topup modal */
-.topup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:290px;overflow-y:auto;padding:7px;background:var(--bg-elevated);border-radius:var(--r-md);margin-bottom:11px;border:1px solid var(--line-mid)}
-.topup-item{padding:7px 5px;border:1px solid var(--line-mid);border-radius:var(--r-sm);background:var(--bg-surface);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-align:center}
-.topup-item.selected{border-color:var(--lilac-line);background:var(--lilac-soft)}
-.topup-item img{width:34px;height:34px;object-fit:contain}
-.topup-item .ti-name{font-size:9px;font-weight:700;color:var(--text-soft);line-height:1.1;height:23px;overflow:hidden}
-.topup-item .ti-price{font-size:11px;font-weight:800;color:var(--lilac);line-height:1.3}
-.topup-price-line{display:flex;justify-content:space-between;align-items:center;padding:11px;background:var(--bg-surface-hover);border:1px solid var(--line-mid);border-radius:var(--r-md);margin-bottom:9px;font-size:13px;font-weight:700}
-.topup-price-line .tpl-label{color:var(--text-muted)}
-.topup-price-line .tpl-value{font-weight:800;color:var(--lilac);display:flex;align-items:center;gap:5px}
-.topup-price-line .tpl-value img{width:14px;height:14px}
-
-/* Withdraw modal */
-.withdraw-warning{display:flex;gap:10px;align-items:flex-start;padding:13px;border-radius:var(--r-md);background:var(--yellow-soft);border:1px solid var(--yellow-line);margin-bottom:16px}
-.withdraw-warning .ww-icon{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#1a1204;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
-.withdraw-warning .ww-text{font-size:12px;font-weight:700;color:var(--yellow);line-height:1.5}
-.withdraw-items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--s-2);max-height:230px;overflow-y:auto;padding:6px;background:var(--bg-elevated);border:1px solid var(--line-mid);border-radius:var(--r-md)}
-.withdraw-item{padding:9px 6px;border:1px solid var(--line-mid);border-radius:var(--r-sm);background:var(--bg-surface);display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;text-align:center;transition:all .15s}
-.withdraw-item.selected{border-color:var(--lilac-line);background:var(--lilac-soft);box-shadow:0 0 0 1px var(--lilac-line)}
-.withdraw-item img{width:38px;height:38px;object-fit:contain}
-.withdraw-item .wname{font-size:9.5px;font-weight:700;color:var(--text-soft);line-height:1.1;height:24px;overflow:hidden}
-.withdraw-item .wprice{font-size:11px;font-weight:800;color:var(--lilac)}
-.withdraw-selected-info{font-size:11.5px;font-weight:700;color:var(--text-muted);margin-top:6px;text-align:center}
-.withdraw-agree{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);cursor:pointer;margin-bottom:16px;transition:all .18s}
-.wa-box{width:22px;height:22px;border-radius:var(--r-xs);border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;color:transparent;font-weight:900;transition:all .18s}
-.withdraw-agree.checked .wa-box{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
-.wa-label{font-size:12px;font-weight:700;color:var(--text-soft);line-height:1.4}
-
-/* Confirm withdraw modal */
-.confirm-withdraw-box{padding:var(--s-4);border-radius:var(--r-md);background:var(--yellow-soft);border:1px solid var(--yellow-line);margin-bottom:var(--s-4);text-align:left}
-.confirm-withdraw-box .cw-title{font-size:14px;font-weight:800;color:var(--yellow);margin-bottom:8px}
-.confirm-withdraw-box .cw-text{font-size:12.5px;font-weight:600;color:var(--text-soft);line-height:1.55}
-.confirm-withdraw-actions{display:flex;gap:10px;margin-top:var(--s-4)}
-.confirm-withdraw-actions button{flex:1;padding:13px;border-radius:var(--r-md);font-size:13px;font-weight:800;text-transform:uppercase;cursor:pointer;letter-spacing:.04em}
-.cw-yes{background:var(--green-soft);border:1px solid var(--green-line);color:var(--green)}
-.cw-no{background:var(--red-soft);border:1px solid var(--red-line);color:var(--red)}
-
-/* Approved modal */
-.approved-modal-box{padding:var(--s-5);border-radius:var(--r-md);background:var(--green-soft);border:1px solid var(--green-line);text-align:center}
-.approved-modal-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-.approved-modal-time{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
-.approved-modal-time strong{color:var(--green);font-size:16px;display:block;margin-top:6px;text-shadow:0 0 10px rgba(92,240,176,.5)}
-.approved-modal-hint{font-size:11.5px;color:var(--text-muted);margin-top:10px}
-
-/* Action btn */
-.action-btn{width:100%;padding:14px;border-radius:var(--r-md);border:1px solid var(--lilac-line);background:var(--lilac-soft);color:var(--lilac-bright);font-size:13px;font-weight:800;text-transform:uppercase;cursor:pointer;margin-top:11px}
-.form-input{width:100%;padding:12px 13px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);color:#fff;font-size:15px;font-weight:600;outline:none}
-.avatar-upload-row{display:flex;align-items:center;gap:var(--s-3)}
-.avatar-preview{width:64px;height:64px;border-radius:50%;border:1px solid var(--line-mid);object-fit:cover;background:var(--bg-elevated);flex-shrink:0}
-.avatar-upload-buttons{flex:1;display:flex;flex-direction:column;gap:7px}
-.upload-btn{padding:12px 17px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-soft);font-size:11.5px;font-weight:800;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.reset-avatar-btn{padding:9px 13px;border-radius:var(--r-sm);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-muted);font-size:10.5px;font-weight:800;cursor:pointer}
-.customize-in-profile{padding:0 var(--s-5) var(--s-6)}
-.customize-section{background:var(--bg-surface-hover);border:1px solid var(--line-mid);border-radius:var(--r-md);padding:var(--s-4);margin-bottom:var(--s-3)}
-.customize-section-title{font-size:11.5px;font-weight:800;color:var(--text-muted);margin-bottom:var(--s-3);text-transform:uppercase}
 .profile-inventory-section{padding:0 var(--s-5) var(--s-5)}
 .profile-inventory-toggle{width:100%;padding:15px 19px;border-radius:var(--r-md);background:var(--bg-surface-hover);border:1px solid var(--line-mid);display:flex;align-items:center;gap:var(--s-3);cursor:pointer;text-align:left}
 .profile-inventory-toggle .pt-title{font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:800}
@@ -424,8 +301,68 @@ button{cursor:pointer;background:none;border:none}
 .profile-inventory-item .inv-name{font-size:10px;color:var(--text-soft);text-align:center;height:26px;overflow:hidden;font-weight:600}
 .profile-inventory-item .inv-price{font-size:11px;color:var(--lilac);font-weight:800}
 .profile-inventory-empty{text-align:center;color:var(--text-muted);font-size:12px;padding:var(--s-6);grid-column:1/-1}
+.customize-in-profile{padding:0 var(--s-5) var(--s-6)}
+.customize-section{background:var(--bg-surface-hover);border:1px solid var(--line-mid);border-radius:var(--r-md);padding:var(--s-4);margin-bottom:var(--s-3)}
+.customize-section-title{font-size:11.5px;font-weight:800;color:var(--text-muted);margin-bottom:var(--s-3);text-transform:uppercase}
+.form-input{width:100%;padding:12px 13px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);color:#fff;font-size:15px;font-weight:600;outline:none}
+.action-btn{width:100%;padding:14px;border-radius:var(--r-md);border:1px solid var(--lilac-line);background:var(--lilac-soft);color:var(--lilac-bright);font-size:13px;font-weight:800;text-transform:uppercase;cursor:pointer;margin-top:11px}
+.avatar-upload-row{display:flex;align-items:center;gap:var(--s-3)}
+.avatar-preview{width:64px;height:64px;border-radius:50%;border:1px solid var(--line-mid);object-fit:cover;background:var(--bg-elevated);flex-shrink:0}
+.avatar-upload-buttons{flex:1;display:flex;flex-direction:column;gap:7px}
+.upload-btn{padding:12px 17px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-soft);font-size:11.5px;font-weight:800;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.reset-avatar-btn{padding:9px 13px;border-radius:var(--r-sm);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-muted);font-size:10.5px;font-weight:800;cursor:pointer}
 
-/* Admin */
+.modal{position:fixed;inset:0;background:rgba(5,4,10,.84);display:flex;justify-content:center;align-items:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .22s;padding:var(--s-4)}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-card{background:linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));border:1px solid var(--lilac-line);border-radius:var(--r-lg);padding:var(--s-6);width:100%;max-width:480px;text-align:center;position:relative;max-height:92vh;overflow-y:auto}
+.modal-card.wide{max-width:700px;text-align:left;padding:var(--s-6) var(--s-5)}
+.modal-close{position:absolute;top:13px;right:13px;width:32px;height:32px;border-radius:var(--r-sm);border:1px solid var(--line-mid);background:var(--bg-elevated);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;margin-bottom:var(--s-4)}
+.form-group{margin-bottom:var(--s-4);text-align:left}
+.form-label{display:block;font-size:11.5px;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px}
+.msg{margin-top:11px;font-size:12.5px;font-weight:700;min-height:16px;text-align:center}
+.msg.ok{color:var(--green)} .msg.err{color:var(--red)} .msg.wait{color:var(--lilac-bright)}
+
+.topup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:290px;overflow-y:auto;padding:7px;background:var(--bg-elevated);border-radius:var(--r-md);margin-bottom:11px;border:1px solid var(--line-mid)}
+.topup-item{padding:7px 5px;border:1px solid var(--line-mid);border-radius:var(--r-sm);background:var(--bg-surface);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-align:center}
+.topup-item.selected{border-color:var(--lilac-line);background:var(--lilac-soft)}
+.topup-item img{width:34px;height:34px;object-fit:contain}
+.topup-item .ti-name{font-size:9px;font-weight:700;color:var(--text-soft);line-height:1.1;height:23px;overflow:hidden}
+.topup-item .ti-price{font-size:11px;font-weight:800;color:var(--lilac);line-height:1.3}
+.topup-price-line{display:flex;justify-content:space-between;align-items:center;padding:11px;background:var(--bg-surface-hover);border:1px solid var(--line-mid);border-radius:var(--r-md);margin-bottom:9px;font-size:13px;font-weight:700}
+.topup-price-line .tpl-label{color:var(--text-muted)}
+.topup-price-line .tpl-value{font-weight:800;color:var(--lilac);display:flex;align-items:center;gap:5px}
+.topup-price-line .tpl-value img{width:14px;height:14px}
+
+.withdraw-warning{display:flex;gap:10px;align-items:flex-start;padding:13px;border-radius:var(--r-md);background:var(--yellow-soft);border:1px solid var(--yellow-line);margin-bottom:16px}
+.withdraw-warning .ww-icon{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#1a1204;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.withdraw-warning .ww-text{font-size:12px;font-weight:700;color:var(--yellow);line-height:1.5}
+.withdraw-items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--s-2);max-height:230px;overflow-y:auto;padding:6px;background:var(--bg-elevated);border:1px solid var(--line-mid);border-radius:var(--r-md)}
+.withdraw-item{padding:9px 6px;border:1px solid var(--line-mid);border-radius:var(--r-sm);background:var(--bg-surface);display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;text-align:center;transition:all .15s}
+.withdraw-item.selected{border-color:var(--lilac-line);background:var(--lilac-soft)}
+.withdraw-item img{width:38px;height:38px;object-fit:contain}
+.withdraw-item .wname{font-size:9.5px;font-weight:700;color:var(--text-soft);line-height:1.1;height:24px;overflow:hidden}
+.withdraw-item .wprice{font-size:11px;font-weight:800;color:var(--lilac)}
+.withdraw-selected-info{font-size:11.5px;font-weight:700;color:var(--text-muted);margin-top:6px;text-align:center}
+.withdraw-agree{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--r-md);border:1px solid var(--line-mid);background:var(--bg-elevated);cursor:pointer;margin-bottom:16px;transition:all .18s}
+.wa-box{width:22px;height:22px;border-radius:var(--r-xs);border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;color:transparent;font-weight:900;transition:all .18s}
+.withdraw-agree.checked .wa-box{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.wa-label{font-size:12px;font-weight:700;color:var(--text-soft);line-height:1.4}
+
+.confirm-withdraw-box{padding:var(--s-4);border-radius:var(--r-md);background:var(--yellow-soft);border:1px solid var(--yellow-line);margin-bottom:var(--s-4);text-align:left}
+.confirm-withdraw-box .cw-title{font-size:14px;font-weight:800;color:var(--yellow);margin-bottom:8px}
+.confirm-withdraw-box .cw-text{font-size:12.5px;font-weight:600;color:var(--text-soft);line-height:1.55}
+.confirm-withdraw-actions{display:flex;gap:10px;margin-top:var(--s-4)}
+.confirm-withdraw-actions button{flex:1;padding:13px;border-radius:var(--r-md);font-size:13px;font-weight:800;text-transform:uppercase;cursor:pointer;letter-spacing:.04em}
+.cw-yes{background:var(--green-soft);border:1px solid var(--green-line);color:var(--green)}
+.cw-no{background:var(--red-soft);border:1px solid var(--red-line);color:var(--red)}
+
+.approved-modal-box{padding:var(--s-5);border-radius:var(--r-md);background:var(--green-soft);border:1px solid var(--green-line);text-align:center}
+.approved-modal-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.approved-modal-time{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.approved-modal-time strong{color:var(--green);font-size:16px;display:block;margin-top:6px}
+.approved-modal-hint{font-size:11.5px;color:var(--text-muted);margin-top:10px}
+
 .admin-header{background:var(--lilac-soft);border:1px solid var(--lilac-line);border-radius:var(--r-md);padding:var(--s-4);margin-bottom:var(--s-4);display:flex;align-items:center;gap:var(--s-3)}
 .admin-header-icon{width:42px;height:42px;border-radius:var(--r-md);background:var(--bg-elevated);border:1px solid var(--lilac-line);display:flex;align-items:center;justify-content:center;color:var(--lilac)}
 .admin-header-icon svg{width:22px;height:22px}
@@ -490,12 +427,9 @@ button{cursor:pointer;background:none;border:none}
 @keyframes spin{100%{transform:rotate(360deg)}}
 
 .announcement-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:999999;pointer-events:none;display:flex;justify-content:center;width:100%;max-width:620px;padding:0 var(--s-5)}
-.announcement-box{background:var(--bg-surface);border:1px solid var(--lilac-line);border-radius:var(--r-md);padding:13px 24px;color:#fff;font-size:14px;font-weight:700;text-align:center;animation:dropIn .45s forwards}
-@keyframes dropIn{0%{opacity:0;transform:translateY(-30px)}100%{opacity:1;transform:translateY(0)}}
-
+.announcement-box{background:var(--bg-surface);border:1px solid var(--lilac-line);border-radius:var(--r-md);padding:13px 24px;color:#fff;font-size:14px;font-weight:700;text-align:center}
 #telegramWarning{display:none;position:fixed;inset:0;z-index:9999999;background:#ff0000;color:#fff;font-size:30px;font-weight:900;text-align:center;padding:20px;align-items:center;justify-content:center;text-transform:uppercase}
 
-/* Mobile */
 @media (max-width:900px){
   .side-nav{position:fixed;left:0;top:0;height:100vh;width:280px;transform:translateX(-100%);transition:transform .28s;z-index:700;background:#0d0b16;box-shadow:8px 0 40px rgba(0,0,0,.6);display:flex;flex-direction:column}
   .side-nav.open{transform:translateX(0)}
@@ -591,7 +525,6 @@ button{cursor:pointer;background:none;border:none}
     </div>
 </div>
 
-<!-- ★ Пополнение — теперь рабочее -->
 <div class="modal" id="topupModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('topupModal')">✕</button>
@@ -613,7 +546,6 @@ button{cursor:pointer;background:none;border:none}
     </div>
 </div>
 
-<!-- ★ Вывод — рабочее -->
 <div class="modal" id="withdrawModal">
     <div class="modal-card wide">
         <button class="modal-close" onclick="closeModal('withdrawModal')">✕</button>
@@ -640,7 +572,6 @@ button{cursor:pointer;background:none;border:none}
     </div>
 </div>
 
-<!-- ★ Подтверждение вывода -->
 <div class="modal" id="confirmWithdrawModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('confirmWithdrawModal')">✕</button>
@@ -656,7 +587,6 @@ button{cursor:pointer;background:none;border:none}
     </div>
 </div>
 
-<!-- ★ Вывод одобрен -->
 <div class="modal" id="approvedWithdrawModal">
     <div class="modal-card">
         <button class="modal-close" onclick="closeModal('approvedWithdrawModal')">✕</button>
@@ -678,7 +608,19 @@ button{cursor:pointer;background:none;border:none}
     </div>
 </div>
 
-<!-- ★ Админка -->
+<div class="modal" id="scheduleModal">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
+        <div class="modal-title">Назначить время вывода</div>
+        <div class="form-group">
+            <label class="form-label">Дата и время МСК</label>
+            <input type="datetime-local" class="form-input" id="scheduleDateTime">
+        </div>
+        <button class="action-btn" onclick="adminScheduleWithdraw()">Назначить</button>
+        <div class="msg" id="scheduleMsg"></div>
+    </div>
+</div>
+
 <div class="modal" id="adminModal">
     <div class="modal-card wide">
         <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
@@ -747,22 +689,7 @@ button{cursor:pointer;background:none;border:none}
                 </div>
                 <div class="msg" id="adminBanMsg"></div>
             </div>
-            <div class="admin-section"><div class="admin-section-title">Забаненные</div><div id="adminBansList"></div></div>
         </div>
-    </div>
-</div>
-
-<!-- ★ Модалка «Назначить время вывода» (для админа) -->
-<div class="modal" id="scheduleModal">
-    <div class="modal-card">
-        <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
-        <div class="modal-title">Назначить время вывода</div>
-        <div class="form-group">
-            <label class="form-label">Дата и время МСК</label>
-            <input type="datetime-local" class="form-input" id="scheduleDateTime">
-        </div>
-        <button class="action-btn" onclick="adminScheduleWithdraw()">Назначить</button>
-        <div class="msg" id="scheduleMsg"></div>
     </div>
 </div>
 
@@ -1075,12 +1002,8 @@ let promoType = 'balance', selectedAdminItem = null, activePromo = null;
 let maintenanceEnabled = false, maintenanceInterval = null, announcementInterval = null, lastAnnouncementId = null;
 let isPromoActivating = false, banPollInterval = null;
 let stakingInfo = null, stakingTierSelected = null, stakingInterval = null;
-let withdrawSelectedIndexes = [];
-let withdrawAgree = false;
-let pendingWithdrawPayload = null;
-let adminSchedulingId = null;
-let adminSchedulingItem = null;
-let topupSelectedItem = null;
+let withdrawSelectedIndexes = [], withdrawAgree = false, pendingWithdrawPayload = null;
+let adminSchedulingId = null, adminSchedulingItem = null, topupSelectedItem = null;
 
 const bgMusic = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicBtn');
@@ -1137,12 +1060,18 @@ async function api(path, body){
   const headers = { 'Content-Type':'application/json' };
   if (initDataRaw) headers['X-Telegram-Init-Data'] = initDataRaw;
   try {
-    const res = await fetch(API_URL+path, {method:'POST', headers, body:JSON.stringify(Object.assign({},body||{}))});
+    const ctrl = new AbortController();
+    const timeoutId = setTimeout(() => ctrl.abort(), 20000);
+    const res = await fetch(API_URL+path, {method:'POST', headers, body:JSON.stringify(Object.assign({},body||{})), signal: ctrl.signal});
+    clearTimeout(timeoutId);
     const data = await res.json().catch(()=>({ok:false,error:'BAD_JSON'}));
     if (!res.ok && !data.error) data.error = 'HTTP_'+res.status;
     if (data && data.error==='BANNED') showBanOverlay(data.ban||null);
     return data;
-  } catch(e){ return {ok:false, error:'NETWORK'}; }
+  } catch(e){
+    if (e.name === 'AbortError') return {ok:false, error:'Таймаут'};
+    return {ok:false, error:'NETWORK'};
+  }
 }
 
 function applyServerUser(data){
@@ -1168,15 +1097,14 @@ function applyServerUser(data){
 }
 
 function checkApprovedWithdrawPopup(data){
-  if (!data || !Array.isArray(data.pending_withdraw_details)) return;
+  if (!data || !data.pending_withdraw_details) return;
   const details = data.pending_withdraw_details;
+  if (typeof details !== 'object') return;
   for (const [itemId, info] of Object.entries(details)) {
     if (info && info.approved && info.time && !info.shown) {
-      const item = getItemById(itemId);
-      const timeStr = info.time;
-      openApprovedWithdrawModal(timeStr, item ? item.name : itemId);
+      openApprovedWithdrawModal(info.time);
       info.shown = true;
-      try { api('/api/withdraw/mark-shown', {item_id: itemId}); } catch(e){}
+      api('/api/withdraw/mark-shown', {item_id: itemId}).catch(()=>{});
       break;
     }
   }
@@ -1186,11 +1114,14 @@ async function loadUserFromServer(){
   try {
     const initDataRaw = window.Telegram?.WebApp?.initData || '';
     const headers = {}; if (initDataRaw) headers['X-Telegram-Init-Data'] = initDataRaw;
-    const res = await fetch(API_URL+'/api/user/'+encodeURIComponent(getTelegramId()), {cache:'no-store',headers});
+    const ctrl = new AbortController();
+    const timeoutId = setTimeout(() => ctrl.abort(), 15000);
+    const res = await fetch(API_URL+'/api/user/'+encodeURIComponent(getTelegramId()), {cache:'no-store',headers, signal: ctrl.signal});
+    clearTimeout(timeoutId);
     const data = await res.json().catch(()=>({ok:false}));
     if (data.ok && data.user) applyServerUser(data.user);
     else if (data.error==='BANNED') showBanOverlay(data.ban||null);
-  } catch(e){}
+  } catch(e){ console.warn('[SYNC]', e.message); }
 }
 
 async function checkAnnouncement(){ try{ const res = await fetch(API_URL+'/api/announcement',{cache:'no-store'}); const d = await res.json(); if (d.ok) renderAnnouncement(d.announcement); }catch(e){} }
@@ -1206,7 +1137,7 @@ function applyMaintenanceState(enabled){
   maintenanceEnabled = !!enabled;
   const ov = document.getElementById('maintenanceOverlay'), app = document.getElementById('mainApp');
   if (!ov||!app) return;
-  if (maintenanceEnabled && !isCurrentUserAdmin()) { ov.style.display='flex'; app.style.display='none'; closeCaseOpen(); }
+  if (maintenanceEnabled && !isCurrentUserAdmin()) { ov.style.display='flex'; app.style.display='none'; }
   else { ov.style.display='none'; app.style.display=''; }
 }
 async function checkMaintenance(){
@@ -1223,7 +1154,6 @@ function showBanOverlay(ban){
   if (r) r.textContent = (ban&&ban.reason)?ban.reason:'Не указана';
   if (!ov) return;
   ov.classList.add('show');
-  try { closeCaseOpen(); } catch(e){}
   ['topupModal','adminModal','targetModal','withdrawModal','confirmWithdrawModal','approvedWithdrawModal','scheduleModal','unbanModal'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('open');});
   refreshBodyScrollLock();
 }
@@ -1329,7 +1259,6 @@ window.switchTab = function(tab){
   if (tab==='bonuses') loadStakingInfo();
 };
 
-/* Profile */
 function applyCustomAvatar(){ const src = customAvatar || DEFAULT_AVATAR; ['profileAvatarImg','topAvatarImg','avatarPreview'].forEach(id=>{const el=document.getElementById(id);if(el)el.src=src;}); }
 window.handleAvatarUpload = function(e){
   const f = e.target.files[0]; if (!f||!f.type.startsWith('image/')||f.size>2*1024*1024) return;
@@ -1372,7 +1301,6 @@ window.saveCustomNick = function(){
   applyUserToProfile(); syncCosmetics();
 };
 
-/* ★ TOPUP — теперь открыт, только items price >= 41 */
 window.openTopup = function(){
   playClick(); vibrate(10);
   renderTopupGrid();
@@ -1419,7 +1347,6 @@ window.createDeposit = async function(){
   }
 };
 
-/* ★ WITHDRAW — открыт, items price >= 41, 2-step confirm */
 window.openWithdrawFor = function(index){
   if (document.body.classList.contains('upgrade-locked')) return;
   if (index < 0 || index >= inventory.length) return;
@@ -1536,13 +1463,12 @@ window.cancelWithdraw = function(){
   playClick();
 };
 
-function openApprovedWithdrawModal(timeStr, itemName){
+function openApprovedWithdrawModal(timeStr){
   const t = document.getElementById('approvedTimeText'); if (t) t.textContent = timeStr;
   openModal('approvedWithdrawModal');
   playWin(); vibratePattern([30,50,30,50,60]);
 }
 
-/* Admin */
 window.selectPromoType = function(type){
   promoType = type;
   document.querySelectorAll('.radio-option').forEach(o=>o.classList.toggle('active',o.dataset.type===type));
@@ -1585,7 +1511,7 @@ async function renderPromoList(){
       let rt='',ic='';
       if (p.type==='balance'){rt=p.value+' монет';ic=`<img src="${COIN_IMG}">`;}
       else {const it=getItemById(p.value);rt=it?it.name:p.value;ic=it?`<img src="${it.img}" ${FALLBACK_ATTR}>`:'';}
-      return `<div class="promo-list-item"><div class="pl-icon">${ic}</div><div class="pl-info"><div class="code">${escapeHtml(p.code)}</div><div class="pl-reward">${escapeHtml(rt)}</div></div><div><div class="pl-uses">${p.uses}</div><div class="pl-uses-label">активаций</div></div></div>`;
+      return `<div class="promo-list-item"><div class="pl-icon">${ic}</div><div><div class="code">${escapeHtml(p.code)}</div><div class="pl-reward">${escapeHtml(rt)}</div></div><div><div class="pl-uses">${p.uses}</div><div class="pl-uses-label">активаций</div></div></div>`;
     }).join('');
   } catch(e){l.innerHTML='<div style="padding:16px;text-align:center;color:var(--red)">Сервер спит</div>';}
 }
@@ -1636,7 +1562,7 @@ window.adminUnbanUser = async function(){
   if (d.ok){if(m){m.className='msg ok';m.textContent='Разбанен';}checkBanStatus();}
   else {if(m){m.className='msg err';m.textContent=d.error||'Ошибка';}}
 };
-async function loadAdminBans(){ /* упрощено */ }
+async function loadAdminBans(){}
 async function loadMaintenanceStatus(){
   const el = document.getElementById('maintenanceStatus'), btn = document.getElementById('maintenanceToggleBtn');
   if (!el||!btn) return;
@@ -1654,7 +1580,6 @@ window.toggleMaintenance = async function(){
   if (d.ok) { await loadMaintenanceStatus(); await checkMaintenance(); playCoin(); }
 };
 
-/* ★ ADMIN DEPOSITS */
 async function loadAdminDeposits(){
   const list = document.getElementById('adminDepositsList'), cnt = document.getElementById('adminDepCount');
   if (!list) return;
@@ -1668,19 +1593,7 @@ async function loadAdminDeposits(){
     if (!pending.length) { list.innerHTML = '<div class="admin-request-empty">Нет новых заявок</div>'; return; }
     list.innerHTML = pending.map(x=>{
       const it = getItemById(x.item_id) || {img:'',name:x.item_name};
-      return `<div class="admin-request-card">
-        <img class="req-img" src="${it.img}" ${FALLBACK_ATTR}>
-        <div class="admin-request-info">
-          <div class="req-line"><span class="req-key">TG:</span> <span class="req-val accent">@${escapeHtml(x.username||'—')}</span></div>
-          <div class="req-line"><span class="req-key">Предмет:</span> <span class="req-val">${escapeHtml(x.item_name)}</span></div>
-          <div class="req-line"><span class="req-key">Цена:</span> <span class="req-val accent">${x.item_price}</span></div>
-          <div class="req-line"><span class="req-key">Roblox:</span> <span class="req-val">${escapeHtml(x.roblox_name||'—')}</span></div>
-        </div>
-        <div class="admin-request-actions">
-          <button class="dep-accept" onclick="processDeposit('${x.id}','accepted')">Принять</button>
-          <button class="dep-reject" onclick="processDeposit('${x.id}','rejected')">Отклонить</button>
-        </div>
-      </div>`;
+      return `<div class="admin-request-card"><img class="req-img" src="${it.img}" ${FALLBACK_ATTR}><div class="admin-request-info"><div class="req-line"><span class="req-key">TG:</span> <span class="req-val accent">@${escapeHtml(x.username||'—')}</span></div><div class="req-line"><span class="req-key">Предмет:</span> <span class="req-val">${escapeHtml(x.item_name)}</span></div><div class="req-line"><span class="req-key">Цена:</span> <span class="req-val accent">${x.item_price}</span></div><div class="req-line"><span class="req-key">Roblox:</span> <span class="req-val">${escapeHtml(x.roblox_name||'—')}</span></div></div><div class="admin-request-actions"><button class="dep-accept" onclick="processDeposit('${x.id}','accepted')">Принять</button><button class="dep-reject" onclick="processDeposit('${x.id}','rejected')">Отклонить</button></div></div>`;
     }).join('');
   } catch(e){ list.innerHTML = '<div class="admin-request-empty">Сервер недоступен</div>'; }
 }
@@ -1691,7 +1604,6 @@ window.processDeposit = async function(id, status){
   else playLose();
 };
 
-/* ★ ADMIN WITHDRAWS */
 async function loadAdminWithdraws(){
   const list = document.getElementById('adminWithdrawsList'), cnt = document.getElementById('adminWdCount');
   if (!list) return;
@@ -1705,19 +1617,7 @@ async function loadAdminWithdraws(){
     if (!pending.length) { list.innerHTML = '<div class="admin-request-empty">Нет заявок на вывод</div>'; return; }
     list.innerHTML = pending.map(x=>{
       const it = getItemById(x.item_id) || {img:'',name:x.item_name};
-      return `<div class="admin-request-card">
-        <img class="req-img" src="${it.img}" ${FALLBACK_ATTR}>
-        <div class="admin-request-info">
-          <div class="req-line"><span class="req-key">TG:</span> <span class="req-val accent">@${escapeHtml(x.username||'—')}</span></div>
-          <div class="req-line"><span class="req-key">Предмет:</span> <span class="req-val">${escapeHtml(x.item_name)}</span></div>
-          <div class="req-line"><span class="req-key">Цена:</span> <span class="req-val accent">${x.item_price}</span></div>
-          <div class="req-line"><span class="req-key">Roblox:</span> <span class="req-val">${escapeHtml(x.roblox_name||'—')}</span></div>
-        </div>
-        <div class="admin-request-actions">
-          <button class="dep-time" onclick="openScheduleWithdraw('${x.id}','${x.item_id}','${escapeHtml(x.item_name)}')">Назначить время</button>
-          <button class="dep-reject" onclick="processWithdraw('${x.id}','rejected')">Отклонить</button>
-        </div>
-      </div>`;
+      return `<div class="admin-request-card"><img class="req-img" src="${it.img}" ${FALLBACK_ATTR}><div class="admin-request-info"><div class="req-line"><span class="req-key">TG:</span> <span class="req-val accent">@${escapeHtml(x.username||'—')}</span></div><div class="req-line"><span class="req-key">Предмет:</span> <span class="req-val">${escapeHtml(x.item_name)}</span></div><div class="req-line"><span class="req-key">Цена:</span> <span class="req-val accent">${x.item_price}</span></div><div class="req-line"><span class="req-key">Roblox:</span> <span class="req-val">${escapeHtml(x.roblox_name||'—')}</span></div></div><div class="admin-request-actions"><button class="dep-time" onclick="openScheduleWithdraw('${x.id}','${x.item_id}','${escapeHtml(x.item_name)}')">Назначить время</button><button class="dep-reject" onclick="processWithdraw('${x.id}','rejected')">Отклонить</button></div></div>`;
     }).join('');
   } catch(e){ list.innerHTML = '<div class="admin-request-empty">Сервер недоступен</div>'; }
 }
@@ -1749,7 +1649,7 @@ window.adminScheduleWithdraw = async function(){
   if (isNaN(d.getTime())) { if(msg){msg.className='msg err';msg.textContent='Неверная дата';} return; }
   const msk = d.toLocaleString('ru-RU', {timeZone: 'Europe/Moscow', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
   const formatted = msk.replace(',', ' в') + ' МСК';
-  const r = await api('/api/withdraw/status', {id: adminSchedulingId, status: 'accepted', time_slot: formatted, approved: true});
+  const r = await api('/api/withdraw/status', {id: adminSchedulingId, status: 'accepted', time_slot: formatted});
   if (r.ok) {
     if(msg){msg.className='msg ok';msg.textContent='Назначено: '+formatted;}
     playWin();
@@ -1760,7 +1660,6 @@ window.adminScheduleWithdraw = async function(){
   }
 };
 
-/* UPGRADER */
 function calcUpgradeChance(sp, tp){ if (!sp||!tp||tp<=sp) return 0; const p = MAX_CHANCE/(tp/sp); return Math.max(MIN_CHANCE, Math.min(MAX_CHANCE, p)); }
 function formatChance(p){ if (!p||p<=0) return '0%'; if (p>=10) return Math.round(p)+'%'; if (p>=1){const s=p.toFixed(1).replace('.',',');return s.endsWith(',0')?s.slice(0,-2)+'%':s+'%';} return p.toFixed(2).replace('.',',')+'%'; }
 function calculateChance(){ const s=selectedSourceIndex!==null?getItemById(inventory[selectedSourceIndex]):null; const t=selectedTargetId?getItemById(selectedTargetId):null; if(!s||!t)return 0; return calcUpgradeChance(s.price,t.price); }
@@ -1792,7 +1691,6 @@ async function performUpgrade(dur){
   isSpinning = true; document.body.classList.add('upgrade-locked');
   const arr = document.getElementById('upgArrowContainer'), btn = document.getElementById('upgradeBtn');
   if (btn) { btn.disabled=true; btn.querySelector('span').innerText='КРУТИМ...'; }
-  playUpgradeStart();
   const d = await api('/api/upgrade',{source_item_id:src.id,target_item_id:tgt.id});
   if (!d.ok) { isSpinning=false; document.body.classList.remove('upgrade-locked'); if(btn){btn.disabled=false;btn.querySelector('span').innerText='АПГРЕЙД';} playLose(); return; }
   const chance = Math.max(MIN_CHANCE, Math.min(MAX_CHANCE, Number(d.chance)||0));
@@ -1886,7 +1784,6 @@ window.pickTargetFromList = function(id){
   renderInventory(); updateUpgradeScreen();
 };
 
-/* CASES */
 const CASE_ROW_ITEMS=60, CASE_ITEM_WIDTH=120, CASE_WIN_INDEX=50, CASE_SPIN_MS=6800;
 let caseSpinTimeout = null;
 function scheduleCaseTicks(dur, n=34){ for (let i=0;i<n;i++){const t=i/n;const et=1-Math.pow(1-t,1/3);setTimeout(()=>playTick(),et*dur);} }
@@ -2007,7 +1904,6 @@ window.sellItemFromTab = async function(idx){
   else playLose();
 };
 
-/* AUTO PROMO */
 const AUTO_PROMOS = [{code:'KRAKEN121',bonus:5},{code:'SAINT213',bonus:8},{code:'EASYROLL',bonus:7},{code:'MOON334',bonus:7},{code:'SUN21',bonus:4},{code:'STAR482',bonus:3},{code:'NIGHT73',bonus:2},{code:'CLOUD56',bonus:8}];
 const AUTO_PROMO_INTERVAL = 60*60*1000;
 function getCurrentAutoPromo(){ const n=Date.now(),s=new Date().setHours(0,0,0,0),e=n-s,i=Math.floor(e/AUTO_PROMO_INTERVAL)%AUTO_PROMOS.length,p=AUTO_PROMOS[i],nc=s+(Math.floor(e/AUTO_PROMO_INTERVAL)+1)*AUTO_PROMO_INTERVAL; return {...p,nextChangeTime:nc}; }
@@ -2021,7 +1917,6 @@ function updateAutoPromoDisplay(){
 window.copyAutoPromoCode = function(){ const p = getCurrentAutoPromo(); navigator.clipboard.writeText(p.code).then(()=>{}).catch(()=>{}); };
 window.activateAutoPromo = function(){ const p = getCurrentAutoPromo(); activePromo={code:p.code,bonus:p.bonus}; playWin(); };
 
-/* STAKING */
 window.selectStakingTier = function(t){ stakingTierSelected=t; document.querySelectorAll('.staking-tier').forEach(el=>el.classList.toggle('active',el.dataset.tier===t)); playClick(); };
 async function loadStakingInfo(){
   if (!USER.id) return;
@@ -2068,7 +1963,6 @@ window.claimStaking = async function(){
   stakingInfo={claimed:true}; renderStaking(); await loadStakingInfo();
 };
 
-/* MINES */
 let minesGameActive=false, minesOpenedCells=new Set(), minesMinesCount=2, minesBetItems=[];
 function minesMultiplierClient(n){ if(n===2)return 1.04;if(n===3)return 1.13;if(n===5)return 1.24;if(n===10)return 1.37;if(n===24)return 24;return 1+n*0.05; }
 function initMinesGame(){
@@ -2159,8 +2053,22 @@ async function startMinesGame(){
   document.getElementById('minesBetAmount').textContent = d.total_bet_value||0;
 }
 
-/* INIT */
+async function pingServer(){
+  for (let i=0; i<5; i++) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(()=>ctrl.abort(), 10000);
+      const res = await fetch(API_URL+'/', {cache:'no-store', signal: ctrl.signal});
+      clearTimeout(t);
+      if (res.ok) return true;
+    } catch(e) {}
+    await new Promise(r=>setTimeout(r, 3000));
+  }
+  return false;
+}
+
 async function init(){
+  try { await pingServer(); } catch(e){}
   isSpinning=false; document.body.classList.remove('upgrade-locked');
   selectedSourceIndex=null; selectedTargetId=null;
   applyCustomAvatar(); renderMenuCases(); updateAutoPromoDisplay();
@@ -2170,11 +2078,11 @@ async function init(){
   await checkMaintenance(); applyMaintenanceState(maintenanceEnabled);
   await loadUserFromServer(); await checkBanStatus(); await checkAnnouncement();
   if (maintenanceInterval) clearInterval(maintenanceInterval);
-  maintenanceInterval = setInterval(checkMaintenance, 1000);
+  maintenanceInterval = setInterval(checkMaintenance, 5000);
   if (announcementInterval) clearInterval(announcementInterval);
-  announcementInterval = setInterval(checkAnnouncement, 1000);
+  announcementInterval = setInterval(checkAnnouncement, 5000);
   if (banPollInterval) clearInterval(banPollInterval);
-  banPollInterval = setInterval(checkBanStatus, 8000);
+  banPollInterval = setInterval(checkBanStatus, 15000);
   initMusicAutoplay();
 }
 window.addEventListener('load', ()=>{
