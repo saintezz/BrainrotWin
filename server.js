@@ -32,7 +32,6 @@ const RATE_LIMIT_WINDOW_MS = 1000;
 const RATE_LIMIT_MAX = 30;
 const MINES_TTL_MS = 10 * 60 * 1000;
 
-// ★ Минимальная цена предмета для пополнения/вывода
 const MIN_DEPOSIT_PRICE = 41;
 const MIN_WITHDRAW_PRICE = 41;
 
@@ -85,23 +84,16 @@ const CASE_ONLY_ITEMS = Object.freeze({
   goldstrawberry: { name: 'Gold Strawberry Elephant', price: 45000 }, lavastrawberry: { name: 'Lava Strawberry Elephant', price: 56000 }
 });
 
-// ★ НОВЫЕ КЕЙСЫ: orange, apple, allin
 const CASES = Object.freeze({
   school: { name: 'School Case', price: 12, rewards: [{ id: 'lagrande', chance: 40 }, { id: 'nuclearo', chance: 25 }, { id: 'tangtang', chance: 15 }, { id: 'tictacsahur', chance: 10 }, { id: 'worl', chance: 5 }, { id: 'lostangsitos', chance: 4 }, { id: 'garama', chance: 0.9 }, { id: 'burguro', chance: 0.1 }] },
   orange: { name: 'Orange Case', price: 29, rewards: [
-    { id: 'tangtang', chance: 55 },
-    { id: 'worl', chance: 25 },
-    { id: 'witchbroom', chance: 10 },
-    { id: 'garama', chance: 5 },
-    { id: 'sammyni', chance: 3 },
-    { id: 'popcuru', chance: 2 }
+    { id: 'tangtang', chance: 55 }, { id: 'worl', chance: 25 }, { id: 'witchbroom', chance: 10 },
+    { id: 'garama', chance: 5 }, { id: 'sammyni', chance: 3 }, { id: 'popcuru', chance: 2 }
   ] },
   sun: { name: 'Sun Case', price: 39, rewards: [{ id: 'tictacsahur', chance: 50 }, { id: 'worl', chance: 30 }, { id: 'garama', chance: 17 }, { id: 'burguro', chance: 2 }, { id: 'cerberus', chance: 1 }] },
   apple: { name: 'Apple Case', price: 59, rewards: [
-    { id: 'witchbroom', chance: 50 },
-    { id: 'garama', chance: 25 },
-    { id: 'sammyni', chance: 15 },
-    { id: 'burguro', chance: 10 }
+    { id: 'witchbroom', chance: 50 }, { id: 'garama', chance: 25 },
+    { id: 'sammyni', chance: 15 }, { id: 'burguro', chance: 10 }
   ] },
   winter: { name: 'Winter Case', price: 61, rewards: [{ id: 'lostangsitos', chance: 40 }, { id: 'garama', chance: 30 }, { id: 'burguro', chance: 10 }, { id: 'popcuru', chance: 5 }, { id: 'fragrama', chance: 4 }, { id: 'cerberus', chance: 0.5 }, { id: 'dugdugdug', chance: 0.3 }, { id: 'roseyandteddy', chance: 0.1 }, { id: 'lacasaboo', chance: 0.1 }] },
   autumn: { name: 'Autumn Case', price: 90, rewards: [{ id: 'garama', chance: 40 }, { id: 'burguro', chance: 30 }, { id: 'popcuru', chance: 20 }, { id: 'cloverat', chance: 5 }, { id: 'guest666', chance: 4 }, { id: 'lossecret', chance: 3 }, { id: 'roseyandteddy', chance: 1 }] },
@@ -109,9 +101,7 @@ const CASES = Object.freeze({
   money: { name: 'Money Case', price: 201, rewards: [{ id: 'cerberus', chance: 70 }, { id: 'dugdugdug', chance: 20 }, { id: 'cloverat', chance: 9 }, { id: 'guest666', chance: 0.3 }, { id: 'ricodinero', chance: 0.3 }, { id: 'lacasaboo', chance: 0.2 }, { id: 'skelly', chance: 0.1 }] },
   spring: { name: 'Spring Case', price: 451, rewards: [{ id: 'rubiko', chance: 50 }, { id: 'ricodinero', chance: 20 }, { id: 'lacasaboo', chance: 20 }, { id: 'ketupas', chance: 8 }, { id: 'skelly', chance: 2 }] },
   allin: { name: 'ALL IN Case', price: 590, rewards: [
-    { id: 'coin20', chance: 60 },
-    { id: 'dragon', chance: 39.9 },
-    { id: 'skibidi', chance: 0.1 }
+    { id: 'coin20', chance: 60 }, { id: 'dragon', chance: 39.9 }, { id: 'skibidi', chance: 0.1 }
   ] },
   summer: { name: 'Summer Case', price: 3241, rewards: [{ id: 'kraken', chance: 50 }, { id: 'lasupreme', chance: 20 }, { id: 'digi', chance: 15 }, { id: 'dragonaquanini', chance: 10 }, { id: 'antonio', chance: 4 }, { id: 'skibidi', chance: 1 }] },
   easter: { name: 'Easter Case', price: 9000, rewards: [{ id: 'antonio', chance: 50 }, { id: 'griffin', chance: 30 }, { id: 'skibidi', chance: 10 }, { id: 'johnpork', chance: 5 }, { id: 'meowl', chance: 4 }, { id: 'strawberryelephant', chance: 0.9 }, { id: 'headless', chance: 0.1 }] },
@@ -119,10 +109,7 @@ const CASES = Object.freeze({
   username: { name: 'Username Case', price: 0, rewards: [{ id: 'coin2', chance: 50 }, { id: 'lagrande', chance: 49.9 }, { id: 'dragon', chance: 0.1 }] }
 });
 
-const COIN_REWARDS = Object.freeze({
-  coin20: 20,
-  coin2: 2
-});
+const COIN_REWARDS = Object.freeze({ coin20: 20, coin2: 2 });
 
 const MAX_CHANCE = 80;
 const MIN_CHANCE = 0.01;
@@ -265,8 +252,8 @@ setInterval(() => {
 // ================== БД ХЕЛПЕРЫ ==================
 async function getUser(telegramId, username) {
   if (!telegramId) telegramId = 'guest_' + Date.now();
-  let res = await pool.query('SELECT * FROM users WHERE id = $1', [telegramId]);
-  if (res.rows.length === 0) {
+  let row = await pool.query('SELECT * FROM users WHERE id = $1', [telegramId]);
+  if (row.rows.length === 0) {
     const newUser = {
       id: telegramId, balance: START_BALANCE, inventory: [],
       username: username || '', custom_nick: '', avatar: '',
@@ -280,7 +267,7 @@ async function getUser(telegramId, username) {
     );
     return newUser;
   }
-  const u = res.rows[0];
+  const u = row.rows[0];
   u.inventory = u.inventory || [];
   u.promos_used = u.promos_used || [];
   u.pending_withdraw_details = u.pending_withdraw_details || {};
@@ -305,8 +292,8 @@ async function updateUser(telegramId, fields) {
 }
 
 async function getPendingWithdrawIds(telegramId) {
-  const res = await pool.query("SELECT item_id FROM withdraws WHERE telegram_id = $1 AND status = 'pending'", [telegramId]);
-  return res.rows.map(r => r.item_id);
+  const pendingRows = await pool.query("SELECT item_id FROM withdraws WHERE telegram_id = $1 AND status = 'pending'", [telegramId]);
+  return pendingRows.rows.map(r => r.item_id);
 }
 
 function publicUser(u, pendingWithdrawIds = []) {
@@ -324,21 +311,21 @@ function publicUser(u, pendingWithdrawIds = []) {
 }
 
 async function listActiveBans() {
-  const res = await pool.query("SELECT id, username, ban FROM users WHERE ban IS NOT NULL AND (ban->>'active')::boolean = true");
-  return res.rows.map(r => ({
+  const bansRows = await pool.query("SELECT id, username, ban FROM users WHERE ban IS NOT NULL AND (ban->>'active')::boolean = true");
+  return bansRows.rows.map(r => ({
     id: r.id, username: r.username || '', reason: r.ban?.reason || 'Не указана', at: r.ban?.at || null, by: r.ban?.by || '', pending: false
   }));
 }
 
 async function getUsernameCaseStatus(telegramId, nick) {
   const hasRequired = nickHasRequiredTag(nick || '');
-  const res = await pool.query(
+  const ucRows = await pool.query(
     "SELECT last_opened_at FROM username_case WHERE telegram_id = $1",
     [String(telegramId)]
   );
   let nextAvailableAt = 0;
-  if (res.rows.length > 0 && res.rows[0].last_opened_at) {
-    nextAvailableAt = new Date(res.rows[0].last_opened_at).getTime() + USERNAME_CASE_COOLDOWN_MS;
+  if (ucRows.rows.length > 0 && ucRows.rows[0].last_opened_at) {
+    nextAvailableAt = new Date(ucRows.rows[0].last_opened_at).getTime() + USERNAME_CASE_COOLDOWN_MS;
   }
   const now = Date.now();
   return {
@@ -520,8 +507,8 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && req.url === '/api/promocodes') {
       const adminUser = requireAdmin(req);
       if (!adminUser) return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
-      const res = await pool.query("SELECT * FROM promocodes");
-      return sendJSON(res, 200, { ok: true, promocodes: res.rows });
+      const promoRows = await pool.query("SELECT * FROM promocodes");
+      return sendJSON(res, 200, { ok: true, promocodes: promoRows.rows });
     }
 
     // ================== USERNAME CASE ==================
@@ -598,13 +585,13 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && req.url === '/api/staking/info') {
       const user = getTelegramUser(req);
       if (!user) return sendJSON(res, 401, { ok: false, error: 'Не авторизован' });
-      const res1 = await pool.query(
+      const stakingRows = await pool.query(
         "SELECT * FROM staking WHERE telegram_id = $1 ORDER BY created_at DESC LIMIT 1",
         [String(user.id)]
       );
       let stake = null;
-      if (res1.rows.length > 0) {
-        const s = res1.rows[0];
+      if (stakingRows.rows.length > 0) {
+        const s = stakingRows.rows[0];
         stake = {
           id: s.id, amount: Number(s.amount), tier: s.tier, bonus: s.bonus,
           ends_at: new Date(s.ends_at).getTime(),
@@ -657,12 +644,12 @@ const server = http.createServer(async (req, res) => {
       const u = await getUser(user.id, user.username);
       if (u.ban && u.ban.active) return sendJSON(res, 403, { ok: false, error: 'BANNED' });
 
-      const res1 = await pool.query(
+      const claimRows = await pool.query(
         "SELECT * FROM staking WHERE telegram_id = $1 AND claimed = false ORDER BY created_at DESC LIMIT 1",
         [String(user.id)]
       );
-      if (res1.rows.length === 0) return sendJSON(res, 404, { ok: false, error: 'Нет активного стейка' });
-      const s = res1.rows[0];
+      if (claimRows.rows.length === 0) return sendJSON(res, 404, { ok: false, error: 'Нет активного стейка' });
+      const s = claimRows.rows[0];
       if (Date.now() < new Date(s.ends_at).getTime()) {
         return sendJSON(res, 400, { ok: false, error: 'Срок ещё не истёк', ends_at: new Date(s.ends_at).getTime() });
       }
@@ -934,8 +921,8 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && req.url.startsWith('/api/deposits')) {
       const adminUser = requireAdmin(req);
       if (!adminUser) return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
-      const res = await pool.query("SELECT * FROM deposits ORDER BY created_at DESC");
-      return sendJSON(res, 200, { ok: true, deposits: res.rows });
+      const depositsRows = await pool.query("SELECT * FROM deposits ORDER BY created_at DESC");
+      return sendJSON(res, 200, { ok: true, deposits: depositsRows.rows });
     }
 
     if (req.method === 'POST' && req.url === '/api/deposit/status') {
@@ -997,8 +984,8 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && req.url.startsWith('/api/withdraws')) {
       const adminUser = requireAdmin(req);
       if (!adminUser) return sendJSON(res, 403, { ok: false, error: 'Нет доступа' });
-      const res = await pool.query("SELECT * FROM withdraws ORDER BY created_at DESC");
-      return sendJSON(res, 200, { ok: true, withdraws: res.rows });
+      const withdrawalsRows = await pool.query("SELECT * FROM withdraws ORDER BY created_at DESC");
+      return sendJSON(res, 200, { ok: true, withdraws: withdrawalsRows.rows });
     }
 
     if (req.method === 'POST' && req.url === '/api/withdraw/status') {
@@ -1042,7 +1029,6 @@ const server = http.createServer(async (req, res) => {
         return sendJSON(res, 200, { ok: true, withdraw: { ...wd, status: 'accepted', time_slot: finalTime } });
       }
 
-      // rejected
       await pool.query(
         "UPDATE withdraws SET status = 'rejected', processed_at = NOW(), processed_by = $1 WHERE id = $2",
         [adminUser.username, id]
